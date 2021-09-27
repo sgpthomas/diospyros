@@ -91,6 +91,8 @@
       (egg-vec-op `vec-mul-sgn (map s-exp-to-ast (list v1 v2)))]
     [`(VecAdd ,v1 ,v2)
       (egg-vec-op `vec-add (map s-exp-to-ast (list v1 v2)))]
+    [`(VecMinus ,v1 ,v2)
+      (egg-vec-op `vec-minus (map s-exp-to-ast (list v1 v2)))]
     [`(VecDiv ,v1 ,v2)
       (egg-vec-op `vec-div (map s-exp-to-ast (list v1 v2)))]
     [`(VecNeg ,v)

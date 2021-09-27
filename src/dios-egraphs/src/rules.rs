@@ -1,6 +1,7 @@
 use egg::{rewrite as rw, *};
 
 use itertools::Itertools;
+use ruler::{dios, Synthesizer};
 
 use crate::{
     binopsearcher::build_binop_or_zero_rule,
@@ -167,9 +168,9 @@ pub fn rules(no_ac: bool, no_vec: bool) -> Vec<Rewrite<VecLang, ()>> {
             build_unop_rule("sqrt", "VecSqrt"),
             build_unop_rule("sgn", "VecSgn"),
             build_binop_rule("/", "VecDiv"),
-            build_binop_or_zero_rule("+", "VecAdd"),
+            // build_binop_or_zero_rule("+", "VecAdd"),
             build_binop_or_zero_rule("*", "VecMul"),
-            build_binop_or_zero_rule("-", "VecMinus"),
+            // build_binop_or_zero_rule("-", "VecMinus"),
             build_mac_rule(),
         ]);
     } else {
@@ -185,5 +186,54 @@ pub fn rules(no_ac: bool, no_vec: bool) -> Vec<Rewrite<VecLang, ()>> {
             rw!("assoc-mul"; "(* (* ?a ?b) ?c)" => "(* ?a (* ?b ?c))"),
         ]);
     }
+
+    if true {
+        rules.extend(ruler_rules());
+    }
+
+    rules
+}
+
+fn ruler_rules() -> Vec<Rewrite<VecLang, ()>> {
+    let p = ruler::SynthParams {
+        seed: 0,
+        n_samples: 0,
+        chunk_size: 100000,
+        minimize: false,
+        no_constants_above_iter: 999999,
+        no_conditionals: false,
+        no_run_rewrites: false,
+        linear_cvec_matching: false,
+        outfile: "out.json".to_string(),
+        eqsat_node_limit: 300000,
+        eqsat_time_limit: 60,
+        important_cvec_offsets: 5,
+        str_int_variables: 1,
+        complete_cvec: false,
+        no_xor: false,
+        no_shift: false,
+        use_smt: false,
+        do_final_run: false,
+        // custom
+        rules_to_take: 2,
+        num_fuzz: 4,
+        iters: 2,
+        eqsat_iter_limit: 10,
+        vector_size: 2,
+        variables: 4,
+    };
+
+    let mut rules = vec![];
+
+    // start synthesizer
+    let syn = Synthesizer::<dios::VecLang>::new(p).run();
+    for eq in &syn.eqs {
+        eprintln!("{} <=> {}", eq.lhs, eq.rhs);
+        let lstr: Pattern<VecLang> = eq.lhs.to_string().parse().unwrap();
+        let rstr: Pattern<VecLang> = eq.rhs.to_string().parse().unwrap();
+        rules.push(rw!(format!("{}_lr", eq.name); { lstr.clone() } => { rstr.clone() }));
+        rules.push(rw!(format!("{}_rl", eq.name); { rstr } => { lstr }));
+    }
+
     rules
 }

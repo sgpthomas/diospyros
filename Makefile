@@ -4,7 +4,7 @@
 MK_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 # Default vector width of 4
-VEC_WIDTH := 4
+VEC_WIDTH := 2
 
 # By default, run one jobs
 MAKEFLAGS += --jobs=1

@@ -16,6 +16,9 @@ itertools = "0.9.0"
 clap = "2.33.2"
 lexpr = "0.2.5"
 libc = "0.2.98"
+ruler = { path = "/home/samthomas/Research/ruler"}
+log = "0.4"
+env_logger = { version = "0.7", default-features = false }
 
 [features]
 # For setting the vector width, default is 4
