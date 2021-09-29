@@ -174,7 +174,7 @@ pub fn build_litvec_rule() -> Rewrite<VecLang, ()> {
 
 pub fn rules(no_ac: bool, no_vec: bool) -> Vec<Rewrite<VecLang, ()>> {
     let mut rules: Vec<Rewrite<VecLang, ()>> = vec![
-        rw!("add-0"; "(+ 0 ?a)" => "?a"),
+        // rw!("add-0"; "(+ 0 ?a)" => "?a"),
         rw!("mul-0"; "(* 0 ?a)" => "0"),
         rw!("mul-1"; "(* 1 ?a)" => "?a"),
         rw!("div-1"; "(/ ?a 1)" => "?a"),
@@ -260,13 +260,13 @@ fn ruler_rules() -> Vec<Rewrite<VecLang, ()>> {
         use_smt: false,
         do_final_run: false,
         // custom
-        rules_to_take: 2,
+        rules_to_take: 0,
         num_fuzz: 4,
-        iters: 2,
+        iters: 4,
         eqsat_iter_limit: 10,
         vector_size: 2,
         variables: 4,
-        abs_timeout: 10,
+        abs_timeout: 500,
     };
 
     let mut rules = vec![];
