@@ -49,6 +49,49 @@ fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr
     }
 }
 
+fn report(runner: &Runner<VecLang, ()>) {
+    let search_time: f64 = runner.iterations.iter().map(|i| i.search_time).sum();
+    let apply_time: f64 = runner.iterations.iter().map(|i| i.apply_time).sum();
+    let rebuild_time: f64 = runner.iterations.iter().map(|i| i.rebuild_time).sum();
+    let total_time: f64 = runner.iterations.iter().map(|i| i.total_time).sum();
+
+    let iters = runner.iterations.len();
+    let rebuilds: usize = runner.iterations.iter().map(|i| i.n_rebuilds).sum();
+
+    let eg = &runner.egraph;
+    eprintln!("Runner report");
+    eprintln!("=============");
+    eprintln!("  Stop reason: {:?}", runner.stop_reason.as_ref().unwrap());
+    eprintln!("  Iterations: {}", iters);
+    eprintln!(
+        "  Egraph size: {} nodes, {} classes, {} memo",
+        eg.total_number_of_nodes(),
+        eg.number_of_classes(),
+        eg.total_size()
+    );
+    eprintln!(
+        "  Rebuilds: {}, {:.2} per iter",
+        rebuilds,
+        (rebuilds as f64) / (iters as f64)
+    );
+    eprintln!("  Total time: {}", total_time);
+    eprintln!(
+        "    Search:  ({:.2}) {}",
+        search_time / total_time,
+        search_time
+    );
+    eprintln!(
+        "    Apply:   ({:.2}) {}",
+        apply_time / total_time,
+        apply_time
+    );
+    eprintln!(
+        "    Rebuild: ({:.2}) {}",
+        rebuild_time / total_time,
+        rebuild_time
+    );
+}
+
 /// Run the rewrite rules over the input program and return the best (cost, program)
 pub fn run(
     prog: &RecExpr<VecLang>,
@@ -60,13 +103,15 @@ pub fn run(
     filter_applicable_rules(&mut rules, prog);
     let mut init_eg: EGraph = EGraph::new(());
     init_eg.add(VecLang::Num(0));
-    let runner = Runner::default()
+    let runner: Runner<VecLang, ()> = Runner::default()
         .with_egraph(init_eg)
         .with_expr(&prog)
         .with_node_limit(10_000_000)
         .with_time_limit(std::time::Duration::from_secs(timeout))
         .with_iter_limit(10_000)
         .run(&rules);
+
+    report(&runner);
 
     // print reason to STDERR.
     eprintln!(
@@ -221,6 +266,7 @@ fn ruler_rules() -> Vec<Rewrite<VecLang, ()>> {
         eqsat_iter_limit: 10,
         vector_size: 2,
         variables: 4,
+        abs_timeout: 10,
     };
 
     let mut rules = vec![];
@@ -229,10 +275,21 @@ fn ruler_rules() -> Vec<Rewrite<VecLang, ()>> {
     let syn = Synthesizer::<dios::VecLang>::new(p).run();
     for eq in &syn.eqs {
         eprintln!("{} <=> {}", eq.lhs, eq.rhs);
-        let lstr: Pattern<VecLang> = eq.lhs.to_string().parse().unwrap();
-        let rstr: Pattern<VecLang> = eq.rhs.to_string().parse().unwrap();
-        rules.push(rw!(format!("{}_lr", eq.name); { lstr.clone() } => { rstr.clone() }));
-        rules.push(rw!(format!("{}_rl", eq.name); { rstr } => { lstr }));
+        let lpat: Pattern<VecLang> = eq.lhs.to_string().parse().unwrap();
+        let rpat: Pattern<VecLang> = eq.rhs.to_string().parse().unwrap();
+
+        let left_vars = lpat.vars();
+        let right_vars = rpat.vars();
+
+        // if right vars are a subset of left vars, add the rule in this direction
+        if rpat.vars().iter().all(|x| left_vars.contains(x)) {
+            rules.push(rw!(format!("{}_lr", eq.name); { lpat.clone() } => { rpat.clone() }));
+        }
+
+        // if left vars are a subset of right vars, add the rule in the backward direction
+        if lpat.vars().iter().all(|x| right_vars.contains(x)) {
+            rules.push(rw!(format!("{}_rl", eq.name); { rpat } => { lpat }));
+        }
     }
 
     rules
