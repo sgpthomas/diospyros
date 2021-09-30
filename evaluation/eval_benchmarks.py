@@ -121,7 +121,7 @@ def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validati
         start_time = time.time()
         gen = sp.Popen(synth_cmd,
                        env=dict(os.environ, TIMEOUT=str(eq_sat_timeout)),
-                       stderr=log,
+                       # stderr=log,
                        stdout=log)
 
     # Start a thread to measure the memory usage.

@@ -19,6 +19,7 @@ libc = "0.2.98"
 ruler = { path = "../../../ruler" }
 log = "0.4"
 env_logger = { version = "0.7", default-features = false }
+json = "0.12"
 
 [features]
 # For setting the vector width, default is 4

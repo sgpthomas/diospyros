@@ -22,6 +22,8 @@ else ifneq ($(VEC_WIDTH),4)
 	$(error Bad vector width, currently 2, 4, or 8 supported)
 endif
 
+RULER_FLAGS := --num-fuzz 4 --iters 2 --variables 4 --eqsat-iter-limit 10 --vector-size 2 
+
 build: dios dios-example-gen dios-egraphs
 
 test: test-racket test-rust test-cdios
@@ -54,9 +56,15 @@ clean:
 %-out: %-params
 	$(MK_DIR)/dios-example-gen -w $(VEC_WIDTH) -b $* -p  $< -o $@
 
+.FORCE:
+
+# generate rules
+rules.json: .FORCE
+	RUST_LOG=info cargo run --manifest-path ../ruler/Cargo.toml --release --bin dios -- synth $(RULER_FLAGS) --outfile rules.json
+
 # Run egg rewriter
-%-out/res.rkt: %-out
-	cargo run $(CARGO_FLAGS) --manifest-path $(MK_DIR)/src/dios-egraphs/Cargo.toml $(EGG_BUILD_FLAGS) -- $</spec.rkt $(EGG_FLAGS)  > $@
+%-out/res.rkt: %-out rules.json
+	cargo run $(CARGO_FLAGS) --manifest-path $(MK_DIR)/src/dios-egraphs/Cargo.toml $(EGG_BUILD_FLAGS) -- $</spec.rkt $(EGG_FLAGS) --rules rules.json > $@
 
 # Backend code gen
 %-egg: %-out/res.rkt

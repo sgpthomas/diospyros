@@ -20,6 +20,12 @@ fn main() {
                 .long("no-vec")
                 .help("Disable vector rules"),
         )
+        .arg(
+            Arg::with_name("rules")
+                .long("rules")
+                .takes_value(true)
+                .help("Pass in a json file with rules"),
+        )
         .get_matches();
 
     use std::{env, fs};
@@ -43,6 +49,7 @@ fn main() {
     // Rules to disable flags
     let no_ac = matches.is_present("no-ac");
     let no_vec = matches.is_present("no-vec");
+    let ruleset = matches.value_of("rules");
 
     // Run rewriter
     eprintln!(
@@ -50,7 +57,7 @@ fn main() {
         timeout,
         config::vector_width()
     );
-    let (cost, best) = rules::run(&prog, timeout, no_ac, no_vec);
+    let (cost, best) = rules::run(&prog, timeout, no_ac, no_vec, ruleset);
 
     println!("{}", best.pretty(80)); /* Pretty print with width 80 */
     eprintln!("\nCost: {}", cost);

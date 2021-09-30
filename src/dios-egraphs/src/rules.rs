@@ -1,7 +1,6 @@
 use egg::{rewrite as rw, *};
 
 use itertools::Itertools;
-use ruler::{dios, Synthesizer};
 
 use crate::{
     binopsearcher::build_binop_or_zero_rule,
@@ -98,8 +97,9 @@ pub fn run(
     timeout: u64,
     no_ac: bool,
     no_vec: bool,
+    ruleset: Option<&str>,
 ) -> (f64, RecExpr<VecLang>) {
-    let mut rules = rules(no_ac, no_vec);
+    let mut rules = rules(no_ac, no_vec, ruleset);
     filter_applicable_rules(&mut rules, prog);
     let mut init_eg: EGraph = EGraph::new(());
     init_eg.add(VecLang::Num(0));
@@ -172,16 +172,16 @@ pub fn build_litvec_rule() -> Rewrite<VecLang, ()> {
         if is_all_same_memory_or_zero(&mem_vars))
 }
 
-pub fn rules(no_ac: bool, no_vec: bool) -> Vec<Rewrite<VecLang, ()>> {
+pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<VecLang, ()>> {
     let mut rules: Vec<Rewrite<VecLang, ()>> = vec![
         // rw!("add-0"; "(+ 0 ?a)" => "?a"),
-        rw!("mul-0"; "(* 0 ?a)" => "0"),
-        rw!("mul-1"; "(* 1 ?a)" => "?a"),
+        // rw!("mul-0"; "(* 0 ?a)" => "0"),
+        // rw!("mul-1"; "(* 1 ?a)" => "?a"),
         rw!("div-1"; "(/ ?a 1)" => "?a"),
-        rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
-        rw!("mul-1-inv"; "?a" => "(* 1 ?a)"),
+        // rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
+        // rw!("mul-1-inv"; "?a" => "(* 1 ?a)"),
         rw!("div-1-inv"; "?a" => "(/ ?a 1)"),
-        rw!("expand-zero-get"; "0" => "(Get 0 0)"),
+        // rw!("expand-zero-get"; "0" => "(Get 0 0)"),
         // Literal vectors, that use the same memory or no memory in every lane,
         // are cheaper
         build_litvec_rule(),
@@ -213,9 +213,9 @@ pub fn rules(no_ac: bool, no_vec: bool) -> Vec<Rewrite<VecLang, ()>> {
             build_unop_rule("sqrt", "VecSqrt"),
             build_unop_rule("sgn", "VecSgn"),
             build_binop_rule("/", "VecDiv"),
-            // build_binop_or_zero_rule("+", "VecAdd"),
+            build_binop_or_zero_rule("+", "VecAdd"),
             build_binop_or_zero_rule("*", "VecMul"),
-            // build_binop_or_zero_rule("-", "VecMinus"),
+            build_binop_or_zero_rule("-", "VecMinus"),
             build_mac_rule(),
         ]);
     } else {
@@ -232,63 +232,27 @@ pub fn rules(no_ac: bool, no_vec: bool) -> Vec<Rewrite<VecLang, ()>> {
         ]);
     }
 
-    if true {
-        rules.extend(ruler_rules());
+    if let Some(filename) = ruleset {
+        rules.extend(ruler_rules(filename));
     }
 
     rules
 }
 
-fn ruler_rules() -> Vec<Rewrite<VecLang, ()>> {
-    let p = ruler::SynthParams {
-        seed: 0,
-        n_samples: 0,
-        chunk_size: 100000,
-        minimize: false,
-        no_constants_above_iter: 999999,
-        no_conditionals: false,
-        no_run_rewrites: false,
-        linear_cvec_matching: false,
-        outfile: "out.json".to_string(),
-        eqsat_node_limit: 300000,
-        eqsat_time_limit: 60,
-        important_cvec_offsets: 5,
-        str_int_variables: 1,
-        complete_cvec: false,
-        no_xor: false,
-        no_shift: false,
-        use_smt: false,
-        do_final_run: false,
-        // custom
-        rules_to_take: 0,
-        num_fuzz: 4,
-        iters: 4,
-        eqsat_iter_limit: 10,
-        vector_size: 2,
-        variables: 4,
-        abs_timeout: 500,
-    };
+fn ruler_rules(filename: &str) -> Vec<Rewrite<VecLang, ()>> {
+    let contents = std::fs::read_to_string(filename).unwrap();
+    let data = json::parse(&contents).unwrap();
 
     let mut rules = vec![];
+    for (idx, eq) in data["eqs"].members().enumerate() {
+        let lpat: Pattern<VecLang> = eq["lhs"].as_str().unwrap().parse().unwrap();
+        let rpat: Pattern<VecLang> = eq["rhs"].as_str().unwrap().parse().unwrap();
 
-    // start synthesizer
-    let syn = Synthesizer::<dios::VecLang>::new(p).run();
-    for eq in &syn.eqs {
-        eprintln!("{} <=> {}", eq.lhs, eq.rhs);
-        let lpat: Pattern<VecLang> = eq.lhs.to_string().parse().unwrap();
-        let rpat: Pattern<VecLang> = eq.rhs.to_string().parse().unwrap();
-
-        let left_vars = lpat.vars();
-        let right_vars = rpat.vars();
-
-        // if right vars are a subset of left vars, add the rule in this direction
-        if rpat.vars().iter().all(|x| left_vars.contains(x)) {
-            rules.push(rw!(format!("{}_lr", eq.name); { lpat.clone() } => { rpat.clone() }));
-        }
-
-        // if left vars are a subset of right vars, add the rule in the backward direction
-        if lpat.vars().iter().all(|x| right_vars.contains(x)) {
-            rules.push(rw!(format!("{}_rl", eq.name); { rpat } => { lpat }));
+        if eq["bidirectional"].as_bool().unwrap() {
+            // we have to clone bc it is a bidirectional rule
+            rules.extend(rw!(format!("ruler_{}_lr", idx); { lpat.clone() } <=> { rpat.clone() }))
+        } else {
+            rules.push(rw!(format!("ruler_{}_lr", idx); { lpat } => { rpat }))
         }
     }
 
