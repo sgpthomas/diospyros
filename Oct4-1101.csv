@@ -1,0 +1,4 @@
+test-results/mat-mul/2x2_2x2_4r/compile-log.txt, 4.156000000000001
+test-results/2d-conv/3x3_2x2_4r/compile-log.txt, 26.175999999999988
+test-results/qr-decomp/3_4r/compile-log.txt
+test-results/q-prod/4r/compile-log.txt, 54.934999999999995

@@ -4,3 +4,6 @@
 [submodule "third-party/eigen/eigen"]
 	path = third-party/eigen/eigen
 	url = https://gitlab.com/libeigen/eigen.git
+[submodule "ruler"]
+	path = ruler
+	url = git@github.com:uwplse/ruler.git
