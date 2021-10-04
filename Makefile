@@ -61,7 +61,7 @@ rules.json:
 	RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth $(RULER_FLAGS) --outfile rules.json
 
 # Run egg rewriter
-%-out/res.rkt: %-out rules.json
+%-out/res.rkt: %-out
 	cargo run $(CARGO_FLAGS) --manifest-path $(MK_DIR)/src/dios-egraphs/Cargo.toml $(EGG_BUILD_FLAGS) -- $</spec.rkt $(EGG_FLAGS) --rules rules.json > $@
 
 # Backend code gen

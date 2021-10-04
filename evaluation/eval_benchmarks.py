@@ -13,6 +13,7 @@ import os
 import psutil
 import subprocess as sp
 import time
+import re
 
 from py_utils import *
 
@@ -121,7 +122,7 @@ def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validati
         start_time = time.time()
         gen = sp.Popen(synth_cmd,
                        env=dict(os.environ, TIMEOUT=str(eq_sat_timeout)),
-                       # stderr=log,
+                       stderr=log,
                        stdout=log)
 
     # Start a thread to measure the memory usage.
@@ -166,8 +167,12 @@ def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validati
 
         # Check for saturation
         saturated = ""
+        cost = ""
         with open(compile_log, 'r') as log:
-            saturated = "yes" if "Saturated" in log.read() else "no"
+            log_text = log.read()
+            saturated = "yes" if "Saturated" in log_text else "no"
+            match = re.search("Cost: ([0-9]+)", log_text)
+            cost = match.group(1)
 
         print("Synthesis and compilation finished in {:.1f} seconds using {:.1f} MB".format(
             elapsed_time,
@@ -177,6 +182,7 @@ def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validati
             'time': elapsed_time,
             'memory': memthread.maxmem,
             'saturated' : saturated,
+            'cost': cost
         }
 
     finally:

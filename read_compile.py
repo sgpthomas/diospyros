@@ -2,18 +2,17 @@
 
 import glob
 import sys
+import re
+import json
 
 def main():
     root = sys.argv[1]
-    for log in glob.glob(f"{root}/*/*/compile-log.txt"):
-        # print("Log:", log)
-        cost = [log]
+    for log in glob.glob(f"{root}/*/*/stats.json"):
         with open(log, "r") as f:
-            for line in f.readlines():
-                if "Cost" in line:
-                    cost.append(line.split(": ")[1].strip())
-                    # print(line)
-        print(", ".join(cost))
+            j = json.load(f)
+            cost = j["cost"]
+            time = j["time"]
+            print(f"{log}, {cost}, {time}")
 
 if __name__ == "__main__":
     main()
