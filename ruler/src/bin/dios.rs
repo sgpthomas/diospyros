@@ -663,6 +663,7 @@ impl SynthLanguage for VecLang {
                         // don't fold
                         // VecLang::Concat(x),
                         VecLang::VecAdd(x),
+                        VecLang::VecMul(x),
                         VecLang::VecMinus(x),
                     ]
                 })
