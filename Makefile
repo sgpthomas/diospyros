@@ -22,6 +22,7 @@ else ifneq ($(VEC_WIDTH),4)
 	$(error Bad vector width, currently 2, 4, or 8 supported)
 endif
 
+# EGG_FLAGS += --rules rules.json 
 RULER_FLAGS := --num-fuzz 8 --iters 2 --variables 2 --eqsat-iter-limit 4 --vector-size 2 
 
 build: dios dios-example-gen dios-egraphs
@@ -62,7 +63,7 @@ rules.json:
 
 # Run egg rewriter
 %-out/res.rkt: %-out
-	cargo run $(CARGO_FLAGS) --manifest-path $(MK_DIR)/src/dios-egraphs/Cargo.toml $(EGG_BUILD_FLAGS) -- $</spec.rkt $(EGG_FLAGS) --rules rules.json > $@
+	cargo run $(CARGO_FLAGS) --manifest-path $(MK_DIR)/src/dios-egraphs/Cargo.toml $(EGG_BUILD_FLAGS) -- $</spec.rkt $(EGG_FLAGS) > $@
 
 # Backend code gen
 %-egg: %-out/res.rkt

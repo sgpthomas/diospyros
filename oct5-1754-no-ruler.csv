@@ -1,0 +1,4 @@
+oct5-results/mat-mul/2x2_2x2_4r/stats.json, 4.156000000000001, 5.591784238815308
+oct5-results/2d-conv/3x3_2x2_4r/stats.json, 30.176, 1.2219886779785156
+oct5-results/qr-decomp/3_4r/stats.json, 117177.36, 17.28712248802185
+oct5-results/q-prod/4r/stats.json, 66.527, 1.4392504692077637

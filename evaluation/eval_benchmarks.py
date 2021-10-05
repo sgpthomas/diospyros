@@ -132,6 +132,8 @@ def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validati
     memthread = MemChecker(gen.pid)
     memthread.start()
 
+    ret = {}
+
     try:
         print("Running synthesis for {}, equality saturation timeout: {}".format(benchmark, eq_sat_timeout))
 
@@ -171,6 +173,7 @@ def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validati
     except Exception as e:
         print(e)
 
+    finally:
         # Check for saturation
         saturated = ""
         cost = ""
@@ -184,15 +187,15 @@ def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validati
             elapsed_time,
             memthread.maxmem / 10**6,
         ))
+
+        memthread.stop()
+
         return {
             'time': elapsed_time,
             'memory': memthread.maxmem,
             'saturated' : saturated,
             'cost': cost
         }
-
-    finally:
-        memthread.stop()
 
 def synthesize_benchmark(dir, benchmark, eq_sat_timeout, parameters, validation):
     """Call synthesis and write out data"""
