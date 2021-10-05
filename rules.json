@@ -5,7 +5,7 @@
     "variables": 4,
     "vector_size": 2,
     "abs_timeout": 120,
-    "iters": 1,
+    "iters": 2,
     "rules_to_take": 18446744073709551615,
     "chunk_size": 100000,
     "minimize": false,
@@ -15,29 +15,89 @@
     "linear_cvec_matching": false,
     "outfile": "rules.json",
     "eqsat_node_limit": 300000,
-    "eqsat_iter_limit": 3,
+    "eqsat_iter_limit": 2,
     "eqsat_time_limit": 60,
     "important_cvec_offsets": 5,
     "str_int_variables": 1,
     "complete_cvec": false,
     "no_xor": false,
     "no_shift": false,
-    "num_fuzz": 4,
+    "num_fuzz": 8,
     "use_smt": false,
     "do_final_run": false
   },
-  "time": 0.000943607,
-  "num_rules": 4,
+  "time": 6.418069062,
+  "num_rules": 20,
   "smt_unknown": 0,
   "eqs": [
+    {
+      "lhs": "(- (- ?a ?b) (- ?c ?d))",
+      "rhs": "(- (- ?d ?b) (- ?c ?a))",
+      "bidirectional": false
+    },
+    {
+      "lhs": "(+ (+ ?a ?b) (+ ?c ?d))",
+      "rhs": "(+ (+ ?a ?c) (+ ?b ?d))",
+      "bidirectional": false
+    },
+    {
+      "lhs": "(* (* ?a ?b) (* ?c ?d))",
+      "rhs": "(* (* ?c ?a) (* ?d ?b))",
+      "bidirectional": true
+    },
+    {
+      "lhs": "(- (+ ?a ?b) (+ ?c ?d))",
+      "rhs": "(+ ?a (- ?b (+ ?c ?d)))",
+      "bidirectional": true
+    },
+    {
+      "lhs": "(- (- ?a ?b) (+ ?c ?d))",
+      "rhs": "(- (- ?a (+ ?b ?c)) ?d)",
+      "bidirectional": true
+    },
+    {
+      "lhs": "(* (- ?a ?b) (- ?c ?d))",
+      "rhs": "(* (- ?b ?a) (- ?d ?c))",
+      "bidirectional": false
+    },
+    {
+      "lhs": "(+ (- ?a ?b) (- ?c ?d))",
+      "rhs": "(+ (- ?c ?b) (- ?a ?d))",
+      "bidirectional": false
+    },
+    {
+      "lhs": "(+ ?a (+ ?b (- ?c ?d)))",
+      "rhs": "(+ ?c (+ ?a (- ?b ?d)))",
+      "bidirectional": true
+    },
+    {
+      "lhs": "(- (* ?a ?b) (* ?b ?c))",
+      "rhs": "(* ?b (- ?a ?c))",
+      "bidirectional": true
+    },
+    {
+      "lhs": "(+ (* ?a ?b) (* ?a ?c))",
+      "rhs": "(* ?a (+ ?b ?c))",
+      "bidirectional": true
+    },
+    {
+      "lhs": "(* ?a ?b)",
+      "rhs": "(* ?b ?a)",
+      "bidirectional": false
+    },
     {
       "lhs": "(+ ?a ?b)",
       "rhs": "(+ ?b ?a)",
       "bidirectional": false
     },
     {
-      "lhs": "?a",
-      "rhs": "(+ 0 ?a)",
+      "lhs": "(- (* ?a ?a) (* ?b ?b))",
+      "rhs": "(* (- ?a ?b) (+ ?a ?b))",
+      "bidirectional": true
+    },
+    {
+      "lhs": "(- (* ?a ?b) ?b)",
+      "rhs": "(* ?b (+ ?a -1))",
       "bidirectional": true
     },
     {
@@ -48,6 +108,26 @@
     {
       "lhs": "?a",
       "rhs": "(- ?a 0)",
+      "bidirectional": true
+    },
+    {
+      "lhs": "?a",
+      "rhs": "(* 1 ?a)",
+      "bidirectional": true
+    },
+    {
+      "lhs": "?a",
+      "rhs": "(+ 0 ?a)",
+      "bidirectional": true
+    },
+    {
+      "lhs": "(* 0 ?a)",
+      "rhs": "0",
+      "bidirectional": false
+    },
+    {
+      "lhs": "(+ (* ?a ?a) -1)",
+      "rhs": "(* (+ 1 ?a) (+ ?a -1))",
       "bidirectional": true
     }
   ]

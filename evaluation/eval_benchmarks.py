@@ -89,20 +89,23 @@ def params_to_name(benchmark, params):
 
 def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validation):
     # Call example-gen, AKA symbolic execution and equality saturation.
-    sp.check_call([
-        "rm",
-        "-rf",
-        "{}-out/".format(benchmark)])
-    sp.check_call([
-        "mkdir",
-        "{}-out/".format(benchmark)])
-    sp.check_call([
-        "cp",
-        params_f,
-        "{}-params".format(benchmark)])
-    sp.check_call([
-        "cat",
-        params_f,])
+    try:
+        sp.check_call([
+            "rm",
+            "-rf",
+            "{}-out/".format(benchmark)])
+        sp.check_call([
+            "mkdir",
+            "{}-out/".format(benchmark)])
+        sp.check_call([
+            "cp",
+            params_f,
+            "{}-params".format(benchmark)])
+        sp.check_call([
+            "cat",
+            params_f,])
+    except Exception as e:
+        print(e)
 
     synth_cmd = [
         "make",
@@ -165,13 +168,16 @@ def call_synth_with_timeout(benchmark, params_f, p_dir, eq_sat_timeout, validati
             "{}-out/res.rkt".format(benchmark),
             "{}/res.rkt".format(p_dir)])
 
+    except Exception as e:
+        print(e)
+
         # Check for saturation
         saturated = ""
         cost = ""
         with open(compile_log, 'r') as log:
             log_text = log.read()
             saturated = "yes" if "Saturated" in log_text else "no"
-            match = re.search("Cost: ([0-9]+)", log_text)
+            match = re.search("Cost: ([0-9]+\.[0-9]*)", log_text)
             cost = match.group(1)
 
         print("Synthesis and compilation finished in {:.1f} seconds using {:.1f} MB".format(
