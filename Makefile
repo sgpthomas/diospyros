@@ -22,7 +22,7 @@ else ifneq ($(VEC_WIDTH),4)
 	$(error Bad vector width, currently 2, 4, or 8 supported)
 endif
 
-# EGG_FLAGS += --rules rules.json 
+EGG_FLAGS += --rules rules.json 
 RULER_FLAGS := --num-fuzz 8 --iters 2 --variables 2 --eqsat-iter-limit 4 --vector-size 2 
 
 build: dios dios-example-gen dios-egraphs
