@@ -637,11 +637,11 @@ impl SynthLanguage for VecLang {
                     .map(|x| {
                         vec![
                             VecLang::Add(x),
-                            VecLang::Minus(x),
+                            // VecLang::Minus(x),
                             VecLang::Mul(x),
                             // VecLang::Div(x),
-                            VecLang::Or(x),
-                            VecLang::And(x),
+                            // VecLang::Or(x),
+                            // VecLang::And(x),
                             // VecLang::Ite(x),
                             // VecLang::Lt(x),
                         ]
@@ -664,7 +664,7 @@ impl SynthLanguage for VecLang {
                         // VecLang::Concat(x),
                         VecLang::VecAdd(x),
                         VecLang::VecMul(x),
-                        VecLang::VecMinus(x),
+                        // VecLang::VecMinus(x),
                     ]
                 })
                 .flatten();

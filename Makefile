@@ -23,7 +23,8 @@ else ifneq ($(VEC_WIDTH),4)
 endif
 
 EGG_FLAGS += --rules rules.json 
-RULER_FLAGS := --num-fuzz 8 --iters 2 --variables 2 --eqsat-iter-limit 4 --vector-size 2 
+RULER_FLAGS := --num-fuzz 4 --iters 2 --variables 4 --eqsat-iter-limit 2 --vector-size 2
+RULER_FLAGS += --abs-timeout 240 # --rules-to-take 5
 
 build: dios dios-example-gen dios-egraphs
 

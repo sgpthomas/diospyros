@@ -1,6 +1,8 @@
+#!/usr/bin/env sh
+
 set -x
 
-ADDR=3.143.217.40
+ADDR=$1
 
 # some other commands
 dir=diospyros

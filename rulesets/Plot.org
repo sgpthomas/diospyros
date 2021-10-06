@@ -1,0 +1,80 @@
+#+title: Test Plotting with Python and Org
+
+* Rules to Take Ablation
+
+#+name: rulesToTake
+| Rules to Take | # Rules | Time |
+|---------------+---------+------|
+|             1 |     130 |  120 |
+|             2 |     120 |   85 |
+|             3 |     115 |   54 |
+|             4 |     117 |   45 |
+|             5 |     123 |   59 |
+|             6 |     131 |   49 |
+|             7 |     127 |   39 |
+|             8 |     131 |   43 |
+|             9 |     133 |   36 |
+|            10 |     130 |   35 |
+|           inf |     157 | 15.5 |
+
+
+#+begin_src python :results file :exports results :var data=rulesToTake :sesson test
+import matplotlib.pyplot as plt
+import numpy as np
+
+'''If you have formatting lines on your table
+(http://orgmode.org/manual/Column-groups.html) you need to remove them
+"by hand" with a line like:
+
+data = data[2:]
+'''
+
+'''Turn the table data into x and y data'''
+rules_to_take = [a[0] for a in data]
+n_rules = [a[1] for a in data]
+time = [a[2] for a in data]
+
+''' Set the x and y labels on the graph '''
+plt.ylabel("Rules to take")
+
+''' Create the legend '''
+rules_pos = [i for i, _ in enumerate(rules_to_take)]
+
+N = len(rules_to_take)
+ind = np.arange(N) 
+width = 0.35       
+
+plt.bar(ind, n_rules, width, label="# Rules")
+plt.bar(ind + width, time, width, label="Time")
+plt.xticks(ind + width / 2, rules_to_take)
+plt.legend(loc='best')
+# plt.bar(rules_to_take, n_rules, color='green')
+
+''' Save the PNG file '''
+filename = "mySweetPlot.png"
+plt.savefig(filename)
+
+''' Return the PNG file path to OrgMode '''
+return(filename)
+#+end_src
+
+#+RESULTS:
+[[file:mySweetPlot.png]]
+
+* How do Ruler rules perform?
+
+#+NAME: rulerRules
+| Bench    | Use dios rules? | # Ruler rules | Ruleset | Timelimit |         Cost |
+|----------+-----------------+---------------+---------+-----------+--------------|
+| conv2d   | f               |           115 | 3       |        10 | too much mem |
+| qprod    | f               |           115 | 3       |        10 | too much mem |
+| qrdecomp | f               |           115 | 3       |        10 |   162710.465 |
+| qrdecomp | t               |             0 | 3       |        10 |    117177.36 |
+| qrdecomp | t               |           115 | 3       |        10 |       killed |
+| qrdecomp | f               |            63 | var4    |        10 |   149679.465 |
+| qrdecomp | f               |            63 | var4    |        40 |   149679.465 |
+| qrdecomp | f               |            63 | var4    |        60 |   149679.465 |
+| qrdecomp | f               |            63 | var4    |        80 |       killed |
+| qrdecomp | f               |            63 | var4    |        70 |   149679.465 |
+| qrdecomp | t               |            63 | var4    |        70 |   149679.465 |
+
