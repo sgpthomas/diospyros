@@ -6,7 +6,7 @@
     "vector_size": 2,
     "abs_timeout": 240,
     "iters": 2,
-    "rules_to_take": 4,
+    "rules_to_take": 1,
     "chunk_size": 100000,
     "minimize": false,
     "no_constants_above_iter": 999999,
@@ -26,24 +26,24 @@
     "use_smt": false,
     "do_final_run": false
   },
-  "time": 64.419810083,
+  "time": 239.399888399,
   "num_rules": 18,
   "smt_unknown": 0,
   "eqs": [
     {
       "lhs": "(VecMul (VecMul ?a ?b) (VecMul ?c ?d))",
-      "rhs": "(VecMul (VecMul ?a ?c) (VecMul ?b ?d))",
-      "bidirectional": false
+      "rhs": "(VecMul (VecMul ?d ?a) (VecMul ?c ?b))",
+      "bidirectional": true
     },
     {
       "lhs": "(VecAdd (VecAdd ?a ?b) (VecAdd ?c ?d))",
-      "rhs": "(VecAdd (VecAdd ?a ?c) (VecAdd ?b ?d))",
+      "rhs": "(VecAdd (VecAdd ?a ?d) (VecAdd ?c ?b))",
       "bidirectional": false
     },
     {
       "lhs": "(+ (+ ?a ?b) (+ ?c ?d))",
-      "rhs": "(+ (+ ?c ?a) (+ ?b ?d))",
-      "bidirectional": true
+      "rhs": "(+ (+ ?a ?d) (+ ?c ?b))",
+      "bidirectional": false
     },
     {
       "lhs": "(* (* ?a ?b) (* ?c ?d))",
@@ -67,17 +67,17 @@
     },
     {
       "lhs": "(VecMul ?a (VecMul ?b ?c))",
-      "rhs": "(VecMul ?b (VecMul ?a ?c))",
-      "bidirectional": false
+      "rhs": "(VecMul (VecMul ?a ?c) ?b)",
+      "bidirectional": true
     },
     {
       "lhs": "(VecAdd ?a (VecAdd ?b ?c))",
-      "rhs": "(VecAdd ?b (VecAdd ?a ?c))",
-      "bidirectional": false
+      "rhs": "(VecAdd (VecAdd ?c ?a) ?b)",
+      "bidirectional": true
     },
     {
-      "lhs": "(VecMul ?a (VecAdd ?b ?c))",
-      "rhs": "(VecAdd (VecMul ?a ?b) (VecMul ?a ?c))",
+      "lhs": "(VecMul (VecAdd ?a ?b) ?c)",
+      "rhs": "(VecAdd (VecMul ?c ?b) (VecMul ?c ?a))",
       "bidirectional": true
     },
     {
@@ -107,7 +107,7 @@
     },
     {
       "lhs": "?a",
-      "rhs": "(+ 0 ?a)",
+      "rhs": "(+ ?a 0)",
       "bidirectional": true
     },
     {
@@ -116,7 +116,7 @@
       "bidirectional": true
     },
     {
-      "lhs": "(* 0 ?a)",
+      "lhs": "(* ?a 0)",
       "rhs": "0",
       "bidirectional": false
     }

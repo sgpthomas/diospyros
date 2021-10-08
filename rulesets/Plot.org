@@ -3,22 +3,34 @@
 * Rules to Take Ablation
 
 #+name: rulesToTake
-| Rules to Take | # Rules | Time |
-|---------------+---------+------|
-|             1 |     130 |  120 |
-|             2 |     120 |   85 |
-|             3 |     115 |   54 |
-|             4 |     117 |   45 |
-|             5 |     123 |   59 |
-|             6 |     131 |   49 |
-|             7 |     127 |   39 |
-|             8 |     131 |   43 |
-|             9 |     133 |   36 |
-|            10 |     130 |   35 |
-|           inf |     157 | 15.5 |
+| Rules to Take | # Rules | Time | Iter |
+|---------------+---------+------+------|
+|             1 |     130 |  120 |    2 |
+|             2 |     120 |   85 |    2 |
+|             3 |     115 |   54 |    2 |
+|             4 |     117 |   45 |    2 |
+|             5 |     123 |   59 |    2 |
+|             6 |     131 |   49 |    2 |
+|             7 |     127 |   39 |    2 |
+|             8 |     131 |   43 |    2 |
+|             9 |     133 |   36 |    2 |
+|            10 |     130 |   35 |    2 |
+|           inf |     157 | 15.5 |    2 |
+
+TODO: track memory usage (iso add uses waaaay less memory)
+
+#+name: isoRulesToTake
+| Rules to take | # Rules | Time | Iter |
+|---------------+---------+------+------|
+|             1 |      18 |  240 |    2 |
+|             2 |      18 |  114 |    2 |
+|             4 |      18 |   64 |    2 |
+|             7 |      18 |   64 |    2 |
+|            10 |      18 |   94 |    2 |
+|           inf |      27 |   26 |    2 |
 
 
-#+begin_src python :results file :exports results :var data=rulesToTake :sesson test
+#+begin_src python :results file :exports results :var data=isoRulesToTake :sesson test
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -64,17 +76,645 @@ return(filename)
 * How do Ruler rules perform?
 
 #+NAME: rulerRules
-| Bench    | Use dios rules? | # Ruler rules | Ruleset | Timelimit |         Cost |
-|----------+-----------------+---------------+---------+-----------+--------------|
-| conv2d   | f               |           115 | 3       |        10 | too much mem |
-| qprod    | f               |           115 | 3       |        10 | too much mem |
-| qrdecomp | f               |           115 | 3       |        10 |   162710.465 |
-| qrdecomp | t               |             0 | 3       |        10 |    117177.36 |
-| qrdecomp | t               |           115 | 3       |        10 |       killed |
-| qrdecomp | f               |            63 | var4    |        10 |   149679.465 |
-| qrdecomp | f               |            63 | var4    |        40 |   149679.465 |
-| qrdecomp | f               |            63 | var4    |        60 |   149679.465 |
-| qrdecomp | f               |            63 | var4    |        80 |       killed |
-| qrdecomp | f               |            63 | var4    |        70 |   149679.465 |
-| qrdecomp | t               |            63 | var4    |        70 |   149679.465 |
+| Bench    | Use dios rules? | # Ruler rules | Ruleset  | Timelimit |               Cost |
+|----------+-----------------+---------------+----------+-----------+--------------------|
+| conv2d   | f               |           115 | 3        |        10 |             killed |
+| qprod    | f               |           115 | 3        |        10 |             killed |
+| qrdecomp | f               |           115 | 3        |        10 |         162710.465 |
+| qrdecomp | t               |             0 | 3        |        10 |          117177.36 |
+| qrdecomp | t               |           115 | 3        |        10 |             killed |
+| qrdecomp | f               |            63 | var4     |        10 |         149679.465 |
+| qrdecomp | f               |            63 | var4     |        40 |         149679.465 |
+| qrdecomp | f               |            63 | var4     |        60 |         149679.465 |
+| qrdecomp | f               |            63 | var4     |        80 |             killed |
+| qrdecomp | f               |            63 | var4     |        70 |         149679.465 |
+| qrdecomp | t               |            63 | var4     |        70 |         149679.465 |
+| qrdecomp | t               |            18 | iso-var4 |        10 |         163589.469 |
+| qrdecomp | f               |            18 | iso-var4 |        10 |         163590.465 |
+| qrdecomp | f               |            18 | iso-var4 |       120 |             killed |
+| qrdecomp | f               |            18 | iso-var4 |        70 |         163589.469 |
+| qrdecomp | f               |            18 | iso-var4 |        90 |             killed |
+| qrdecomp | f               |            18 | iso-var4 |        80 | 163589.46999999997 |
+|          |                 |               |          |           |                    |
 
+* More rigorous =rules-to-take= ablation
+:PROPERTIES:
+:header-args: :dir (magit-toplevel) :results output list :var SERVER="18.217.40.81"
+:END:
+
+** Launch an EC2 Instance
+
+- Press =SPC a d=
+- Launch a machine with ~64 gbs of ram
+- Copy the IP address into the properties drawer above
+
+** Sync diospyros
+
+#+begin_src shell
+rsync -rv \
+      --exclude=.git \
+      --exclude=target \
+      --exclude='*-results' \
+      --exclude=rulesets \
+      . "ubuntu@$SERVER:~/diospyros/"
+#+end_src
+
+#+RESULTS:
+#+begin_example
+- sending incremental file list
+- .gitignore
+- .gitmodules
+- 2d-conv-params
+- LICENSE
+- Makefile
+- Oct4-1101.csv
+- Oct4-1112.csv
+- README.md
+- ablation.sh
+- cdios.py
+- dios
+- dios-example-gen
+- mat-mul-params
+- oct5-1737.csv
+- oct5-1754-no-ruler.csv
+- oct5-1807-ruler.csv
+- out.json
+- q-prod-params
+- qr-decomp-params
+- read_compile.py
+- rules.json
+- runt.toml
+- setup.py
+- sync.sh
+- cdios-tests/2d-2d-conv.c
+- cdios-tests/2d-2d-conv.expect
+- cdios-tests/2d-conv.c
+- cdios-tests/2d-conv.expect
+- cdios-tests/2d-matrix-multiply.c
+- cdios-tests/2d-matrix-multiply.expect
+- cdios-tests/break-w.c
+- cdios-tests/break-w.expect
+- cdios-tests/break.c
+- cdios-tests/break.expect
+- cdios-tests/continue-w.c
+- cdios-tests/continue-w.expect
+- cdios-tests/continue.c
+- cdios-tests/continue.expect
+- cdios-tests/cube.c
+- cdios-tests/cube.expect
+- cdios-tests/error-for-update-missing.c
+- cdios-tests/error-for-update-missing.expect
+- cdios-tests/error-for-update.c
+- cdios-tests/error-for-update.expect
+- cdios-tests/error-gcc.c
+- cdios-tests/error-gcc.expect
+- cdios-tests/fft.c
+- cdios-tests/fft.expect
+- cdios-tests/if-else.c
+- cdios-tests/if-else.expect
+- cdios-tests/matrix-multiply.c
+- cdios-tests/matrix-multiply.expect
+- cdios-tests/multi-mat-mul.c
+- cdios-tests/multi-mat-mul.expect
+- cdios-tests/point-product.c
+- cdios-tests/point-product.expect
+- cdios-tests/return.c
+- cdios-tests/return.expect
+- cdios-tests/scalar.c
+- cdios-tests/scalar.expect
+- cdios-tests/sqrt.c
+- cdios-tests/sqrt.expect
+- cdios-tests/stencil-2d.c
+- cdios-tests/stencil-2d.expect
+- cdios-tests/ternary.c
+- cdios-tests/ternary.expect
+- demo/Makefile
+- demo/README.md
+- demo/src-completed/completed_example.c
+- demo/src-completed/kernel.c
+- demo/src-completed/transpose_and_multiply.c
+- demo/src-completed/transpose_and_multiply.h
+- demo/src/example.c
+- evaluation/README.md
+- evaluation/asplos_parameters.json
+- evaluation/benchmarks.csv
+- evaluation/benchtbl.py
+- evaluation/chart_benchmarks.py
+- evaluation/eval_benchmarks.py
+- evaluation/no_vec_ablation.py
+- evaluation/py_utils.py
+- evaluation/readme.tex
+- evaluation/shared.mk
+- evaluation/2d-conv/Makefile
+- evaluation/2d-conv/harness.c
+- evaluation/__pycache__/py_utils.cpython-39.pyc
+- evaluation/ablation/Makefile
+- evaluation/ablation/ablation-exp-gen.py
+- evaluation/ablation/ablation_chart.py
+- evaluation/ablation/harness.c
+- evaluation/ablation/run_all.sh
+- evaluation/ablation/nature/Makefile
+- evaluation/ablation/nature/harness.c
+- evaluation/ablation/params/mat-mul-large
+- evaluation/mat-mul/Makefile
+- evaluation/mat-mul/harness.c
+- evaluation/q-prod/Makefile
+- evaluation/q-prod/README
+- evaluation/q-prod/diospyros_test.cpp
+- evaluation/q-prod/egg-kernel.c
+- evaluation/q-prod/harness.c
+- evaluation/q-prod/quaternion_product.cpp
+- evaluation/q-prod/quaternion_product.h
+- evaluation/qr-decomp/Makefile
+- evaluation/qr-decomp/egg-kernel-partial-vec.c
+- evaluation/qr-decomp/egg-kernel.c
+- evaluation/qr-decomp/harness.c
+- evaluation/src/utils.h
+- evaluation/theia/.gitignore
+- evaluation/theia/Makefile
+- evaluation/theia/decompose-projection-matrix.cpp
+- evaluation/theia/dios_rq_decomposition.h
+- evaluation/theia/dpmresults.py
+- evaluation/theia/rq_decomposition.h
+- misc/shuf_patterns.py
+- qr-decomp-out/outputs.rkt
+- qr-decomp-out/prelude.rkt
+- qr-decomp-out/spec.rkt
+- ruler/.gitignore
+- ruler/Cargo.lock
+- ruler/Cargo.toml
+- ruler/README.md
+- ruler/dios_rules.md
+- ruler/exp.org
+- ruler/launch_ec2.sh
+- ruler/out.json
+- ruler/rules.json
+- ruler/.cargo/config
+- ruler/scripts/add-arrows.py
+- ruler/scripts/eval.sh
+- ruler/scripts/print-rules.py
+- ruler/scripts/ablation/ablation.sh
+- ruler/scripts/ablation/parse.js
+- ruler/scripts/ablation/run.sh
+- ruler/scripts/ablation/run_ruler.sh
+- ruler/scripts/ablation/run_ruler_rr.sh
+- ruler/scripts/ablation/visualize.py
+- ruler/scripts/ablation/submitted-data/compare/10-run.tar.gz
+- ruler/scripts/ablation/submitted-data/compare/parsed.json
+- ruler/scripts/ablation/submitted-data/no-rr/parsed.json
+- ruler/scripts/ablation/submitted-plots/10-run/by-domain-phase-times.pdf
+- ruler/scripts/ablation/submitted-plots/10-run/parsed.json
+- ruler/scripts/ablation/submitted-plots/10-run/bv32/by-config-rules-learned.pdf
+- ruler/scripts/ablation/submitted-plots/10-run/bv4/by-config-rules-learned.pdf
+- ruler/scripts/ablation/submitted-plots/10-run/rat/by-config-rules-learned.pdf
+- ruler/scripts/ablation/submitted-plots/orat-rr/parsed.json
+- ruler/scripts/ablation/submitted-plots/orat-rr/bv32/run-rewrites.pdf
+- ruler/scripts/ablation/submitted-plots/orat-rr/bv4/run-rewrites.pdf
+- ruler/scripts/ablation/submitted-plots/orat-rr/rats/run-rewrites-timeout.pdf
+- ruler/scripts/cvc4-eval/Makefile
+- ruler/scripts/cvc4-eval/compare.py
+- ruler/scripts/cvc4-eval/cvc4/bool-2vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bool-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bool-4vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv32-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv4-2vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv4-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv4ns-2vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv4ns-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/str-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/str-4vars.sy
+- ruler/scripts/eqsat-sound/aggregate.sh
+- ruler/scripts/eqsat-sound/derivation.sh
+- ruler/scripts/eqsat-sound/eqsat-soundness.sh
+- ruler/scripts/eqsat-sound/postpass.sh
+- ruler/scripts/eqsat-sound/tabulate.py
+- ruler/scripts/herbie-rational/filter.rkt
+- ruler/scripts/herbie-rational/herbie-eval.sh
+- ruler/scripts/herbie-rational/preprocess.py
+- ruler/scripts/herbie-rational/seed-stats-per-test.sh
+- ruler/scripts/herbie-rational/seed-variance.sh
+- ruler/scripts/herbie-rational/plots/config-all-tests-box-plot.py
+- ruler/scripts/herbie-rational/plots/config-per-test-bar.py
+- ruler/scripts/herbie-rational/plots/config-per-test-box-plot.py
+- ruler/scripts/herbie-rational/plots/plot-results.sh
+- ruler/src/bv.rs
+- ruler/src/convert_sexp.rs
+- ruler/src/derive.rs
+- ruler/src/equality.rs
+- ruler/src/lib.rs
+- ruler/src/util.rs
+- ruler/src/bin/bigint.rs
+- ruler/src/bin/bool.rs
+- ruler/src/bin/bv16.rs
+- ruler/src/bin/bv32.rs
+- ruler/src/bin/bv4.rs
+- ruler/src/bin/bv8.rs
+- ruler/src/bin/dios.rs
+- ruler/src/bin/float.rs
+- ruler/src/bin/rational-new-div.rs
+- ruler/src/bin/rational.rs
+- ruler/src/bin/str.rs
+- src/ast.rkt
+- src/c-ast.rkt
+- src/c-meta.rkt
+- src/compile-passes.rkt
+- src/compiler.rkt
+- src/configuration.rkt
+- src/dsp-insts.rkt
+- src/egg-ast.rkt
+- src/egg-to-dios-dsl.rkt
+- src/example-gen.rkt
+- src/interp.rkt
+- src/main.rkt
+- src/prog-sketch.rkt
+- src/register-allocation-pass.rkt
+- src/shuffle-truncation-pass.rkt
+- src/translation-validation.rkt
+- src/uninterp-fns.rkt
+- src/utils.rkt
+- src/backend/backend-utils.rkt
+- src/backend/tensilica-g3.rkt
+- src/dios-egraphs/Cargo.lock
+- src/dios-egraphs/Cargo.toml
+- src/dios-egraphs/common.py
+- src/dios-egraphs/Diospyros/Cargo.toml
+- src/dios-egraphs/Diospyros/README.md
+- src/dios-egraphs/Diospyros/a.c
+- src/dios-egraphs/Diospyros/build.rs
+- src/dios-egraphs/Diospyros/diospyros.cpp
+- src/dios-egraphs/Diospyros/mult.c
+- src/dios-egraphs/Diospyros/src/lib.rs
+- src/dios-egraphs/Diospyros/src/main.rs
+- src/dios-egraphs/src/binopsearcher.rs
+- src/dios-egraphs/src/config.rs
+- src/dios-egraphs/src/cost.rs
+- src/dios-egraphs/src/lib.rs
+- src/dios-egraphs/src/macsearcher.rs
+- src/dios-egraphs/src/main.rs
+- src/dios-egraphs/src/rewriteconcats.rs
+- src/dios-egraphs/src/rules.rs
+- src/dios-egraphs/src/searchutils.rs
+- src/dios-egraphs/src/stringconversion.rs
+- src/dios-egraphs/src/veclang.rs
+- src/examples/2d-conv.rkt
+- src/examples/matrix-multiply.rkt
+- src/examples/q-prod.rkt
+- src/examples/qr-decomp.rkt
+- utils/.gitignore
+- utils/Makefile
+- utils/README.md
+- utils/arguments.py
+- utils/build.py
+- utils/diospyros.py
+- utils/eigen.py
+- utils/manifest.py
+- utils/source.py
+- utils/test.py
+- utils/utils.py
+- utils/experiments/matrix_multiply/designsweep.py
+- utils/experiments/matrix_multiply/pretty_print.py
+- utils/generators/matrix_multiply.py
+- utils/sample/spec/MatMult6x6x6x6.c
+- utils/sample/spec/diospyros.json
+- web-demo/README.md
+- web-demo/predicated-acc.c
+- web-demo/scalar-harness.c
+- web-demo/serve.py
+- web-demo/synth-harness.c
+- web-demo/vec_norm.c
+- web-demo/frontend/.gitignore
+- web-demo/frontend/Makefile
+- web-demo/frontend/README.md
+- web-demo/frontend/config.toml
+- web-demo/frontend/content/_index.md
+- web-demo/frontend/custom-js/examples.js
+- web-demo/frontend/custom-js/index.js
+- web-demo/frontend/custom-js/package.json
+- web-demo/frontend/custom-js/yarn.lock
+- web-demo/frontend/layouts/index.html
+- web-demo/frontend/layouts/partials/footer.html
+- web-demo/frontend/layouts/partials/head.html
+- web-demo/frontend/layouts/partials/nav.html
+- web-demo/frontend/static/.gitkeep
+- web-demo/frontend/static/css/editor.css
+- web-demo/frontend/static/files/futil-short.pdf
+- web-demo/frontend/static/img/dahlia-logo-small.png
+- web-demo/frontend/static/img/dahlia-logo.png
+- web-demo/frontend/static/js/.gitkeep
+- sent 101,576 bytes  received 125,364 bytes  90,776.00 bytes/sec
+- total size is 49,518,778  speedup is 218.20
+#+end_example
+
+
+** Ablation
+:PROPERTIES:
+:header-args: :dir "/ssh:ubuntu@18.217.40.81:~/diospyros" :results output list
+:END:
+
+*** Study 1
+
+Parameters:
+- =variables: 4=
+- =no vec-add iso rule=
+
+Run the [[file:ablation.sh][ablation.sh]] script in the background on the server. Change the IP address to be the relevant server.
+
+#+begin_src bash
+nohup ./ablation.sh var4-no-iso &
+#+end_src
+
+#+RESULTS:
+: 
+
+Look at the output:
+
+#+begin_src sh :results output verbatim
+# cat nohup.out
+tail rulesets/var4-no-iso/stderr.log
+#+end_src
+
+#+RESULTS:
+#+begin_example
+(VecMul ?a (VecAdd ?b ?c)) <=> (VecAdd (VecMul ?a ?c) (VecMul ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(VecMul ?a ?b) <=> (VecMul ?b ?a)
+(VecAdd ?a ?b) <=> (VecAdd ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (* 1 ?a)
+?a <=> (+ 0 ?a)
+(* 0 ?a) => 0
+Learned 19 rules in 14.879831014
+#+end_example
+
+Check the generated ruleset files.
+
+#+begin_src sh
+ls rulesets/var4-no-iso
+#+end_src
+
+#+RESULTS:
+: - n-100-rules.json  n-35-rules.json  n-60-rules.json  n-8-rules.json
+: - n-10-rules.json   n-3-rules.json   n-65-rules.json  n-90-rules.json
+: - n-15-rules.json   n-40-rules.json  n-6-rules.json   n-95-rules.json
+: - n-1-rules.json	  n-45-rules.json  n-70-rules.json  n-9-rules.json
+: - n-20-rules.json   n-4-rules.json   n-75-rules.json  stderr.log
+: - n-25-rules.json   n-50-rules.json  n-7-rules.json   stdout.log
+: - n-2-rules.json	  n-55-rules.json  n-80-rules.json
+: - n-30-rules.json   n-5-rules.json   n-85-rules.json
+
+*** Data processing
+
+**** Copy files back over
+
+#+begin_src sh
+rsync -rv \
+      "ubuntu@$SERVER:~/diospyros/rulesets/var4-no-iso/*.json" \
+      rulesets/var4-no-iso/
+#+end_src
+
+#+RESULTS:
+#+begin_example
+- receiving incremental file list
+- n-1-rules.json
+- n-10-rules.json
+- n-100-rules.json
+- n-15-rules.json
+- n-2-rules.json
+- n-20-rules.json
+- n-25-rules.json
+- n-3-rules.json
+- n-30-rules.json
+- n-35-rules.json
+- n-4-rules.json
+- n-40-rules.json
+- n-45-rules.json
+- n-5-rules.json
+- n-50-rules.json
+- n-55-rules.json
+- n-6-rules.json
+- n-60-rules.json
+- n-65-rules.json
+- n-7-rules.json
+- n-70-rules.json
+- n-75-rules.json
+- n-8-rules.json
+- n-80-rules.json
+- n-85-rules.json
+- n-9-rules.json
+- n-90-rules.json
+- n-95-rules.json
+- sent 556 bytes  received 97,492 bytes  39,219.20 bytes/sec
+- total size is 95,481  speedup is 0.97
+#+end_example
+
+**** Links to JSON files
+#+NAME: filelink
+#+begin_src elisp :var files="" :results value
+(require 'dash)
+(--map (format "[[file:%s][%s]]\n"
+	       (car it)
+	       (car (last (string-split (car it)))))
+       files)
+#+end_src
+
+#+RESULTS: filelink
+
+#+NAME: rules-files
+#+begin_src sh :results table
+ls $PWD/rulesets/var4-no-iso/*
+#+end_src
+
+#+RESULTS: rules-files
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-100-rules.json |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-10-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-15-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-1-rules.json   |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-20-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-25-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-2-rules.json   |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-30-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-35-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-3-rules.json   |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-40-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-45-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-4-rules.json   |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-50-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-55-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-5-rules.json   |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-60-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-65-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-6-rules.json   |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-70-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-75-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-7-rules.json   |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-80-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-85-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-8-rules.json   |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-90-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-95-rules.json  |
+| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-9-rules.json   |
+
+Links to files:
+#+begin_src emacs-lisp :results value :var fs=rules-files :post filelink(files=*this*)
+fs
+#+end_src
+
+#+RESULTS:
+- [[file:./var4-no-iso/n-100-rules.json][n-100-rules.json]]
+- [[file:./var4-no-iso/n-10-rules.json][n-10-rules.json]]
+- [[file:./var4-no-iso/n-15-rules.json][n-15-rules.json]]
+- [[file:./var4-no-iso/n-1-rules.json][n-1-rules.json]]
+- [[file:./var4-no-iso/n-20-rules.json][n-20-rules.json]]
+- [[file:./var4-no-iso/n-25-rules.json][n-25-rules.json]]
+- [[file:./var4-no-iso/n-2-rules.json][n-2-rules.json]]
+- [[file:./var4-no-iso/n-30-rules.json][n-30-rules.json]]
+- [[file:./var4-no-iso/n-35-rules.json][n-35-rules.json]]
+- [[file:./var4-no-iso/n-3-rules.json][n-3-rules.json]]
+- [[file:./var4-no-iso/n-40-rules.json][n-40-rules.json]]
+- [[file:./var4-no-iso/n-45-rules.json][n-45-rules.json]]
+- [[file:./var4-no-iso/n-4-rules.json][n-4-rules.json]]
+- [[file:./var4-no-iso/n-50-rules.json][n-50-rules.json]]
+- [[file:./var4-no-iso/n-55-rules.json][n-55-rules.json]]
+- [[file:./var4-no-iso/n-5-rules.json][n-5-rules.json]]
+- [[file:./var4-no-iso/n-60-rules.json][n-60-rules.json]]
+- [[file:./var4-no-iso/n-65-rules.json][n-65-rules.json]]
+- [[file:./var4-no-iso/n-6-rules.json][n-6-rules.json]]
+- [[file:./var4-no-iso/n-70-rules.json][n-70-rules.json]]
+- [[file:./var4-no-iso/n-75-rules.json][n-75-rules.json]]
+- [[file:./var4-no-iso/n-7-rules.json][n-7-rules.json]]
+- [[file:./var4-no-iso/n-80-rules.json][n-80-rules.json]]
+- [[file:./var4-no-iso/n-85-rules.json][n-85-rules.json]]
+- [[file:./var4-no-iso/n-8-rules.json][n-8-rules.json]]
+- [[file:./var4-no-iso/n-90-rules.json][n-90-rules.json]]
+- [[file:./var4-no-iso/n-95-rules.json][n-95-rules.json]]
+- [[file:./var4-no-iso/n-9-rules.json][n-9-rules.json]]
+
+**** Scrape data from json files
+#+NAME: rule-data
+#+begin_src python :var fs=rules-files :results value table
+import json
+table = [["N", "Vars", "Vec Size", "Time", "Num Rules"]]
+table += [None]
+for f in fs:
+    with open(f[0], "r") as f:
+        j = json.load(f)
+        row = []
+        row.append(j["params"]["rules_to_take"])
+        row.append(j["params"]["variables"])
+        row.append(j["params"]["vector_size"])
+        row.append(j["time"])
+        row.append(j["num_rules"])
+        table.append(row)
+return table
+#+end_src
+
+#+RESULTS: rule-data
+|   N | Vars | Vec Size |          Time | Num Rules |
+|-----+------+----------+---------------+-----------|
+|   1 |    4 |        2 | 147.681476622 |       107 |
+|   2 |    4 |        2 |  119.67963924 |        19 |
+|   3 |    4 |        2 |  79.138159071 |        19 |
+|   4 |    4 |        2 |  64.584728276 |        19 |
+|   5 |    4 |        2 |  65.108601204 |        19 |
+|   6 |    4 |        2 |  19.283881524 |        19 |
+|   7 |    4 |        2 |  19.580199898 |        19 |
+|   8 |    4 |        2 |  58.803516416 |        19 |
+|   9 |    4 |        2 |  65.124658285 |        19 |
+|  10 |    4 |        2 |  134.74147279 |        19 |
+|  15 |    4 |        2 |   51.22335748 |        19 |
+|  20 |    4 |        2 |  51.184862974 |        19 |
+|  25 |    4 |        2 |   9.857465921 |        19 |
+|  30 |    4 |        2 |   9.859247944 |        19 |
+|  35 |    4 |        2 |   9.962592065 |        19 |
+|  40 |    4 |        2 |   9.982694353 |        19 |
+|  45 |    4 |        2 |  10.064010994 |        19 |
+|  50 |    4 |        2 |  10.154156085 |        19 |
+|  55 |    4 |        2 |  10.069690947 |        19 |
+|  60 |    4 |        2 |   9.882527209 |        19 |
+|  65 |    4 |        2 |   9.882128155 |        19 |
+|  70 |    4 |        2 |   9.911815332 |        19 |
+|  75 |    4 |        2 |   10.03678034 |        19 |
+|  80 |    4 |        2 |   9.942031503 |        19 |
+|  85 |    4 |        2 |   9.853525752 |        19 |
+|  90 |    4 |        2 |   9.983949492 |        19 |
+|  95 |    4 |        2 |   9.887742557 |        19 |
+| 100 |    4 |        2 |  14.879831014 |        19 |
+
+Interesting that for all params besides =N=1=, we get 19 rules. This suggests that the drastic reduction with the =iso-add= rule is not as significant as I thought previously.
+
+**** Plot Times
+
+#+header: :width 850 :height 600
+#+begin_src R :var rules=rule-data :colnames yes :session graphics :results graphics file :file time.png
+library(tidyverse)
+colnames(rules) <- c("N", "Vars", "Vec Size", "Time", "Num_Rules")
+
+ggplot(data = rules) + 
+  geom_col(mapping = aes(x = factor(N), y = Time)) +
+  theme(legend.position = "top")
+#+end_src
+
+#+RESULTS:
+[[file:../time.png]]
+
+**** Print out rules in a pretty format
+
+#+begin_src python :results value table
+import json
+
+template = "rulesets/var4-no-iso/n-{}-rules.json"
+ns = [3, 5]
+table = []
+for n in ns:
+    with open(template.format(n), "r") as f:
+        j = json.load(f)
+        for eq in j["eqs"]:
+            arrow = ""
+            if eq["bidirectional"]:
+                arrow = "<=>"
+            else:
+                arrow = "=>"
+                table.append([n, "{} {} {}".format(eq["lhs"], arrow, eq["rhs"])])
+return table 
+#+end_src
+
+#+RESULTS:
+| 3 | (VecMul (VecMul ?a ?b) (VecMul ?c ?d)) <=> (VecMul (VecMul ?d ?a) (VecMul ?c ?b)) |
+| 3 | (VecAdd (VecAdd ?a ?b) (VecAdd ?c ?d)) => (VecAdd (VecAdd ?a ?c) (VecAdd ?b ?d))  |
+| 3 | (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))                               |
+| 3 | (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?a) (* ?b ?c))                               |
+| 3 | (VecMul (Vec ?a ?b) (Vec ?c ?d)) => (VecMul (Vec ?c ?b) (Vec ?a ?d))              |
+| 3 | (VecAdd (Vec ?a ?b) (Vec ?c ?d)) => (VecAdd (Vec ?c ?b) (Vec ?a ?d))              |
+| 3 | (VecMul (Vec ?a ?b) (Vec ?c ?d)) <=> (Vec (* ?a ?c) (* ?b ?d))                    |
+| 3 | (VecAdd (Vec ?a ?b) (Vec ?c ?d)) <=> (Vec (+ ?a ?c) (+ ?d ?b))                    |
+| 3 | (VecMul ?a (VecMul ?b ?c)) <=> (VecMul (VecMul ?a ?c) ?b)                         |
+| 3 | (VecAdd ?a (VecAdd ?b ?c)) => (VecAdd ?b (VecAdd ?a ?c))                          |
+| 3 | (VecMul ?a (VecAdd ?b ?c)) <=> (VecAdd (VecMul ?a ?b) (VecMul ?a ?c))             |
+| 3 | (+ (* ?a ?b) (* ?b ?c)) <=> (* ?b (+ ?a ?c))                                      |
+| 3 | (* ?a ?b) => (* ?b ?a)                                                            |
+| 3 | (VecMul ?a ?b) => (VecMul ?b ?a)                                                  |
+| 3 | (VecAdd ?a ?b) => (VecAdd ?b ?a)                                                  |
+| 3 | (+ ?a ?b) => (+ ?b ?a)                                                            |
+| 3 | ?a <=> (* 1 ?a)                                                                   |
+| 3 | ?a <=> (+ 0 ?a)                                                                   |
+| 3 | (* ?a 0) => 0                                                                     |
+| 5 | (VecMul (VecMul ?a ?b) (VecMul ?c ?d)) => (VecMul (VecMul ?a ?c) (VecMul ?b ?d))  |
+| 5 | (VecAdd (VecAdd ?a ?b) (VecAdd ?c ?d)) => (VecAdd (VecAdd ?a ?c) (VecAdd ?b ?d))  |
+| 5 | (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))                               |
+| 5 | (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?a) (* ?b ?c))                               |
+| 5 | (VecMul (Vec ?a ?b) (Vec ?c ?d)) => (VecMul (Vec ?a ?d) (Vec ?c ?b))              |
+| 5 | (VecAdd (Vec ?a ?b) (Vec ?c ?d)) => (VecAdd (Vec ?c ?b) (Vec ?a ?d))              |
+| 5 | (VecMul (Vec ?a ?b) (Vec ?c ?d)) <=> (Vec (* ?a ?c) (* ?b ?d))                    |
+| 5 | (VecAdd (Vec ?a ?b) (Vec ?c ?d)) <=> (Vec (+ ?a ?c) (+ ?b ?d))                    |
+| 5 | (VecMul ?a (VecMul ?b ?c)) => (VecMul ?b (VecMul ?a ?c))                          |
+| 5 | (VecAdd ?a (VecAdd ?b ?c)) => (VecAdd ?b (VecAdd ?a ?c))                          |
+| 5 | (VecMul ?a (VecAdd ?b ?c)) <=> (VecAdd (VecMul ?a ?b) (VecMul ?a ?c))             |
+| 5 | (+ (* ?a ?b) (* ?c ?a)) <=> (* (+ ?b ?c) ?a)                                      |
+| 5 | (* ?a ?b) => (* ?b ?a)                                                            |
+| 5 | (VecMul ?a ?b) => (VecMul ?b ?a)                                                  |
+| 5 | (VecAdd ?a ?b) => (VecAdd ?b ?a)                                                  |
+| 5 | (+ ?a ?b) => (+ ?b ?a)                                                            |
+| 5 | ?a <=> (* ?a 1)                                                                   |
+| 5 | ?a <=> (+ 0 ?a)                                                                   |
+| 5 | (* 0 ?a) => 0                                                                     |

@@ -477,6 +477,19 @@ impl SynthLanguage for VecLang {
         //     "(VecAdd (VecAdd ?a ?b) ?c)",
         //     "(VecAdd ?a (VecAdd ?b ?c))",
         // );
+        // add_eq(
+        //     synth,
+        //     "iso_add",
+        //     "(VecAdd (Vec ?a ?b) (Vec ?c ?d))",
+        //     "(Vec (+ ?a ?c) (+ ?b ?d))",
+        // );
+
+        // add_eq(
+        //     synth,
+        //     "iso_mul",
+        //     "(VecMul (Vec ?a ?b) (Vec ?c ?d))",
+        //     "(Vec (* ?a ?c) (* ?b ?d))",
+        // );
 
         // add_eq(synth, "get0", "(Get (Vec ?a ?b ?c) i0)", "?a");
         // add_eq(synth, "get1", "(Get (Vec ?a ?b ?c) i1)", "?b");

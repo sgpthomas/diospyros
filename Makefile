@@ -24,7 +24,7 @@ endif
 
 EGG_FLAGS += --rules rules.json 
 RULER_FLAGS := --num-fuzz 4 --iters 2 --variables 4 --eqsat-iter-limit 2 --vector-size 2
-RULER_FLAGS += --abs-timeout 240 # --rules-to-take 5
+RULER_FLAGS += --abs-timeout 240 # --rules-to-take 10
 
 build: dios dios-example-gen dios-egraphs
 
