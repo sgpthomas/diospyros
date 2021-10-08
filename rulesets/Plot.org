@@ -718,3 +718,10 @@ return table
 | 5 | ?a <=> (* ?a 1)                                                                   |
 | 5 | ?a <=> (+ 0 ?a)                                                                   |
 | 5 | (* 0 ?a) => 0                                                                     |
+
+*** Next
+
+- I want to run the same ablation but with the =vec-add= isomorphism rule.
+- See if the =vec-add= rule is special in some way or if you can get a similar effect with lots of different rules.
+- verify that there is an effect where the number of rules decline dramatically when the =vec-add= rule is added. It might just be the variable number that's important.
+- Fix the validator so that =lt= and =div= rules work.
