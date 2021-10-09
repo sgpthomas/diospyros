@@ -99,14 +99,22 @@ return(filename)
 
 * More rigorous =rules-to-take= ablation
 :PROPERTIES:
-:header-args: :dir (magit-toplevel) :results output list :var SERVER="18.217.40.81"
+:header-args: :var SERVER="18.217.40.81"
 :END:
 
 ** Launch an EC2 Instance
 
 - Press =SPC a d=
 - Launch a machine with ~64 gbs of ram
-- Copy the IP address into the properties drawer above
+- Copy the IP address below and run code block
+
+  #+begin_src emacs-lisp :results silent
+(save-excursion
+  (outline-up-heading 1)
+  (org-set-property "header-args" ":var SERVER=\"18.217.40.81\""))
+  #+end_src
+
+  #+RESULTS:
 
 ** Sync diospyros
 
@@ -405,13 +413,12 @@ rsync -rv \
 - total size is 49,518,778  speedup is 218.20
 #+end_example
 
-
 ** Ablation
-:PROPERTIES:
-:header-args: :dir "/ssh:ubuntu@18.217.40.81:~/diospyros" :results output list
-:END:
 
 *** Study 1
+:PROPERTIES:
+:header-args+: :dir (format "/ssh:ubuntu@%s:~/diospyros" (sgt/babel-get-var "SERVER"))
+:END:
 
 Parameters:
 - =variables: 4=
@@ -508,17 +515,7 @@ rsync -rv \
 - total size is 95,481  speedup is 0.97
 #+end_example
 
-**** Links to JSON files
-#+NAME: filelink
-#+begin_src elisp :var files="" :results value
-(require 'dash)
-(--map (format "[[file:%s][%s]]\n"
-	       (car it)
-	       (car (last (string-split (car it)))))
-       files)
-#+end_src
-
-#+RESULTS: filelink
+Get filenames:
 
 #+NAME: rules-files
 #+begin_src sh :results table
@@ -526,34 +523,45 @@ ls $PWD/rulesets/var4-no-iso/*
 #+end_src
 
 #+RESULTS: rules-files
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-100-rules.json |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-10-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-15-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-1-rules.json   |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-20-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-25-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-2-rules.json   |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-30-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-35-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-3-rules.json   |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-40-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-45-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-4-rules.json   |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-50-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-55-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-5-rules.json   |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-60-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-65-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-6-rules.json   |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-70-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-75-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-7-rules.json   |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-80-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-85-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-8-rules.json   |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-90-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-95-rules.json  |
-| /home/samthomas/Research/diospyros/rulesets/var4-no-iso/n-9-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-1-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-10-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-100-rules.json |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-15-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-2-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-20-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-25-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-3-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-30-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-35-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-4-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-40-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-45-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-5-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-50-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-55-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-6-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-60-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-65-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-7-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-70-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-75-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-8-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-80-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-85-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-9-rules.json   |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-90-rules.json  |
+| /Users/sgt/Research/dios/rulesets/var4-no-iso/n-95-rules.json  |
+
+**** Links to JSON files
+#+NAME: filelink
+#+begin_src elisp :var files="" :results code
+(require 'dash)
+(--map (format "[[file:%s][%s]]\n"
+	       (car it)
+	       (car (last (string-split (car it)))))
+       files)
+#+end_src
+
 
 Links to files:
 #+begin_src emacs-lisp :results value :var fs=rules-files :post filelink(files=*this*)
@@ -645,7 +653,7 @@ Interesting that for all params besides =N=1=, we get 19 rules. This suggests th
 
 **** Plot Times
 
-#+header: :width 850 :height 600
+#+header: :width 800 :height 600
 #+begin_src R :var rules=rule-data :colnames yes :session graphics :results graphics file :file time.png
 library(tidyverse)
 colnames(rules) <- c("N", "Vars", "Vec Size", "Time", "Num_Rules")
