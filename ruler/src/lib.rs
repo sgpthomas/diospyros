@@ -201,9 +201,11 @@ pub trait SynthLanguage: egg::Language + Send + Sync + 'static {
             match enode {
                 ENodeOrVar::ENode(enode) => {
                     let cvec = enode.eval(cvec_len, |id| buf[usize::from(*id)].borrow());
+                    // log::info!("cvec: {:?}", cvec);
                     buf.push(Cow::Owned(cvec));
                 }
                 ENodeOrVar::Var(var) => {
+                    // log::info!("var: {} = {:?}", var, &ctx[var]);
                     buf.push(Cow::Borrowed(&ctx[var]));
                 }
             }

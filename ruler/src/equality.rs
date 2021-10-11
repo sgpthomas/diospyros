@@ -108,16 +108,16 @@ impl<L: SynthLanguage> Applier<L, SynthAnalysis> for NotUndefined<L> {
                         }
                     }
 
-                    let mut extractor = Extractor::new(
-                        &egraph,
-                        RandomCost {
-                            rng: Pcg64::seed_from_u64(0),
-                        },
-                    );
-                    for i in 0..10 {
-                        let (_best_cost, best) = extractor.find_best(id);
-                        log::info!("{}: {}", i, best.pretty(80));
-                    }
+                    // let mut extractor = Extractor::new(
+                    //     &egraph,
+                    //     RandomCost {
+                    //         rng: Pcg64::seed_from_u64(0),
+                    //     },
+                    // );
+                    // for i in 0..10 {
+                    //     let (_best_cost, best) = extractor.find_best(id);
+                    //     log::info!("{}: {}", i, best.pretty(80));
+                    // }
                     assert_eq!(a, b, "bad rule {}", self.name)
                 }
                 _ => (),

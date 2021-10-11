@@ -297,7 +297,7 @@ fn egg_to_z3<'a>(
     expr: &[Math],
 ) -> (z3::ast::Real<'a>, Vec<z3::ast::Bool<'a>>) {
     let mut buf: Vec<z3::ast::Real> = vec![];
-    let mut assumes: Vec<z3::ast::Bool> = vec![];
+    let assumes: Vec<z3::ast::Bool> = vec![];
     let zero = z3::ast::Real::from_real(&ctx, 0, 1);
     for node in expr.as_ref().iter() {
         match node {
@@ -327,11 +327,8 @@ fn egg_to_z3<'a>(
                 let gez = z3::ast::Real::ge(denom, &zero);
                 let denom_zero = z3::ast::Bool::and(&ctx, &[&lez, &gez]);
                 let numer = &buf[usize::from(*a)].clone();
-                buf.push(z3::ast::Bool::ite(
-                    &denom_zero,
-                    &zero,
-                    &z3::ast::Real::div(numer, denom),
-                ));
+                let d = z3::ast::Real::div(numer, denom);
+                buf.push(z3::ast::Bool::ite(&denom_zero, &zero, &d));
             }
             Math::Neg(a) => buf.push(z3::ast::Real::unary_minus(&buf[usize::from(*a)])),
             Math::Abs(a) => {

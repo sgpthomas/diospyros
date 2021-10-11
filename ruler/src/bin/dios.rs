@@ -9,6 +9,8 @@ use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::hash::BuildHasherDefault;
 use std::str::FromStr;
+use z3::ast::{Ast, Bool, Datatype, Int};
+use z3::{DatatypeAccessor, DatatypeBuilder, Sort};
 
 #[derive(Debug, PartialOrd, Ord, PartialEq, Eq, Hash, Clone)]
 pub enum Value {
@@ -656,7 +658,7 @@ impl SynthLanguage for VecLang {
                             // VecLang::Or(x),
                             // VecLang::And(x),
                             // VecLang::Ite(x),
-                            // VecLang::Lt(x),
+                            VecLang::Lt(x),
                         ]
                     })
                     .flatten(),
@@ -713,6 +715,10 @@ impl SynthLanguage for VecLang {
         // let n = 10;
         let mut env = HashMap::default();
 
+        if lhs.vars() != rhs.vars() {
+            return false;
+        }
+
         for var in lhs.vars() {
             env.insert(var, vec![]);
         }
@@ -721,65 +727,38 @@ impl SynthLanguage for VecLang {
             env.insert(var, vec![]);
         }
 
-        // env.insert(egg::Var::from_str("?a").unwrap(), vec![]);
-        // env.insert(egg::Var::from_str("?b").unwrap(), vec![]);
-        // env.insert(egg::Var::from_str("?c").unwrap(), vec![]);
-        // env.insert(egg::Var::from_str("?d").unwrap(), vec![]);
-
         let (_n_ints, n_vecs) = split_into_halves(10);
         // let (n_neg_ints, n_pos_ints) = split_into_halves(n_ints);
 
-        let mut length = 0;
-        let possibilities = vec![-25, -2, -1, 0, 1, 2, 25];
-        for l in possibilities.iter().permutations(possibilities.len()) {
-            for cvec in env.values_mut() {
-                cvec.extend(l.iter().map(|x| Some(Value::Int(**x))));
-                // cvec.extend(
-                //     Value::sample_int(&mut synth.rng, -100, 100, 4)
-                //         .into_iter()
-                //         .map(Some),
-                // );
-                // // cvec.extend(
-                // //     Value::sample_int(&mut synth.rng, 0, 100, 4)
-                // //         .into_iter()
-                // //         .map(Some),
-                // // );
-                // cvec.extend(Value::int_range(-100, 100, n_ints).into_iter().map(Some));
-
-                cvec.extend(
-                    Value::sample_vec(&mut synth.rng, -100, 100, synth.params.vector_size, n_vecs)
-                        .into_iter()
-                        .map(Some),
-                );
-
-                length = cvec.len();
+        let possibilities = vec![-5, -2, -1, 0, 1, 2, 5];
+        // let possibilities = vec![0, 1, 2];
+        for perms in possibilities.iter().permutations(env.keys().len()) {
+            for (i, cvec) in perms.iter().zip(env.values_mut()) {
+                cvec.push(Some(Value::Int(**i)));
             }
         }
 
-        // let mut d_env: HashMap<egg::Var, Vec<Option<Value>>, BuildHasherDefault<FxHasher>> =
-        //     HashMap::default();
-        // d_env.insert(
-        //     egg::Var::from_str("?a").unwrap(),
-        //     vec![Some(Value::Int(66))],
-        // );
-        // d_env.insert(
-        //     egg::Var::from_str("?b").unwrap(),
-        //     vec![Some(Value::Int(89))],
-        // );
-        // d_env.insert(
-        //     egg::Var::from_str("?c").unwrap(),
-        //     vec![Some(Value::Int(-6))],
-        // );
-        // d_env.insert(
-        //     egg::Var::from_str("?d").unwrap(),
-        //     vec![Some(Value::Int(83))],
-        // );
+        // add some random vectors
+        let mut length = 0;
+        for cvec in env.values_mut() {
+            cvec.extend(
+                Value::sample_vec(&mut synth.rng, -100, 100, synth.params.vector_size, n_vecs)
+                    .into_iter()
+                    .map(Some),
+            );
+            length = cvec.len();
+        }
 
         // debug(
-        //     "(< (+ ?a ?b) (- ?c ?d))",
-        //     "(< ?b (- ?c ?d))",
+        //     "(< (+ ?a ?b) (+ ?c ?a))",
+        //     "(< ?b (+ i1 ?c))",
         //     length,
-        //     &d_env,
+        //     &[
+        //         ("?a", Value::Int(66)),
+        //         ("?b", Value::Int(89)),
+        //         ("?c", Value::Int(-6)),
+        //         ("?d", Value::Int(83)),
+        //     ],
         // );
         // panic!();
 
@@ -792,15 +771,64 @@ impl SynthLanguage for VecLang {
             log::debug!("  lvec: {:?}, rvec: {:?}", lvec, rvec);
         }
 
-        // only compare values where both sides are defined
-        if lvec.iter().all(|x| x.is_none()) && rvec.iter().all(|x| x.is_none()) {
-            false
-        } else {
-            lvec.iter().zip(rvec.iter()).all(|tup| match tup {
-                (Some(l), Some(r)) => l == r,
-                _ => true,
-            })
+        let mut cfg = z3::Config::new();
+        cfg.set_timeout_msec(1000);
+        let ctx = z3::Context::new(&cfg);
+        let solver = z3::Solver::new(&ctx);
+
+        let (lexpr, lasses) = egg_to_z3(&ctx, Self::instantiate(lhs).as_ref());
+        let (rexpr, rasses) = egg_to_z3(&ctx, Self::instantiate(rhs).as_ref());
+
+        for ass in lasses.iter().chain(rasses.iter()) {
+            solver.assert(ass);
+            match solver.check() {
+                z3::SatResult::Unsat => {
+                    log::info!("z3 ass was unsat {}", ass);
+                    return false;
+                }
+                z3::SatResult::Unknown => {
+                    return false;
+                }
+                z3::SatResult::Sat => {
+                    continue;
+                }
+            }
         }
+        solver.reset();
+
+        solver.assert(&lexpr._eq(&rexpr).not());
+        log::info!("z3 {:?} =? {:?}", lexpr, rexpr);
+
+        match solver.check() {
+            z3::SatResult::Sat => {
+                log::info!("model: {:?}", solver.get_model());
+                false
+            }
+            z3::SatResult::Unsat => {
+                log::info!("z3 validation: failed for {} => {}", lhs, rhs);
+                true
+            }
+            z3::SatResult::Unknown => {
+                synth.smt_unknown += 1;
+                log::info!("z3 validation: unknown for {} => {}", lhs, rhs);
+                false
+                // vecs_eq(&lvec, &rvec)
+            }
+        }
+
+        // only compare values where both sides are defined
+        // vecs_eq(&lvec, &rvec)
+    }
+}
+
+fn vecs_eq(lvec: &CVec<VecLang>, rvec: &CVec<VecLang>) -> bool {
+    if lvec.iter().all(|x| x.is_none()) && rvec.iter().all(|x| x.is_none()) {
+        false
+    } else {
+        lvec.iter().zip(rvec.iter()).all(|tup| match tup {
+            (Some(l), Some(r)) => l == r,
+            _ => true,
+        })
     }
 }
 
@@ -812,28 +840,95 @@ fn add_eq(synth: &mut Synthesizer<VecLang>, name: &str, left: &str, right: &str)
 }
 
 #[allow(unused)]
-fn debug(
-    left: &str,
-    right: &str,
-    n: usize,
-    env: &HashMap<egg::Var, Vec<Option<Value>>, BuildHasherDefault<FxHasher>>,
-) {
+fn debug(left: &str, right: &str, n: usize, env_pairs: &[(&str, Value)]) {
+    let mut env: HashMap<egg::Var, Vec<Option<Value>>, BuildHasherDefault<FxHasher>> =
+        HashMap::default();
+
+    env_pairs.iter().for_each(|(var, value)| {
+        env.insert(egg::Var::from_str(var).unwrap(), vec![Some(value.clone())]);
+    });
+
     let pleft: egg::Pattern<VecLang> = left.parse().unwrap();
     let pright: egg::Pattern<VecLang> = right.parse().unwrap();
-    let lres = VecLang::eval_pattern(&pleft, env, n);
-    let rres = VecLang::eval_pattern(&pright, env, n);
+    log::info!("left");
+    let lres = VecLang::eval_pattern(&pleft, &env, n);
+    log::info!("right");
+    let rres = VecLang::eval_pattern(&pright, &env, n);
     log::info!(
         "TEST:\n  {:?}\n    ?= ({})\n  {:?}",
         lres,
-        lres == rres,
+        vecs_eq(&lres, &rres),
         rres
     );
     log::info!("{} => {}", left, right);
-    // panic!();
 }
 
 fn main() {
     VecLang::main()
 }
 
-// 132289, 15053463213406696608
+fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> (Datatype<'a>, Vec<Bool<'a>>) {
+    let mut buf: Vec<(Datatype, bool)> = vec![];
+    let mut assumes: Vec<Bool> = vec![];
+
+    let int_bool = DatatypeBuilder::new(&ctx, "Int+Bool")
+        .variant(
+            "Int",
+            vec![("Int.v", DatatypeAccessor::Sort(Sort::int(&ctx)))],
+        )
+        .variant(
+            "Bool",
+            vec![("Bool.v", DatatypeAccessor::Sort(Sort::bool(&ctx)))],
+        )
+        .finish();
+
+    let int_cons = &int_bool.variants[0].constructor;
+    let int_get = &int_bool.variants[0].accessors[0];
+    let bool_cons = &int_bool.variants[1].constructor;
+    let bool_get = &int_bool.variants[1].accessors[0];
+
+    for node in expr.as_ref().iter() {
+        match node {
+            VecLang::Const(Value::Int(i)) => buf.push((
+                int_cons
+                    .apply(&[&Int::from_i64(&ctx, *i as i64)])
+                    .as_datatype()
+                    .unwrap(),
+                false,
+            )),
+            VecLang::Symbol(v) => buf.push((
+                Datatype::new_const(&ctx, v.to_string(), &int_bool.sort),
+                false,
+            )),
+            VecLang::Add([x, y]) => {
+                let x_int = int_get.apply(&[&buf[usize::from(*x)].0]).as_int().unwrap();
+                let y_int = int_get.apply(&[&buf[usize::from(*y)].0]).as_int().unwrap();
+                let res = int_cons.apply(&[&(x_int + y_int)]).as_datatype().unwrap();
+                buf.push((res, false))
+            }
+            VecLang::Mul([x, y]) => {
+                let x_int = int_get.apply(&[&buf[usize::from(*x)].0]).as_int().unwrap();
+                let y_int = int_get.apply(&[&buf[usize::from(*y)].0]).as_int().unwrap();
+                let res = int_cons.apply(&[&(x_int * y_int)]).as_datatype().unwrap();
+                buf.push((res, false))
+            }
+            VecLang::Lt([a, b]) => {
+                let a_int = int_get.apply(&[&buf[usize::from(*a)].0]).as_int().unwrap();
+                let b_int = int_get.apply(&[&buf[usize::from(*b)].0]).as_int().unwrap();
+                let res = bool_cons
+                    .apply(&[&Int::lt(&a_int, &b_int)])
+                    .as_datatype()
+                    .unwrap();
+                buf.push((res, true))
+            }
+            x => unimplemented!("{:?}", x),
+        }
+    }
+
+    let (head, b) = buf.pop().unwrap();
+    if b {
+        assumes.push(bool_get.apply(&[&head]).as_bool().unwrap());
+    }
+    // log::info!("z3 term: {:?}", head);
+    (head, assumes)
+}
