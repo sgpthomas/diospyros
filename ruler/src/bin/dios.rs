@@ -667,7 +667,7 @@ impl SynthLanguage for VecLang {
             None
         };
 
-        let vec_stuff = if iter < 2 {
+        let vec_stuff = if false {
             let vec_binops = (0..2)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()

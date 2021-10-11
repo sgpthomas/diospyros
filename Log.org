@@ -1,0 +1,46 @@
+#+title: Work Log
+
+* Oct 11
+
+I worked on fixing the validator so that it works with =lt=. The first thing I discovered was that I was constructing the CVEC permutations incorrectly. I was adding all perumations to a single CVEC, something like:
+
+#+begin_example
+a = [0, 1, 2, ..]
+b = [0, 1, 2, ..]
+#+end_example
+
+which ofc was not very useful. I fixed it so that it generates CVECs that look like:
+
+#+begin_example
+a = [0, 1, 2, ...]
+b = [1, 0, 1, ...]
+#+end_example
+
+This ruled out a lot of the obviously wrong rules. However, there were still problems. Rules like:
+
+#+begin_example
+a < b => a < b + 1
+#+end_example
+
+which is obviously correct but was causing things to crash in the =equality.rs= check. My best guess for this is that the validator doesn't preserve transitivity of equality. Which is obviously a problem. But why wasn't it preserving this?
+
+I decided to integrate z3 to perform the equality checking so that I could check my validator against something that's formally correct.
+
+I spent a while trying to deal with converting the egg lang ast into the z3 one. The problem was that I had to deal with the =Datatype= api in the z3 library. This was a pain to figure out and I was also using an older version of the library than I was reading the documentation for.
+
+Once I fixed that, I discovered that you can't check for satisfiability of formulas of the form =a = b= with z3 directly. This is because z3 is just looking for 1 satisfying assignment. Instead you can check =(not a = b)=. If the formula is unsatisfiable, then you know that =a = b=. The logic is that if there are no satisfying assignments to =(not a = b)=, then the converse must be satisfiable.
+
+With that finally working, I still had some problems. Consider:
+#+begin_example
+(a * b) < (b * a) => (a * a) < (0 * b)
+#+end_example
+
+Neither side of the rewrite rule is ever true. So technically they are equivalent. But my feeling is that we don't want rules like this. It was also causing the same =equality.rs= crash. So I think this was also probably violating the transitivity of equality. Not sure though, maybe worth digging more into.
+
+- TODO: dig more into exactly why rules of the above form are bad.
+
+  Anyways, I solved this by making sure that the antecedant of these kinds of rules are satisfiable before I check if the whole rule is equivalent. This solves that problem.
+
+I haven't implemented converstion from =egg -> z3= for Vec rules yet so I haven't tested the whole thing yet.
+
+- TODO: deal with Vec rules in the validator (either with implementing z3 translation or using the existing technique)
