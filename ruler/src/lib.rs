@@ -956,7 +956,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
                 if should_validate {
                     let rule_validation = Instant::now();
                     let valid = L::is_valid(self, &eq.lhs, &eq.rhs);
-                    log::info!(
+                    log::debug!(
                         "Time taken in validation: {}",
                         rule_validation.elapsed().as_secs_f64()
                     );
@@ -1081,7 +1081,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
             .into_iter()
             .partition(|(_name, eq)| L::is_valid(self, &eq.lhs, &eq.rhs));
 
-        log::info!(
+        log::debug!(
             "Time taken in validation: {}",
             rule_validation.elapsed().as_secs_f64()
         );
