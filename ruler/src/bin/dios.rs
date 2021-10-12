@@ -742,11 +742,12 @@ impl SynthLanguage for VecLang {
 
             match solver.check_assumptions(&all) {
                 z3::SatResult::Sat => {
-                    log::debug!("model: {:?}", solver.get_model());
+                    log::info!("counter-example: {:?}", solver.get_model());
                     false
                 }
                 z3::SatResult::Unsat => {
-                    log::debug!("z3 validation: failed for {} => {}", lhs, rhs);
+                    log::info!("z3 validation: success for {} => {}", lhs, rhs);
+                    log::info!("core: {:?}", solver.get_unsat_core());
                     true
                 }
                 z3::SatResult::Unknown => {
@@ -937,7 +938,7 @@ fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>
     let (head, b) = buf.pop().unwrap();
     if b {
         let ass = bool_get.apply(&[&head]).as_bool().unwrap();
-        assumes.push(ass.not());
+        assumes.push(ass);
     }
     Some((head, assumes))
 }
