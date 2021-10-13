@@ -9,7 +9,7 @@ use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::hash::BuildHasherDefault;
 use std::str::FromStr;
-use z3::ast::{Ast, Bool, Datatype, Int};
+use z3::ast::{forall_const, Ast, Bool, Datatype, Int};
 use z3::{DatatypeAccessor, DatatypeBuilder, Sort};
 
 #[derive(Debug, PartialOrd, Ord, PartialEq, Eq, Hash, Clone)]
@@ -738,7 +738,8 @@ impl SynthLanguage for VecLang {
             let all: Vec<_> = lasses.into_iter().chain(rasses.into_iter()).collect();
 
             solver.assert(&lexpr._eq(&rexpr).not());
-            log::info!("z3 eq {} <=> {}", lhs, rhs);
+            log::info!("z3 asses: {:?}", all);
+            log::info!("z3 check {} != {}", lhs, rhs);
 
             match solver.check_assumptions(&all) {
                 z3::SatResult::Sat => {
@@ -874,7 +875,7 @@ fn main() {
 }
 
 fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>, Vec<Bool<'a>>)> {
-    let mut buf: Vec<(Datatype, bool)> = vec![];
+    let mut buf: Vec<Datatype> = vec![];
     let mut assumes: Vec<Bool> = vec![];
 
     // data type representing either ints or bools
@@ -894,51 +895,68 @@ fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>
     let bool_cons = &int_bool.variants[1].constructor;
     let bool_get = &int_bool.variants[1].accessors[0];
 
+    let mut vars: Vec<_> = vec![];
+
     for node in expr.as_ref().iter() {
         match node {
-            VecLang::Const(Value::Int(i)) => buf.push((
+            VecLang::Const(Value::Int(i)) => buf.push(
                 int_cons
                     .apply(&[&Int::from_i64(&ctx, *i as i64)])
                     .as_datatype()
                     .unwrap(),
-                false,
-            )),
-            VecLang::Symbol(v) => buf.push((
-                Datatype::new_const(&ctx, v.to_string(), &int_bool.sort),
-                false,
-            )),
+            ),
+            VecLang::Symbol(v) => {
+                let var = Datatype::new_const(&ctx, v.to_string(), &int_bool.sort);
+                vars.push(buf.len());
+                buf.push(var)
+            }
             VecLang::Add([x, y]) => {
-                let x_int = int_get.apply(&[&buf[usize::from(*x)].0]).as_int().unwrap();
-                let y_int = int_get.apply(&[&buf[usize::from(*y)].0]).as_int().unwrap();
+                let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
+                let y_int = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
                 let res = int_cons.apply(&[&(x_int + y_int)]).as_datatype().unwrap();
-                buf.push((res, false))
+                buf.push(res)
             }
             VecLang::Mul([x, y]) => {
-                let x_int = int_get.apply(&[&buf[usize::from(*x)].0]).as_int().unwrap();
-                let y_int = int_get.apply(&[&buf[usize::from(*y)].0]).as_int().unwrap();
+                let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
+                let y_int = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
                 let res = int_cons.apply(&[&(x_int * y_int)]).as_datatype().unwrap();
-                buf.push((res, false))
+                buf.push(res)
             }
             // VecLang::Div([x, y]) => {
             // 	let denom = int_get.apply(&[buf[usize::from(*x)].0]).as_int().unwrap();
             // }
             VecLang::Lt([a, b]) => {
-                let a_int = int_get.apply(&[&buf[usize::from(*a)].0]).as_int().unwrap();
-                let b_int = int_get.apply(&[&buf[usize::from(*b)].0]).as_int().unwrap();
+                let a_int = int_get.apply(&[&buf[usize::from(*a)]]).as_int().unwrap();
+                let b_int = int_get.apply(&[&buf[usize::from(*b)]]).as_int().unwrap();
+
                 let res = bool_cons
                     .apply(&[&Int::lt(&a_int, &b_int)])
                     .as_datatype()
                     .unwrap();
-                buf.push((res, true))
+
+                let term = Int::lt(&a_int, &b_int);
+                let pattern = z3::Pattern::new(&ctx, &[&term]);
+                let vs: Vec<_> = vars.iter().map(|i| &buf[usize::from(*i)]).collect();
+
+                let forall: Bool = forall_const(
+                    &ctx,
+                    vs.as_slice(),
+                    // &[&a_int, &b_int],
+                    &[&pattern],
+                    &term,
+                );
+
+                assumes.push(forall);
+                // buf.push(forall)
             }
             _ => return None,
         }
     }
 
-    let (head, b) = buf.pop().unwrap();
-    if b {
-        let ass = bool_get.apply(&[&head]).as_bool().unwrap();
-        assumes.push(ass);
-    }
+    let head = buf.pop().unwrap();
+    // if b {
+    //     let ass = bool_get.apply(&[&head]).as_bool().unwrap();
+    //     assumes.push(ass);
+    // }
     Some((head, assumes))
 }
