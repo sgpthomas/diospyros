@@ -718,27 +718,30 @@ impl SynthLanguage for VecLang {
         let right = egg_to_z3(&ctx, Self::instantiate(rhs).as_ref());
 
         let ret = if let (Some((lexpr, lasses)), Some((rexpr, rasses))) = (left, right) {
-            // for ass in lasses.iter().chain(rasses.iter()) {
-            //     solver.reset();
-            //     solver.assert(ass);
-            //     match solver.check() {
-            //         z3::SatResult::Unsat => {
-            //             log::info!("z3 ass was unsat {}", ass);
-            //             return false;
-            //         }
-            //         z3::SatResult::Unknown => {
-            //             return false;
-            //         }
-            //         z3::SatResult::Sat => {
-            //             continue;
-            //         }
-            //     }
-            // }
-            // solver.reset();
+            solver.reset();
             let all: Vec<_> = lasses.into_iter().chain(rasses.into_iter()).collect();
-
-            solver.assert(&lexpr._eq(&rexpr).not());
+            let qe_eq = &lexpr._eq(&rexpr).not();
+            log::info!("z3 eq: {} = {}", lhs, rhs);
             log::info!("z3 asses: {:?}", all);
+            for ass in &all {
+                solver.reset();
+                solver.assert(ass);
+                match solver.check() {
+                    z3::SatResult::Unsat => {
+                        log::info!("z3 ass was unsat {}", ass);
+                        return false;
+                    }
+                    z3::SatResult::Unknown => {
+                        log::info!("z3 ass was unknown {}", ass);
+                        return false;
+                    }
+                    z3::SatResult::Sat => {
+                        continue;
+                    }
+                }
+            }
+
+            solver.assert(qe_eq);
             log::info!("z3 check {} != {}", lhs, rhs);
 
             match solver.check_assumptions(&all) {
@@ -748,7 +751,7 @@ impl SynthLanguage for VecLang {
                 }
                 z3::SatResult::Unsat => {
                     log::info!("z3 validation: success for {} => {}", lhs, rhs);
-                    log::info!("core: {:?}", solver.get_unsat_core());
+                    log::debug!("core: {:?}", solver.get_unsat_core());
                     true
                 }
                 z3::SatResult::Unknown => {
@@ -928,35 +931,26 @@ fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>
             VecLang::Lt([a, b]) => {
                 let a_int = int_get.apply(&[&buf[usize::from(*a)]]).as_int().unwrap();
                 let b_int = int_get.apply(&[&buf[usize::from(*b)]]).as_int().unwrap();
-
-                let res = bool_cons
-                    .apply(&[&Int::lt(&a_int, &b_int)])
-                    .as_datatype()
-                    .unwrap();
-
                 let term = Int::lt(&a_int, &b_int);
-                let pattern = z3::Pattern::new(&ctx, &[&term]);
-                let vs: Vec<_> = vars.iter().map(|i| &buf[usize::from(*i)]).collect();
 
-                let forall: Bool = forall_const(
-                    &ctx,
-                    vs.as_slice(),
-                    // &[&a_int, &b_int],
-                    &[&pattern],
-                    &term,
-                );
+                // let pattern = z3::Pattern::new(&ctx, &[&term]);
+                // let vs: Vec<&dyn Ast> = vars.iter().map(|i| &buf[usize::from(*i)] as _).collect();
+                // let forall: Bool = forall_const(&ctx, vs.as_slice(), &[&pattern], &term);
 
-                assumes.push(forall);
-                // buf.push(forall)
+                let res = bool_cons.apply(&[&term]).as_datatype().unwrap();
+
+                // assumes.push(forall);
+                buf.push(res)
             }
-            _ => return None,
+            _ => (),
         }
     }
 
-    let head = buf.pop().unwrap();
+    // let head = buf.pop().unwrap();
     // if b {
     //     let ass = bool_get.apply(&[&head]).as_bool().unwrap();
     //     assumes.push(ass);
     // }
-    Some((head, assumes))
+    // Some((head, assumes))
+    buf.pop().map(|head| (head, assumes))
 }

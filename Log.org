@@ -44,3 +44,55 @@ Neither side of the rewrite rule is ever true. So technically they are equivalen
 I haven't implemented converstion from =egg -> z3= for Vec rules yet so I haven't tested the whole thing yet.
 
 - TODO: deal with Vec rules in the validator (either with implementing z3 translation or using the existing technique)
+* Oct 12
+
+Continued working on the validator. This is written from the next day unfortunately, so I don't remember all the tangents I was following. The basic idea though was that I wanted to extend the validator to work on =Div= rules. Following the scheme in =bigint.rs= in ruler, I needed to add back the idea of assumptions. Along the way I got sidetracked because I felt like my approach for dealing with =Lt= wasn't sound and I wanted to make that work with assumptions.
+
+For some reason this wasn't working (though I'm trying this again today and it worked fine. Damn it I need to write this stuff down and think more clearly about what I'm doing before I waste a day doing random things). Anyways at the end of the day, I concluded that I needed to use z3 =forall= to form the correct statements about =lt=. I think this is true when you don't have an equation. Consider:
+
+#+begin_example
+a < b => a < b + 1
+#+end_example
+
+This is obviously true, but how do you state this to z3 as a satisfiability question? If you ask, is there a satisfying assignment, you can prove false statements:
+
+#+begin_src emacs-lisp
+a < b => a < 0
+(a < b => a < 0)/{a <- 1, b <- 0}
+1 < 0 => 1 < 0
+false => false
+true (!!)
+#+end_src
+
+So that doesn't work. What if we ask about an assignment for the negation:
+
+#+begin_src emacs-lisp
+! (a < b => a < 0)
+! (! (a < b) || (a < 0))
+(a < b) & ! (a < 0)
+(a < b) & ! (a < 0)/{a <- 1, b <- 2}
+(1 < 2) & ! (1 < 0)
+true & ! false
+true & true
+true
+#+end_src
+
+So that doesn't work either. What does work is using a =forall= like so:
+
+#+begin_src emacs-lisp
+(forall (a b) a < b => a < 0)
+#+end_src
+
+I don't know how to work it out from here, so I'll just say if you ask z3 this question, it gives you the right answer.
+
+However, this was just a tangent because I don't actually need to ask this kind of question. Arghh!! If you ask
+
+#+begin_src emacs-lisp
+a < b != a < 0
+(a < b != a < 0)/{a <- 1, b <- 2}
+1 < 2 != 1 < 0
+true != false
+true
+#+end_src
+
+This assignment shows that =a < b -> =
