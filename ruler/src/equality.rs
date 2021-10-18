@@ -17,7 +17,7 @@ pub struct Equality<L: SynthLanguage> {
 }
 
 #[derive(Clone, Serialize, Deserialize)]
-struct SerializedEq {
+pub struct SerializedEq {
     lhs: String,
     rhs: String,
     bidirectional: bool,

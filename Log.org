@@ -44,7 +44,7 @@ Neither side of the rewrite rule is ever true. So technically they are equivalen
 I haven't implemented converstion from =egg -> z3= for Vec rules yet so I haven't tested the whole thing yet.
 
 - TODO: deal with Vec rules in the validator (either with implementing z3 translation or using the existing technique)
-* Oct 12
+* Oct 12+13
 
 Continued working on the validator. This is written from the next day unfortunately, so I don't remember all the tangents I was following. The basic idea though was that I wanted to extend the validator to work on =Div= rules. Following the scheme in =bigint.rs= in ruler, I needed to add back the idea of assumptions. Along the way I got sidetracked because I felt like my approach for dealing with =Lt= wasn't sound and I wanted to make that work with assumptions.
 
@@ -95,4 +95,57 @@ true != false
 true
 #+end_src
 
-This assignment shows that =a < b -> =
+Because the inverse is satisfiable, this proves that =a < b -> a < 0= is false.
+
+Next I implemented the z3 verifier for =div=. Went smoothly. Jk it crashed :((
+* Oct 14
+
+Homework + parents arrived
+
+* Oct 15
+
+For the sake of running experiments, I want to be able to externally manage various settings that I have up until now been tweaking by directly modifying the code. Things I want to be able to parameterize:
+
+- [X] Seed set of rules
+- [X] Starting values
+- [X] Which operators I'm using (e.g. =lt, mul, add=)
+- [X] Which vector oeprators I'm using
+
+* Oct 18
+
+Starting the week. I guess I'll start with some hacking. I'll work through the todo list above.
+
+Example config:
+#+begin_src js :tangle test-config.json
+{
+    "constants": [
+	{
+	    "type": "int",
+	    "value": 0
+	},
+	{
+	    "type": "int",
+	    "value": 1
+	},
+	{
+	    "type": "bool",
+	    "value": true
+	},
+	{
+	    "type": "bool", 
+	    "value": false
+	}
+    ],
+    "seed_rules": [
+	{
+	    "lhs": "(+ ?a ?b)",
+	    "rhs": "(+ ?b ?a)",
+	    "bidirectional": true
+	}
+    ],
+    "binops": ["+", "*", "<"],
+    "use_vector": false,
+    "vector_binops": ["+", "*"]
+    
+}
+#+end_src

@@ -643,12 +643,12 @@ impl<L: SynthLanguage> Synthesizer<L> {
             self.params.no_conditionals = old;
         }
 
-        eprintln!("Learned {} rules in {:?}", num_rules, time);
+        println!("Learned {} rules in {:?}", num_rules, time);
         for eq in &eqs {
             // println!("  {:?}   {}", eq.score(), eq);
-            eprintln!("{}", eq);
+            println!("{}", eq);
         }
-        eprintln!("Learned {} rules in {:?}", num_rules, time);
+        println!("Learned {} rules in {:?}", num_rules, time);
         Report {
             params: self.params,
             time,
@@ -696,6 +696,9 @@ pub struct SynthParams {
     /// Absolute timeout
     #[clap(long, default_value = "120")]
     pub abs_timeout: usize,
+    /// Dios config
+    #[clap(long)]
+    pub dios_config: Option<String>,
 
     ///////////////////
     // search params //

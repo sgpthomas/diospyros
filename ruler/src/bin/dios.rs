@@ -7,9 +7,10 @@ use ruler::{letter, map, self_product, CVec, Equality, SynthAnalysis, SynthLangu
 use rustc_hash::FxHasher;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
+use std::fs::File;
 use std::hash::BuildHasherDefault;
 use std::str::FromStr;
-use z3::ast::{forall_const, Ast, Bool, Datatype, Int};
+use z3::ast::{Ast, Bool, Datatype, Int};
 use z3::{DatatypeAccessor, DatatypeBuilder, Sort};
 
 #[derive(Debug, PartialOrd, Ord, PartialEq, Eq, Hash, Clone)]
@@ -421,121 +422,27 @@ impl SynthLanguage for VecLang {
     }
 
     fn init_synth(synth: &mut Synthesizer<Self>) {
-        let consts: [Value; 2] = [
-            // Value::List(vec![]),
-            // Value::Vec(vec![Value::Int(0); synth.params.vector_size]),
-            // Value::Vec(vec![Value::Int(1); synth.params.vector_size]),
-            // Value::Vec(vec![]),
-            // Value::Int(-1),
-            Value::Int(0),
-            Value::Int(1),
-            // Value::Bool(true),
-            // Value::Bool(false),
-        ];
+        // read config
+        let config_path = synth
+            .params
+            .dios_config
+            .as_ref()
+            .expect("Expected dios config file.");
 
-        // add_eq(
-        //     synth,
-        //     "1",
-        //     "(+ (+ ?a ?b) (+ ?c ?d))",
-        //     "(+ (+ ?c ?b) (+ ?a ?d))",
-        // );
-        // add_eq(synth, "2", "(+ ?a ?b)", "(+ ?b ?a)");
-        // add_eq(synth, "3", "?a", "(+ ?a i0)");
+        log::info!("config: {}", config_path);
 
-        // initial set of rewrite rules
-        // let assoc_add: ruler::Equality<VecLang> = ruler::Equality::new(
-        //     &"(+ (+ ?a ?b) ?c)".parse().unwrap(),
-        //     &"(+ ?a (+ ?b ?c))".parse().unwrap(),
-        // )
-        // .unwrap();
-        // synth.equalities.insert("assoc_add".into(), assoc_add);
-
-        // let iso_add: Equality<VecLang> = Equality::new(
-        //     &"(VecAdd (Vec ?a ?b) (Vec ?c ?d))".parse().unwrap(),
-        //     &"(Vec (+ ?a ?c) (+ ?b ?d))".parse().unwrap(),
-        // )
-        // .unwrap();
-        // synth.equalities.insert("iso_add".into(), iso_add);
-
-        // add_eq(
-        //     synth,
-        //     "iso_add_n3",
-        //     "(VecAdd ?a ?b)",
-        //     "(VecAdd (Vec (Get ?a i0) (Get ?a i1))
-        //              (Vec (Get ?b i0) (Get ?b i1)))",
-        // );
-
-        // add_eq(
-        //     synth,
-        //     "iso_add_n3",
-        //     "(VecAdd ?a (VecAdd ?b ?c))",
-        //     "(VecAdd (Vec (Get ?a i0) (Get ?a i1) (Get ?a i2))
-        //              (VecAdd (Vec (Get ?b i0) (Get ?b i1) (Get ?b i2))
-        //                      (Vec (Get ?c i0) (Get ?c i1) (Get ?c i2))))",
-        // );
-        // add_eq(
-        //     synth,
-        //     "assoc_add",
-        //     "(VecAdd (VecAdd ?a ?b) ?c)",
-        //     "(VecAdd ?a (VecAdd ?b ?c))",
-        // );
-        // add_eq(
-        //     synth,
-        //     "iso_add",
-        //     "(VecAdd (Vec ?a ?b) (Vec ?c ?d))",
-        //     "(Vec (+ ?a ?c) (+ ?b ?d))",
-        // );
-
-        // add_eq(
-        //     synth,
-        //     "iso_mul",
-        //     "(VecMul (Vec ?a ?b) (Vec ?c ?d))",
-        //     "(Vec (* ?a ?c) (* ?b ?d))",
-        // );
-
-        // add_eq(synth, "get0", "(Get (Vec ?a ?b ?c) i0)", "?a");
-        // add_eq(synth, "get1", "(Get (Vec ?a ?b ?c) i1)", "?b");
-        // add_eq(synth, "get1", "(Get (Vec ?a ?b ?c) i2)", "?c");
-
-        // let iso_add: ruler::Equality<VecLang> = ruler::Equality::new(
-        //     &"(VecAdd ?a ?b)".parse().unwrap(),
-        //     &"(VecAdd (Vec (Get ?a i0) (Get ?a i1)) (Vec (Get ?b i0) (Get ?b i1)))"
-        //         .parse()
-        //         .unwrap(),
-        // )
-        // .unwrap();
-        // synth.equalities.insert("iso_add".into(), iso_add);
-
-        // let comm_add: ruler::Equality<VecLang> =
-        //     ruler::Equality::new(&"(+ ?a ?b)".parse().unwrap(), &"(+ ?b ?a)".parse().unwrap())
-        //         .unwrap();
-        // synth.equalities.insert("comm_add".into(), comm_add);
-        // let assoc_add: ruler::Equality<VecLang> = ruler::Equality::new(
-        //     &"(+ ?a (+ ?b ?c))".parse().unwrap(),
-        //     &"(+ (+ ?a ?b) ?c)".parse().unwrap(),
-        // )
-        // .unwrap();
-        // synth.equalities.insert("assoc_add".into(), assoc_add);
-
-        // let get_vec: ruler::Equality<VecLang> = ruler::Equality::new(
-        //     &"(VecAdd ?a (VecAdd ?b ?c))".parse().unwrap(),
-        //     &"(Vec (+ (Get ?a i0) (+ (Get ?b i0) (Get ?c i0)))
-        //            (+ (Get ?a i1) (+ (Get ?b i1) (Get ?c i1)))
-        //            (+ (Get ?a i2) (+ (Get ?b i2) (Get ?c i2))))"
-        //         .parse()
-        //         .unwrap(),
-        // )
-        // .unwrap();
-        // synth.equalities.insert("get_vec".into(), get_vec);
-
-        // let assoc_vec_add: ruler::Equality<VecLang> = ruler::Equality::new(
-        //     &"(VecAdd ?a (VecAdd ?b ?c))".parse().unwrap(),
-        //     &"(VecAdd (VecAdd ?a ?b) ?c)".parse().unwrap(),
-        // )
-        // .unwrap();
-        // synth
-        //     .equalities
-        //     .insert("assoc_vec_add".into(), assoc_vec_add);
+        let config = read_conf(synth);
+        // parse constants
+        let consts: Vec<Value> = config["constants"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| match v["type"].as_str().unwrap() {
+                "int" => Value::Int(v["value"].as_i64().unwrap() as i32),
+                "bool" => Value::Bool(v["value"].as_bool().unwrap()),
+                _ => panic!("unknown type."),
+            })
+            .collect();
 
         let consts_cross = self_product(
             &consts.iter().map(|x| Some(x.clone())).collect::<Vec<_>>(),
@@ -544,55 +451,11 @@ impl SynthLanguage for VecLang {
 
         let size = consts_cross[0].len();
 
-        // new egraph
-
-        // let rewrites: Vec<egg::Rewrite<VecLang, SynthAnalysis>> = vec![
-        //     rewrite!("add-comm"; "(+ ?a ?b)" <=> "(+ ?b ?a)"),
-        //     rewrite!("add-vec-iso";
-        // 	     "(VecAdd (Vec ?a ?b) (Vec ?c ?d))" <=> "(Vec (+ ?a ?c) (+ ?b ?d))"),
-        // ]
-        // .concat();
-
-        // let mut runner = egg::Runner::default()
-        //     .with_iter_limit(10)
-        //     .with_node_limit(10_000)
-        //     .with_scheduler(SimpleScheduler);
-
-        // runner = runner.with_expr(&"(Vec (+ ?a ?c) (+ ?b ?d))".parse().unwrap());
-        // runner = runner.with_expr(&"(Vec (+ ?a ?c) (+ ?d ?b))".parse().unwrap());
-        // runner = runner.with_expr(&"(+ ?a ?b)".parse().unwrap());
-        // runner = runner.with_expr(&"(+ ?b ?a)".parse().unwrap());
-
-        // log::info!(
-        //     "before {:?} ?= {:?}",
-        //     runner.egraph.find(runner.roots[0]),
-        //     runner.egraph.find(runner.roots[1])
-        // );
-        // runner = runner.run(&rewrites);
-        // log::info!(
-        //     "after {:?} ?= {:?}",
-        //     runner.egraph.find(runner.roots[0]),
-        //     runner.egraph.find(runner.roots[1])
-        // );
-
-        // runner.egraph.dot().to_png("play.png").unwrap();
-
-        // log::info!("runner roots: {:?}", runner.roots);
-
-        // let mut extract = egg::Extractor::new(&runner.egraph, egg::AstSize);
-        // for ids in runner.roots.iter().combinations(2) {
-        //     let l = *ids[0];
-        //     let r = *ids[1];
-        //     log::info!("{} <=?=> {}", l, r);
-        //     if runner.egraph.find(l) != runner.egraph.find(r) {
-        //         let (lcost, left) = extract.find_best(l);
-        //         let (rcost, right) = extract.find_best(r);
-        //         log::info!("lcost: {:?}, rcost: {:?}", lcost, rcost);
-        //         log::info!("{} <=> {}", left, right);
-        //     }
-        // }
-
-        // panic!();
+        // read and add seed rules from config
+        for eq in config["seed_rules"].as_array().unwrap() {
+            log::info!("eq: {}", eq);
+            add_eq(synth, eq);
+        }
 
         let mut egraph = egg::EGraph::new(SynthAnalysis { cvec_len: size });
 
@@ -649,17 +512,22 @@ impl SynthLanguage for VecLang {
                     .multi_cartesian_product()
                     .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
                     .map(|ids| [ids[0], ids[1]])
-                    .map(|x| {
-                        vec![
-                            VecLang::Add(x),
-                            // VecLang::Minus(x),
-                            VecLang::Mul(x),
-                            // VecLang::Div(x),
-                            // VecLang::Or(x),
-                            // VecLang::And(x),
-                            // VecLang::Ite(x),
-                            VecLang::Lt(x),
-                        ]
+                    .map(move |x| {
+                        read_conf(synth)["binops"]
+                            .as_array()
+                            .expect("binops in config")
+                            .iter()
+                            .map(|op| match op.as_str().unwrap() {
+                                "+" => VecLang::Add(x),
+                                "*" => VecLang::Mul(x),
+                                "-" => VecLang::Minus(x),
+                                "/" => VecLang::Div(x),
+                                "or" => VecLang::Or(x),
+                                "&&" => VecLang::And(x),
+                                "<" => VecLang::Lt(x),
+                                _ => panic!("Unknown binop"),
+                            })
+                            .collect::<Vec<_>>()
                     })
                     .flatten(),
             )
@@ -667,20 +535,25 @@ impl SynthLanguage for VecLang {
             None
         };
 
-        let vec_stuff = if false {
+        let vec_stuff = if read_conf(synth)["use_vector"].as_bool().unwrap() {
             let vec_binops = (0..2)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
                 .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
                 .map(|ids| [ids[0], ids[1]])
-                .map(|x| {
-                    vec![
-                        // don't fold
-                        // VecLang::Concat(x),
-                        VecLang::VecAdd(x),
-                        VecLang::VecMul(x),
-                        // VecLang::VecMinus(x),
-                    ]
+                .map(move |x| {
+                    read_conf(synth)["vector_binops"]
+                        .as_array()
+                        .expect("vector binops")
+                        .iter()
+                        .map(|op| match op.as_str().unwrap() {
+                            "+" => VecLang::VecAdd(x),
+                            "-" => VecLang::VecMinus(x),
+                            "*" => VecLang::VecMul(x),
+                            "/" => VecLang::VecDiv(x),
+                            _ => panic!("Unknown vec binop"),
+                        })
+                        .collect::<Vec<_>>()
                 })
                 .flatten();
 
@@ -721,36 +594,36 @@ impl SynthLanguage for VecLang {
             solver.reset();
             let all: Vec<_> = lasses.into_iter().chain(rasses.into_iter()).collect();
             let qe_eq = &lexpr._eq(&rexpr).not();
-            log::info!("z3 eq: {} = {}", lhs, rhs);
-            log::info!("z3 asses: {:?}", all);
-            for ass in &all {
-                solver.reset();
-                solver.assert(ass);
-                match solver.check() {
-                    z3::SatResult::Unsat => {
-                        log::info!("z3 ass was unsat {}", ass);
-                        return false;
-                    }
-                    z3::SatResult::Unknown => {
-                        log::info!("z3 ass was unknown {}", ass);
-                        return false;
-                    }
-                    z3::SatResult::Sat => {
-                        continue;
-                    }
-                }
-            }
+            // log::info!("z3 eq: {} = {}", lhs, rhs);
+            // log::info!("z3 asses: {:?}", all);
+            // for ass in &all {
+            //     solver.reset();
+            //     solver.assert(ass);
+            //     match solver.check() {
+            //         z3::SatResult::Unsat => {
+            //             log::info!("z3 ass was unsat {}", ass);
+            //             return false;
+            //         }
+            //         z3::SatResult::Unknown => {
+            //             log::info!("z3 ass was unknown {}", ass);
+            //             return false;
+            //         }
+            //         z3::SatResult::Sat => {
+            //             continue;
+            //         }
+            //     }
+            // }
 
             solver.assert(qe_eq);
-            log::info!("z3 check {} != {}", lhs, rhs);
+            log::debug!("z3 check {} != {}", lhs, rhs);
 
             match solver.check_assumptions(&all) {
                 z3::SatResult::Sat => {
-                    log::info!("counter-example: {:?}", solver.get_model());
+                    log::debug!("counter-example: {:?}", solver.get_model());
                     false
                 }
                 z3::SatResult::Unsat => {
-                    log::info!("z3 validation: success for {} => {}", lhs, rhs);
+                    log::debug!("z3 validation: success for {} => {}", lhs, rhs);
                     log::debug!("core: {:?}", solver.get_unsat_core());
                     true
                 }
@@ -831,6 +704,11 @@ impl SynthLanguage for VecLang {
     }
 }
 
+fn read_conf(synth: &Synthesizer<VecLang>) -> serde_json::Value {
+    let file = File::open(synth.params.dios_config.as_ref().unwrap()).unwrap();
+    serde_json::from_reader(file).unwrap()
+}
+
 fn vecs_eq(lvec: &CVec<VecLang>, rvec: &CVec<VecLang>) -> bool {
     if lvec.iter().all(|x| x.is_none()) && rvec.iter().all(|x| x.is_none()) {
         false
@@ -842,11 +720,15 @@ fn vecs_eq(lvec: &CVec<VecLang>, rvec: &CVec<VecLang>) -> bool {
     }
 }
 
-#[allow(unused)]
-fn add_eq(synth: &mut Synthesizer<VecLang>, name: &str, left: &str, right: &str) {
+fn add_eq(synth: &mut Synthesizer<VecLang>, value: &serde_json::Value) {
+    let left = value["lhs"].as_str().unwrap();
+    let right = value["rhs"].as_str().unwrap();
+
     let rule: Equality<VecLang> =
         Equality::new(&left.parse().unwrap(), &right.parse().unwrap()).unwrap();
-    synth.equalities.insert(name.into(), rule);
+    synth
+        .equalities
+        .insert(format!("{} <=> {}", left, right).into(), rule);
 }
 
 #[allow(unused)]
@@ -896,7 +778,7 @@ fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>
     let int_cons = &int_bool.variants[0].constructor;
     let int_get = &int_bool.variants[0].accessors[0];
     let bool_cons = &int_bool.variants[1].constructor;
-    let bool_get = &int_bool.variants[1].accessors[0];
+    let _bool_get = &int_bool.variants[1].accessors[0];
 
     let mut vars: Vec<_> = vec![];
 
@@ -925,9 +807,18 @@ fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>
                 let res = int_cons.apply(&[&(x_int * y_int)]).as_datatype().unwrap();
                 buf.push(res)
             }
-            // VecLang::Div([x, y]) => {
-            // 	let denom = int_get.apply(&[buf[usize::from(*x)].0]).as_int().unwrap();
-            // }
+            VecLang::Div([x, y]) => {
+                let denom = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
+                // let eqz = Int::le(&denom, &Int::from_i64(&ctx, 0));
+                let lez = Int::le(&denom, &Int::from_i64(&ctx, 0));
+                let gez = Int::ge(&denom, &Int::from_i64(&ctx, 0));
+                let assume = Bool::not(&Bool::and(&ctx, &[&lez, &gez]));
+                assumes.push(assume);
+                let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
+                let term = Int::div(&x_int, &denom);
+
+                buf.push(int_cons.apply(&[&term]).as_datatype().unwrap())
+            }
             VecLang::Lt([a, b]) => {
                 let a_int = int_get.apply(&[&buf[usize::from(*a)]]).as_int().unwrap();
                 let b_int = int_get.apply(&[&buf[usize::from(*b)]]).as_int().unwrap();
@@ -946,11 +837,5 @@ fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>
         }
     }
 
-    // let head = buf.pop().unwrap();
-    // if b {
-    //     let ass = bool_get.apply(&[&head]).as_bool().unwrap();
-    //     assumes.push(ass);
-    // }
-    // Some((head, assumes))
     buf.pop().map(|head| (head, assumes))
 }

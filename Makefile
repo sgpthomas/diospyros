@@ -60,7 +60,7 @@ clean:
 
 # generate rules
 rules.json:
-	RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth $(RULER_FLAGS) --outfile rules.json
+	cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth $(RULER_FLAGS) --outfile rules.json --dios-config dios-config.json
 
 # Run egg rewriter
 %-out/res.rkt: %-out
