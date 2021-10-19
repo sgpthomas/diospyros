@@ -27,43 +27,23 @@
     "use_smt": false,
     "do_final_run": false
   },
-  "time": 1.40683563,
-  "num_rules": 13,
+  "time": 1.178606176,
+  "num_rules": 8,
   "smt_unknown": 0,
   "eqs": [
     {
-      "lhs": "(* ?a (* ?b ?c))",
-      "rhs": "(* (* ?a ?b) ?c)",
+      "lhs": "(* (* ?a ?b) (* ?c ?d))",
+      "rhs": "(* (* ?c ?a) (* ?b ?d))",
       "bidirectional": true
     },
     {
-      "lhs": "(+ ?a (+ ?b ?c))",
-      "rhs": "(+ (+ ?a ?b) ?c)",
+      "lhs": "(+ (+ ?a ?b) (+ ?c ?d))",
+      "rhs": "(+ (+ ?d ?a) (+ ?c ?b))",
       "bidirectional": true
     },
     {
-      "lhs": "(+ (* ?a ?b) (* ?c ?a))",
-      "rhs": "(* (+ ?c ?b) ?a)",
-      "bidirectional": true
-    },
-    {
-      "lhs": "(+ ?a (+ ?b ?c))",
-      "rhs": "(+ 0 (+ ?a (+ ?b ?c)))",
-      "bidirectional": true
-    },
-    {
-      "lhs": "(* ?a (+ ?b ?c))",
-      "rhs": "(* ?a (+ ?b (+ 0 ?c)))",
-      "bidirectional": true
-    },
-    {
-      "lhs": "(+ ?a (* ?b ?c))",
-      "rhs": "(+ ?a (* ?b (+ 0 ?c)))",
-      "bidirectional": true
-    },
-    {
-      "lhs": "(+ 0 (* ?a (* ?b ?c)))",
-      "rhs": "(* ?a (* ?b ?c))",
+      "lhs": "(+ (* ?a ?b) (* ?b ?c))",
+      "rhs": "(* ?b (+ ?a ?c))",
       "bidirectional": true
     },
     {
@@ -77,24 +57,19 @@
       "bidirectional": false
     },
     {
-      "lhs": "(+ ?a ?b)",
-      "rhs": "(+ 0 (+ ?a ?b))",
+      "lhs": "?a",
+      "rhs": "(* ?a 1)",
       "bidirectional": true
     },
     {
-      "lhs": "(* ?a ?b)",
-      "rhs": "(* ?b (+ 0 ?a))",
+      "lhs": "?a",
+      "rhs": "(+ ?a 0)",
       "bidirectional": true
     },
     {
       "lhs": "(* ?a 0)",
       "rhs": "0",
       "bidirectional": false
-    },
-    {
-      "lhs": "(+ 0 ?a)",
-      "rhs": "(* 1 ?a)",
-      "bidirectional": true
     }
   ]
 }

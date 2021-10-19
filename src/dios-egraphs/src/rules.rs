@@ -108,6 +108,10 @@ pub fn run(
         .with_expr(&prog)
         .with_node_limit(10_000_000)
         .with_time_limit(std::time::Duration::from_secs(timeout))
+        .with_hook(|runner| {
+            eprintln!("Egraph big big? {}", runner.egraph.total_size());
+            Ok(())
+        })
         .with_iter_limit(10_000);
 
     eprintln!("Starting run with {} rules", rules.len());

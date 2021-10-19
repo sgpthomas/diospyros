@@ -1064,69 +1064,172 @@ echo ""
 	},
 	{
 	    "lhs": "(+ ?a i0)",
-	    "rhs": "i0"
+	    "rhs": "?a"
 	}
     ],
 	<<operations>>
 }
 #+end_src
 
-#+begin_src shell :noweb yes :results output verbatim :session yes
-export RUST_LOG=info
-<<run-dios>> 2>&1
+#+begin_src bash :noweb yes :results output verbatim
+<<run-dios>>
+#+end_src
+
+#+NAME: commute_zero
+#+RESULTS:
+#+begin_example
+(* ?a 0) => 0
+?a <=> (+ ?a 0)
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(+ ?a (* ?b ?c)) <=> (+ (* 1 ?a) (* ?b ?c))
+(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a (* 1 ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a (* 1 ?b)))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(* ?a (* ?b ?c)) <=> (* ?c (* (* ?b ?a) 1))
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?a ?d) (+ ?c ?b))
+#+end_example
+
+Number of rules.
+#+begin_src shell :var a=commute_zero
+echo "$a" | wc -l
+#+end_src
+
+#+RESULTS:
+: 1
+
+#+begin_src bash :results verbatim :var a=commute_zero b=assoc_commute :wrap SRC diff :exports results
+
+diff -u --label "commute_zero" <(echo "$a") --label "assoc+commute" <(echo "$b")
+echo ""
+#+end_src
+
+#+RESULTS:
+#+begin_SRC diff
+--- commute_zero
++++ assoc+commute
+@@ -1,13 +1,14 @@
++(+ 0 ?a) <=> (* 1 ?a)
++(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
+(* ?a 0) => 0
+-?a <=> (+ ?a 0)
+-(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
++(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
++(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+-(+ ?a (* ?b ?c)) <=> (+ (* 1 ?a) (* ?b ?c))
+-(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a (* 1 ?c)))
+-(+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a (* 1 ?b)))
+-(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+-(* ?a (* ?b ?c)) <=> (* ?c (* (* ?b ?a) 1))
+-(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
+-(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?a ?d) (+ ?c ?b))
++(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
++(* ?a (+ ?b ?c)) <=> (* ?a (+ ?b (+ 0 ?c)))
++(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
++(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
++(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
++(+ (* ?a ?b) (* ?c ?a)) <=> (* (+ ?c ?b) ?a)
+
+
+#+end_SRC
+
+So this shows that you can successfully get rid of these "seemingly useless" zero rules. Examples of such rules:
+
+#+begin_example
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(* ?a (+ ?b ?c)) <=> (* ?a (+ ?b (+ 0 ?c)))
+(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
+#+end_example
+
+**** Commute + zero + one
+
+#+begin_src js :tangle ../dios-config.json :noweb yes
+{
+	<<constants>>,
+    "seed_rules": [
+	{
+	    "lhs": "(+ ?a ?b)",
+	    "rhs": "(+ ?b ?a)"
+	},
+	{
+	    "lhs": "(* ?a ?b)",
+	    "rhs": "(* ?b ?a)"
+	},
+	{
+	    "lhs": "(+ ?a i0)",
+	    "rhs": "?a"
+	},
+	{
+	    "lhs": "(* ?a i1)",
+	    "rhs": "?a"
+	}
+    ],
+	<<operations>>
+}
+#+end_src
+
+#+begin_src bash :noweb yes :results output verbatim
+<<run-dios>>
+#+end_src
+
+#+RESULTS:
+: (* ?a 0) => 0
+: ?a <=> (+ ?a 0)
+: ?a <=> (* ?a 1)
+: (* ?a ?b) <=> (* ?b ?a)
+: (+ ?a ?b) <=> (+ ?b ?a)
+: (+ (* ?a ?b) (* ?b ?c)) <=> (* ?b (+ ?a ?c))
+: (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?c ?a) (* ?b ?d))
+: (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?d ?a) (+ ?c ?b))
+
+By seeding various rules, we can get the output rules to be more "interesting" and seemingly less redundant. Now let's try and quantify some of what it means for a rule to be "more interesting".
+
+** How do different rules effect how the size of the Diospyros egraph grows over time?
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
+
+*** Setup
+Firstly, how do we record the size of the egraph over time.
+
+Tried using the =with hook= method on =runner=.
+
+#+begin_src shell :async :results output verbatim
+python3 evaluation/eval_benchmarks.py \
+	--timeout 20 \
+	--skiprun \
+	--test \
+	-o test-result \
+    | grep "Egraph big big?" \
+    | cut -d' ' -f 4
 #+end_src
 
 #+RESULTS:
 #+begin_example
-export RUST_LOG=info
-           [33me[33mx[33mp[33mo[33mr[33mt[39m RUST_LOG=info[?2004l
-cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
-
-
-
-  [01;34m~/Research/diospyros
-
-[00m[3243m([39m[32m[3m[2mmaster[00m[3243m)[39m[00m [01;32m➜[00m ]51;Asamthomas@thelio:/home/samthomas/Research/diospyros\[?2004hcargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
-           [32mc[32ma[32mr[32mg[32mo[39m run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \[?2004l
-[?2004h      --num-fuzz 4 \[?2004l
-[?2004h      --iters 2 \[?2004l
-[?2004h      --variables 4 \[?2004l
-[?2004h      --eqsat-iter-limit 2 \[?2004l
-[?2004h      --vector-size 2 \[?2004l
-[?2004h      --abs-timeout 240 \[?2004l
-[?2004h      --outfile rules.json \rules.json \[?2004l
-[?2004h      --dios-config dios-config.json \dios-config.json \[?2004l
-[?2004h    | head -n -1 \
-      | [32mh[32me[32ma[32md[39m -n -1 \[?2004l
-[?2004h    | tail -n +2 \
-          | [32mt[32ma[32mi[32ml[39m -n +2 \[?2004l
-[?2004h    | sort 2>&1[?2004l
-
-
-    Finished release [optimized] target(s) in 0.03s
-     Running `ruler/target/release/dios synth --num-fuzz 4 --iters 2 --variables 4 --eqsat-iter-limit 2 --vector-size 2 --abs-timeout 240 --outfile rules.json --dios-config dios-config.json`
-[INFO  dios] config: dios-config.json
-[INFO  dios] eq: {"lhs":"(+ ?a ?b)","rhs":"(+ ?b ?a)"}
-[INFO  dios] eq: {"lhs":"(* ?a ?b)","rhs":"(* ?b ?a)"}
-[INFO  dios] eq: {"lhs":"(+ ?a i0)","rhs":"i0"}
-[INFO  ruler] [[[ Iteration 1 ]]]
-[INFO  ruler] Made layer! Using chunk size: 100000
-[INFO  ruler] egraph n=6, e=6
-[INFO  ruler] running eqsat with 3 rules
-[INFO  egg::egraph] REBUILT! in 0.000s
-      Old: hc size 70, eclasses: 70
-      New: hc size 70, eclasses: 70
-      unions: 0, trimmed nodes: 0
-[INFO  egg::run] 
-    Iteration 0
-[INFO  egg::run] Search time: 0.000012003
-  a = 66
-  b = 89
-  c = -6
-  d = 83
-thread 'main' panicked at 'assertion failed: `(left == right)`
-  left: `Int(89)`,
-0', /home/samthomas/Research/diospyros/ruler/src/equality.rs:121:21
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+29
+111
+526
+1479
+2270
+2125
+2125
+2761
+2905
+2869
+2861
+2861
+2861
+2861
+6178
+6178
+6178
+6178
+66018
 #+end_example
 
