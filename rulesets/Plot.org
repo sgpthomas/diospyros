@@ -740,12 +740,12 @@ For these experiments, we are using the following constants:
 #+begin_src js
 "constants": [
     {
-        "type": "int",
-        "value": 0
+	"type": "int",
+	"value": 0
     },
     {
-        "type": "int",
-        "value": 1
+	"type": "int",
+	"value": 1
     }
 ]
 #+end_src
@@ -760,7 +760,7 @@ and the following operations:
 
 We are using the following command line settings:
 #+name: run-dios
-#+begin_src sh
+#+begin_src bash :var config="" :async :results output
 cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
       --num-fuzz 4 \
       --iters 2 \
@@ -769,16 +769,19 @@ cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
       --vector-size 2 \
       --abs-timeout 240 \
       --outfile rules.json \
-      --dios-config dios-config.json \
-    | head -n -1 \
-    | tail -n +2 \
-    | sort
+      --dios-config $config
+#+end_src
+
+#+name: trim
+#+begin_src bash :var inp="" :results output verbatim
+echo $inp | head -n -1
 #+end_src
 
 *** Experiments
 **** Baseline
 Let's first establish a baseline. What are the rules we generate with no seed rules?
-#+begin_src js :tangle ../dios-config.json :noweb yes
+#+NAME: baseline-config
+#+begin_src json :tangle ../configs/baseline.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [],
@@ -786,43 +789,34 @@ Let's first establish a baseline. What are the rules we generate with no seed ru
 }
 #+end_src
 
-#+begin_src shell :noweb yes :results output verbatim
-<<run-dios>>
-#+end_src
+#+call: run-dios(config="configs/baseline.json")
 
-#+NAME: baseline
 #+RESULTS:
 #+begin_example
-(* 0 ?a) => 0
-(+ 0 ?a) <=> (* 1 ?a)
-(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
-(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
-(+ ?a ?a) <=> (* ?a 2)
-(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
-(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
-(* ?a ?b) <=> (* ?b (* 1 ?a))
-(* ?a ?b) <=> (* ?b ?a)
-(+ ?a ?b) <=> (+ ?b ?a)
-(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
-(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a ?c))
-(+ ?a (* ?b ?c)) <=> (+ (* ?b ?c) (+ 0 ?a))
-(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+Learned 15 rules in 1.495697708
 (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
 (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?b) (* ?a ?c))
+(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ ?a (+ 0 (* ?b ?c))) <=> (+ ?a (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* ?b (* 1 ?a))
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(+ ?a ?a) <=> (* ?a 2)
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 15 rules in 1.495697708
 #+end_example
-
-#+begin_src shell :var a=baseline
-echo "$a" | wc -l
-#+end_src
-
-#+RESULTS:
-: 17
 
 **** Commutativity
 
 I wonder what happens if we start with commutativity rules.
 
-#+begin_src js :tangle ../dios-config.json :noweb yes
+#+begin_src js :tangle ../configs/commutativity.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
@@ -839,37 +833,29 @@ I wonder what happens if we start with commutativity rules.
 }
 #+end_src
 
-#+begin_src shell :noweb yes :results output verbatim
-<<run-dios>>
-#+end_src
+#+call: run-dios(config="configs/commutativity.json")
 
 #+NAME: commute
 #+RESULTS:
 #+begin_example
-(+ 0 ?a) <=> (* 1 ?a)
-(+ 0 (* ?a ?b)) <=> (* ?a ?b)
-(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
-(* ?a 0) => 0
-(+ ?a ?a) <=> (* ?a 2)
-(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
-(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
-(* ?a ?b) <=> (* ?b ?a)
-(+ ?a ?b) <=> (+ ?b ?a)
-(* ?a (+ ?b ?c)) <=> (* (+ 0 ?a) (+ ?b ?c))
-(+ ?a (* ?b ?c)) <=> (+ 0 (+ ?a (* ?b ?c)))
-(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
-(* ?a (* ?b ?c)) <=> (* ?b (* ?a ?c))
-(+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a ?b))
+Learned 15 rules in 1.212821458
 (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
 (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
+(+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a ?b))
+(* ?a (* ?b ?c)) <=> (* ?b (* ?a ?c))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
+(+ ?a (* ?b ?c)) <=> (+ 0 (+ ?a (* ?b ?c)))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(+ ?a ?a) <=> (* ?a 2)
+(* ?a 0) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 15 rules in 1.212821458
 #+end_example
-
-#+begin_src shell :var a=commute
-echo "$a" | wc -l
-#+end_src
-
-#+RESULTS:
-: 17
 
 These rules don't seem to change the rules generated.
 
@@ -877,7 +863,7 @@ These rules don't seem to change the rules generated.
 
 What about adding an associativity rule?
 
-#+begin_src js :tangle ../dios-config.json :noweb yes
+#+begin_src js :tangle ../configs/associativity.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
@@ -894,34 +880,26 @@ What about adding an associativity rule?
 }
 #+end_src
 
-#+begin_src shell :noweb yes :results output verbatim
-<<run-dios>>
-#+end_src
+#+call: run-dios(config="configs/associativity.json")
 
-#+NAME: assoc
 #+RESULTS:
 #+begin_example
-(* 0 ?a) => 0
-(+ 0 ?a) <=> (* 1 ?a)
-(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
-(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
-(+ (* ?a ?b) (* ?a ?c)) <=> (* (+ ?c ?b) ?a)
-(* ?a ?b) <=> (* ?b (+ 0 ?a))
-(+ ?a ?b) <=> (+ ?b (+ 0 ?a))
-(* ?a ?b) <=> (* ?b ?a)
-(+ ?a ?b) <=> (+ ?b ?a)
-(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
-(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
+Learned 13 rules in 1.597851125
 (* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
 (+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(+ (* ?a ?b) (* ?a ?c)) <=> (* (+ ?c ?b) ?a)
+(* ?a (* ?b ?c)) <=> (* ?c (* (* 1 ?b) ?a))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
+(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* (* 1 ?a) ?b)
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 13 rules in 1.597851125
 #+end_example
-
-#+begin_src shell :var a=assoc
-echo "$a" | wc -l
-#+end_src
-
-#+RESULTS:
-: 14
 
 So this generated three fewer rules than before. I wonder what rules are different.
 
@@ -962,7 +940,7 @@ echo ""
 
 **** Commute + Associativity
 
-#+begin_src js :tangle ../dios-config.json :noweb yes
+#+begin_src js :tangle ../configs/commute_assoc.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
@@ -987,35 +965,26 @@ echo ""
 }
 #+end_src
 
-#+begin_src shell :noweb yes :results output verbatim
-<<run-dios>>
-#+end_src
+#+call: run-dios(config="configs/commute_assoc.json")
 
-#+NAME: assoc_commute
 #+RESULTS:
 #+begin_example
-(+ 0 ?a) <=> (* 1 ?a)
-(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
-(* ?a 0) => 0
-(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
-(* ?a ?b) <=> (* ?b (+ 0 ?a))
-(* ?a ?b) <=> (* ?b ?a)
-(+ ?a ?b) <=> (+ ?b ?a)
-(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
-(* ?a (+ ?b ?c)) <=> (* ?a (+ ?b (+ 0 ?c)))
-(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
+Learned 13 rules in 1.198853833
 (* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
 (+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
 (+ (* ?a ?b) (* ?c ?a)) <=> (* (+ ?c ?b) ?a)
+(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(* ?a (+ ?b ?c)) <=> (* ?a (+ ?b (+ 0 ?c)))
+(+ ?a (* ?b ?c)) <=> (+ (+ 0 ?a) (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(+ ?a ?b) <=> (+ ?b (+ 0 ?a))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(* ?a 0) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 13 rules in 1.198853833
 #+end_example
-
-Number of rules.
-#+begin_src shell :var a=assoc_commute
-echo "$a" | wc -l
-#+end_src
-
-#+RESULTS:
-: 14
 
 #+begin_src bash :results verbatim :var a=assoc b=assoc_commute :wrap SRC diff :exports results
 diff -u --label "base" <(echo "$a") --label "assoc+commute" <(echo "$b")
@@ -1050,7 +1019,7 @@ echo ""
 
 **** Commute + zero rule
 
-#+begin_src js :tangle ../dios-config.json :noweb yes
+#+begin_src js :tangle ../configs/commute_zero.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
@@ -1071,34 +1040,28 @@ echo ""
 }
 #+end_src
 
+#+call: run-dios(config="configs/commute_zero.json")
+
+#+name: commute_zero
+#+RESULTS:
+#+begin_example
+Learned 10 rules in 1.08482675
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?a ?d) (+ ?c ?b))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* (* ?b ?a) 1))
+(+ ?a (+ ?b ?c)) <=> (+ (* 1 ?a) (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (+ ?a 0)
+(* ?a 0) => 0
+Learned 10 rules in 1.08482675
+#+end_example
+
 #+begin_src bash :noweb yes :results output verbatim
 <<run-dios>>
 #+end_src
-
-#+NAME: commute_zero
-#+RESULTS:
-#+begin_example
-(* ?a 0) => 0
-?a <=> (+ ?a 0)
-(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
-(* ?a ?b) <=> (* ?b ?a)
-(+ ?a ?b) <=> (+ ?b ?a)
-(+ ?a (* ?b ?c)) <=> (+ (* 1 ?a) (* ?b ?c))
-(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a (* 1 ?c)))
-(+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a (* 1 ?b)))
-(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
-(* ?a (* ?b ?c)) <=> (* ?c (* (* ?b ?a) 1))
-(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
-(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?a ?d) (+ ?c ?b))
-#+end_example
-
-Number of rules.
-#+begin_src shell :var a=commute_zero
-echo "$a" | wc -l
-#+end_src
-
-#+RESULTS:
-: 1
 
 #+begin_src bash :results verbatim :var a=commute_zero b=assoc_commute :wrap SRC diff :exports results
 
@@ -1149,7 +1112,7 @@ So this shows that you can successfully get rid of these "seemingly useless" zer
 
 **** Commute + zero + one
 
-#+begin_src js :tangle ../dios-config.json :noweb yes
+#+begin_src js :tangle ../configs/commute_zero_one.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
@@ -1174,19 +1137,21 @@ So this shows that you can successfully get rid of these "seemingly useless" zer
 }
 #+end_src
 
-#+begin_src bash :noweb yes :results output verbatim
-<<run-dios>>
-#+end_src
+#+call: run-dios(config="configs/commute_zero_one.json")
 
 #+RESULTS:
-: (* ?a 0) => 0
-: ?a <=> (+ ?a 0)
-: ?a <=> (* ?a 1)
-: (* ?a ?b) <=> (* ?b ?a)
-: (+ ?a ?b) <=> (+ ?b ?a)
-: (+ (* ?a ?b) (* ?b ?c)) <=> (* ?b (+ ?a ?c))
-: (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?c ?a) (* ?b ?d))
-: (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?d ?a) (+ ?c ?b))
+#+begin_example
+Learned 8 rules in 1.048874583
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?c ?a) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?d ?a) (+ ?c ?b))
+(+ (* ?a ?b) (* ?b ?c)) <=> (* ?b (+ ?a ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (* ?a 1)
+?a <=> (+ ?a 0)
+(* ?a 0) => 0
+Learned 8 rules in 1.048874583
+#+end_example
 
 By seeding various rules, we can get the output rules to be more "interesting" and seemingly less redundant. Now let's try and quantify some of what it means for a rule to be "more interesting".
 
@@ -1200,7 +1165,8 @@ Firstly, how do we record the size of the egraph over time.
 
 Tried using the =with hook= method on =runner=.
 
-#+begin_src shell :async :results output verbatim
+#+name: eval_benchmarks
+#+begin_src shell :async :results output table
 python3 evaluation/eval_benchmarks.py \
 	--timeout 20 \
 	--skiprun \
@@ -1210,26 +1176,325 @@ python3 evaluation/eval_benchmarks.py \
     | cut -d' ' -f 4
 #+end_src
 
+
+#+RESULTS: eval_benchmarks
+
+*** Baseline
+
+#+call: run-dios(config="configs/baseline.json")
+
 #+RESULTS:
 #+begin_example
-29
-111
-526
-1479
-2270
-2125
-2125
-2761
-2905
-2869
-2861
-2861
-2861
-2861
-6178
-6178
-6178
-6178
-66018
+Learned 15 rules in 1.526623833
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?b) (* ?a ?c))
+(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ ?a (+ 0 (* ?b ?c))) <=> (+ ?a (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* ?b (* 1 ?a))
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(+ ?a ?a) <=> (* ?a 2)
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 15 rules in 1.526623833
 #+end_example
 
+#+call: eval_benchmarks()
+
+#+name: baseline_data
+#+RESULTS:
+|   29 |
+|   77 |
+|  401 |
+| 1387 |
+| 1743 |
+| 1599 |
+| 1616 |
+| 1693 |
+| 1768 |
+| 3990 |
+| 3834 |
+| 3845 |
+| 3849 |
+| 3849 |
+| 3849 |
+| 9647 |
+| 9687 |
+| 9687 |
+| 9687 |
+| 9687 |
+
+*** Commutativity
+
+#+call: run-dios(config="configs/commutativity.json")
+#+call: eval_benchmarks()
+
+#+name: commute_data
+#+RESULTS:
+|    29 |
+|   111 |
+|   526 |
+|  1479 |
+|  2270 |
+|  2125 |
+|  2125 |
+|  2761 |
+|  2905 |
+|  2869 |
+|  2861 |
+|  2861 |
+|  2861 |
+|  2861 |
+|  6178 |
+|  6178 |
+|  6178 |
+|  6178 |
+| 66018 |
+#+end_example
+
+*** Associativity
+
+#+call: run-dios(config="configs/associativity.json")
+
+#+RESULTS:
+#+begin_example
+Learned 13 rules in 1.629444458
+(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
+(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(+ (* ?a ?b) (* ?a ?c)) <=> (* (+ ?c ?b) ?a)
+(* ?a (* ?b ?c)) <=> (* ?c (* (* 1 ?b) ?a))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
+(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* (* 1 ?a) ?b)
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 13 rules in 1.629444458
+#+end_example
+
+#+call: eval_benchmarks()
+
+#+name: assoc_data
+#+RESULTS:
+|    29 |
+|    79 |
+|   465 |
+|  1497 |
+|  1783 |
+|  1544 |
+|  2216 |
+|  2667 |
+|  2956 |
+|  5010 |
+|  4303 |
+|  4303 |
+|  4303 |
+|  4356 |
+|  4356 |
+|  4356 |
+|  6277 |
+|  6277 |
+|  6277 |
+|  6277 |
+|  6277 |
+|  6277 |
+|  6277 |
+|  6277 |
+| 24093 |
+| 24093 |
+| 24093 |
+| 24093 |
+| 24093 |
+| 24093 |
+| 24093 |
+| 24093 |
+| 24237 |
+| 24141 |
+| 24141 |
+| 50793 |
+
+*** Commute + Associativity
+
+#+call: run-dios(config="configs/commute_assoc.json")
+
+#+RESULTS:
+#+begin_example
+Learned 13 rules in 1.240857833
+(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
+(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(+ (* ?a ?b) (* ?c ?a)) <=> (* (+ ?c ?b) ?a)
+(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(* ?a (+ ?b ?c)) <=> (* ?a (+ ?b (+ 0 ?c)))
+(+ ?a (* ?b ?c)) <=> (+ (+ 0 ?a) (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(+ ?a ?b) <=> (+ ?b (+ 0 ?a))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(* ?a 0) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 13 rules in 1.240857833
+#+end_example
+
+#+call: eval_benchmarks()
+
+#+name: commute_assoc_data
+#+RESULTS:
+|   29 |
+|   77 |
+|  531 |
+| 1134 |
+| 1501 |
+| 1622 |
+| 1578 |
+| 1593 |
+| 1623 |
+| 2320 |
+| 2388 |
+| 2388 |
+| 3482 |
+| 3482 |
+| 3482 |
+| 7324 |
+| 7324 |
+| 7324 |
+
+*** Commute + zero
+
+#+call: run-dios(config="configs/commute_zero.json")
+
+#+RESULTS:
+#+begin_example
+Learned 10 rules in 1.140422958
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?a ?d) (+ ?c ?b))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* (* ?b ?a) 1))
+(+ ?a (+ ?b ?c)) <=> (+ (* 1 ?a) (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (+ ?a 0)
+(* ?a 0) => 0
+Learned 10 rules in 1.140422958
+#+end_example
+
+#+call: eval_benchmarks()
+
+#+name: commute_zero_data
+#+RESULTS:
+|    29 |
+|    82 |
+|   341 |
+|   996 |
+|  1890 |
+|  2178 |
+|  2202 |
+|  2202 |
+|  2202 |
+|  2202 |
+|  2433 |
+|  2356 |
+|  2356 |
+|  2356 |
+|  2356 |
+|  2356 |
+|  2356 |
+|  2356 |
+| 70636 |
+
+*** Commute + zero + one
+
+#+call: run-dios(config="configs/commute_zero_one.json")
+
+#+RESULTS:
+#+begin_example
+Learned 8 rules in 1.07546475
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?c ?a) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?d ?a) (+ ?c ?b))
+(+ (* ?a ?b) (* ?b ?c)) <=> (* ?b (+ ?a ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (* ?a 1)
+?a <=> (+ ?a 0)
+(* ?a 0) => 0
+Learned 8 rules in 1.07546475
+#+end_example
+
+#+call: eval_benchmarks()
+
+#+name: commute_zero_one_data
+#+RESULTS:
+|    29 |
+|   111 |
+|   526 |
+|  1479 |
+|  2270 |
+|  2125 |
+|  2125 |
+|  2761 |
+|  2905 |
+|  2869 |
+|  2861 |
+|  2861 |
+|  2861 |
+|  2861 |
+|  6178 |
+|  6178 |
+|  6178 |
+|  6178 |
+| 66018 |
+
+*** Pictures!
+
+#+header: :width 600 :height 700
+#+header: :var baseline=baseline_data
+#+header: :var commute=commute_data
+#+header: :var assoc=assoc_data
+#+header: :var commute_assoc=commute_assoc_data
+#+header: :var commute_zero=commute_zero_data
+#+header: :var commute_zero_one=commute_zero_one_data
+#+begin_src R :session graphics :results graphics file :file size.png
+library(tidyverse)
+
+max_rows <- max(nrow(baseline),
+                nrow(commute),
+                nrow(assoc),
+                nrow(commute_assoc),
+                nrow(commute_zero),
+                nrow(commute_zero_one))
+
+data <- data.frame("baseline" = c(baseline$V1, rep(NA, max_rows - nrow(baseline))),
+                   "commute" = c(commute$V1, rep(NA, max_rows - nrow(commute))),
+                   "assoc" = c(assoc$V1, rep(NA, max_rows - nrow(assoc))),
+                   "commute_assoc" =
+                     c(commute_assoc$V1, rep(NA, max_rows - nrow(commute_assoc))),
+                   "commute_zero" =
+                     c(commute_zero$V1, rep(NA, max_rows - nrow(commute_zero))),
+                   "commute_zero_one" =
+                     c(commute_zero_one$V1, rep(NA, max_rows - nrow(commute_zero_one))))
+
+## colnames(baseline) <- c("Size")
+
+
+ggplot(data = data,
+       mapping = aes(x = as.numeric(seq(1, max_rows)))) +
+  geom_line(mapping = aes(y = baseline, color = "baseline")) +
+  geom_line(mapping = aes(y = commute, color = "commute")) +
+  geom_line(mapping = aes(y = assoc, color = "assoc")) +
+  geom_line(mapping = aes(y = commute_assoc, color = "commute_assoc")) +
+  geom_line(mapping = aes(y = commute_zero, color = "commute_zero")) +
+  geom_line(mapping = aes(y = commute_zero_one, color = "commute_zero_one")) +
+  theme(legend.position = "bottom")
+#+end_src
+
+#+RESULTS:
+[[file:../size.png]]

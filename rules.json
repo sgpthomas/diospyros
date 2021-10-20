@@ -5,7 +5,7 @@
     "variables": 4,
     "vector_size": 2,
     "abs_timeout": 240,
-    "dios_config": "dios-config.json",
+    "dios_config": "configs/commute_zero_one.json",
     "iters": 2,
     "rules_to_take": 18446744073709551615,
     "chunk_size": 100000,
@@ -27,7 +27,7 @@
     "use_smt": false,
     "do_final_run": false
   },
-  "time": 1.178606176,
+  "time": 1.07546475,
   "num_rules": 8,
   "smt_unknown": 0,
   "eqs": [
