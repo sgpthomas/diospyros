@@ -66,16 +66,16 @@ def params_to_name(benchmark, params):
     """Formatting for CSV data"""
     if benchmark == conv2d:
         return '{}x{}_{}x{}_{}r'.format(params["input-rows"],
-                                            params["input-cols"],
-                                            params["filter-rows"],
-                                            params["filter-cols"],
-                                            params["reg-size"])
+                                        params["input-cols"],
+                                        params["filter-rows"],
+                                        params["filter-cols"],
+                                        params["reg-size"])
     if benchmark == matmul:
         return '{}x{}_{}x{}_{}r'.format(params["A-rows"],
-                                            params["A-cols"],
-                                            params["B-rows"],
-                                            params["B-cols"],
-                                            params["reg-size"])
+                                        params["A-cols"],
+                                        params["B-rows"],
+                                        params["B-cols"],
+                                        params["reg-size"])
 
     if benchmark == qrdecomp:
         return '{}_{}r'.format(params["N"],

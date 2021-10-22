@@ -1,29 +1,32 @@
 {
-	"constants": [
-	    {
-		"type": "int",
-		"value": 0
-	    },
-	    {
-		"type": "int",
-		"value": 1
-	    }
-	],
-    "seed_rules": [
-	{
-	    "lhs": "(+ ?a ?b)",
-	    "rhs": "(+ ?b ?a)"
-	},
-	{
-	    "lhs": "(* ?a ?b)",
-	    "rhs": "(* ?b ?a)"
-	},
-	{
-	    "lhs": "(+ ?a i0)",
-	    "rhs": "?a"
-	}
-    ],
-	"binops": ["+", "*"],
-	"use_vector": false,
-	"vector_binops": []
+  "constants": [
+    {
+      "type": "int",
+      "value": 0
+    },
+    {
+      "type": "int",
+      "value": 1
+    }
+  ],
+  "seed_rules": [
+    {
+      "lhs": "(+ ?a ?b)",
+      "rhs": "(+ ?b ?a)"
+    },
+    {
+      "lhs": "(* ?a ?b)",
+      "rhs": "(* ?b ?a)"
+    },
+    {
+      "lhs": "(+ ?a i0)",
+      "rhs": "?a"
+    }
+  ],
+  "binops": [
+    "+",
+    "*"
+  ],
+  "use_vector": false,
+  "vector_binops": []
 }

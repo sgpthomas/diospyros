@@ -99,7 +99,7 @@ return(filename)
 
 * More rigorous =rules-to-take= ablation
 :PROPERTIES:
-:header-args: :var SERVER="3.134.91.51"
+:header-args: :var SERVER="18.223.156.160"
 :END:
 
 ** Launch an EC2 Instance
@@ -111,21 +111,340 @@ return(filename)
   #+begin_src emacs-lisp :results silent
 (save-excursion
   (outline-up-heading 1)
-  (org-set-property "header-args" ":var SERVER=\"3.134.91.51\""))
+  (org-set-property "header-args" ":var SERVER=\"18.223.156.160\""))
   #+end_src
 
   #+RESULTS:
 
 ** Sync diospyros
 
-#+begin_src shell :dir (magit-toplevel) :results output list
+#+name: sync-repo
+#+begin_src shell :dir (magit-toplevel) :results output list :async
 rsync -rv \
       --exclude=.git \
       --exclude=target \
       --exclude='*-results' \
-      --exclude=rulesets \
       . "ubuntu@$SERVER:~/diospyros/"
 #+end_src
+
+#+RESULTS: sync-repo
+#+begin_example
+- sending incremental file list
+- .gitignore
+- .gitmodules
+- 2d-conv-params
+- LICENSE
+- Log.org
+- Makefile
+- Oct4-1101.csv
+- Oct4-1112.csv
+- README.md
+- ablation.sh
+- cdios.py
+- dios
+- dios-config.json
+- dios-example-gen
+- iters_conv2d.png
+- mat-mul-params
+- oct5-1737.csv
+- oct5-1754-no-ruler.csv
+- oct5-1807-ruler.csv
+- q-prod-params
+- qr-decomp-params
+- read_compile.py
+- rosette.rkt
+- rule.png
+- rules.json
+- runt.toml
+- setup.py
+- size.png
+- sync.sh
+- test.rkt
+- time.png
+- skipping non-regular file "rulesets/.#Plot.org"
+- cdios-tests/2d-2d-conv.c
+- cdios-tests/2d-2d-conv.expect
+- cdios-tests/2d-conv.c
+- cdios-tests/2d-conv.expect
+- cdios-tests/2d-matrix-multiply.c
+- cdios-tests/2d-matrix-multiply.expect
+- cdios-tests/break-w.c
+- cdios-tests/break-w.expect
+- cdios-tests/break.c
+- cdios-tests/break.expect
+- cdios-tests/continue-w.c
+- cdios-tests/continue-w.expect
+- cdios-tests/continue.c
+- cdios-tests/continue.expect
+- cdios-tests/cube.c
+- cdios-tests/cube.expect
+- cdios-tests/error-for-update-missing.c
+- cdios-tests/error-for-update-missing.expect
+- cdios-tests/error-for-update.c
+- cdios-tests/error-for-update.expect
+- cdios-tests/error-gcc.c
+- cdios-tests/error-gcc.expect
+- cdios-tests/fft.c
+- cdios-tests/fft.expect
+- cdios-tests/if-else.c
+- cdios-tests/if-else.expect
+- cdios-tests/matrix-multiply.c
+- cdios-tests/matrix-multiply.expect
+- cdios-tests/multi-mat-mul.c
+- cdios-tests/multi-mat-mul.expect
+- cdios-tests/point-product.c
+- cdios-tests/point-product.expect
+- cdios-tests/return.c
+- cdios-tests/return.expect
+- cdios-tests/scalar.c
+- cdios-tests/scalar.expect
+- cdios-tests/sqrt.c
+- cdios-tests/sqrt.expect
+- cdios-tests/stencil-2d.c
+- cdios-tests/stencil-2d.expect
+- cdios-tests/ternary.c
+- cdios-tests/ternary.expect
+- configs/
+- configs/associativity.json
+- configs/baseline.json
+- configs/commutativity.json
+- configs/commute_assoc.json
+- configs/commute_zero.json
+- configs/commute_zero_one.json
+- configs/commutitivity.json
+- demo/Makefile
+- demo/README.md
+- demo/src-completed/completed_example.c
+- demo/src-completed/kernel.c
+- demo/src-completed/transpose_and_multiply.c
+- demo/src-completed/transpose_and_multiply.h
+- demo/src/example.c
+- evaluation/README.md
+- evaluation/asplos_parameters.json
+- evaluation/benchmarks.csv
+- evaluation/benchtbl.py
+- evaluation/chart_benchmarks.py
+- evaluation/eval_benchmarks.py
+- evaluation/no_vec_ablation.py
+- evaluation/py_utils.py
+- evaluation/readme.tex
+- evaluation/shared.mk
+- evaluation/2d-conv/Makefile
+- evaluation/2d-conv/harness.c
+- evaluation/__pycache__/py_utils.cpython-39.pyc
+- evaluation/ablation/Makefile
+- evaluation/ablation/ablation-exp-gen.py
+- evaluation/ablation/ablation_chart.py
+- evaluation/ablation/harness.c
+- evaluation/ablation/run_all.sh
+- evaluation/ablation/nature/Makefile
+- evaluation/ablation/nature/harness.c
+- evaluation/ablation/params/mat-mul-large
+- evaluation/mat-mul/Makefile
+- evaluation/mat-mul/harness.c
+- evaluation/q-prod/Makefile
+- evaluation/q-prod/README
+- evaluation/q-prod/diospyros_test.cpp
+- evaluation/q-prod/egg-kernel.c
+- evaluation/q-prod/harness.c
+- evaluation/q-prod/quaternion_product.cpp
+- evaluation/q-prod/quaternion_product.h
+- evaluation/qr-decomp/Makefile
+- evaluation/qr-decomp/egg-kernel-partial-vec.c
+- evaluation/qr-decomp/egg-kernel.c
+- evaluation/qr-decomp/harness.c
+- evaluation/src/utils.h
+- evaluation/theia/.gitignore
+- evaluation/theia/Makefile
+- evaluation/theia/decompose-projection-matrix.cpp
+- evaluation/theia/dios_rq_decomposition.h
+- evaluation/theia/dpmresults.py
+- evaluation/theia/rq_decomposition.h
+- mat-mul-out/outputs.rkt
+- mat-mul-out/prelude.rkt
+- mat-mul-out/spec.rkt
+- misc/shuf_patterns.py
+- q-prod-out/outputs.rkt
+- q-prod-out/prelude.rkt
+- q-prod-out/spec.rkt
+- ruler/.gitignore
+- ruler/Cargo.lock
+- ruler/Cargo.toml
+- ruler/README.md
+- ruler/dios_rules.md
+- ruler/exp.org
+- ruler/launch_ec2.sh
+- ruler/out.json
+- ruler/rules.json
+- ruler/.cargo/config
+- ruler/scripts/add-arrows.py
+- ruler/scripts/eval.sh
+- ruler/scripts/print-rules.py
+- ruler/scripts/ablation/ablation.sh
+- ruler/scripts/ablation/parse.js
+- ruler/scripts/ablation/run.sh
+- ruler/scripts/ablation/run_ruler.sh
+- ruler/scripts/ablation/run_ruler_rr.sh
+- ruler/scripts/ablation/visualize.py
+- ruler/scripts/ablation/submitted-data/compare/10-run.tar.gz
+- ruler/scripts/ablation/submitted-data/compare/parsed.json
+- ruler/scripts/ablation/submitted-data/no-rr/parsed.json
+- ruler/scripts/ablation/submitted-plots/10-run/by-domain-phase-times.pdf
+- ruler/scripts/ablation/submitted-plots/10-run/parsed.json
+- ruler/scripts/ablation/submitted-plots/10-run/bv32/by-config-rules-learned.pdf
+- ruler/scripts/ablation/submitted-plots/10-run/bv4/by-config-rules-learned.pdf
+- ruler/scripts/ablation/submitted-plots/10-run/rat/by-config-rules-learned.pdf
+- ruler/scripts/ablation/submitted-plots/orat-rr/parsed.json
+- ruler/scripts/ablation/submitted-plots/orat-rr/bv32/run-rewrites.pdf
+- ruler/scripts/ablation/submitted-plots/orat-rr/bv4/run-rewrites.pdf
+- ruler/scripts/ablation/submitted-plots/orat-rr/rats/run-rewrites-timeout.pdf
+- ruler/scripts/cvc4-eval/Makefile
+- ruler/scripts/cvc4-eval/compare.py
+- ruler/scripts/cvc4-eval/cvc4/bool-2vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bool-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bool-4vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv32-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv4-2vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv4-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv4ns-2vars.sy
+- ruler/scripts/cvc4-eval/cvc4/bv4ns-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/str-3vars.sy
+- ruler/scripts/cvc4-eval/cvc4/str-4vars.sy
+- ruler/scripts/eqsat-sound/aggregate.sh
+- ruler/scripts/eqsat-sound/derivation.sh
+- ruler/scripts/eqsat-sound/eqsat-soundness.sh
+- ruler/scripts/eqsat-sound/postpass.sh
+- ruler/scripts/eqsat-sound/tabulate.py
+- ruler/scripts/herbie-rational/filter.rkt
+- ruler/scripts/herbie-rational/herbie-eval.sh
+- ruler/scripts/herbie-rational/preprocess.py
+- ruler/scripts/herbie-rational/seed-stats-per-test.sh
+- ruler/scripts/herbie-rational/seed-variance.sh
+- ruler/scripts/herbie-rational/plots/config-all-tests-box-plot.py
+- ruler/scripts/herbie-rational/plots/config-per-test-bar.py
+- ruler/scripts/herbie-rational/plots/config-per-test-box-plot.py
+- ruler/scripts/herbie-rational/plots/plot-results.sh
+- ruler/src/bv.rs
+- ruler/src/convert_sexp.rs
+- ruler/src/derive.rs
+- ruler/src/equality.rs
+- ruler/src/lib.rs
+- ruler/src/util.rs
+- ruler/src/bin/bigint.rs
+- ruler/src/bin/bool.rs
+- ruler/src/bin/bv16.rs
+- ruler/src/bin/bv32.rs
+- ruler/src/bin/bv4.rs
+- ruler/src/bin/bv8.rs
+- ruler/src/bin/dios.rs
+- ruler/src/bin/float.rs
+- ruler/src/bin/rational-new-div.rs
+- ruler/src/bin/rational.rs
+- ruler/src/bin/str.rs
+- rulesets/
+- rulesets/Plot.org
+- rulesets/baseline.json
+- src/ast.rkt
+- src/c-ast.rkt
+- src/c-meta.rkt
+- src/compile-passes.rkt
+- src/compiler.rkt
+- src/configuration.rkt
+- src/dsp-insts.rkt
+- src/egg-ast.rkt
+- src/egg-to-dios-dsl.rkt
+- src/example-gen.rkt
+- src/interp.rkt
+- src/main.rkt
+- src/prog-sketch.rkt
+- src/register-allocation-pass.rkt
+- src/shuffle-truncation-pass.rkt
+- src/translation-validation.rkt
+- src/uninterp-fns.rkt
+- src/utils.rkt
+- src/backend/backend-utils.rkt
+- src/backend/tensilica-g3.rkt
+- src/dios-egraphs/Cargo.lock
+- src/dios-egraphs/Cargo.toml
+- src/dios-egraphs/common.py
+- src/dios-egraphs/Diospyros/Cargo.toml
+- src/dios-egraphs/Diospyros/README.md
+- src/dios-egraphs/Diospyros/a.c
+- src/dios-egraphs/Diospyros/build.rs
+- src/dios-egraphs/Diospyros/diospyros.cpp
+- src/dios-egraphs/Diospyros/mult.c
+- src/dios-egraphs/Diospyros/src/lib.rs
+- src/dios-egraphs/Diospyros/src/main.rs
+- src/dios-egraphs/src/binopsearcher.rs
+- src/dios-egraphs/src/config.rs
+- src/dios-egraphs/src/cost.rs
+- src/dios-egraphs/src/lib.rs
+- src/dios-egraphs/src/macsearcher.rs
+- src/dios-egraphs/src/main.rs
+- src/dios-egraphs/src/rewriteconcats.rs
+- src/dios-egraphs/src/rules.rs
+- src/dios-egraphs/src/searchutils.rs
+- src/dios-egraphs/src/stringconversion.rs
+- src/dios-egraphs/src/veclang.rs
+- src/examples/2d-conv.rkt
+- src/examples/matrix-multiply.rkt
+- src/examples/q-prod.rkt
+- src/examples/qr-decomp.rkt
+- test-result/
+- test-result/mat-mul/
+- test-result/mat-mul/2x2_2x2_4r/
+- test-result/mat-mul/2x2_2x2_4r/compile-log.txt
+- test-result/mat-mul/2x2_2x2_4r/egg-kernel.c
+- test-result/mat-mul/2x2_2x2_4r/outputs.rkt
+- test-result/mat-mul/2x2_2x2_4r/params.json
+- test-result/mat-mul/2x2_2x2_4r/prelude.rkt
+- test-result/mat-mul/2x2_2x2_4r/res.rkt
+- test-result/mat-mul/2x2_2x2_4r/spec.rkt
+- test-result/mat-mul/2x2_2x2_4r/stats.json
+- utils/.gitignore
+- utils/Makefile
+- utils/README.md
+- utils/arguments.py
+- utils/build.py
+- utils/diospyros.py
+- utils/eigen.py
+- utils/manifest.py
+- utils/source.py
+- utils/test.py
+- utils/utils.py
+- utils/experiments/matrix_multiply/designsweep.py
+- utils/experiments/matrix_multiply/pretty_print.py
+- utils/generators/matrix_multiply.py
+- utils/sample/spec/MatMult6x6x6x6.c
+- utils/sample/spec/diospyros.json
+- web-demo/README.md
+- web-demo/predicated-acc.c
+- web-demo/scalar-harness.c
+- web-demo/serve.py
+- web-demo/synth-harness.c
+- web-demo/vec_norm.c
+- web-demo/frontend/.gitignore
+- web-demo/frontend/Makefile
+- web-demo/frontend/README.md
+- web-demo/frontend/config.toml
+- web-demo/frontend/content/_index.md
+- web-demo/frontend/custom-js/examples.js
+- web-demo/frontend/custom-js/index.js
+- web-demo/frontend/custom-js/package.json
+- web-demo/frontend/custom-js/yarn.lock
+- web-demo/frontend/layouts/index.html
+- web-demo/frontend/layouts/partials/footer.html
+- web-demo/frontend/layouts/partials/head.html
+- web-demo/frontend/layouts/partials/nav.html
+- web-demo/frontend/static/.gitkeep
+- web-demo/frontend/static/css/editor.css
+- web-demo/frontend/static/files/futil-short.pdf
+- web-demo/frontend/static/img/dahlia-logo-small.png
+- web-demo/frontend/static/img/dahlia-logo.png
+- web-demo/frontend/static/js/.gitkeep
+- sent 297,163 bytes  received 119,221 bytes  36,207.30 bytes/sec
+- total size is 48,439,670  speedup is 116.33
+#+end_example
 
 #+RESULTS:
 #+begin_example
@@ -737,22 +1056,22 @@ return table
 *** Setup
 For these experiments, we are using the following constants:
 #+name: constants
-#+begin_src js
+#+begin_src json
 "constants": [
     {
-	"type": "int",
-	"value": 0
-    },
+    "type": "int",
+    "value": 0
+},
     {
-	"type": "int",
-	"value": 1
-    }
+    "type": "int",
+    "value": 1
+}
 ]
 #+end_src
 
 and the following operations:
 #+name: operations
-#+begin_src js :noweb yes
+#+begin_src json :noweb yes
 "binops": ["+", "*"],
 "use_vector": false,
 "vector_binops": []
@@ -760,7 +1079,7 @@ and the following operations:
 
 We are using the following command line settings:
 #+name: run-dios
-#+begin_src bash :var config="" :async :results output
+#+begin_src bash :var config="dios-config.json" rules="rules.json" :async :results output
 cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
       --num-fuzz 4 \
       --iters 2 \
@@ -768,7 +1087,7 @@ cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
       --eqsat-iter-limit 2 \
       --vector-size 2 \
       --abs-timeout 240 \
-      --outfile rules.json \
+      --outfile $rules \
       --dios-config $config
 #+end_src
 
@@ -776,7 +1095,7 @@ cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
 **** Baseline
 Let's first establish a baseline. What are the rules we generate with no seed rules?
 #+NAME: baseline-config
-#+begin_src json :tangle ../configs/baseline.json :noweb yes
+#+begin_src json :results file silent :file configs/baseline.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [],
@@ -788,15 +1107,16 @@ Let's first establish a baseline. What are the rules we generate with no seed ru
 
 #+RESULTS:
 #+begin_example
-Learned 15 rules in 1.495697708
+Learned 16 rules in 1.498129494
 (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
 (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?b) (* ?a ?c))
 (+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a ?c))
 (* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
 (+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
-(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
 (+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
-(+ ?a (+ 0 (* ?b ?c))) <=> (+ ?a (* ?b ?c))
+(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
+(+ ?a (* ?b ?c)) <=> (+ (* ?b ?c) (+ 0 ?a))
+(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
 (* ?a ?b) <=> (* ?b ?a)
 (+ ?a ?b) <=> (+ ?b ?a)
 (* ?a ?b) <=> (* ?b (* 1 ?a))
@@ -804,25 +1124,25 @@ Learned 15 rules in 1.495697708
 (+ ?a ?a) <=> (* ?a 2)
 (* 0 ?a) => 0
 (+ 0 ?a) <=> (* 1 ?a)
-Learned 15 rules in 1.495697708
+Learned 16 rules in 1.498129494
 #+end_example
 
 **** Commutativity
 
 I wonder what happens if we start with commutativity rules.
 
-#+begin_src js :tangle ../configs/commutativity.json :noweb yes
+#+begin_src json :results file silent :file configs/commutativity.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
 	{
-	    "lhs": "(+ ?a ?b)",
-	    "rhs": "(+ ?b ?a)"
-	},
+	"lhs": "(+ ?a ?b)",
+	"rhs": "(+ ?b ?a)"
+    },
 	{
-	    "lhs": "(* ?a ?b)",
-	    "rhs": "(* ?b ?a)"
-	}
+	"lhs": "(* ?a ?b)",
+	"rhs": "(* ?b ?a)"
+    }
     ],
 	<<operations>>
 }
@@ -833,23 +1153,24 @@ I wonder what happens if we start with commutativity rules.
 #+NAME: commute
 #+RESULTS:
 #+begin_example
-Learned 15 rules in 1.212821458
+Learned 16 rules in 1.044258646
 (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
 (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
 (+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a ?b))
 (* ?a (* ?b ?c)) <=> (* ?b (* ?a ?c))
 (+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
 (+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
-(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
+(* ?a (+ ?b ?c)) <=> (* (+ 0 ?a) (+ ?b ?c))
 (+ ?a (* ?b ?c)) <=> (+ 0 (+ ?a (* ?b ?c)))
+(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
 (* ?a ?b) <=> (* ?b ?a)
 (+ ?a ?b) <=> (+ ?b ?a)
 (+ ?a ?b) <=> (+ 0 (+ ?a ?b))
-(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(+ 0 (* ?a ?b)) <=> (* ?a ?b)
 (+ ?a ?a) <=> (* ?a 2)
 (* ?a 0) => 0
 (+ 0 ?a) <=> (* 1 ?a)
-Learned 15 rules in 1.212821458
+Learned 16 rules in 1.044258646
 #+end_example
 
 These rules don't seem to change the rules generated.
@@ -858,18 +1179,18 @@ These rules don't seem to change the rules generated.
 
 What about adding an associativity rule?
 
-#+begin_src js :tangle ../configs/associativity.json :noweb yes
+#+begin_src json :results file silent :file configs/associativity.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
 	{
-	    "lhs": "(+ (+ ?a ?b) ?c)",
-	    "rhs": "(+ ?a (+ ?b ?c))"
-	},
+	"lhs": "(+ (+ ?a ?b) ?c)",
+	"rhs": "(+ ?a (+ ?b ?c))"
+    },
 	{
-	    "lhs": "(* (* ?a ?b) ?c)",
-	    "rhs": "(* ?a (* ?b ?c))"
-	}
+	"lhs": "(* (* ?a ?b) ?c)",
+	"rhs": "(* ?a (* ?b ?c))"
+    }
     ],
 	<<operations>>
 }
@@ -879,21 +1200,21 @@ What about adding an associativity rule?
 
 #+RESULTS:
 #+begin_example
-Learned 13 rules in 1.597851125
+Learned 13 rules in 1.599011
 (* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
 (+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
 (+ (* ?a ?b) (* ?a ?c)) <=> (* (+ ?c ?b) ?a)
-(* ?a (* ?b ?c)) <=> (* ?c (* (* 1 ?b) ?a))
 (+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
 (+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
 (+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
+(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
 (* ?a ?b) <=> (* ?b ?a)
 (+ ?a ?b) <=> (+ ?b ?a)
-(* ?a ?b) <=> (* (* 1 ?a) ?b)
-(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(+ ?a ?b) <=> (+ ?b (+ 0 ?a))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
 (* 0 ?a) => 0
 (+ 0 ?a) <=> (* 1 ?a)
-Learned 13 rules in 1.597851125
+Learned 13 rules in 1.599011
 #+end_example
 
 So this generated three fewer rules than before. I wonder what rules are different.
@@ -935,26 +1256,26 @@ echo ""
 
 **** Commute + Associativity
 
-#+begin_src js :tangle ../configs/commute_assoc.json :noweb yes
+#+begin_src json :results file silent :file configs/commute_assoc.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
 	{
-	    "lhs": "(+ (+ ?a ?b) ?c)",
-	    "rhs": "(+ ?a (+ ?b ?c))"
-	},
+	"lhs": "(+ (+ ?a ?b) ?c)",
+	"rhs": "(+ ?a (+ ?b ?c))"
+    },
 	{
-	    "lhs": "(* (* ?a ?b) ?c)",
-	    "rhs": "(* ?a (* ?b ?c))"
-	},
+	"lhs": "(* (* ?a ?b) ?c)",
+	"rhs": "(* ?a (* ?b ?c))"
+    },
 	{
-	    "lhs": "(+ ?a ?b)",
-	    "rhs": "(+ ?b ?a)"
-	},
+	"lhs": "(+ ?a ?b)",
+	"rhs": "(+ ?b ?a)"
+    },
 	{
-	    "lhs": "(* ?a ?b)",
-	    "rhs": "(* ?b ?a)"
-	}
+	"lhs": "(* ?a ?b)",
+	"rhs": "(* ?b ?a)"
+    }
     ],
 	<<operations>>
 }
@@ -964,21 +1285,21 @@ echo ""
 
 #+RESULTS:
 #+begin_example
-Learned 13 rules in 1.198853833
+Learned 13 rules in 1.289977023
 (* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
 (+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
 (+ (* ?a ?b) (* ?c ?a)) <=> (* (+ ?c ?b) ?a)
-(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
 (+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
 (* ?a (+ ?b ?c)) <=> (* ?a (+ ?b (+ 0 ?c)))
-(+ ?a (* ?b ?c)) <=> (+ (+ 0 ?a) (* ?b ?c))
+(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
+(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
 (* ?a ?b) <=> (* ?b ?a)
 (+ ?a ?b) <=> (+ ?b ?a)
-(+ ?a ?b) <=> (+ ?b (+ 0 ?a))
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
 (* ?a ?b) <=> (* ?b (+ 0 ?a))
 (* ?a 0) => 0
 (+ 0 ?a) <=> (* 1 ?a)
-Learned 13 rules in 1.198853833
+Learned 13 rules in 1.289977023
 #+end_example
 
 #+begin_src bash :results verbatim :var a=assoc b=assoc_commute :wrap SRC diff :exports results
@@ -1014,22 +1335,22 @@ echo ""
 
 **** Commute + zero rule
 
-#+begin_src js :tangle ../configs/commute_zero.json :noweb yes
+#+begin_src json :results file silent :file configs/commute_zero.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
 	{
-	    "lhs": "(+ ?a ?b)",
-	    "rhs": "(+ ?b ?a)"
-	},
+	"lhs": "(+ ?a ?b)",
+	"rhs": "(+ ?b ?a)"
+    },
 	{
-	    "lhs": "(* ?a ?b)",
-	    "rhs": "(* ?b ?a)"
-	},
+	"lhs": "(* ?a ?b)",
+	"rhs": "(* ?b ?a)"
+    },
 	{
-	    "lhs": "(+ ?a i0)",
-	    "rhs": "?a"
-	}
+	"lhs": "(+ ?a i0)",
+	"rhs": "?a"
+    }
     ],
 	<<operations>>
 }
@@ -1040,18 +1361,20 @@ echo ""
 #+name: commute_zero
 #+RESULTS:
 #+begin_example
-Learned 10 rules in 1.08482675
+Learned 12 rules in 0.96681023
 (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
 (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?a ?d) (+ ?c ?b))
 (* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
 (+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
 (* ?a (* ?b ?c)) <=> (* ?c (* (* ?b ?a) 1))
-(+ ?a (+ ?b ?c)) <=> (+ (* 1 ?a) (+ ?b ?c))
+(+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a (* 1 ?b)))
+(+ ?a (* ?b ?c)) <=> (+ (* 1 ?a) (* ?b ?c))
+(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a (* 1 ?c)))
 (* ?a ?b) <=> (* ?b ?a)
 (+ ?a ?b) <=> (+ ?b ?a)
 ?a <=> (+ ?a 0)
 (* ?a 0) => 0
-Learned 10 rules in 1.08482675
+Learned 12 rules in 0.96681023
 #+end_example
 
 #+begin_src bash :noweb yes :results output verbatim
@@ -1107,26 +1430,26 @@ So this shows that you can successfully get rid of these "seemingly useless" zer
 
 **** Commute + zero + one
 
-#+begin_src js :tangle ../configs/commute_zero_one.json :noweb yes
+#+begin_src json :results file silent :file configs/commute_zero_one.json :noweb yes
 {
 	<<constants>>,
     "seed_rules": [
 	{
-	    "lhs": "(+ ?a ?b)",
-	    "rhs": "(+ ?b ?a)"
-	},
+	"lhs": "(+ ?a ?b)",
+	"rhs": "(+ ?b ?a)"
+    },
 	{
-	    "lhs": "(* ?a ?b)",
-	    "rhs": "(* ?b ?a)"
-	},
+	"lhs": "(* ?a ?b)",
+	"rhs": "(* ?b ?a)"
+    },
 	{
-	    "lhs": "(+ ?a i0)",
-	    "rhs": "?a"
-	},
+	"lhs": "(+ ?a i0)",
+	"rhs": "?a"
+    },
 	{
-	    "lhs": "(* ?a i1)",
-	    "rhs": "?a"
-	}
+	"lhs": "(* ?a i1)",
+	"rhs": "?a"
+    }
     ],
 	<<operations>>
 }
@@ -1136,7 +1459,7 @@ So this shows that you can successfully get rid of these "seemingly useless" zer
 
 #+RESULTS:
 #+begin_example
-Learned 8 rules in 1.048874583
+Learned 8 rules in 1.151370773
 (* (* ?a ?b) (* ?c ?d)) <=> (* (* ?c ?a) (* ?b ?d))
 (+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?d ?a) (+ ?c ?b))
 (+ (* ?a ?b) (* ?b ?c)) <=> (* ?b (+ ?a ?c))
@@ -1145,7 +1468,7 @@ Learned 8 rules in 1.048874583
 ?a <=> (* ?a 1)
 ?a <=> (+ ?a 0)
 (* ?a 0) => 0
-Learned 8 rules in 1.048874583
+Learned 8 rules in 1.151370773
 #+end_example
 
 By seeding various rules, we can get the output rules to be more "interesting" and seemingly less redundant. Now let's try and quantify some of what it means for a rule to be "more interesting".
@@ -1824,7 +2147,7 @@ ggplot(data = data,
 
 ** More automated cost of best program by # of iterations
 :PROPERTIES:
-:header-args: :dir (magit-toplevel)
+:header-args: :dir (magit-toplevel) :var vector_size="2"
 :END:
 
 *** Setup
@@ -1834,15 +2157,116 @@ ggplot(data = data,
 #+header: :var iters="2"
 #+header: :var variables="4"
 #+header: :var eqsat_iter="2"
-#+header: :var vector_size="2"
 #+header: :var abs_timeout="240"
-#+begin_src shell :var fuzz="4", iters="2", variables="4", eq_iter="2", 
+#+header: :var config="dios-config.json"
+#+begin_src shell
 cargo run --manifest-path ruler/Cargo.toml \
       --release \
       --bin dios -- synth \
+      --outfile rules.json \
+      --dios-config $config \
       --num-fuzz $fuzz --iters $iters --variables $variables \
       --eqsat-iter-limit $eqsat_iter --vector-size $vector_size \
       --abs-timeout $abs_timeout
 #+end_src
 
-#+call: gen-rules()
+#+name: q-prod-params
+#+begin_src json :results file silent :file q-prod-params
+{
+    "reg-size": 4
+}
+#+end_src
+
+#+name: qr-decomp-params
+#+begin_src json :results file silent :file qr-decomp-params
+{
+    "N": 3,
+    "reg-size": 4
+}
+#+end_src
+
+#+name: build-spec
+#+begin_src shell :var bench="" :noweb yes
+./dios-example-gen -w $vector_size -b "$bench" -p "$bench"-params -o "$bench"-out
+#+end_src
+
+#+name: egg-rewrite
+#+begin_src shell :var bench="" rules="" :async :results output
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      --features vec_width_2 \
+      -- \
+      "$bench"-out/spec.rkt \
+      --no-ac \
+      --rules "$rules"
+#+end_src
+
+*** 2d-conv
+
+#+name: 2d-conv-params
+#+begin_src json :results file :file 2d-conv-params
+{
+    "input-rows": 3,
+    "input-cols": 3,
+    "filter-rows": 2,
+    "filter-cols": 2,
+    "reg-size": 4
+}
+#+end_src
+
+#+call: build-spec("q-prod")
+#+call: run-dios(config="configs/baseline.json", rules="rulesets/baseline.json")
+#+call: egg-rewrite(bench="q-prod", rules="rulesets/baseline.json")
+
+*** mat-mul
+
+#+name: mat-mul-params
+#+begin_src json :results file :file mat-mul-params
+{
+    "A-rows": 2,
+    "A-cols": 2,
+    "B-rows": 2,
+    "B-cols": 2,
+    "reg-size": 4
+}
+#+end_src
+
+#+RESULTS: mat-mul-params
+[[file:../mat-mul-params]]
+
+#+call: build-spec("mat-mul")
+
+#+RESULTS:
+: #f
+
+**** Baseline
+:PROPERTIES:
+:header-args+: :dir (format "/ssh:ubuntu@%s:~/diospyros" (sgt/babel-get-var "SERVER"))
+:END:
+
+#+call: run-dios(config="configs/baseline.json", rules="rulesets/baseline.json")
+
+#+RESULTS:
+#+begin_example
+Learned 16 rules in 1.546932629
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?b) (* ?a ?c))
+(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
+(+ ?a (* ?b ?c)) <=> (+ (* ?b ?c) (+ 0 ?a))
+(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* ?b (* 1 ?a))
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(+ ?a ?a) <=> (* ?a 2)
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 16 rules in 1.546932629
+#+end_example
+
+#+call: egg-rewrite(bench="mat-mul", rules="rulesets/baseline.json")
+
+#+RESULTS:

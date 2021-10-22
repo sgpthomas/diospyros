@@ -1,16 +1,19 @@
 {
-	"constants": [
-	    {
-		"type": "int",
-		"value": 0
-	    },
-	    {
-		"type": "int",
-		"value": 1
-	    }
-	],
-    "seed_rules": [],
-	"binops": ["+", "*"],
-	"use_vector": false,
-	"vector_binops": []
+  "constants": [
+    {
+      "type": "int",
+      "value": 0
+    },
+    {
+      "type": "int",
+      "value": 1
+    }
+  ],
+  "seed_rules": [],
+  "binops": [
+    "+",
+    "*"
+  ],
+  "use_vector": false,
+  "vector_binops": []
 }
