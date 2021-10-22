@@ -99,8 +99,8 @@ pub fn run(
     no_vec: bool,
     ruleset: Option<&str>,
 ) -> (f64, RecExpr<VecLang>) {
-    let mut rules = rules(no_ac, no_vec, ruleset);
-    filter_applicable_rules(&mut rules, prog);
+    let rules = rules(no_ac, no_vec, ruleset);
+    // filter_applicable_rules(&mut rules, prog);
     let mut init_eg: EGraph = EGraph::new(());
     init_eg.add(VecLang::Num(0));
     let mut runner: Runner<VecLang, ()> = Runner::default()
@@ -110,6 +110,13 @@ pub fn run(
         .with_time_limit(std::time::Duration::from_secs(timeout))
         .with_hook(|runner| {
             eprintln!("Egraph big big? {}", runner.egraph.total_size());
+            Ok(())
+        })
+        .with_hook(|runner| {
+            let (eg, root) = (&runner.egraph, &runner.roots[0]);
+            let mut extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
+            let (cost, _) = extractor.find_best(*root);
+            eprintln!("Egraph cost? {}", cost);
             Ok(())
         })
         .with_iter_limit(10_000);

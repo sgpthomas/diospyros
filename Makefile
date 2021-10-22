@@ -22,7 +22,7 @@ else ifneq ($(VEC_WIDTH),4)
 	$(error Bad vector width, currently 2, 4, or 8 supported)
 endif
 
-EGG_FLAGS += --rules rules.json 
+EGG_FLAGS += --rules rules.json
 RULER_FLAGS := --num-fuzz 4 --iters 2 --variables 4 --eqsat-iter-limit 2 --vector-size 2
 RULER_FLAGS += --abs-timeout 240 # --rules-to-take 10
 

@@ -772,11 +772,6 @@ cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
       --dios-config $config
 #+end_src
 
-#+name: trim
-#+begin_src bash :var inp="" :results output verbatim
-echo $inp | head -n -1
-#+end_src
-
 *** Experiments
 **** Baseline
 Let's first establish a baseline. What are the rules we generate with no seed rules?
@@ -1163,7 +1158,9 @@ By seeding various rules, we can get the output rules to be more "interesting" a
 *** Setup
 Firstly, how do we record the size of the egraph over time.
 
-Tried using the =with hook= method on =runner=.
+Using the =with hook= method on =runner=.
+
+*** Size of graph by # of iterations
 
 #+name: eval_benchmarks
 #+begin_src shell :async :results output table
@@ -1176,10 +1173,7 @@ python3 evaluation/eval_benchmarks.py \
     | cut -d' ' -f 4
 #+end_src
 
-
-#+RESULTS: eval_benchmarks
-
-*** Baseline
+**** Baseline
 
 #+call: run-dios(config="configs/baseline.json")
 
@@ -1229,7 +1223,7 @@ Learned 15 rules in 1.526623833
 | 9687 |
 | 9687 |
 
-*** Commutativity
+**** Commutativity
 
 #+call: run-dios(config="configs/commutativity.json")
 #+call: eval_benchmarks()
@@ -1257,13 +1251,13 @@ Learned 15 rules in 1.526623833
 | 66018 |
 #+end_example
 
-*** Associativity
+**** Associativity
 
 #+call: run-dios(config="configs/associativity.json")
 
 #+RESULTS:
 #+begin_example
-Learned 13 rules in 1.629444458
+Learned 13 rules in 1.61879475
 (* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
 (+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
 (+ (* ?a ?b) (* ?a ?c)) <=> (* (+ ?c ?b) ?a)
@@ -1277,7 +1271,7 @@ Learned 13 rules in 1.629444458
 (+ ?a ?b) <=> (+ 0 (+ ?a ?b))
 (* 0 ?a) => 0
 (+ 0 ?a) <=> (* 1 ?a)
-Learned 13 rules in 1.629444458
+Learned 13 rules in 1.61879475
 #+end_example
 
 #+call: eval_benchmarks()
@@ -1313,15 +1307,8 @@ Learned 13 rules in 1.629444458
 | 24093 |
 | 24093 |
 | 24093 |
-| 24093 |
-| 24093 |
-| 24093 |
-| 24237 |
-| 24141 |
-| 24141 |
-| 50793 |
 
-*** Commute + Associativity
+**** Commute + Associativity
 
 #+call: run-dios(config="configs/commute_assoc.json")
 
@@ -1367,7 +1354,7 @@ Learned 13 rules in 1.240857833
 | 7324 |
 | 7324 |
 
-*** Commute + zero
+**** Commute + zero
 
 #+call: run-dios(config="configs/commute_zero.json")
 
@@ -1411,7 +1398,7 @@ Learned 10 rules in 1.140422958
 |  2356 |
 | 70636 |
 
-*** Commute + zero + one
+**** Commute + zero + one
 
 #+call: run-dios(config="configs/commute_zero_one.json")
 
@@ -1453,9 +1440,9 @@ Learned 8 rules in 1.07546475
 |  6178 |
 | 66018 |
 
-*** Pictures!
+**** Pictures!
 
-#+header: :width 600 :height 700
+#+header: :width 600 :height 500
 #+header: :var baseline=baseline_data
 #+header: :var commute=commute_data
 #+header: :var assoc=assoc_data
@@ -1487,14 +1474,375 @@ data <- data.frame("baseline" = c(baseline$V1, rep(NA, max_rows - nrow(baseline)
 
 ggplot(data = data,
        mapping = aes(x = as.numeric(seq(1, max_rows)))) +
-  geom_line(mapping = aes(y = baseline, color = "baseline")) +
-  geom_line(mapping = aes(y = commute, color = "commute")) +
-  geom_line(mapping = aes(y = assoc, color = "assoc")) +
-  geom_line(mapping = aes(y = commute_assoc, color = "commute_assoc")) +
-  geom_line(mapping = aes(y = commute_zero, color = "commute_zero")) +
-  geom_line(mapping = aes(y = commute_zero_one, color = "commute_zero_one")) +
+  geom_line(mapping = aes(y = baseline, color = "baseline"), size = 1.2) +
+  geom_line(mapping = aes(y = commute, color = "commute"), size = 1.2) +
+  geom_line(mapping = aes(y = assoc, color = "assoc"), size = 1.2) +
+  geom_line(mapping = aes(y = commute_assoc, color = "commute_assoc"), size = 1.2) +
+  geom_line(mapping = aes(y = commute_zero, color = "commute_zero"), size = 1.2) +
+  geom_line(mapping = aes(y = commute_zero_one, color = "commute_zero_one"), size = 1.2) +
   theme(legend.position = "bottom")
 #+end_src
 
 #+RESULTS:
 [[file:../size.png]]
+
+*** Cost of best program by # of iterations
+
+#+name: iteration_exper
+#+begin_src shell :async :results output table
+python3 evaluation/eval_benchmarks.py \
+	--timeout 20 \
+	--skiprun \
+	--test \
+	-o test-result \
+    | grep "Egraph cost?" \
+    | cut -d' ' -f 3
+#+end_src
+
+**** Baseline
+
+#+call: run-dios(config="configs/baseline.json")
+
+#+RESULTS:
+#+begin_example
+Learned 15 rules in 1.413282208
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?b) (* ?a ?c))
+(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ ?a (+ 0 (* ?b ?c))) <=> (+ ?a (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* ?b (* 1 ?a))
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(+ ?a ?a) <=> (* ?a 2)
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 15 rules in 1.413282208
+#+end_example
+
+#+call: iteration_exper()
+
+#+name: baseline_iter_data
+#+RESULTS:
+|  503.5590000000001 |
+|            502.659 |
+|  501.6600000000001 |
+|             492.76 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+| 492.56199999999995 |
+
+**** Commutativity
+
+#+call: run-dios(config="configs/commutativity.json")
+
+#+RESULTS:
+#+begin_example
+Learned 15 rules in 1.1665614579999999
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
+(+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a ?b))
+(* ?a (* ?b ?c)) <=> (* ?b (* ?a ?c))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
+(+ ?a (* ?b ?c)) <=> (+ 0 (+ ?a (* ?b ?c)))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(+ ?a ?a) <=> (* ?a 2)
+(* ?a 0) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 15 rules in 1.1665614579999999
+#+end_example
+
+#+call: iteration_exper()
+
+#+NAME: commute_iter_data
+#+RESULTS:
+: fe3137315a8e18825e5f71b322044175
+
+**** Associativity
+
+#+call: run-dios(config="configs/associativity.json")
+
+#+RESULTS:
+#+begin_example
+Learned 13 rules in 1.520162791
+(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
+(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(+ (* ?a ?b) (* ?a ?c)) <=> (* (+ ?c ?b) ?a)
+(* ?a (* ?b ?c)) <=> (* ?c (* (* 1 ?b) ?a))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
+(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* (* 1 ?a) ?b)
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 13 rules in 1.520162791
+#+end_example
+
+#+call: iteration_exper()
+
+#+NAME: assoc_iter_data
+#+RESULTS:
+: 981c4be7e71ef96b203d295470a7546d
+
+**** Commute + Associativity
+
+#+call: run-dios(config="configs/commute_assoc.json")
+
+#+RESULTS:
+#+begin_example
+Learned 13 rules in 1.18981075
+(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
+(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(+ (* ?a ?b) (* ?c ?a)) <=> (* (+ ?c ?b) ?a)
+(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(* ?a (+ ?b ?c)) <=> (* ?a (+ ?b (+ 0 ?c)))
+(+ ?a (* ?b ?c)) <=> (+ (+ 0 ?a) (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(+ ?a ?b) <=> (+ ?b (+ 0 ?a))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(* ?a 0) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 13 rules in 1.18981075
+#+end_example
+
+#+call: iteration_exper()
+
+#+NAME: commute_assoc_iter_data
+#+RESULTS:
+|  503.5590000000001 |
+|            502.659 |
+| 496.05999999999995 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+|            492.562 |
+
+**** Commute + zero
+
+#+call: run-dios(config="configs/commute_zero.json")
+
+#+RESULTS:
+#+begin_example
+Learned 10 rules in 1.053053791
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?a ?d) (+ ?c ?b))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* (* ?b ?a) 1))
+(+ ?a (+ ?b ?c)) <=> (+ (* 1 ?a) (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (+ ?a 0)
+(* ?a 0) => 0
+Learned 10 rules in 1.053053791
+#+end_example
+
+#+call: iteration_exper()
+
+#+NAME: commute_zero_iter_data
+#+RESULTS:
+| 503.5590000000001 |
+|           502.659 |
+| 501.6600000000001 |
+|            492.76 |
+|           491.566 |
+|           491.566 |
+|           491.566 |
+|           491.566 |
+|           491.566 |
+|           491.566 |
+|           491.566 |
+|           491.566 |
+|           491.566 |
+
+**** Commute + zero + one
+
+#+call: run-dios(config="configs/commute_zero_one.json")
+
+#+RESULTS:
+#+begin_example
+Learned 8 rules in 1.06209475
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?c ?a) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?d ?a) (+ ?c ?b))
+(+ (* ?a ?b) (* ?b ?c)) <=> (* ?b (+ ?a ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (* ?a 1)
+?a <=> (+ ?a 0)
+(* ?a 0) => 0
+Learned 8 rules in 1.06209475
+#+end_example
+
+#+call: iteration_exper()
+
+#+NAME: commute_zero_one_iter_data
+#+RESULTS:
+|  503.5590000000001 |
+|            502.659 |
+|  500.8620000000001 |
+|            491.863 |
+| 491.66499999999996 |
+| 491.66499999999996 |
+| 491.66499999999996 |
+| 491.66499999999996 |
+| 491.66499999999996 |
+| 491.66499999999996 |
+| 491.66499999999996 |
+| 491.66499999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+| 490.56399999999996 |
+|            489.564 |
+|            489.564 |
+
+**** Pictures!
+
+#+header: :width 600 :height 500
+#+header: :var baseline=baseline_iter_data
+#+header: :var commute=commute_iter_data
+#+header: :var assoc=assoc_iter_data
+#+header: :var commute_assoc=commute_assoc_iter_data
+#+header: :var commute_zero=commute_zero_iter_data
+#+header: :var commute_zero_one=commute_zero_one_iter_data
+#+begin_src R :session graphics2 :results graphics file :file iters_conv2d.png
+library(tidyverse)
+
+max_rows <- max(nrow(baseline),
+                ## nrow(commute),
+                ## nrow(assoc),
+                nrow(commute_assoc),
+                nrow(commute_zero),
+                nrow(commute_zero_one))
+
+data <- data.frame("baseline" = c(baseline$V1, rep(NA, max_rows - nrow(baseline))),
+                   ## "commute" = c(commute$V1, rep(NA, max_rows - nrow(commute))),
+                   ## "assoc" = c(assoc$V1, rep(NA, max_rows - nrow(assoc))),
+                   "commute_assoc" =
+                     c(commute_assoc$V1, rep(NA, max_rows - nrow(commute_assoc))),
+                   "commute_zero" =
+                     c(commute_zero$V1, rep(NA, max_rows - nrow(commute_zero))),
+                   "commute_zero_one" =
+                     c(commute_zero_one$V1, rep(NA, max_rows - nrow(commute_zero_one))))
+
+
+ggplot(data = data,
+       mapping = aes(x = as.numeric(seq(1, max_rows))),
+       log="y") +
+  geom_line(mapping = aes(y = baseline, color = "baseline"), size = 1.2) +
+  ## geom_line(mapping = aes(y = commute, color = "commute"), size = 1.2) +
+  ## geom_line(mapping = aes(y = assoc, color = "assoc"), size = 1.2) +
+  geom_line(mapping = aes(y = commute_assoc, color = "commute_assoc"), size = 1.2) +
+  geom_line(mapping = aes(y = commute_zero, color = "commute_zero"), size = 1.2) +
+  geom_line(mapping = aes(y = commute_zero_one, color = "commute_zero_one"), size = 1.2) +
+  theme(legend.position = "bottom")
+#+end_src
+
+#+RESULTS:
+[[file:../iters_conv2d.png]]
+
+** More automated cost of best program by # of iterations
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
+
+*** Setup
+
+#+name: gen-rules
+#+header: :var fuzz="4"
+#+header: :var iters="2"
+#+header: :var variables="4"
+#+header: :var eqsat_iter="2"
+#+header: :var vector_size="2"
+#+header: :var abs_timeout="240"
+#+begin_src shell :var fuzz="4", iters="2", variables="4", eq_iter="2", 
+cargo run --manifest-path ruler/Cargo.toml \
+      --release \
+      --bin dios -- synth \
+      --num-fuzz $fuzz --iters $iters --variables $variables \
+      --eqsat-iter-limit $eqsat_iter --vector-size $vector_size \
+      --abs-timeout $abs_timeout
+#+end_src
+
+#+call: gen-rules()
