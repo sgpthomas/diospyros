@@ -111,7 +111,7 @@ return(filename)
   #+begin_src emacs-lisp :results silent
 (save-excursion
   (outline-up-heading 1)
-  (org-set-property "header-args" ":var SERVER=\"18.223.156.160\""))
+  (org-set-property "header-args" ":var SERVER=\"18.221.14.249\""))
   #+end_src
 
   #+RESULTS:
@@ -161,7 +161,6 @@ rsync -rv \
 - sync.sh
 - test.rkt
 - time.png
-- skipping non-regular file "rulesets/.#Plot.org"
 - cdios-tests/2d-2d-conv.c
 - cdios-tests/2d-2d-conv.expect
 - cdios-tests/2d-conv.c
@@ -204,7 +203,6 @@ rsync -rv \
 - cdios-tests/stencil-2d.expect
 - cdios-tests/ternary.c
 - cdios-tests/ternary.expect
-- configs/
 - configs/associativity.json
 - configs/baseline.json
 - configs/commutativity.json
@@ -341,7 +339,6 @@ rsync -rv \
 - ruler/src/bin/rational-new-div.rs
 - ruler/src/bin/rational.rs
 - ruler/src/bin/str.rs
-- rulesets/
 - rulesets/Plot.org
 - rulesets/baseline.json
 - src/ast.rkt
@@ -390,9 +387,6 @@ rsync -rv \
 - src/examples/matrix-multiply.rkt
 - src/examples/q-prod.rkt
 - src/examples/qr-decomp.rkt
-- test-result/
-- test-result/mat-mul/
-- test-result/mat-mul/2x2_2x2_4r/
 - test-result/mat-mul/2x2_2x2_4r/compile-log.txt
 - test-result/mat-mul/2x2_2x2_4r/egg-kernel.c
 - test-result/mat-mul/2x2_2x2_4r/outputs.rkt
@@ -442,8 +436,8 @@ rsync -rv \
 - web-demo/frontend/static/img/dahlia-logo-small.png
 - web-demo/frontend/static/img/dahlia-logo.png
 - web-demo/frontend/static/js/.gitkeep
-- sent 297,163 bytes  received 119,221 bytes  36,207.30 bytes/sec
-- total size is 48,439,670  speedup is 116.33
+- sent 105,813 bytes  received 120,678 bytes  64,711.71 bytes/sec
+- total size is 48,450,768  speedup is 213.92
 #+end_example
 
 #+RESULTS:
@@ -1090,6 +1084,27 @@ cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth \
       --outfile $rules \
       --dios-config $config
 #+end_src
+
+#+begin_src emacs-lisp :export code
+(defun run-dios (config rules &optional stdout-buf stderr-buf)
+  (let ((cmd (list "cargo run --manifest-path ruler/Cargo.toml"
+		   "--release" "--bin dios" "--"
+		   "synth"
+		   "--num-fuzz" "4"
+		   "--iters" "2"
+		   "--variables" "2"
+		   "--eqsat-iter-limit" "2"
+		   "--vector-size" "2"
+		   "--abs-timeout" "240"
+		   "--outfile" rules
+		   "--dios-config" config)))
+    (shell-command (string-join cmd " ") stdout-buf stderr-buf)
+    (with-current-buffer stdout-buf
+      (buffer-substring (point-min) (point-max)))))
+#+end_src
+
+#+RESULTS:
+: run-dios
 
 *** Experiments
 **** Baseline
@@ -2148,6 +2163,7 @@ ggplot(data = data,
 ** More automated cost of best program by # of iterations
 :PROPERTIES:
 :header-args: :dir (magit-toplevel) :var vector_size="2"
+:header-args+: :var SERVER="18.218.164.151"
 :END:
 
 *** Setup
@@ -2159,7 +2175,7 @@ ggplot(data = data,
 #+header: :var eqsat_iter="2"
 #+header: :var abs_timeout="240"
 #+header: :var config="dios-config.json"
-#+begin_src shell
+#+begin_src bash
 cargo run --manifest-path ruler/Cargo.toml \
       --release \
       --bin dios -- synth \
@@ -2186,21 +2202,99 @@ cargo run --manifest-path ruler/Cargo.toml \
 #+end_src
 
 #+name: build-spec
-#+begin_src shell :var bench="" :noweb yes
+#+begin_src bash :var bench="" :noweb yes
 ./dios-example-gen -w $vector_size -b "$bench" -p "$bench"-params -o "$bench"-out
 #+end_src
 
 #+name: egg-rewrite
-#+begin_src shell :var bench="" rules="" :async :results output
+#+begin_src sh :var bench="" rules="" :async :results output
 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       --features vec_width_2 \
       -- \
       "$bench"-out/spec.rkt \
       --no-ac \
-      --rules "$rules"
+      --rules "$rules" 2>&1
+#+end_src
+
+#+name: get-final-cost
+#+begin_src elisp :var raw=""
+(--> (split-string raw "\n")
+     (--filter (string-match "Cost: " it) it)
+     (--map (string-remove-prefix "Cost:" it) it)
+     ;;end
+     )
+#+end_src
+
+#+name: get-cost
+#+begin_src elisp :var raw=""
+(--> (split-string raw "\n")
+     (--filter (string-match "Egraph cost\\?" it) it)
+     (--map (string-remove-prefix "Egraph cost? " it) it)
+     (--map (format "%s\n" it) it)
+     (cons "Cost\n" it)
+     ;;end
+     )
+#+end_src
+
+#+name: get-size
+#+begin_src elisp :var raw="" :colnames yes
+(--> (split-string raw "\n")
+     (--filter (string-match "Egraph big big\\?" it) it)
+     (--map (string-remove-prefix "Egraph big big? " it) it)
+     (--map (format "%s\n" it) it)
+     (cons "Size\n" it)
+     ;;end
+     )
+#+end_src
+
+#+name: zip-table
+#+begin_src emacs-lisp :var a="", b=""
+(-zip-lists (-map 'string-trim a) (-map 'string-trim b))
+#+end_src
+
+*** Rulesets
+
+#+name: ruleset-table
+| Name          | Config                     | Ruleset                     |
+|---------------+----------------------------+-----------------------------|
+| Commutativity | configs/commutativity.json | rulesets/commutativity.json |
+| Baseline      | configs/baseline.json      | rulesets/baseline.json      |
+
+*** Server setup
+
+Setup server variable.
+#+begin_src emacs-lisp :results silent
+(save-excursion
+  (outline-up-heading 1)
+  (org-set-property "header-args+" ":var SERVER=\"18.218.164.151\""))
+#+end_src
+
+#+name: set-remote
+#+begin_src emacs-lisp :var remote="yes" :results output hidden
+(save-excursion
+  (if (equal remote "yes")
+      (org-set-property "header-args+" (format ":dir /ssh:ubuntu@%s:~/diospyros" SERVER))
+    (org-set-property "header-args+" ":dir (magit-toplevel)")))
+#+end_src
+
+#+name: sync-repo
+#+begin_src shell :results output list :dir (magit-toplevel)
+rsync -rv \
+      --exclude=.git \
+      --exclude=target \
+      --exclude='*-results' \
+      . "ubuntu@$SERVER:~/diospyros/"
 #+end_src
 
 *** 2d-conv
+:PROPERTIES:
+:header-args+: :dir /ssh:ubuntu@18.221.14.249:~/diospyros
+:END:
+
+#+begin_src emacs-lisp :results silent
+(save-excursion
+  (org-set-property "header-args+" (format ":dir /ssh:ubuntu@%s:~/diospyros" SERVER)))
+#+end_src
 
 #+name: 2d-conv-params
 #+begin_src json :results file :file 2d-conv-params
@@ -2213,11 +2307,32 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 }
 #+end_src
 
+#+RESULTS: 2d-conv-params
+[[file:/ssh:ubuntu@18.221.14.249:/home/ubuntu/diospyros/2d-conv-params]]
+
 #+call: build-spec("q-prod")
+
+#+RESULTS:
+: #f
+
 #+call: run-dios(config="configs/baseline.json", rules="rulesets/baseline.json")
+
+#+RESULTS:
+: b8874de7984dca564626601d8c09a7c7
+
 #+call: egg-rewrite(bench="q-prod", rules="rulesets/baseline.json")
 
+#+RESULTS:
+: 1cf61dc48884b5f8a58095dbe5191dc0
+
 *** mat-mul
+:PROPERTIES:
+:header-args+: :dir (magit-toplevel)
+:END:
+
+#+call: set-remote("no")
+
+#+RESULTS:
 
 #+name: mat-mul-params
 #+begin_src json :results file :file mat-mul-params
@@ -2239,34 +2354,159 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 : #f
 
 **** Baseline
-:PROPERTIES:
-:header-args+: :dir (format "/ssh:ubuntu@%s:~/diospyros" (sgt/babel-get-var "SERVER"))
-:END:
 
-#+call: run-dios(config="configs/baseline.json", rules="rulesets/baseline.json")
+test a function
+#+begin_src emacs-lisp :export code
+(defun a (b)
+  (message "b: %s" b))
+#+end_src
 
 #+RESULTS:
-#+begin_example
-Learned 16 rules in 1.546932629
-(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
-(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?b) (* ?a ?c))
-(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a ?c))
-(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
-(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
-(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
-(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
-(+ ?a (* ?b ?c)) <=> (+ (* ?b ?c) (+ 0 ?a))
-(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
-(* ?a ?b) <=> (* ?b ?a)
-(+ ?a ?b) <=> (+ ?b ?a)
-(* ?a ?b) <=> (* ?b (* 1 ?a))
-(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
-(+ ?a ?a) <=> (* ?a 2)
-(* 0 ?a) => 0
-(+ 0 ?a) <=> (* 1 ?a)
-Learned 16 rules in 1.546932629
-#+end_example
+: a
 
+#+begin_src emacs-lisp :var tab=ruleset-table :results value :async
+;; (mapcar (lambda (it) (run-dios (cadr it) (caddr it) "*dios-out*"))
+;; 	tab)
+(run-dios (cadar tab) (caddar tab) "*dios-out*" "*dios-err*")
+#+end_src
+
+#+RESULTS:
+: 3543dd4ce1bf8e1ef0606c631eb570b7
+
+#+name: baseline-raw-data
 #+call: egg-rewrite(bench="mat-mul", rules="rulesets/baseline.json")
 
+#+RESULTS: baseline-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs mat-mul-out/spec.rkt --no-ac --rules rulesets/baseline.json`
+Running egg with timeout 180s, width: 2
+Starting run with 52 rules
+Egraph big big? 29
+Egraph cost? 212.148
+Egraph big big? 164
+Egraph cost? 206.54799999999997
+Egraph big big? 635
+Egraph cost? 4.552
+Egraph big big? 2332
+Egraph cost? 4.156000000000001
+Egraph big big? 4478
+Egraph cost? 4.156000000000001
+Egraph big big? 5777
+Egraph cost? 4.156000000000001
+Egraph big big? 5650
+Egraph cost? 4.156000000000001
+Egraph big big? 5807
+Egraph cost? 4.156000000000001
+Egraph big big? 5941
+Egraph cost? 4.156000000000001
+Egraph big big? 8943
+Egraph cost? 4.156000000000001
+Egraph big big? 9775
+Egraph cost? 4.156000000000001
+Egraph big big? 10138
+Egraph cost? 4.156000000000001
+Egraph big big? 10108
+Egraph cost? 4.156000000000001
+Egraph big big? 10108
+Egraph cost? 4.156000000000001
+Egraph big big? 10600
+Egraph cost? 4.156000000000001
+Egraph big big? 10600
+Egraph cost? 4.156000000000001
+Egraph big big? 11994
+Egraph cost? 4.156000000000001
+Egraph big big? 11994
+Egraph cost? 4.156000000000001
+Egraph big big? 11994
+Egraph cost? 4.156000000000001
+Egraph big big? 11994
+Egraph cost? 4.156000000000001
+Egraph big big? 21946
+Egraph cost? 4.156000000000001
+Egraph big big? 22018
+Egraph cost? 4.156000000000001
+Egraph big big? 22018
+Egraph cost? 4.156000000000001
+Egraph big big? 22018
+Egraph cost? 4.156000000000001
+Egraph big big? 22018
+Egraph cost? 4.156000000000001
+Egraph big big? 22018
+Egraph cost? 4.156000000000001
+Egraph big big? 22018
+Egraph cost? 4.156000000000001
+Runner report
+=============
+  Stop reason: NodeLimit(36898)
+  Iterations: 28
+  Egraph size: 36898 nodes, 11267 classes, 36898 memo
+  Rebuilds: 8704, 310.86 per iter
+  Total time: 5.169339556000001
+    Search:  (0.98) 5.046893975000001
+    Apply:   (0.02) 0.09399765900000003
+    Rebuild: (0.01) 0.028397822999999996
+Stopped after 28 iterations, reason: Some(NodeLimit(36898))
+(Concat
+  (VecMAC
+    (VecMul (LitVec (Get A 0) (Get A 0)) (LitVec (Get B 0) (Get B 1)))
+    (LitVec (Get A 1) (Get A 1))
+    (LitVec (Get B 2) (Get B 3)))
+  (VecMAC
+    (VecMul (LitVec (Get B 0) (Get B 1)) (LitVec (Get A 2) (Get A 2)))
+    (LitVec (Get B 2) (Get B 3))
+    (LitVec (Get A 3) (Get A 3))))
+
+Cost: 4.156000000000001
+#+end_example
+
+#+name: baseline-size-data
+#+call: get-size(baseline-raw-data)
+
+#+name: baseline-cost-data
+#+call: get-cost(baseline-raw-data)
+
+#+call: zip-table(baseline-size-data, baseline-cost-data)
+
 #+RESULTS:
+|  Size |               Cost |
+|-------+--------------------|
+|    29 |            212.148 |
+|   164 | 206.54799999999997 |
+|   635 |              4.552 |
+|  2332 |  4.156000000000001 |
+|  4478 |  4.156000000000001 |
+|  5777 |  4.156000000000001 |
+|  5650 |  4.156000000000001 |
+|  5807 |  4.156000000000001 |
+|  5941 |  4.156000000000001 |
+|  8943 |  4.156000000000001 |
+|  9775 |  4.156000000000001 |
+| 10138 |  4.156000000000001 |
+| 10108 |  4.156000000000001 |
+| 10108 |  4.156000000000001 |
+| 10600 |  4.156000000000001 |
+| 10600 |  4.156000000000001 |
+| 11994 |  4.156000000000001 |
+| 11994 |  4.156000000000001 |
+| 11994 |  4.156000000000001 |
+| 11994 |  4.156000000000001 |
+| 21946 |  4.156000000000001 |
+| 22018 |  4.156000000000001 |
+| 22018 |  4.156000000000001 |
+| 22018 |  4.156000000000001 |
+| 22018 |  4.156000000000001 |
+| 22018 |  4.156000000000001 |
+| 22018 |  4.156000000000001 |
+
+**** Commutativity

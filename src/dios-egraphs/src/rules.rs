@@ -106,7 +106,7 @@ pub fn run(
     let mut runner: Runner<VecLang, ()> = Runner::default()
         .with_egraph(init_eg)
         .with_expr(&prog)
-        .with_node_limit(10_000_000)
+        .with_node_limit(30_000)
         .with_time_limit(std::time::Duration::from_secs(timeout))
         .with_hook(|runner| {
             eprintln!("Egraph big big? {}", runner.egraph.total_size());
