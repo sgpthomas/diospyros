@@ -2208,7 +2208,7 @@ cargo run --manifest-path ruler/Cargo.toml \
 #+end_src
 
 #+name: egg-rewrite
-#+begin_src sh :var bench="" rules="" :results output :cache "yes"
+#+begin_src sh :var bench="" rules="" :results output :cache yes
 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       --features vec_width_2 \
       -- \
@@ -3878,15 +3878,15 @@ Cost: 163590.465
 
 **** No Ruler
 
+#+name: q-prod-no-ruler-raw-data
 #+call: egg-rewrite(bench="q-prod", rules="")
 
-#+name: q-prod-no-ruler-raw-data
-#+RESULTS: q-prod-no-ruler-raw-data
+#+RESULTS[a8a9f7b06e93680690a856feb208f22ca0621323]: q-prod-no-ruler-raw-data
 #+begin_example
 warning: function is never used: `filter_applicable_rules`
-  --> src/rules.rs:27:4
+  --> src/rules.rs:28:4
    |
-27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+28 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
    |    ^^^^^^^^^^^^^^^^^^^^^^^
    |
    = note: `#[warn(dead_code)]` on by default
@@ -3896,6 +3896,152 @@ warning: 1 warning emitted
     Finished release [optimized] target(s) in 0.01s
      Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules ''`
 Running egg with timeout 180s, width: 2
+[
+    Rewrite {
+        name: "neg-sgn-rev",
+        long_name: "\"(sgn (neg ?a))\" => \"(neg (sgn ?a))\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "sqrt-1-inv",
+        long_name: "\"1\" => \"(sqrt 1)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-neg",
+        long_name: "\"(neg (neg ?a))\" => \"?a\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-minus-zero",
+        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "*_binop_or_zero",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "div-1",
+        long_name: "\"(/ ?a 1)\" => \"?a\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg_unop",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "div-1-inv",
+        long_name: "\"?a\" => \"(/ ?a 1)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-zero-inv",
+        long_name: "\"0\" => \"(neg 0)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "litvec",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "sqrt_unop",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "expand-zero-get",
+        long_name: "\"0\" => \"(Get 0 0)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "vec-mac",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "vec-mac-add-mul",
+        long_name: "\"(VecAdd ?v0 (VecMul ?v1 ?v2))\" => \"(VecMAC ?v0 ?v1 ?v2)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-minus-zero-rev",
+        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "sqrt-1-inv-rev",
+        long_name: "\"(sqrt 1)\" => \"1\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-neg-rev",
+        long_name: "\"?a\" => \"(neg (neg ?a))\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-minus",
+        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "/_binop",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-sgn",
+        long_name: "\"(neg (sgn ?a))\" => \"(sgn (neg ?a))\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-zero-inv-rev",
+        long_name: "\"(neg 0)\" => \"0\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-minus-rev",
+        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "sgn_unop",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "+_binop_or_zero",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+]
 Starting run with 24 rules
 Egraph big big? 102
 Egraph cost? 503.5590000000001
@@ -3927,10 +4073,10 @@ Runner report
   Iterations: 13
   Egraph size: 2117 nodes, 481 classes, 2117 memo
   Rebuilds: 722, 55.54 per iter
-  Total time: 0.013206316000000001
-    Search:  (0.52) 0.006898615
-    Apply:   (0.35) 0.004592138
-    Rebuild: (0.13) 0.0017140019999999998
+  Total time: 0.013225846999999999
+    Search:  (0.52) 0.006910194
+    Apply:   (0.36) 0.0047128050000000005
+    Rebuild: (0.12) 0.0016012229999999997
 Stopped after 13 iterations, reason: Some(Saturated)
 
 Cost: 157.23000000000002
@@ -5254,8 +5400,40 @@ Cost: 490.56399999999996
 #+name: q-prod-no-ruler-size
 #+call: get-size(q-prod-no-ruler-raw-data)
 
+#+RESULTS: q-prod-no-ruler-size
+| Size |
+|------|
+|  102 |
+|  397 |
+|  719 |
+|  905 |
+| 1181 |
+| 1461 |
+| 1695 |
+| 1872 |
+| 1992 |
+| 2063 |
+| 2105 |
+| 2117 |
+
 #+name: q-prod-no-ruler-cost
 #+call: get-cost(q-prod-no-ruler-raw-data)
+
+#+RESULTS: q-prod-no-ruler-cost
+|               Cost |
+|--------------------|
+|  503.5590000000001 |
+|            502.659 |
+|  501.6600000000001 |
+|            492.963 |
+| 387.97499999999997 |
+|            387.579 |
+|            387.579 |
+| 376.79900000000004 |
+|            359.225 |
+|            358.225 |
+| 157.23000000000002 |
+| 157.23000000000002 |
 
 #+name: q-prod-no-ruler
 #+call: zip-table(q-prod-no-ruler-size, q-prod-no-ruler-cost)
@@ -5533,14 +5711,14 @@ Cost: 490.56399999999996
 **** Plot
 
 #+header: :width 600 :height 500
-#+header: :var mm_no_ruler=qr-decomp-no-ruler
-#+header: :var mm_baseline=qr-decomp-baseline
-#+header: :var mm_commute=qr-decomp-commute
-#+header: :var mm_assoc=qr-decomp-assoc
-#+header: :var mm_commute_assoc=qr-decomp-commute-assoc
-#+header: :var mm_commute_zero=qr-decomp-commute-zero
-#+header: :var mm_commute_zero_one=qr-decomp-commute-zero-one
-#+begin_src R :session graphics :results graphics file :file qr-decomp-cost.png
+#+header: :var mm_no_ruler=q-prod-no-ruler
+#+header: :var mm_baseline=q-prod-baseline
+#+header: :var mm_commute=q-prod-commute
+#+header: :var mm_assoc=q-prod-assoc
+#+header: :var mm_commute_assoc=q-prod-commute-assoc
+#+header: :var mm_commute_zero=q-prod-commute-zero
+#+header: :var mm_commute_zero_one=q-prod-commute-zero-one
+#+begin_src R :session graphics :results graphics file :file q-prod-cost2.png
 library(tidyverse)
 
 max_rows <- max(nrow(mm_no_ruler),
@@ -5576,5 +5754,5 @@ ggplot(data = df,
 #+end_src
 
 #+RESULTS:
-[[file:../qr-decomp-cost.png]]
+[[file:../q-prod-cost2.png]]
 

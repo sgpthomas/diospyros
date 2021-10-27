@@ -1,4 +1,5 @@
 use egg::{rewrite as rw, *};
+use rand::prelude::*;
 
 use itertools::Itertools;
 
@@ -121,6 +122,7 @@ pub fn run(
         })
         .with_iter_limit(10_000);
 
+    eprintln!("{:#?}", rules);
     eprintln!("Starting run with {} rules", rules.len());
     runner = runner.run(&rules);
 
@@ -248,6 +250,9 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<Ve
     if let Some(filename) = ruleset {
         rules.extend(ruler_rules(filename));
     }
+
+    let mut rng = rand::thread_rng();
+    rules.shuffle(&mut rng);
 
     rules
 }
