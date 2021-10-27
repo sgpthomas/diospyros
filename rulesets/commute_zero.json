@@ -5,7 +5,7 @@
     "variables": 4,
     "vector_size": 2,
     "abs_timeout": 240,
-    "dios_config": "configs/baseline.json",
+    "dios_config": "configs/commute_zero.json",
     "iters": 2,
     "rules_to_take": 18446744073709551615,
     "chunk_size": 100000,
@@ -14,7 +14,7 @@
     "no_conditionals": false,
     "no_run_rewrites": false,
     "linear_cvec_matching": false,
-    "outfile": "rulesets/baseline.json",
+    "outfile": "rulesets/commute_zero.json",
     "eqsat_node_limit": 300000,
     "eqsat_iter_limit": 2,
     "eqsat_time_limit": 60,
@@ -27,23 +27,18 @@
     "use_smt": false,
     "do_final_run": false
   },
-  "time": 1.5439685,
-  "num_rules": 15,
+  "time": 1.024875333,
+  "num_rules": 10,
   "smt_unknown": 0,
   "eqs": [
     {
-      "lhs": "(+ (+ ?a ?b) (+ ?c ?d))",
-      "rhs": "(+ (+ ?c ?a) (+ ?b ?d))",
-      "bidirectional": true
-    },
-    {
       "lhs": "(* (* ?a ?b) (* ?c ?d))",
-      "rhs": "(* (* ?d ?b) (* ?a ?c))",
-      "bidirectional": true
+      "rhs": "(* (* ?a ?c) (* ?b ?d))",
+      "bidirectional": false
     },
     {
-      "lhs": "(+ ?a (+ ?b ?c))",
-      "rhs": "(+ ?b (+ ?a ?c))",
+      "lhs": "(+ (+ ?a ?b) (+ ?c ?d))",
+      "rhs": "(+ (+ ?a ?d) (+ ?c ?b))",
       "bidirectional": false
     },
     {
@@ -58,17 +53,12 @@
     },
     {
       "lhs": "(* ?a (* ?b ?c))",
-      "rhs": "(* 1 (* ?a (* ?b ?c)))",
+      "rhs": "(* ?c (* (* ?b ?a) 1))",
       "bidirectional": true
     },
     {
       "lhs": "(+ ?a (+ ?b ?c))",
-      "rhs": "(+ 0 (+ ?a (+ ?b ?c)))",
-      "bidirectional": true
-    },
-    {
-      "lhs": "(+ ?a (+ 0 (* ?b ?c)))",
-      "rhs": "(+ ?a (* ?b ?c))",
+      "rhs": "(+ (* 1 ?a) (+ ?b ?c))",
       "bidirectional": true
     },
     {
@@ -82,29 +72,14 @@
       "bidirectional": false
     },
     {
-      "lhs": "(* ?a ?b)",
-      "rhs": "(* ?b (* 1 ?a))",
+      "lhs": "?a",
+      "rhs": "(+ ?a 0)",
       "bidirectional": true
     },
     {
-      "lhs": "(+ ?a ?b)",
-      "rhs": "(+ 0 (+ ?a ?b))",
-      "bidirectional": true
-    },
-    {
-      "lhs": "(+ ?a ?a)",
-      "rhs": "(* ?a 2)",
-      "bidirectional": true
-    },
-    {
-      "lhs": "(* 0 ?a)",
+      "lhs": "(* ?a 0)",
       "rhs": "0",
       "bidirectional": false
-    },
-    {
-      "lhs": "(+ 0 ?a)",
-      "rhs": "(* 1 ?a)",
-      "bidirectional": true
     }
   ]
 }

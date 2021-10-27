@@ -2175,11 +2175,12 @@ ggplot(data = data,
 #+header: :var eqsat_iter="2"
 #+header: :var abs_timeout="240"
 #+header: :var config="dios-config.json"
-#+begin_src bash
+#+header: :var rules="rules.json"
+#+begin_src bash :async :results output
 cargo run --manifest-path ruler/Cargo.toml \
       --release \
       --bin dios -- synth \
-      --outfile rules.json \
+      --outfile $rules \
       --dios-config $config \
       --num-fuzz $fuzz --iters $iters --variables $variables \
       --eqsat-iter-limit $eqsat_iter --vector-size $vector_size \
@@ -2207,13 +2208,13 @@ cargo run --manifest-path ruler/Cargo.toml \
 #+end_src
 
 #+name: egg-rewrite
-#+begin_src sh :var bench="" rules="" :async :results output
+#+begin_src sh :var bench="" rules="" :results output
 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       --features vec_width_2 \
       -- \
       "$bench"-out/spec.rkt \
       --no-ac \
-      --rules "$rules" 2>&1
+      --rules "$rules" 3>&1 1>&2 2>&3
 #+end_src
 
 #+name: get-final-cost
@@ -2252,14 +2253,6 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 (-zip-lists (-map 'string-trim a) (-map 'string-trim b))
 #+end_src
 
-*** Rulesets
-
-#+name: ruleset-table
-| Name          | Config                     | Ruleset                     |
-|---------------+----------------------------+-----------------------------|
-| Commutativity | configs/commutativity.json | rulesets/commutativity.json |
-| Baseline      | configs/baseline.json      | rulesets/baseline.json      |
-
 *** Server setup
 
 Setup server variable.
@@ -2285,6 +2278,130 @@ rsync -rv \
       --exclude='*-results' \
       . "ubuntu@$SERVER:~/diospyros/"
 #+end_src
+
+*** Rulesets
+
+#+call: gen-rules(config="configs/baseline.json", rules="rulesets/baseline.json")
+
+#+RESULTS:
+#+begin_example
+Learned 15 rules in 1.5439685
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?d ?b) (* ?a ?c))
+(+ ?a (+ ?b ?c)) <=> (+ ?b (+ ?a ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ ?a (+ 0 (* ?b ?c))) <=> (+ ?a (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* ?b (* 1 ?a))
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(+ ?a ?a) <=> (* ?a 2)
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 15 rules in 1.5439685
+#+end_example
+
+#+call: gen-rules(config="configs/commutativity.json", rules="rulesets/commutativity.json")
+
+#+RESULTS:
+#+begin_example
+Learned 15 rules in 1.202806458
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?c ?a) (+ ?b ?d))
+(+ ?a (+ ?b ?c)) <=> (+ ?c (+ ?a ?b))
+(* ?a (* ?b ?c)) <=> (* ?b (* ?a ?c))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ 0 (* ?a (* ?b ?c))) <=> (* ?a (* ?b ?c))
+(+ ?a (* ?b ?c)) <=> (+ 0 (+ ?a (* ?b ?c)))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(+ ?a ?a) <=> (* ?a 2)
+(* ?a 0) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 15 rules in 1.202806458
+#+end_example
+
+#+call: gen-rules(config="configs/associativity.json", rules="rulesets/associativity.json")
+
+#+RESULTS:
+#+begin_example
+Learned 13 rules in 1.68245825
+(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
+(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(+ (* ?a ?b) (* ?a ?c)) <=> (* (+ ?c ?b) ?a)
+(* ?a (* ?b ?c)) <=> (* ?c (* (* 1 ?b) ?a))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(+ ?a (* ?b ?c)) <=> (+ ?a (* ?b (+ 0 ?c)))
+(+ 0 (* ?a (+ ?b ?c))) <=> (* ?a (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(* ?a ?b) <=> (* (* 1 ?a) ?b)
+(+ ?a ?b) <=> (+ 0 (+ ?a ?b))
+(* 0 ?a) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 13 rules in 1.68245825
+#+end_example
+
+#+call: gen-rules(config="configs/commute_assoc.json", rules="rulesets/commute_assoc.json")
+
+#+RESULTS:
+#+begin_example
+Learned 13 rules in 1.155390833
+(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
+(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(+ (* ?a ?b) (* ?c ?a)) <=> (* (+ ?c ?b) ?a)
+(* ?a (* ?b ?c)) <=> (* 1 (* ?a (* ?b ?c)))
+(+ ?a (+ ?b ?c)) <=> (+ 0 (+ ?a (+ ?b ?c)))
+(* ?a (+ ?b ?c)) <=> (* ?a (+ ?b (+ 0 ?c)))
+(+ ?a (* ?b ?c)) <=> (+ (+ 0 ?a) (* ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+(+ ?a ?b) <=> (+ ?b (+ 0 ?a))
+(* ?a ?b) <=> (* ?b (+ 0 ?a))
+(* ?a 0) => 0
+(+ 0 ?a) <=> (* 1 ?a)
+Learned 13 rules in 1.155390833
+#+end_example
+
+#+call: gen-rules(config="configs/commute_zero.json", rules="rulesets/commute_zero.json")
+
+#+RESULTS:
+#+begin_example
+Learned 10 rules in 1.024875333
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?a ?c) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?a ?d) (+ ?c ?b))
+(* ?a (* ?b ?c)) <=> (* ?c (* ?a ?b))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(* ?a (* ?b ?c)) <=> (* ?c (* (* ?b ?a) 1))
+(+ ?a (+ ?b ?c)) <=> (+ (* 1 ?a) (+ ?b ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (+ ?a 0)
+(* ?a 0) => 0
+Learned 10 rules in 1.024875333
+#+end_example
+
+#+call: gen-rules(config="configs/commute_zero_one.json", rules="rulesets/commute_zero_one.json")
+
+#+RESULTS:
+#+begin_example
+Learned 8 rules in 0.963492833
+(* (* ?a ?b) (* ?c ?d)) <=> (* (* ?c ?a) (* ?b ?d))
+(+ (+ ?a ?b) (+ ?c ?d)) <=> (+ (+ ?d ?a) (+ ?c ?b))
+(+ (* ?a ?b) (* ?b ?c)) <=> (* ?b (+ ?a ?c))
+(* ?a ?b) <=> (* ?b ?a)
+(+ ?a ?b) <=> (+ ?b ?a)
+?a <=> (* ?a 1)
+?a <=> (+ ?a 0)
+(* ?a 0) => 0
+Learned 8 rules in 0.963492833
+#+end_example
 
 *** 2d-conv
 :PROPERTIES:
@@ -2315,15 +2432,36 @@ rsync -rv \
 #+RESULTS:
 : #f
 
-#+call: run-dios(config="configs/baseline.json", rules="rulesets/baseline.json")
+**** Baseline
 
-#+RESULTS:
-: b8874de7984dca564626601d8c09a7c7
+#+name: 2d-conv-baseline-raw-data
+#+call: egg-rewrite(bench="2d-conv", rules="rulesets/baseline.json")
 
-#+call: egg-rewrite(bench="q-prod", rules="rulesets/baseline.json")
+**** Commutativity
 
-#+RESULTS:
-: 1cf61dc48884b5f8a58095dbe5191dc0
+#+name: 2d-conv-commute-raw-data
+#+call: egg-rewrite(bench="2d-conv", rules="rulesets/commutativity.json")
+
+**** Associativity
+
+#+name: 2d-conv-assoc-raw-data
+#+call: egg-rewrite(bench="2d-conv", rules="rulesets/associativity.json")
+
+**** Commute + Associativity
+
+#+name: 2d-conv-commute-assoc-raw-data
+#+call: egg-rewrite(bench="2d-conv", rules="rulesets/commute_assoc.json")
+
+**** Commute + Zero
+
+#+name: 2d-conv-commute-zero-raw-data
+#+call: egg-rewrite(bench="2d-conv", rules="rulesets/commute_zero.json")
+
+**** Commute + Zero + One
+
+#+name: 2d-conv-commute-zero-one-raw-data
+#+call: egg-rewrite(bench="2d-conv", rules="rulesets/commute_zero_one.json")
+
 
 *** mat-mul
 :PROPERTIES:
@@ -2354,24 +2492,6 @@ rsync -rv \
 : #f
 
 **** Baseline
-
-test a function
-#+begin_src emacs-lisp :export code
-(defun a (b)
-  (message "b: %s" b))
-#+end_src
-
-#+RESULTS:
-: a
-
-#+begin_src emacs-lisp :var tab=ruleset-table :results value :async
-;; (mapcar (lambda (it) (run-dios (cadr it) (caddr it) "*dios-out*"))
-;; 	tab)
-(run-dios (cadar tab) (caddar tab) "*dios-out*" "*dios-err*")
-#+end_src
-
-#+RESULTS:
-: 3543dd4ce1bf8e1ef0606c631eb570b7
 
 #+name: baseline-raw-data
 #+call: egg-rewrite(bench="mat-mul", rules="rulesets/baseline.json")
@@ -2510,3 +2630,1649 @@ Cost: 4.156000000000001
 | 22018 |  4.156000000000001 |
 
 **** Commutativity
+
+#+name: commute-raw-data
+#+call: egg-rewrite(bench="mat-mul", rules="rulesets/commutativity.json")
+
+#+RESULTS: commute-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs mat-mul-out/spec.rkt --no-ac --rules rulesets/commutativity.json`
+Running egg with timeout 180s, width: 2
+Starting run with 49 rules
+Egraph big big? 29
+Egraph cost? 212.148
+Egraph big big? 156
+Egraph cost? 206.54799999999997
+Egraph big big? 646
+Egraph cost? 4.552
+Egraph big big? 2036
+Egraph cost? 4.156000000000001
+Egraph big big? 3935
+Egraph cost? 4.156000000000001
+Egraph big big? 4584
+Egraph cost? 4.156000000000001
+Egraph big big? 4689
+Egraph cost? 4.156000000000001
+Egraph big big? 4781
+Egraph cost? 4.156000000000001
+Egraph big big? 4810
+Egraph cost? 4.156000000000001
+Egraph big big? 6947
+Egraph cost? 4.156000000000001
+Egraph big big? 8285
+Egraph cost? 4.156000000000001
+Egraph big big? 8830
+Egraph cost? 4.156000000000001
+Egraph big big? 8918
+Egraph cost? 4.156000000000001
+Egraph big big? 8902
+Egraph cost? 4.156000000000001
+Egraph big big? 8902
+Egraph cost? 4.156000000000001
+Egraph big big? 9480
+Egraph cost? 4.156000000000001
+Egraph big big? 9480
+Egraph cost? 4.156000000000001
+Egraph big big? 10740
+Egraph cost? 4.156000000000001
+Egraph big big? 10740
+Egraph cost? 4.156000000000001
+Egraph big big? 10740
+Egraph cost? 4.156000000000001
+Egraph big big? 10740
+Egraph cost? 4.156000000000001
+Egraph big big? 19676
+Egraph cost? 4.156000000000001
+Egraph big big? 19734
+Egraph cost? 4.156000000000001
+Egraph big big? 19734
+Egraph cost? 4.156000000000001
+Egraph big big? 19734
+Egraph cost? 4.156000000000001
+Egraph big big? 19734
+Egraph cost? 4.156000000000001
+Egraph big big? 19734
+Egraph cost? 4.156000000000001
+Egraph big big? 19734
+Egraph cost? 4.156000000000001
+Runner report
+=============
+  Stop reason: NodeLimit(33138)
+  Iterations: 29
+  Egraph size: 33138 nodes, 10215 classes, 33138 memo
+  Rebuilds: 7700, 265.52 per iter
+  Total time: 3.301655782
+    Search:  (0.97) 3.2125872370000006
+    Apply:   (0.02) 0.06826944900000001
+    Rebuild: (0.01) 0.020783823999999996
+Stopped after 29 iterations, reason: Some(NodeLimit(33138))
+(Concat
+  (VecMAC
+    (VecMul (LitVec (Get A 0) (Get A 0)) (LitVec (Get B 0) (Get B 1)))
+    (LitVec (Get A 1) (Get A 1))
+    (LitVec (Get B 2) (Get B 3)))
+  (VecMAC
+    (VecMul (LitVec (Get B 0) (Get B 1)) (LitVec (Get A 2) (Get A 2)))
+    (LitVec (Get B 2) (Get B 3))
+    (LitVec (Get A 3) (Get A 3))))
+
+Cost: 4.156000000000001
+#+end_example
+
+**** Associativity
+
+#+name: assoc-raw-data
+#+call: egg-rewrite(bench="mat-mul", rules="rulesets/associativity.json")
+
+#+RESULTS: assoc-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs mat-mul-out/spec.rkt --no-ac --rules rulesets/associativity.json`
+Running egg with timeout 180s, width: 2
+Starting run with 47 rules
+Egraph big big? 29
+Egraph cost? 212.148
+Egraph big big? 166
+Egraph cost? 206.54799999999997
+Egraph big big? 704
+Egraph cost? 4.552
+Egraph big big? 2431
+Egraph cost? 4.156000000000001
+Egraph big big? 4739
+Egraph cost? 4.156000000000001
+Egraph big big? 5304
+Egraph cost? 4.156000000000001
+Egraph big big? 5976
+Egraph cost? 4.156000000000001
+Egraph big big? 6427
+Egraph cost? 4.156000000000001
+Egraph big big? 6716
+Egraph cost? 4.156000000000001
+Egraph big big? 8770
+Egraph cost? 4.156000000000001
+Egraph big big? 9092
+Egraph cost? 4.156000000000001
+Egraph big big? 9350
+Egraph cost? 4.156000000000001
+Egraph big big? 9352
+Egraph cost? 4.156000000000001
+Egraph big big? 9352
+Egraph cost? 4.156000000000001
+Egraph big big? 9405
+Egraph cost? 4.156000000000001
+Egraph big big? 9905
+Egraph cost? 4.156000000000001
+Egraph big big? 9905
+Egraph cost? 4.156000000000001
+Egraph big big? 9905
+Egraph cost? 4.156000000000001
+Egraph big big? 11826
+Egraph cost? 4.156000000000001
+Egraph big big? 11826
+Egraph cost? 4.156000000000001
+Egraph big big? 11826
+Egraph cost? 4.156000000000001
+Egraph big big? 11826
+Egraph cost? 4.156000000000001
+Egraph big big? 11826
+Egraph cost? 4.156000000000001
+Egraph big big? 29642
+Egraph cost? 4.156000000000001
+Egraph big big? 29642
+Egraph cost? 4.156000000000001
+Egraph big big? 29642
+Egraph cost? 4.156000000000001
+Egraph big big? 29642
+Egraph cost? 4.156000000000001
+Egraph big big? 29642
+Egraph cost? 4.156000000000001
+Egraph big big? 29642
+Egraph cost? 4.156000000000001
+Egraph big big? 29642
+Egraph cost? 4.156000000000001
+Egraph big big? 29642
+Egraph cost? 4.156000000000001
+Egraph big big? 29786
+Egraph cost? 4.156000000000001
+Egraph big big? 29956
+Egraph cost? 4.156000000000001
+Egraph big big? 29690
+Egraph cost? 4.156000000000001
+Egraph big big? 29690
+Egraph cost? 4.156000000000001
+Runner report
+=============
+  Stop reason: NodeLimit(38574)
+  Iterations: 36
+  Egraph size: 38574 nodes, 10249 classes, 38574 memo
+  Rebuilds: 13018, 361.61 per iter
+  Total time: 20.522586947999997
+    Search:  (0.99) 20.379030195000006
+    Apply:   (0.01) 0.10435302899999999
+    Rebuild: (0.00) 0.039185860999999995
+Stopped after 36 iterations, reason: Some(NodeLimit(38574))
+(Concat
+  (VecMAC
+    (VecMul (LitVec (Get A 0) (Get A 0)) (LitVec (Get B 0) (Get B 1)))
+    (LitVec (Get A 1) (Get A 1))
+    (LitVec (Get B 2) (Get B 3)))
+  (VecMAC
+    (VecMul (LitVec (Get B 0) (Get B 1)) (LitVec (Get A 2) (Get A 2)))
+    (LitVec (Get B 2) (Get B 3))
+    (LitVec (Get A 3) (Get A 3))))
+
+Cost: 4.156000000000001
+#+end_example
+
+**** Commute + Associativity
+
+#+name: commute-assoc-raw-data
+#+call: egg-rewrite(bench="mat-mul", rules="rulesets/commute_assoc.json")
+
+#+RESULTS: commute-assoc-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.04s
+     Running `src/dios-egraphs/target/release/dios-egraphs mat-mul-out/spec.rkt --no-ac --rules rulesets/commute_assoc.json`
+Running egg with timeout 180s, width: 2
+Starting run with 47 rules
+Egraph big big? 29
+Egraph cost? 212.148
+Egraph big big? 164
+Egraph cost? 206.54799999999997
+Egraph big big? 776
+Egraph cost? 4.552
+Egraph big big? 1885
+Egraph cost? 4.156000000000001
+Egraph big big? 3574
+Egraph cost? 4.156000000000001
+Egraph big big? 4868
+Egraph cost? 4.156000000000001
+Egraph big big? 5229
+Egraph cost? 4.156000000000001
+Egraph big big? 5289
+Egraph cost? 4.156000000000001
+Egraph big big? 5319
+Egraph cost? 4.156000000000001
+Egraph big big? 6016
+Egraph cost? 4.156000000000001
+Egraph big big? 6204
+Egraph cost? 4.156000000000001
+Egraph big big? 6364
+Egraph cost? 4.156000000000001
+Egraph big big? 6424
+Egraph cost? 4.156000000000001
+Egraph big big? 6424
+Egraph cost? 4.156000000000001
+Egraph big big? 7518
+Egraph cost? 4.156000000000001
+Egraph big big? 7518
+Egraph cost? 4.156000000000001
+Egraph big big? 7518
+Egraph cost? 4.156000000000001
+Egraph big big? 11360
+Egraph cost? 4.156000000000001
+Egraph big big? 11360
+Egraph cost? 4.156000000000001
+Egraph big big? 11360
+Egraph cost? 4.156000000000001
+Runner report
+=============
+  Stop reason: TimeLimit(225.397591625)
+  Iterations: 21
+  Egraph size: 11360 nodes, 2896 classes, 11360 memo
+  Rebuilds: 2047, 97.48 per iter
+  Total time: 225.374697577
+    Search:  (1.00) 225.32593999399998
+    Apply:   (0.00) 0.035765412
+    Rebuild: (0.00) 0.012979366999999995
+Stopped after 21 iterations, reason: Some(TimeLimit(225.397591625))
+(Concat
+  (VecMAC
+    (VecMul (LitVec (Get A 0) (Get A 0)) (LitVec (Get B 0) (Get B 1)))
+    (LitVec (Get A 1) (Get A 1))
+    (LitVec (Get B 2) (Get B 3)))
+  (VecMAC
+    (VecMul (LitVec (Get B 0) (Get B 1)) (LitVec (Get A 2) (Get A 2)))
+    (LitVec (Get B 2) (Get B 3))
+    (LitVec (Get A 3) (Get A 3))))
+
+Cost: 4.156000000000001
+#+end_example
+
+**** Commute + Zero
+
+#+name: commute-zero-raw-data
+#+call: egg-rewrite(bench="mat-mul", rules="rulesets/commute_zero.json")
+
+#+RESULTS: commute-zero-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.05s
+     Running `src/dios-egraphs/target/release/dios-egraphs mat-mul-out/spec.rkt --no-ac --rules rulesets/commute_zero.json`
+Running egg with timeout 180s, width: 2
+Starting run with 39 rules
+Egraph big big? 29
+Egraph cost? 212.148
+Egraph big big? 169
+Egraph cost? 206.54799999999997
+Egraph big big? 590
+Egraph cost? 4.552
+Egraph big big? 1709
+Egraph cost? 4.156000000000001
+Egraph big big? 3538
+Egraph cost? 4.156000000000001
+Egraph big big? 4706
+Egraph cost? 4.156000000000001
+Egraph big big? 5159
+Egraph cost? 4.156000000000001
+Egraph big big? 5159
+Egraph cost? 4.156000000000001
+Egraph big big? 6225
+Egraph cost? 4.156000000000001
+Egraph big big? 5643
+Egraph cost? 4.156000000000001
+Egraph big big? 5746
+Egraph cost? 4.156000000000001
+Egraph big big? 5746
+Egraph cost? 4.156000000000001
+Egraph big big? 6230
+Egraph cost? 4.156000000000001
+Egraph big big? 6230
+Egraph cost? 4.156000000000001
+Egraph big big? 7253
+Egraph cost? 4.156000000000001
+Egraph big big? 6912
+Egraph cost? 4.156000000000001
+Egraph big big? 6912
+Egraph cost? 4.156000000000001
+Egraph big big? 6912
+Egraph cost? 4.156000000000001
+Egraph big big? 6912
+Egraph cost? 4.156000000000001
+Egraph big big? 6912
+Egraph cost? 4.156000000000001
+Egraph big big? 6912
+Egraph cost? 4.156000000000001
+Egraph big big? 6912
+Egraph cost? 4.156000000000001
+Runner report
+=============
+  Stop reason: TimeLimit(202.202571)
+  Iterations: 23
+  Egraph size: 6912 nodes, 541 classes, 6912 memo
+  Rebuilds: 3680, 160.00 per iter
+  Total time: 202.181494619
+    Search:  (1.00) 202.123255492
+    Apply:   (0.00) 0.04386716000000001
+    Rebuild: (0.00) 0.014346074999999998
+Stopped after 23 iterations, reason: Some(TimeLimit(202.202571))
+(Concat
+  (VecMAC
+    (VecMul (LitVec (Get A 0) (Get A 0)) (LitVec (Get B 0) (Get B 1)))
+    (LitVec (Get A 1) (Get A 1))
+    (LitVec (Get B 2) (Get B 3)))
+  (VecMAC
+    (VecMul (LitVec (Get B 0) (Get B 1)) (LitVec (Get A 2) (Get A 2)))
+    (LitVec (Get B 2) (Get B 3))
+    (LitVec (Get A 3) (Get A 3))))
+
+Cost: 4.156000000000001
+#+end_example
+
+**** Commute + Zero + One
+
+#+name: commute-zero-one-raw-data
+#+call: egg-rewrite(bench="mat-mul", rules="rulesets/commute_zero_one.json")
+
+#+RESULTS: commute-zero-one-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.05s
+     Running `src/dios-egraphs/target/release/dios-egraphs mat-mul-out/spec.rkt --no-ac --rules rulesets/commute_zero_one.json`
+Running egg with timeout 180s, width: 2
+Starting run with 37 rules
+Egraph big big? 29
+Egraph cost? 212.148
+Egraph big big? 198
+Egraph cost? 206.54799999999997
+Egraph big big? 802
+Egraph cost? 4.552
+Egraph big big? 2648
+Egraph cost? 4.156000000000001
+Egraph big big? 4936
+Egraph cost? 4.156000000000001
+Egraph big big? 6062
+Egraph cost? 4.156000000000001
+Egraph big big? 6212
+Egraph cost? 4.156000000000001
+Egraph big big? 6212
+Egraph cost? 4.156000000000001
+Egraph big big? 7372
+Egraph cost? 4.156000000000001
+Egraph big big? 8031
+Egraph cost? 4.156000000000001
+Egraph big big? 7894
+Egraph cost? 4.156000000000001
+Egraph big big? 7910
+Egraph cost? 4.156000000000001
+Egraph big big? 7910
+Egraph cost? 4.156000000000001
+Egraph big big? 7910
+Egraph cost? 4.156000000000001
+Egraph big big? 9722
+Egraph cost? 4.156000000000001
+Egraph big big? 9269
+Egraph cost? 4.156000000000001
+Egraph big big? 9269
+Egraph cost? 4.156000000000001
+Egraph big big? 11534
+Egraph cost? 4.156000000000001
+Egraph big big? 12893
+Egraph cost? 4.156000000000001
+Egraph big big? 12893
+Egraph cost? 4.156000000000001
+Egraph big big? 8816
+Egraph cost? 4.156000000000001
+Egraph big big? 8816
+Egraph cost? 4.156000000000001
+Egraph big big? 8816
+Egraph cost? 4.156000000000001
+Egraph big big? 12722
+Egraph cost? 4.156000000000001
+Egraph big big? 12722
+Egraph cost? 4.156000000000001
+Runner report
+=============
+  Stop reason: TimeLimit(248.401888)
+  Iterations: 26
+  Egraph size: 12722 nodes, 637 classes, 12722 memo
+  Rebuilds: 4332, 166.62 per iter
+  Total time: 248.36512574099999
+    Search:  (1.00) 248.29701474100003
+    Apply:   (0.00) 0.048214202000000005
+    Rebuild: (0.00) 0.019882658
+Stopped after 26 iterations, reason: Some(TimeLimit(248.401888))
+(Concat
+  (VecMAC
+    (VecMul (LitVec (Get A 0) (Get A 0)) (LitVec (Get B 0) (Get B 1)))
+    (LitVec (Get A 1) (Get A 1))
+    (LitVec (Get B 2) (Get B 3)))
+  (VecMAC
+    (VecMul (LitVec (Get B 0) (Get B 1)) (LitVec (Get A 2) (Get A 2)))
+    (LitVec (Get B 2) (Get B 3))
+    (LitVec (Get A 3) (Get A 3))))
+
+Cost: 4.156000000000001
+#+end_example
+
+**** Pictures
+
+*** qr-decomp
+
+#+name: qr-decomp-params
+#+begin_src json :results file :file qr-decomp-params
+{
+    "N": 3,
+    "reg-size": 4
+}
+#+end_src
+
+#+RESULTS: qr-decomp-params
+[[file:../qr-decomp-params]]
+
+#+call: build-spec("qr-decomp")
+
+#+RESULTS:
+: #f
+
+**** Baseline
+
+#+name: qr-decomp-baseline-raw-data
+#+call: egg-rewrite(bench="qr-decomp", rules="rulesets/baseline.json")
+
+#+RESULTS: qr-decomp-baseline-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.05s
+     Running `src/dios-egraphs/target/release/dios-egraphs qr-decomp-out/spec.rkt --no-ac --rules rulesets/baseline.json`
+Running egg with timeout 180s, width: 2
+Starting run with 50 rules
+Egraph big big? 180
+Egraph cost? 163590.465
+Egraph big big? 1191
+Egraph cost? 163590.465
+Egraph big big? 4056
+Egraph cost? 163590.465
+Egraph big big? 6442
+Egraph cost? 163590.465
+Egraph big big? 6936
+Egraph cost? 163590.465
+Egraph big big? 6936
+Egraph cost? 163590.465
+Egraph big big? 10314
+Egraph cost? 163590.465
+Egraph big big? 10423
+Egraph cost? 163590.465
+Egraph big big? 10439
+Egraph cost? 163590.465
+Egraph big big? 10455
+Egraph cost? 163590.465
+Egraph big big? 10455
+Egraph cost? 163590.465
+Egraph big big? 10455
+Egraph cost? 163590.465
+Egraph big big? 13026
+Egraph cost? 163590.46499999997
+Egraph big big? 15119
+Egraph cost? 163590.46499999997
+Egraph big big? 16094
+Egraph cost? 163590.46499999997
+Egraph big big? 16426
+Egraph cost? 163590.46499999997
+Egraph big big? 16615
+Egraph cost? 163590.46499999997
+Egraph big big? 16615
+Egraph cost? 163590.46499999997
+Egraph big big? 19677
+Egraph cost? 163590.46499999997
+Egraph big big? 19677
+Egraph cost? 163590.46499999997
+Egraph big big? 19905
+Egraph cost? 163590.46499999997
+Egraph big big? 20351
+Egraph cost? 163590.46499999997
+Egraph big big? 21243
+Egraph cost? 163590.46499999997
+Egraph big big? 21243
+Egraph cost? 163590.46499999997
+Egraph big big? 21243
+Egraph cost? 163590.46499999997
+Egraph big big? 21243
+Egraph cost? 163590.46499999997
+Egraph big big? 21689
+Egraph cost? 163590.46499999997
+Egraph big big? 22135
+Egraph cost? 163590.46499999997
+Egraph big big? 22135
+Egraph cost? 163590.46499999997
+Egraph big big? 23044
+Egraph cost? 163590.46499999997
+Egraph big big? 23851
+Egraph cost? 163590.46499999997
+Egraph big big? 26494
+Egraph cost? 163590.46499999997
+Egraph big big? 29179
+Egraph cost? 163590.46499999997
+Egraph big big? 29179
+Egraph cost? 163590.46499999997
+Egraph big big? 27415
+Egraph cost? 163590.46499999997
+Egraph big big? 27415
+Egraph cost? 163590.46499999997
+Runner report
+=============
+  Stop reason: NodeLimit(30061)
+  Iterations: 37
+  Egraph size: 30057 nodes, 4717 classes, 30061 memo
+  Rebuilds: 16709, 451.59 per iter
+  Total time: 3.656694071000001
+    Search:  (0.95) 3.460162195
+    Apply:   (0.04) 0.150283071
+    Rebuild: (0.01) 0.046228532
+Stopped after 37 iterations, reason: Some(NodeLimit(30061))
+Cost: 163590.46499999997
+#+end_example
+
+**** Commutativity
+
+#+name: qr-decomp-commute-raw-data
+#+call: egg-rewrite(bench="qr-decomp", rules="rulesets/commutativity.json")
+
+#+RESULTS: qr-decomp-commute-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs qr-decomp-out/spec.rkt --no-ac --rules rulesets/commutativity.json`
+Running egg with timeout 180s, width: 2
+Starting run with 49 rules
+Egraph big big? 180
+Egraph cost? 163590.465
+Egraph big big? 1114
+Egraph cost? 163590.465
+Egraph big big? 4300
+Egraph cost? 163590.46499999997
+Egraph big big? 6617
+Egraph cost? 163590.46499999997
+Egraph big big? 7182
+Egraph cost? 163590.46499999997
+Egraph big big? 7170
+Egraph cost? 163590.46499999997
+Egraph big big? 7170
+Egraph cost? 163590.46499999997
+Egraph big big? 11111
+Egraph cost? 163590.46499999997
+Egraph big big? 11477
+Egraph cost? 163590.46499999997
+Egraph big big? 11505
+Egraph cost? 163590.46499999997
+Egraph big big? 11505
+Egraph cost? 163590.46499999997
+Egraph big big? 11505
+Egraph cost? 163590.46499999997
+Egraph big big? 13034
+Egraph cost? 163590.46499999997
+Egraph big big? 13384
+Egraph cost? 163590.46499999997
+Egraph big big? 13527
+Egraph cost? 163590.46499999997
+Egraph big big? 13640
+Egraph cost? 163590.46499999997
+Egraph big big? 13640
+Egraph cost? 163590.46499999997
+Egraph big big? 15784
+Egraph cost? 163590.46499999997
+Egraph big big? 15784
+Egraph cost? 163590.46499999997
+Egraph big big? 15784
+Egraph cost? 163590.46499999997
+Egraph big big? 15784
+Egraph cost? 163590.46499999997
+Egraph big big? 18636
+Egraph cost? 163590.46499999997
+Egraph big big? 23037
+Egraph cost? 163590.46499999997
+Egraph big big? 23450
+Egraph cost? 163590.46499999997
+Egraph big big? 23753
+Egraph cost? 163590.46499999997
+Egraph big big? 23854
+Egraph cost? 163590.46499999997
+Egraph big big? 23854
+Egraph cost? 163590.46499999997
+Egraph big big? 23009
+Egraph cost? 163590.46499999997
+Egraph big big? 23009
+Egraph cost? 163590.46499999997
+Egraph big big? 26753
+Egraph cost? 163590.46499999997
+Egraph big big? 26955
+Egraph cost? 163590.46499999997
+Egraph big big? 26955
+Egraph cost? 163590.46499999997
+Egraph big big? 23603
+Egraph cost? 163590.46499999997
+Egraph big big? 24100
+Egraph cost? 163590.46499999997
+Egraph big big? 24100
+Egraph cost? 163590.46499999997
+Runner report
+=============
+  Stop reason: NodeLimit(31135)
+  Iterations: 36
+  Egraph size: 31135 nodes, 7954 classes, 31135 memo
+  Rebuilds: 14444, 401.22 per iter
+  Total time: 5.257267113
+    Search:  (0.97) 5.083162363
+    Apply:   (0.02) 0.13027557099999998
+    Rebuild: (0.01) 0.04380902999999999
+Stopped after 36 iterations, reason: Some(NodeLimit(31135))
+Cost: 163590.46499999997
+#+end_example
+
+**** Associativity
+
+#+name: qr-decomp-assoc-raw-data
+#+call: egg-rewrite(bench="qr-decomp", rules="rulesets/associativity.json")
+
+#+RESULTS: qr-decomp-assoc-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs qr-decomp-out/spec.rkt --no-ac --rules rulesets/associativity.json`
+Running egg with timeout 180s, width: 2
+Starting run with 47 rules
+Egraph big big? 180
+Egraph cost? 163590.465
+Egraph big big? 1175
+Egraph cost? 163590.465
+Egraph big big? 4736
+Egraph cost? 163590.46499999997
+Egraph big big? 6667
+Egraph cost? 163590.46499999997
+Egraph big big? 7510
+Egraph cost? 163590.46499999997
+Egraph big big? 7528
+Egraph cost? 163590.46499999997
+Egraph big big? 7528
+Egraph cost? 163590.46499999997
+Egraph big big? 12075
+Egraph cost? 163590.46499999997
+Egraph big big? 11883
+Egraph cost? 163590.46499999997
+Egraph big big? 11938
+Egraph cost? 163590.46499999997
+Egraph big big? 11944
+Egraph cost? 163590.46499999997
+Egraph big big? 11944
+Egraph cost? 163590.46499999997
+Egraph big big? 11944
+Egraph cost? 163590.46499999997
+Egraph big big? 16539
+Egraph cost? 163590.46499999997
+Egraph big big? 16849
+Egraph cost? 163590.46499999997
+Egraph big big? 17323
+Egraph cost? 163590.46499999997
+Egraph big big? 17581
+Egraph cost? 163590.46499999997
+Egraph big big? 17740
+Egraph cost? 163590.46499999997
+Egraph big big? 17858
+Egraph cost? 163590.46499999997
+Egraph big big? 20138
+Egraph cost? 163590.46499999997
+Egraph big big? 20138
+Egraph cost? 163590.46499999997
+Egraph big big? 20049
+Egraph cost? 163590.46499999997
+Egraph big big? 20049
+Egraph cost? 163590.46499999997
+Egraph big big? 23723
+Egraph cost? 163590.46499999997
+Egraph big big? 24933
+Egraph cost? 163590.46499999997
+Egraph big big? 24933
+Egraph cost? 163590.46499999997
+Egraph big big? 24933
+Egraph cost? 163590.46499999997
+Egraph big big? 23046
+Egraph cost? 163590.46499999997
+Egraph big big? 23563
+Egraph cost? 163590.46499999997
+Egraph big big? 23563
+Egraph cost? 163590.46499999997
+Egraph big big? 24080
+Egraph cost? 163590.46499999997
+Egraph big big? 25114
+Egraph cost? 163590.46499999997
+Egraph big big? 26865
+Egraph cost? 163590.46499999997
+Egraph big big? 26865
+Egraph cost? 163590.46499999997
+Egraph big big? 26865
+Egraph cost? 163590.46499999997
+Egraph big big? 26865
+Egraph cost? 163590.46499999997
+Egraph big big? 26865
+Egraph cost? 163590.46499999997
+Egraph big big? 26865
+Egraph cost? 163590.46499999997
+Runner report
+=============
+  Stop reason: NodeLimit(32308)
+  Iterations: 39
+  Egraph size: 32308 nodes, 7319 classes, 32308 memo
+  Rebuilds: 15632, 400.82 per iter
+  Total time: 4.660617155
+    Search:  (0.96) 4.461865361999999
+    Apply:   (0.03) 0.15225936199999998
+    Rebuild: (0.01) 0.046451196000000014
+Stopped after 39 iterations, reason: Some(NodeLimit(32308))
+Cost: 163590.46499999997
+#+end_example
+
+**** Commute + Associativity
+
+#+name: qr-decomp-commute-assoc-raw-data
+#+call: egg-rewrite(bench="qr-decomp", rules="rulesets/commute_assoc.json")
+
+#+RESULTS: qr-decomp-commute-assoc-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs qr-decomp-out/spec.rkt --no-ac --rules rulesets/commute_assoc.json`
+Running egg with timeout 180s, width: 2
+Starting run with 47 rules
+Egraph big big? 180
+Egraph cost? 163590.465
+Egraph big big? 1204
+Egraph cost? 163590.465
+Egraph big big? 5183
+Egraph cost? 163590.46499999997
+Egraph big big? 5934
+Egraph cost? 163590.46499999997
+Egraph big big? 6559
+Egraph cost? 163590.46499999997
+Egraph big big? 6639
+Egraph cost? 163590.46499999997
+Egraph big big? 6644
+Egraph cost? 163590.46499999997
+Egraph big big? 6648
+Egraph cost? 163590.46499999997
+Egraph big big? 10475
+Egraph cost? 163590.46499999997
+Egraph big big? 11631
+Egraph cost? 163590.46499999997
+Egraph big big? 11995
+Egraph cost? 163590.46499999997
+Egraph big big? 12137
+Egraph cost? 163590.46499999997
+Egraph big big? 12137
+Egraph cost? 163590.46499999997
+Egraph big big? 12137
+Egraph cost? 163590.46499999997
+Egraph big big? 13649
+Egraph cost? 163590.46499999997
+Egraph big big? 14638
+Egraph cost? 163590.46499999997
+Egraph big big? 15264
+Egraph cost? 163590.46499999997
+Egraph big big? 15414
+Egraph cost? 163590.46499999997
+Egraph big big? 15414
+Egraph cost? 163590.46499999997
+Egraph big big? 17670
+Egraph cost? 163590.46499999997
+Egraph big big? 17670
+Egraph cost? 163590.46499999997
+Egraph big big? 17670
+Egraph cost? 163590.46499999997
+Egraph big big? 17670
+Egraph cost? 163590.46499999997
+Egraph big big? 17670
+Egraph cost? 163590.46499999997
+Egraph big big? 17670
+Egraph cost? 163590.46499999997
+Egraph big big? 17670
+Egraph cost? 163590.46499999997
+Runner report
+=============
+  Stop reason: NodeLimit(34747)
+  Iterations: 27
+  Egraph size: 34734 nodes, 6567 classes, 34747 memo
+  Rebuilds: 9110, 337.41 per iter
+  Total time: 5.302469407999999
+    Search:  (0.98) 5.192245199
+    Apply:   (0.02) 0.085148533
+    Rebuild: (0.00) 0.02506053499999999
+Stopped after 27 iterations, reason: Some(NodeLimit(34747))
+Cost: 163590.46499999997
+#+end_example
+
+**** Commute + Zero
+
+#+name: qr-decomp-commute-zero-raw-data
+#+call: egg-rewrite(bench="qr-decomp", rules="rulesets/commute_zero.json")
+
+#+RESULTS: qr-decomp-commute-zero-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs qr-decomp-out/spec.rkt --no-ac --rules rulesets/commute_zero.json`
+Running egg with timeout 180s, width: 2
+Starting run with 39 rules
+Egraph big big? 180
+Egraph cost? 163590.465
+Egraph big big? 1172
+Egraph cost? 163590.465
+Egraph big big? 4124
+Egraph cost? 163590.465
+Egraph big big? 5111
+Egraph cost? 163590.465
+Egraph big big? 5624
+Egraph cost? 163590.465
+Egraph big big? 5624
+Egraph cost? 163590.465
+Egraph big big? 9410
+Egraph cost? 163590.465
+Egraph big big? 9684
+Egraph cost? 163590.465
+Egraph big big? 9684
+Egraph cost? 163590.465
+Egraph big big? 10941
+Egraph cost? 163590.465
+Egraph big big? 10941
+Egraph cost? 163590.465
+Egraph big big? 14169
+Egraph cost? 163590.465
+Egraph big big? 13498
+Egraph cost? 163590.465
+Egraph big big? 13498
+Egraph cost? 163590.465
+Egraph big big? 14152
+Egraph cost? 163590.465
+Egraph big big? 14152
+Egraph cost? 163590.465
+Runner report
+=============
+  Stop reason: NodeLimit(30722)
+  Iterations: 17
+  Egraph size: 30707 nodes, 7599 classes, 30722 memo
+  Rebuilds: 9545, 561.47 per iter
+  Total time: 3.6926118679999997
+    Search:  (0.98) 3.6258622849999997
+    Apply:   (0.01) 0.045732785
+    Rebuild: (0.01) 0.021007829999999998
+Stopped after 17 iterations, reason: Some(NodeLimit(30722))
+Cost: 163589.46999999997
+#+end_example
+
+**** Commute + Zero + One
+
+#+name: qr-decomp-commute-zero-one-raw-data
+#+call: egg-rewrite(bench="qr-decomp", rules="rulesets/commute_zero_one.json")
+
+#+RESULTS: qr-decomp-commute-zero-one-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs qr-decomp-out/spec.rkt --no-ac --rules rulesets/commute_zero_one.json`
+Running egg with timeout 180s, width: 2
+Starting run with 37 rules
+Egraph big big? 180
+Egraph cost? 163590.465
+Egraph big big? 1288
+Egraph cost? 163590.465
+Egraph big big? 5222
+Egraph cost? 163590.465
+Egraph big big? 6339
+Egraph cost? 163590.465
+Egraph big big? 7152
+Egraph cost? 163590.465
+Egraph big big? 7152
+Egraph cost? 163590.465
+Egraph big big? 13385
+Egraph cost? 163590.465
+Egraph big big? 13404
+Egraph cost? 163590.465
+Egraph big big? 13404
+Egraph cost? 163590.465
+Egraph big big? 13404
+Egraph cost? 163590.465
+Egraph big big? 19747
+Egraph cost? 163590.465
+Egraph big big? 20269
+Egraph cost? 163590.465
+Egraph big big? 20269
+Egraph cost? 163590.465
+Egraph big big? 22655
+Egraph cost? 163590.465
+Egraph big big? 22655
+Egraph cost? 163590.465
+Egraph big big? 22655
+Egraph cost? 163590.465
+Egraph big big? 22655
+Egraph cost? 163590.465
+Runner report
+=============
+  Stop reason: TimeLimit(182.562487458)
+  Iterations: 18
+  Egraph size: 22633 nodes, 2841 classes, 22655 memo
+  Rebuilds: 8011, 445.06 per iter
+  Total time: 182.20815912
+    Search:  (1.00) 182.14140828799998
+    Apply:   (0.00) 0.044783369999999996
+    Rebuild: (0.00) 0.021940952
+Stopped after 18 iterations, reason: Some(TimeLimit(182.562487458))
+Cost: 163590.465
+#+end_example
+
+*** q-prod
+
+#+name: q-prod-params
+#+begin_src json :results file :file qr-decomp-params
+{
+    "reg-size": 4
+}
+#+end_src
+
+#+RESULTS: q-prod-params
+[[file:../qr-decomp-params]]
+
+#+call: build-spec("q-prod")
+
+#+RESULTS:
+: #f
+
+**** Baseline
+
+#+name: q-prod-baseline-raw-data
+#+call: egg-rewrite(bench="q-prod", rules="rulesets/baseline.json")
+
+#+RESULTS: q-prod-baseline-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.02s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules rulesets/baseline.json`
+Running egg with timeout 180s, width: 2
+Starting run with 50 rules
+Egraph big big? 102
+Egraph cost? 503.5590000000001
+Egraph big big? 607
+Egraph cost? 502.659
+Egraph big big? 1940
+Egraph cost? 501.6600000000001
+Egraph big big? 6023
+Egraph cost? 492.76
+Egraph big big? 7144
+Egraph cost? 492.56199999999995
+Egraph big big? 7265
+Egraph cost? 492.56199999999995
+Egraph big big? 7265
+Egraph cost? 492.56199999999995
+Egraph big big? 10510
+Egraph cost? 492.56199999999995
+Egraph big big? 10927
+Egraph cost? 492.56199999999995
+Egraph big big? 10580
+Egraph cost? 492.56199999999995
+Egraph big big? 10580
+Egraph cost? 492.56199999999995
+Egraph big big? 10580
+Egraph cost? 492.56199999999995
+Egraph big big? 11469
+Egraph cost? 492.56199999999995
+Egraph big big? 11865
+Egraph cost? 492.56199999999995
+Egraph big big? 12080
+Egraph cost? 492.56199999999995
+Egraph big big? 12132
+Egraph cost? 492.56199999999995
+Egraph big big? 12132
+Egraph cost? 492.56199999999995
+Egraph big big? 13548
+Egraph cost? 492.56199999999995
+Egraph big big? 13548
+Egraph cost? 492.56199999999995
+Egraph big big? 13548
+Egraph cost? 492.56199999999995
+Egraph big big? 13548
+Egraph cost? 492.56199999999995
+Egraph big big? 13548
+Egraph cost? 492.56199999999995
+Egraph big big? 13548
+Egraph cost? 492.56199999999995
+Egraph big big? 16094
+Egraph cost? 492.56199999999995
+Egraph big big? 19761
+Egraph cost? 492.56199999999995
+Egraph big big? 18549
+Egraph cost? 492.56199999999995
+Egraph big big? 18549
+Egraph cost? 492.56199999999995
+Egraph big big? 22448
+Egraph cost? 492.56199999999995
+Egraph big big? 23183
+Egraph cost? 492.56199999999995
+Egraph big big? 23183
+Egraph cost? 492.56199999999995
+Egraph big big? 23918
+Egraph cost? 492.56199999999995
+Egraph big big? 25388
+Egraph cost? 492.56199999999995
+Egraph big big? 25388
+Egraph cost? 492.56199999999995
+Egraph big big? 25388
+Egraph cost? 492.56199999999995
+Egraph big big? 26123
+Egraph cost? 492.56199999999995
+Egraph big big? 26123
+Egraph cost? 492.56199999999995
+Egraph big big? 27293
+Egraph cost? 492.56199999999995
+Runner report
+=============
+  Stop reason: NodeLimit(30821)
+  Iterations: 38
+  Egraph size: 30821 nodes, 5451 classes, 30821 memo
+  Rebuilds: 15647, 411.76 per iter
+  Total time: 41.889709528
+    Search:  (0.99) 41.676470361999996
+    Apply:   (0.00) 0.16371169799999996
+    Rebuild: (0.00) 0.049504280000000005
+Stopped after 38 iterations, reason: Some(NodeLimit(30821))
+
+Cost: 492.56199999999995
+#+end_example
+
+**** Commutativity
+
+#+name: q-prod-commute-raw-data
+#+call: egg-rewrite(bench="q-prod", rules="rulesets/commutativity.json")
+
+#+RESULTS: q-prod-commute-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.04s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules rulesets/commutativity.json`
+Running egg with timeout 180s, width: 2
+Starting run with 49 rules
+Egraph big big? 102
+Egraph cost? 503.5590000000001
+Egraph big big? 604
+Egraph cost? 502.659
+Egraph big big? 2251
+Egraph cost? 501.6600000000001
+Egraph big big? 6050
+Egraph cost? 492.76
+Egraph big big? 8279
+Egraph cost? 492.56199999999995
+Egraph big big? 8517
+Egraph cost? 492.56199999999995
+Egraph big big? 8517
+Egraph cost? 492.56199999999995
+Egraph big big? 12027
+Egraph cost? 492.56199999999995
+Egraph big big? 12773
+Egraph cost? 492.56199999999995
+Egraph big big? 12890
+Egraph cost? 492.56199999999995
+Egraph big big? 12968
+Egraph cost? 492.56199999999995
+Egraph big big? 12968
+Egraph cost? 492.56199999999995
+Egraph big big? 13075
+Egraph cost? 492.56199999999995
+Egraph big big? 13075
+Egraph cost? 492.56199999999995
+Egraph big big? 15834
+Egraph cost? 492.56199999999995
+Egraph big big? 18486
+Egraph cost? 492.56199999999995
+Egraph big big? 18752
+Egraph cost? 492.56199999999995
+Egraph big big? 18764
+Egraph cost? 492.56199999999995
+Egraph big big? 18764
+Egraph cost? 492.56199999999995
+Egraph big big? 18764
+Egraph cost? 492.56199999999995
+Egraph big big? 17318
+Egraph cost? 492.56199999999995
+Egraph big big? 17932
+Egraph cost? 492.56199999999995
+Egraph big big? 18546
+Egraph cost? 492.56199999999995
+Egraph big big? 18853
+Egraph cost? 492.56199999999995
+Egraph big big? 18853
+Egraph cost? 492.56199999999995
+Egraph big big? 18853
+Egraph cost? 492.56199999999995
+Egraph big big? 19160
+Egraph cost? 492.56199999999995
+Egraph big big? 19160
+Egraph cost? 492.56199999999995
+Egraph big big? 21644
+Egraph cost? 492.56199999999995
+Egraph big big? 21644
+Egraph cost? 492.56199999999995
+Egraph big big? 21644
+Egraph cost? 492.56199999999995
+Egraph big big? 21644
+Egraph cost? 492.56199999999995
+Egraph big big? 26881
+Egraph cost? 492.56199999999995
+Runner report
+=============
+  Stop reason: NodeLimit(35551)
+  Iterations: 34
+  Egraph size: 35551 nodes, 8983 classes, 35551 memo
+  Rebuilds: 14719, 432.91 per iter
+  Total time: 6.304893361999999
+    Search:  (0.98) 6.150557114999999
+    Apply:   (0.02) 0.11520915500000001
+    Rebuild: (0.01) 0.039107113
+Stopped after 34 iterations, reason: Some(NodeLimit(35551))
+
+Cost: 492.56199999999995
+#+end_example
+
+**** Associativity
+
+#+name: q-prod-assoc-raw-data
+#+call: egg-rewrite(bench="q-prod", rules="rulesets/associativity.json")
+
+#+RESULTS: q-prod-assoc-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules rulesets/associativity.json`
+Running egg with timeout 180s, width: 2
+Starting run with 47 rules
+Egraph big big? 102
+Egraph cost? 503.5590000000001
+Egraph big big? 596
+Egraph cost? 502.659
+Egraph big big? 2235
+Egraph cost? 496.05999999999995
+Egraph big big? 4959
+Egraph cost? 492.562
+Egraph big big? 5818
+Egraph cost? 492.562
+Egraph big big? 5813
+Egraph cost? 492.562
+Egraph big big? 5813
+Egraph cost? 492.562
+Egraph big big? 7663
+Egraph cost? 492.562
+Egraph big big? 7967
+Egraph cost? 492.562
+Egraph big big? 8465
+Egraph cost? 492.562
+Egraph big big? 8501
+Egraph cost? 492.562
+Egraph big big? 8543
+Egraph cost? 492.562
+Egraph big big? 8543
+Egraph cost? 492.562
+Egraph big big? 9101
+Egraph cost? 492.562
+Egraph big big? 9101
+Egraph cost? 492.562
+Egraph big big? 10305
+Egraph cost? 492.562
+Egraph big big? 11643
+Egraph cost? 492.562
+Egraph big big? 11790
+Egraph cost? 492.562
+Egraph big big? 11832
+Egraph cost? 492.562
+Egraph big big? 11832
+Egraph cost? 492.562
+Egraph big big? 11832
+Egraph cost? 492.562
+Egraph big big? 12029
+Egraph cost? 492.562
+Egraph big big? 12475
+Egraph cost? 492.562
+Egraph big big? 12921
+Egraph cost? 492.562
+Egraph big big? 13144
+Egraph cost? 492.562
+Egraph big big? 13144
+Egraph cost? 492.562
+Egraph big big? 13144
+Egraph cost? 492.562
+Egraph big big? 13144
+Egraph cost? 492.562
+Egraph big big? 19940
+Egraph cost? 492.562
+Egraph big big? 19806
+Egraph cost? 492.562
+Egraph big big? 19806
+Egraph cost? 492.562
+Runner report
+=============
+  Stop reason: NodeLimit(31659)
+  Iterations: 32
+  Egraph size: 31659 nodes, 8119 classes, 31659 memo
+  Rebuilds: 10118, 316.19 per iter
+  Total time: 2.105059154
+    Search:  (0.94) 1.9799924080000004
+    Apply:   (0.04) 0.09445557200000002
+    Rebuild: (0.01) 0.030591115000000002
+Stopped after 32 iterations, reason: Some(NodeLimit(31659))
+
+Cost: 492.562
+#+end_example
+
+**** Commute + Associativity
+
+#+name: q-prod-commute-assoc-raw-data
+#+call: egg-rewrite(bench="q-prod", rules="rulesets/commute_assoc.json")
+
+#+RESULTS: q-prod-commute-assoc-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules rulesets/commute_assoc.json`
+Running egg with timeout 180s, width: 2
+Starting run with 47 rules
+Egraph big big? 102
+Egraph cost? 503.5590000000001
+Egraph big big? 627
+Egraph cost? 502.659
+Egraph big big? 2503
+Egraph cost? 496.05999999999995
+Egraph big big? 5047
+Egraph cost? 492.562
+Egraph big big? 6045
+Egraph cost? 492.562
+Egraph big big? 5930
+Egraph cost? 492.562
+Egraph big big? 6032
+Egraph cost? 492.562
+Egraph big big? 6010
+Egraph cost? 492.562
+Egraph big big? 6013
+Egraph cost? 492.562
+Egraph big big? 7084
+Egraph cost? 492.562
+Egraph big big? 7504
+Egraph cost? 492.562
+Egraph big big? 7563
+Egraph cost? 492.562
+Egraph big big? 7603
+Egraph cost? 492.562
+Egraph big big? 7623
+Egraph cost? 492.562
+Egraph big big? 7623
+Egraph cost? 492.562
+Egraph big big? 8093
+Egraph cost? 492.562
+Egraph big big? 8093
+Egraph cost? 492.562
+Egraph big big? 8679
+Egraph cost? 492.562
+Egraph big big? 8853
+Egraph cost? 492.562
+Egraph big big? 9541
+Egraph cost? 492.562
+Egraph big big? 9225
+Egraph cost? 492.562
+Egraph big big? 9321
+Egraph cost? 492.562
+Egraph big big? 9408
+Egraph cost? 492.562
+Egraph big big? 10080
+Egraph cost? 492.562
+Egraph big big? 11246
+Egraph cost? 492.562
+Egraph big big? 11776
+Egraph cost? 492.562
+Egraph big big? 11776
+Egraph cost? 492.562
+Egraph big big? 13088
+Egraph cost? 492.562
+Egraph big big? 14050
+Egraph cost? 492.562
+Egraph big big? 14544
+Egraph cost? 492.562
+Egraph big big? 14544
+Egraph cost? 492.562
+Egraph big big? 14544
+Egraph cost? 492.562
+Egraph big big? 14852
+Egraph cost? 492.562
+Egraph big big? 14852
+Egraph cost? 492.562
+Egraph big big? 14852
+Egraph cost? 492.562
+Runner report
+=============
+  Stop reason: NodeLimit(31622)
+  Iterations: 36
+  Egraph size: 31622 nodes, 4737 classes, 31622 memo
+  Rebuilds: 7450, 206.94 per iter
+  Total time: 34.566774947
+    Search:  (1.00) 34.44238231999999
+    Apply:   (0.00) 0.09765832100000005
+    Rebuild: (0.00) 0.026723364999999995
+Stopped after 36 iterations, reason: Some(NodeLimit(31622))
+
+Cost: 492.562
+#+end_example
+
+**** Commute + Zero
+
+#+name: q-prod-commute-zero-raw-data
+#+call: egg-rewrite(bench="q-prod", rules="rulesets/commute_zero.json")
+
+#+RESULTS: q-prod-commute-zero-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.04s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules rulesets/commute_zero.json`
+Running egg with timeout 180s, width: 2
+Starting run with 39 rules
+Egraph big big? 102
+Egraph cost? 503.5590000000001
+Egraph big big? 639
+Egraph cost? 502.659
+Egraph big big? 2002
+Egraph cost? 501.6600000000001
+Egraph big big? 3320
+Egraph cost? 492.76
+Egraph big big? 5418
+Egraph cost? 491.566
+Egraph big big? 6448
+Egraph cost? 491.566
+Egraph big big? 6448
+Egraph cost? 491.566
+Egraph big big? 7740
+Egraph cost? 491.566
+Egraph big big? 7191
+Egraph cost? 491.566
+Egraph big big? 9583
+Egraph cost? 491.566
+Egraph big big? 9583
+Egraph cost? 491.566
+Egraph big big? 10252
+Egraph cost? 491.566
+Egraph big big? 10252
+Egraph cost? 491.566
+Egraph big big? 11827
+Egraph cost? 490.56399999999996
+Egraph big big? 13944
+Egraph cost? 489.564
+Egraph big big? 18664
+Egraph cost? 489.564
+Egraph big big? 22280
+Egraph cost? 489.564
+Egraph big big? 22280
+Egraph cost? 489.564
+Egraph big big? 23164
+Egraph cost? 489.564
+Egraph big big? 23164
+Egraph cost? 489.564
+Egraph big big? 23164
+Egraph cost? 489.564
+Egraph big big? 23164
+Egraph cost? 489.564
+Runner report
+=============
+  Stop reason: TimeLimit(456.308250833)
+  Iterations: 23
+  Egraph size: 23164 nodes, 3255 classes, 23164 memo
+  Rebuilds: 8629, 375.17 per iter
+  Total time: 456.23251924299996
+    Search:  (1.00) 456.16283961600004
+    Apply:   (0.00) 0.04570820399999999
+    Rebuild: (0.00) 0.023931202
+Stopped after 23 iterations, reason: Some(TimeLimit(456.308250833))
+
+Cost: 489.564
+#+end_example
+
+**** Commute + Zero + One
+
+#+name: q-prod-commute-zero-one-raw-data
+#+call: egg-rewrite(bench="q-prod", rules="rulesets/commute_zero_one.json")
+
+#+RESULTS: q-prod-commute-zero-one-raw-data
+#+begin_example
+warning: function is never used: `filter_applicable_rules`
+  --> src/rules.rs:27:4
+   |
+27 | fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: 1 warning emitted
+
+    Finished release [optimized] target(s) in 0.05s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules rulesets/commute_zero_one.json`
+Running egg with timeout 180s, width: 2
+Starting run with 37 rules
+Egraph big big? 102
+Egraph cost? 503.5590000000001
+Egraph big big? 671
+Egraph cost? 502.659
+Egraph big big? 2219
+Egraph cost? 500.8620000000001
+Egraph big big? 4188
+Egraph cost? 491.863
+Egraph big big? 6709
+Egraph cost? 491.66499999999996
+Egraph big big? 8082
+Egraph cost? 491.66499999999996
+Egraph big big? 8082
+Egraph cost? 491.66499999999996
+Egraph big big? 8830
+Egraph cost? 491.66499999999996
+Egraph big big? 9420
+Egraph cost? 491.66499999999996
+Egraph big big? 9790
+Egraph cost? 491.66499999999996
+Egraph big big? 9790
+Egraph cost? 491.66499999999996
+Egraph big big? 9790
+Egraph cost? 491.66499999999996
+Egraph big big? 13335
+Egraph cost? 490.56399999999996
+Egraph big big? 17968
+Egraph cost? 490.56399999999996
+Egraph big big? 19112
+Egraph cost? 490.56399999999996
+Egraph big big? 19112
+Egraph cost? 490.56399999999996
+Egraph big big? 20212
+Egraph cost? 490.56399999999996
+Egraph big big? 20212
+Egraph cost? 490.56399999999996
+Egraph big big? 25822
+Egraph cost? 490.56399999999996
+Egraph big big? 28572
+Egraph cost? 490.56399999999996
+Egraph big big? 28572
+Egraph cost? 490.56399999999996
+Egraph big big? 28572
+Egraph cost? 490.56399999999996
+Egraph big big? 28572
+Egraph cost? 490.56399999999996
+Egraph big big? 28572
+Egraph cost? 490.56399999999996
+Runner report
+=============
+  Stop reason: NodeLimit(30244)
+  Iterations: 25
+  Egraph size: 30244 nodes, 3289 classes, 30244 memo
+  Rebuilds: 9855, 394.20 per iter
+  Total time: 16.585870781
+    Search:  (0.99) 16.489137033000002
+    Apply:   (0.00) 0.07040924
+    Rebuild: (0.00) 0.026299406
+Stopped after 25 iterations, reason: Some(NodeLimit(30244))
+
+Cost: 490.56399999999996
+#+end_example
