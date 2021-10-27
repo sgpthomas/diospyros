@@ -253,6 +253,9 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<Ve
 }
 
 fn ruler_rules(filename: &str) -> Vec<Rewrite<VecLang, ()>> {
+    if filename == "" {
+        return vec![];
+    }
     let contents = std::fs::read_to_string(filename).unwrap();
     let data = json::parse(&contents).unwrap();
 
