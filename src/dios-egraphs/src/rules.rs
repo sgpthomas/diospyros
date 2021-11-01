@@ -107,7 +107,7 @@ pub fn run(
     let mut runner: Runner<VecLang, ()> = Runner::default()
         .with_egraph(init_eg)
         .with_expr(&prog)
-        .with_node_limit(30_000)
+        .with_node_limit(300_000)
         .with_time_limit(std::time::Duration::from_secs(timeout))
         .with_hook(|runner| {
             eprintln!("Egraph big big? {}", runner.egraph.total_size());
@@ -120,7 +120,8 @@ pub fn run(
             eprintln!("Egraph cost? {}", cost);
             Ok(())
         })
-        .with_iter_limit(10_000);
+        .with_iter_limit(10_000)
+        .with_scheduler(SimpleScheduler);
 
     eprintln!("{:#?}", rules);
     eprintln!("Starting run with {} rules", rules.len());
@@ -220,17 +221,17 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<Ve
     if !no_vec {
         rules.extend(vec![
             // Special MAC fusion rule
-            // rw!("vec-mac-add-mul";
-            //     "(VecAdd ?v0 (VecMul ?v1 ?v2))"
-            //     => "(VecMAC ?v0 ?v1 ?v2)"),
+            rw!("vec-mac-add-mul";
+                "(VecAdd ?v0 (VecMul ?v1 ?v2))"
+                => "(VecMAC ?v0 ?v1 ?v2)"),
             // Custom searchers
             build_unop_rule("neg", "VecNeg"),
             build_unop_rule("sqrt", "VecSqrt"),
             build_unop_rule("sgn", "VecSgn"),
-            // build_binop_rule("/", "VecDiv"),
-            // build_binop_or_zero_rule("+", "VecAdd"),
-            // build_binop_or_zero_rule("*", "VecMul"),
-            // build_binop_or_zero_rule("-", "VecMinus"),
+            build_binop_rule("/", "VecDiv"),
+            build_binop_or_zero_rule("+", "VecAdd"),
+            build_binop_or_zero_rule("*", "VecMul"),
+            build_binop_or_zero_rule("-", "VecMinus"),
             build_mac_rule(),
         ]);
     } else {
