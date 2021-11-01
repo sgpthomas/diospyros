@@ -189,11 +189,11 @@ pub fn build_litvec_rule() -> Rewrite<VecLang, ()> {
 
 pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<VecLang, ()>> {
     let mut rules: Vec<Rewrite<VecLang, ()>> = vec![
-        // rw!("add-0"; "(+ 0 ?a)" => "?a"),
-        // rw!("mul-0"; "(* 0 ?a)" => "0"),
-        // rw!("mul-1"; "(* 1 ?a)" => "?a"),
-        // rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
-        // rw!("mul-1-inv"; "?a" => "(* 1 ?a)"),
+        rw!("add-0"; "(+ 0 ?a)" => "?a"),
+        rw!("mul-0"; "(* 0 ?a)" => "0"),
+        rw!("mul-1"; "(* 1 ?a)" => "?a"),
+        rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
+        rw!("mul-1-inv"; "?a" => "(* 1 ?a)"),
         rw!("div-1"; "(/ ?a 1)" => "?a"),
         rw!("div-1-inv"; "?a" => "(/ ?a 1)"),
         rw!("expand-zero-get"; "0" => "(Get 0 0)"),
@@ -220,16 +220,16 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<Ve
     if !no_vec {
         rules.extend(vec![
             // Special MAC fusion rule
-            rw!("vec-mac-add-mul";
-                "(VecAdd ?v0 (VecMul ?v1 ?v2))"
-                => "(VecMAC ?v0 ?v1 ?v2)"),
+            // rw!("vec-mac-add-mul";
+            //     "(VecAdd ?v0 (VecMul ?v1 ?v2))"
+            //     => "(VecMAC ?v0 ?v1 ?v2)"),
             // Custom searchers
             build_unop_rule("neg", "VecNeg"),
             build_unop_rule("sqrt", "VecSqrt"),
             build_unop_rule("sgn", "VecSgn"),
-            build_binop_rule("/", "VecDiv"),
-            build_binop_or_zero_rule("+", "VecAdd"),
-            build_binop_or_zero_rule("*", "VecMul"),
+            // build_binop_rule("/", "VecDiv"),
+            // build_binop_or_zero_rule("+", "VecAdd"),
+            // build_binop_or_zero_rule("*", "VecMul"),
             // build_binop_or_zero_rule("-", "VecMinus"),
             build_mac_rule(),
         ]);

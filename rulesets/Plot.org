@@ -3881,8 +3881,17 @@ Cost: 163590.465
 #+name: q-prod-no-ruler-raw-data
 #+call: egg-rewrite(bench="q-prod", rules="")
 
-#+RESULTS[a8a9f7b06e93680690a856feb208f22ca0621323]: q-prod-no-ruler-raw-data
+#+RESULTS[cb7ef1a15d32e0ff9e9db8ad37aa3ca1f8809c5b]: q-prod-no-ruler-raw-data
 #+begin_example
+   Compiling dios-egraphs v0.1.0 (/Users/sgt/Research/dios/src/dios-egraphs)
+warning: unused import: `binopsearcher::build_binop_or_zero_rule`
+ --> src/rules.rs:7:5
+  |
+7 |     binopsearcher::build_binop_or_zero_rule,
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
 warning: function is never used: `filter_applicable_rules`
   --> src/rules.rs:28:4
    |
@@ -3891,99 +3900,15 @@ warning: function is never used: `filter_applicable_rules`
    |
    = note: `#[warn(dead_code)]` on by default
 
-warning: 1 warning emitted
+warning: 2 warnings emitted
 
-    Finished release [optimized] target(s) in 0.01s
+    Finished release [optimized] target(s) in 2.99s
      Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules ''`
 Running egg with timeout 180s, width: 2
 [
     Rewrite {
-        name: "neg-sgn-rev",
-        long_name: "\"(sgn (neg ?a))\" => \"(neg (sgn ?a))\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
         name: "sqrt-1-inv",
         long_name: "\"1\" => \"(sqrt 1)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-neg",
-        long_name: "\"(neg (neg ?a))\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus-zero",
-        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "*_binop_or_zero",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "div-1",
-        long_name: "\"(/ ?a 1)\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg_unop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "div-1-inv",
-        long_name: "\"?a\" => \"(/ ?a 1)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-zero-inv",
-        long_name: "\"0\" => \"(neg 0)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "litvec",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sqrt_unop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "expand-zero-get",
-        long_name: "\"0\" => \"(Get 0 0)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "vec-mac",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "vec-mac-add-mul",
-        long_name: "\"(VecAdd ?v0 (VecMul ?v1 ?v2))\" => \"(VecMAC ?v0 ?v1 ?v2)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus-zero-rev",
-        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
         searcher: "<< searcher >>",
         applier: "<< applier >>",
     },
@@ -3994,20 +3919,32 @@ Running egg with timeout 180s, width: 2
         applier: "<< applier >>",
     },
     Rewrite {
-        name: "neg-neg-rev",
-        long_name: "\"?a\" => \"(neg (neg ?a))\"",
+        name: "mul-1",
+        long_name: "\"(* 1 ?a)\" => \"?a\"",
         searcher: "<< searcher >>",
         applier: "<< applier >>",
     },
     Rewrite {
-        name: "neg-minus",
-        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "/_binop",
+        name: "vec-mac",
         long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "litvec",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-sgn-rev",
+        long_name: "\"(sgn (neg ?a))\" => \"(neg (sgn ?a))\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "div-1",
+        long_name: "\"(/ ?a 1)\" => \"?a\"",
         searcher: "<< searcher >>",
         applier: "<< applier >>",
     },
@@ -4018,14 +3955,8 @@ Running egg with timeout 180s, width: 2
         applier: "<< applier >>",
     },
     Rewrite {
-        name: "neg-zero-inv-rev",
-        long_name: "\"(neg 0)\" => \"0\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus-rev",
-        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
+        name: "expand-zero-get",
+        long_name: "\"0\" => \"(Get 0 0)\"",
         searcher: "<< searcher >>",
         applier: "<< applier >>",
     },
@@ -4036,50 +3967,152 @@ Running egg with timeout 180s, width: 2
         applier: "<< applier >>",
     },
     Rewrite {
-        name: "+_binop_or_zero",
+        name: "mul-1-inv",
+        long_name: "\"?a\" => \"(* 1 ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "mul-0",
+        long_name: "\"(* 0 ?a)\" => \"0\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg_unop",
+        long_name: "{ searcher } => { applier }",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-zero-inv-rev",
+        long_name: "\"(neg 0)\" => \"0\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-minus-zero-rev",
+        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-minus-zero",
+        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-minus-rev",
+        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "add-0-inv",
+        long_name: "\"?a\" => \"(+ 0 ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-zero-inv",
+        long_name: "\"0\" => \"(neg 0)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-neg",
+        long_name: "\"(neg (neg ?a))\" => \"?a\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-neg-rev",
+        long_name: "\"?a\" => \"(neg (neg ?a))\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "add-0",
+        long_name: "\"(+ 0 ?a)\" => \"?a\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "div-1-inv",
+        long_name: "\"?a\" => \"(/ ?a 1)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "neg-minus",
+        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
+        searcher: "<< searcher >>",
+        applier: "<< applier >>",
+    },
+    Rewrite {
+        name: "sqrt_unop",
         long_name: "{ searcher } => { applier }",
         searcher: "<< searcher >>",
         applier: "<< applier >>",
     },
 ]
-Starting run with 24 rules
+Starting run with 25 rules
 Egraph big big? 102
 Egraph cost? 503.5590000000001
-Egraph big big? 397
-Egraph cost? 502.659
-Egraph big big? 719
-Egraph cost? 501.6600000000001
-Egraph big big? 905
-Egraph cost? 492.963
-Egraph big big? 1181
-Egraph cost? 387.97499999999997
-Egraph big big? 1461
-Egraph cost? 387.579
-Egraph big big? 1695
-Egraph cost? 387.579
-Egraph big big? 1872
-Egraph cost? 376.79900000000004
-Egraph big big? 1992
-Egraph cost? 359.225
-Egraph big big? 2063
-Egraph cost? 358.225
-Egraph big big? 2105
-Egraph cost? 157.23000000000002
-Egraph big big? 2117
-Egraph cost? 157.23000000000002
+Egraph big big? 589
+Egraph cost? 503.5590000000001
+Egraph big big? 1031
+Egraph cost? 502.7610000000001
+Egraph big big? 1298
+Egraph cost? 501.86400000000003
+Egraph big big? 1989
+Egraph cost? 494.57500000000005
+Egraph big big? 3302
+Egraph cost? 390.701
+Egraph big big? 4930
+Egraph cost? 288.92400000000004
+Egraph big big? 6319
+Egraph cost? 288.82500000000005
+Egraph big big? 6790
+Egraph cost? 280.867
+Egraph big big? 6917
+Egraph cost? 280.76800000000003
+Egraph big big? 6961
+Egraph cost? 280.76800000000003
+Egraph big big? 6961
+Egraph cost? 280.76800000000003
+Egraph big big? 8455
+Egraph cost? 271.19599999999997
+Egraph big big? 9339
+Egraph cost? 268.303
+Egraph big big? 9748
+Egraph cost? 68.453
+Egraph big big? 9952
+Egraph cost? 68.453
+Egraph big big? 10010
+Egraph cost? 68.453
+Egraph big big? 10034
+Egraph cost? 68.453
+Egraph big big? 10628
+Egraph cost? 68.453
+Egraph big big? 10638
+Egraph cost? 68.453
+Egraph big big? 10638
+Egraph cost? 68.453
 Runner report
 =============
   Stop reason: Saturated
-  Iterations: 13
-  Egraph size: 2117 nodes, 481 classes, 2117 memo
-  Rebuilds: 722, 55.54 per iter
-  Total time: 0.013225846999999999
-    Search:  (0.52) 0.006910194
-    Apply:   (0.36) 0.0047128050000000005
-    Rebuild: (0.12) 0.0016012229999999997
-Stopped after 13 iterations, reason: Some(Saturated)
+  Iterations: 22
+  Egraph size: 10638 nodes, 1569 classes, 10638 memo
+  Rebuilds: 2926, 133.00 per iter
+  Total time: 0.105204494
+    Search:  (0.54) 0.056642451999999996
+    Apply:   (0.36) 0.037845162
+    Rebuild: (0.10) 0.010713410999999999
+Stopped after 22 iterations, reason: Some(Saturated)
 
-Cost: 157.23000000000002
+Cost: 68.453
 #+end_example
 
 **** Baseline
@@ -5438,19 +5471,28 @@ Cost: 490.56399999999996
 #+name: q-prod-no-ruler
 #+call: zip-table(q-prod-no-ruler-size, q-prod-no-ruler-cost)
 
-#+RESULTS[d53d713df0121a182f2c9c9e1b337a91348ef572]: q-prod-no-ruler
-|  102 |  503.5590000000001 |
-|  397 |            502.659 |
-|  719 |  501.6600000000001 |
-|  905 |            492.963 |
-| 1181 | 387.97499999999997 |
-| 1461 |            387.579 |
-| 1695 |            387.579 |
-| 1872 | 376.79900000000004 |
-| 1992 |            359.225 |
-| 2063 |            358.225 |
-| 2105 | 157.23000000000002 |
-| 2117 | 157.23000000000002 |
+#+RESULTS[ecb50ddf5f727645ca07e4dafec2c9ea38845805]: q-prod-no-ruler
+|   102 |  503.5590000000001 |
+|   589 |  503.5590000000001 |
+|  1031 |  502.7610000000001 |
+|  1298 | 501.86400000000003 |
+|  1989 | 494.57500000000005 |
+|  3302 |            390.701 |
+|  4930 | 288.92400000000004 |
+|  6319 | 288.82500000000005 |
+|  6790 |            280.867 |
+|  6917 | 280.76800000000003 |
+|  6961 | 280.76800000000003 |
+|  6961 | 280.76800000000003 |
+|  8455 | 271.19599999999997 |
+|  9339 |            268.303 |
+|  9748 |             68.453 |
+|  9952 |             68.453 |
+| 10010 |             68.453 |
+| 10034 |             68.453 |
+| 10628 |             68.453 |
+| 10638 |             68.453 |
+| 10638 |             68.453 |
 
 ***** Baseline
 
