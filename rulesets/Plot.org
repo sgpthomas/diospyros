@@ -6640,3 +6640,11 @@ Removing and then adding the 3 rules above back in:
     "bidirectional": true
 }
 #+end_src
+
+Ok, what I have I learned.
+1) Most ruler rules seem to be strictly worse than just using the default dios rules. I haven't tried every possible combination of ruler rules. Just informally removed and added rules. There are some sets (usually very small sets) that end up finding programs that are similarly as good. However, they are either slower and/or require a searching and generating a larger e-graph.
+2) Maybe interesting? I'm not sure. You can either plot iter vs. cost or size vs. cost. Naively I would expect these graphs to follow similar trends. As you run more iterations, the size of the egraph gets bigger and because there are more programs, you would expect the cost to go down. 
+
+Some generated questions:
+1) What are the "important" dios rules for =q-prod=? Is this the same set of all 4 benchmarks? Do we / can we generate similar rules from =ruler= (at the moment I'm only using non-vector ruler rules).
+2) Can we get =ruler= rules to be better by increasing the node limit or time limit?
