@@ -120,12 +120,14 @@ pub fn run(
             eprintln!("Egraph cost? {}", cost);
             Ok(())
         })
-        .with_iter_limit(10_000)
+        .with_iter_limit(100)
         .with_scheduler(SimpleScheduler);
 
-    eprintln!("{:#?}", rules);
+    // eprintln!("{:#?}", rules);
     eprintln!("Starting run with {} rules", rules.len());
     runner = runner.run(&rules);
+
+    eprintln!("Egraph big big? {}", runner.egraph.total_size());
 
     report(&runner);
 
@@ -140,7 +142,9 @@ pub fn run(
 
     // Always add the literal zero
     let mut extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
-    extractor.find_best(root)
+    let (cost, prog) = extractor.find_best(root);
+    eprintln!("Egraph cost? {}", cost);
+    (cost, prog)
 }
 
 pub fn build_binop_rule(op_str: &str, vec_str: &str) -> Rewrite<VecLang, ()> {
