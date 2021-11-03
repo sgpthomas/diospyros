@@ -2214,7 +2214,7 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       -- \
       "$bench"-out/spec.rkt \
       --no-ac \
-      --rules "$rules" 3>&1 1>&2 2>&3
+      --rules "$rules" 3>&1 1>"$bench"-out/err.out 2>&3
 #+end_src
 
 #+name: get-final-cost
@@ -3881,9 +3881,9 @@ Cost: 163590.465
 #+name: q-prod-no-ruler-raw-data
 #+call: egg-rewrite(bench="q-prod", rules="")
 
-#+RESULTS[a8a9f7b06e93680690a856feb208f22ca0621323]: q-prod-no-ruler-raw-data
+#+RESULTS: q-prod-no-ruler-raw-data
 #+begin_example
-   Compiling dios-egraphs v0.1.0 (/home/samthomas/Research/diospyros/src/dios-egraphs)
+   Compiling dios-egraphs v0.1.0 (/Users/sgt/Research/dios/src/dios-egraphs)
 warning: function is never used: `filter_applicable_rules`
   --> src/rules.rs:28:4
    |
@@ -3894,237 +3894,57 @@ warning: function is never used: `filter_applicable_rules`
 
 warning: 1 warning emitted
 
-    Finished release [optimized] target(s) in 2.67s
+    Finished release [optimized] target(s) in 2.88s
      Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules ''`
 Running egg with timeout 180s, width: 2
-[
-    Rewrite {
-        name: "neg-minus-rev",
-        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus",
-        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "litvec",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-sgn-rev",
-        long_name: "\"(sgn (neg ?a))\" => \"(neg (sgn ?a))\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-neg",
-        long_name: "\"(neg (neg ?a))\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "+_binop_or_zero",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "add-0-inv",
-        long_name: "\"?a\" => \"(+ 0 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "*_binop_or_zero",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus-zero-rev",
-        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg_unop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "/_binop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-zero-inv",
-        long_name: "\"0\" => \"(neg 0)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "mul-1-inv",
-        long_name: "\"?a\" => \"(* 1 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-zero-inv-rev",
-        long_name: "\"(neg 0)\" => \"0\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-neg-rev",
-        long_name: "\"?a\" => \"(neg (neg ?a))\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus-zero",
-        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "expand-zero-get",
-        long_name: "\"0\" => \"(Get 0 0)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "div-1",
-        long_name: "\"(/ ?a 1)\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "vec-mac-add-mul",
-        long_name: "\"(VecAdd ?v0 (VecMul ?v1 ?v2))\" => \"(VecMAC ?v0 ?v1 ?v2)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sqrt-1-inv",
-        long_name: "\"1\" => \"(sqrt 1)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sqrt-1-inv-rev",
-        long_name: "\"(sqrt 1)\" => \"1\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "-_binop_or_zero",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sgn_unop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "mul-1",
-        long_name: "\"(* 1 ?a)\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-sgn",
-        long_name: "\"(neg (sgn ?a))\" => \"(sgn (neg ?a))\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "vec-mac",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "add-0",
-        long_name: "\"(+ 0 ?a)\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "mul-0",
-        long_name: "\"(* 0 ?a)\" => \"0\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sqrt_unop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "div-1-inv",
-        long_name: "\"?a\" => \"(/ ?a 1)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-]
-Starting run with 30 rules
+Starting run with 29 rules
 Egraph big big? 102
 Egraph cost? 503.5590000000001
 Egraph big big? 601
 Egraph cost? 502.659
-Egraph big big? 1186
-Egraph cost? 501.6600000000001
-Egraph big big? 1993
-Egraph cost? 494.161
-Egraph big big? 3781
-Egraph cost? 390.07399999999996
-Egraph big big? 6008
-Egraph cost? 288.084
-Egraph big big? 7904
-Egraph cost? 287.985
-Egraph big big? 9422
-Egraph cost? 279.601
-Egraph big big? 10906
-Egraph cost? 279.502
-Egraph big big? 12268
-Egraph cost? 266.71000000000004
-Egraph big big? 13201
-Egraph cost? 66.527
-Egraph big big? 13689
-Egraph cost? 66.527
-Egraph big big? 13835
-Egraph cost? 66.527
-Egraph big big? 13871
-Egraph cost? 66.527
-Egraph big big? 13903
-Egraph cost? 66.527
-Egraph big big? 13913
-Egraph cost? 66.527
+Egraph big big? 1184
+Egraph cost? 501.759
+Egraph big big? 1984
+Egraph cost? 494.359
+Egraph big big? 3760
+Egraph cost? 391.16299999999995
+Egraph big big? 5979
+Egraph cost? 289.76699999999994
+Egraph big big? 7874
+Egraph cost? 289.76699999999994
+Egraph big big? 9387
+Egraph cost? 282.17499999999995
+Egraph big big? 10870
+Egraph cost? 282.17499999999995
+Egraph big big? 12231
+Egraph cost? 270.17499999999995
+Egraph big big? 13164
+Egraph cost? 70.58600000000001
+Egraph big big? 13652
+Egraph cost? 70.58600000000001
+Egraph big big? 13798
+Egraph cost? 70.58600000000001
+Egraph big big? 13832
+Egraph cost? 70.58600000000001
+Egraph big big? 13864
+Egraph cost? 70.58600000000001
+Egraph big big? 13874
+Egraph cost? 70.58600000000001
+Egraph big big? 13874
 Runner report
 =============
   Stop reason: Saturated
   Iterations: 17
-  Egraph size: 13913 nodes, 1569 classes, 13913 memo
+  Egraph size: 13874 nodes, 1569 classes, 13874 memo
   Rebuilds: 2358, 138.71 per iter
-  Total time: 0.15894964300000003
-    Search:  (0.59) 0.09341962899999999
-    Apply:   (0.31) 0.049521616000000004
-    Rebuild: (0.10) 0.01600518
+  Total time: 0.15881562000000002
+    Search:  (0.59) 0.09448603600000001
+    Apply:   (0.33) 0.051933578
+    Rebuild: (0.08) 0.012394246999999999
 Stopped after 17 iterations, reason: Some(Saturated)
+Egraph cost? 70.58600000000001
 
-Cost: 66.527
+Cost: 70.58600000000001
 #+end_example
 
 **** Baseline
@@ -4132,7 +3952,7 @@ Cost: 66.527
 #+name: q-prod-baseline-raw-data
 #+call: egg-rewrite(bench="q-prod", rules="rulesets/baseline.json")
 
-#+RESULTS[8c488273864dfc08bd32e648012069336cc955b7]: q-prod-baseline-raw-data
+#+RESULTS[d103280d952a445544cc7c92c7265b6249f4bdba]: q-prod-baseline-raw-data
 #+begin_example
 warning: function is never used: `filter_applicable_rules`
   --> src/rules.rs:28:4
@@ -4147,344 +3967,6 @@ warning: 1 warning emitted
     Finished release [optimized] target(s) in 0.01s
      Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules rulesets/baseline.json`
 Running egg with timeout 180s, width: 2
-[
-    Rewrite {
-        name: "div-1-inv",
-        long_name: "\"?a\" => \"(/ ?a 1)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "+_binop_or_zero",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_6_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_6_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "vec-mac",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-sgn-rev",
-        long_name: "\"(sgn (neg ?a))\" => \"(neg (sgn ?a))\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_0_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_10_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "mul-1",
-        long_name: "\"(* 1 ?a)\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-zero-inv",
-        long_name: "\"0\" => \"(neg 0)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_3_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_7_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_4_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg_unop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_1_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "expand-zero-get",
-        long_name: "\"0\" => \"(Get 0 0)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sgn_unop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_5_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_1_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus",
-        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_5_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_11_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "litvec",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "*_binop_or_zero",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sqrt_unop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "vec-mac-add-mul",
-        long_name: "\"(VecAdd ?v0 (VecMul ?v1 ?v2))\" => \"(VecMAC ?v0 ?v1 ?v2)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "add-0-inv",
-        long_name: "\"?a\" => \"(+ 0 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_14_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-zero-inv-rev",
-        long_name: "\"(neg 0)\" => \"0\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_10_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_7_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_8_lr",
-        long_name: "{ lpat } => { rpat }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sqrt-1-inv-rev",
-        long_name: "\"(sqrt 1)\" => \"1\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-neg",
-        long_name: "\"(neg (neg ?a))\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "sqrt-1-inv",
-        long_name: "\"1\" => \"(sqrt 1)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_9_lr",
-        long_name: "{ lpat } => { rpat }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_12_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus-rev",
-        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_4_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_2_lr",
-        long_name: "{ lpat } => { rpat }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_12_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "-_binop_or_zero",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus-zero",
-        long_name: "\"(neg ?a)\" => \"(- 0 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_13_lr",
-        long_name: "{ lpat } => { rpat }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "/_binop",
-        long_name: "{ searcher } => { applier }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "mul-1-inv",
-        long_name: "\"?a\" => \"(* 1 ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_0_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_3_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "div-1",
-        long_name: "\"(/ ?a 1)\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_14_lr-rev",
-        long_name: "{ rpat.clone() } => { lpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "add-0",
-        long_name: "\"(+ 0 ?a)\" => \"?a\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "ruler_11_lr",
-        long_name: "{ lpat.clone() } => { rpat.clone() }",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-sgn",
-        long_name: "\"(neg (sgn ?a))\" => \"(sgn (neg ?a))\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-neg-rev",
-        long_name: "\"?a\" => \"(neg (neg ?a))\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "mul-0",
-        long_name: "\"(* 0 ?a)\" => \"0\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-    Rewrite {
-        name: "neg-minus-zero-rev",
-        long_name: "\"(- 0 ?a)\" => \"(neg ?a)\"",
-        searcher: "<< searcher >>",
-        applier: "<< applier >>",
-    },
-]
 Starting run with 56 rules
 Egraph big big? 102
 Egraph cost? 503.5590000000001
@@ -4492,21 +3974,23 @@ Egraph big big? 724
 Egraph cost? 502.659
 Egraph big big? 2378
 Egraph cost? 501.6600000000001
-Egraph big big? 34383
+Egraph big big? 34391
 Egraph cost? 385.56600000000003
+Egraph big big? 966603
 Runner report
 =============
-  Stop reason: NodeLimit(673051)
+  Stop reason: NodeLimit(966603)
   Iterations: 5
-  Egraph size: 673049 nodes, 67164 classes, 673051 memo
-  Rebuilds: 4586, 917.20 per iter
-  Total time: 1.432741423
-    Search:  (0.48) 0.683940713
-    Apply:   (0.38) 0.541335512
-    Rebuild: (0.14) 0.207463444
-Stopped after 5 iterations, reason: Some(NodeLimit(673051))
+  Egraph size: 965775 nodes, 19144 classes, 966603 memo
+  Rebuilds: 9195, 1839.00 per iter
+  Total time: 5.740741999
+    Search:  (0.10) 0.5682530819999999
+    Apply:   (0.45) 2.5847965399999997
+    Rebuild: (0.45) 2.587691957
+Stopped after 5 iterations, reason: Some(NodeLimit(966603))
+Egraph cost? 379.876
 
-Cost: 385.56600000000003
+Cost: 379.876
 #+end_example
 
 **** Tuning
@@ -4649,7 +4133,7 @@ Cost: 385.56600000000003
 #+name: q-prod-tuning-raw-data
 #+call: egg-rewrite(bench="q-prod", rules="rulesets/tuning.json")
 
-#+RESULTS[94ac4a2cd817d6973d7fc5ccfcfe5ddea2e0be95]: q-prod-tuning-raw-data
+#+RESULTS[5f6880fff7b97d29944261495ba93e122fffeaf0]: q-prod-tuning-raw-data
 #+begin_example
 warning: function is never used: `filter_applicable_rules`
   --> src/rules.rs:28:4
@@ -4683,21 +4167,23 @@ Egraph big big? 86996
 Egraph cost? 278.809
 Egraph big big? 239460
 Egraph cost? 269.015
-Egraph big big? 624187
+Egraph big big? 733545
+Egraph cost? 65.24
+Egraph big big? 1979605
 Runner report
 =============
-  Stop reason: NodeLimit(624187)
-  Iterations: 10
-  Egraph size: 624187 nodes, 19105 classes, 624187 memo
-  Rebuilds: 14402, 1440.20 per iter
-  Total time: 1.3916039269999998
-    Search:  (0.25) 0.349838483
-    Apply:   (0.44) 0.6139219499999999
-    Rebuild: (0.31) 0.427841077
-Stopped after 10 iterations, reason: Some(NodeLimit(624187))
-Egraph cost? 65.249
+  Stop reason: NodeLimit(1979605)
+  Iterations: 11
+  Egraph size: 1979605 nodes, 55929 classes, 1979605 memo
+  Rebuilds: 37194, 3381.27 per iter
+  Total time: 4.285131079
+    Search:  (0.20) 0.861662372
+    Apply:   (0.46) 1.960962498
+    Rebuild: (0.34) 1.462505331
+Stopped after 11 iterations, reason: Some(NodeLimit(1979605))
+Egraph cost? 65.24
 
-Cost: 65.249
+Cost: 65.24
 #+end_example
 
 **** Commutativity
@@ -6337,8 +5823,8 @@ iter_plot = ggplot() +
 
   theme(legend.position = "bottom")
 
-## iter_plot
-size_plot
+iter_plot
+## size_plot
 #+end_src
 
 #+RESULTS:
@@ -6491,11 +5977,32 @@ I swapped the =lhs= and =rhs= of this rule and it made it better. Although the g
 }
 #+end_src
 
+An interesting thing about this rule is that the resulting program is better than a program found with a fully saturated graph. Although I suppose this makes sense, the rulesets are different and so the graphs end up being different. I wonder what happens if we let this rule saturate? I'm going to increase the node limit to 1 mil.
+
+Still didn't saturate. Let's try 2 mil? Still nothing. What about 4 mil? Still not saturated. 10 mil? (strangely it also doesn't seem to be using all that much memory???) (just for sanity, it was just ran for 12 iterations). Let's just lift the cap and let it run for 15 iterations. Well it saturated after 15 iterations but didn't find anything better. I wonder if this is the "best" program. I think that's a much harder question to answer.
+
+Now I'm curious about this route of looking at the program and selectively choosing rules that /look/ like they /should/ apply?
+
+I tried removing all the vector rules. To nobodies surprise this tanked the performance.
+
+Now let's remove the =build_litvec_rule=. Didn't find the optimal program but still did pretty dang well. (~70)
+
+Removing just: =rw!("expand-zero-get"; "0" -=> "(Get 0 0)")=. Again not quite optimal, but still did pretty well.
+
+Removing just the =div-1-inv= rule. Found optimal for not having the =* 2= rule. Now removing =div-1= rule. The same.
+
+Ok, removing the =mul-1-inv= rule improved the final program. Interesting. Removing =add-0-inv= made things ever so slightly better. Removing =mul-1= made almost no difference. =mul-0= rule; no difference. =add-0=; no difference. What if we remove all the "no-difference" rules? Slightly worse now. Let's add them back in 1-by-1. =add-0-inv= was a rule that got us back to the best dios program.
+
+I would be very surprised if this were not just a benchmark specific thing.
+
+I have this theory that the =no ruler= graph stops getting bigger because once all the vector stuff is generated, there stop being "new" programs that rewrite rules can apply to. However, I don't know why this isn't true for the =tuning= set. Maybe it just takes much longer for the graph to reach that point? How do I test this? (TO-RESUME)
+
 ** Thoughts
 
 Ok, what I have I learned.
 1) Most ruler rules seem to be strictly worse than just using the default dios rules. I haven't tried every possible combination of ruler rules. Just informally removed and added rules. There are some sets (usually very small sets) that end up finding programs that are similarly as good. However, they are either slower and/or require a searching and generating a larger e-graph.
 2) Maybe interesting? I'm not sure. You can either plot iter vs. cost or size vs. cost. Naively I would expect these graphs to follow similar trends. As you run more iterations, the size of the egraph gets bigger and because there are more programs, you would expect the cost to go down. However, this is not quite what you see. For at least one set of rules, the =tuning= set gets better faster (fewer iterations needed) but it's cost vs. size ratio is much worse. Here are those two images.
+3) For the base dios =no ruler= set, once the optimal program is found (more or less, I didn't test this precisely) the graph stops getting that much bigger? I wonder why this is? It's good to have rules that apply early on that then cease to apply later? I guess once you find the vector programs there aren't all that many transformations the apply on top of the vector programs.
 
 [[file:~/Research/diospyros/q-prod-iter-v-cost.png]] 
 
@@ -6506,5 +6013,6 @@ Some generated questions:
 2) Can we get =ruler= rules to be better by increasing the node limit or time limit?
 3) Is there some way to get a sense about whether a particular rule is "useful" without running the search for very long?
 4) Do these trends hold for other benchmarks?
+5) How important are rules that generate "intermediate" states? In other words, do rules tend to generate programs that then let other important rules apply? I would imagine that the answer is yes. Would be interesting to actually find out.
+6) Another tangential thought: is the dios ruleset orthogonal? Is this methodology of just commenting out one rule at a time say anything about anything?
 
-  

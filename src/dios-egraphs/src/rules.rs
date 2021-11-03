@@ -107,7 +107,7 @@ pub fn run(
     let mut runner: Runner<VecLang, ()> = Runner::default()
         .with_egraph(init_eg)
         .with_expr(&prog)
-        .with_node_limit(300_000)
+        .with_node_limit(1_000_000)
         .with_time_limit(std::time::Duration::from_secs(timeout))
         .with_hook(|runner| {
             eprintln!("Egraph big big? {}", runner.egraph.total_size());
@@ -120,7 +120,7 @@ pub fn run(
             eprintln!("Egraph cost? {}", cost);
             Ok(())
         })
-        .with_iter_limit(100)
+        .with_iter_limit(200)
         .with_scheduler(SimpleScheduler);
 
     // eprintln!("{:#?}", rules);
@@ -194,13 +194,13 @@ pub fn build_litvec_rule() -> Rewrite<VecLang, ()> {
 
 pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<VecLang, ()>> {
     let mut rules: Vec<Rewrite<VecLang, ()>> = vec![
-        rw!("add-0"; "(+ 0 ?a)" => "?a"),
-        rw!("mul-0"; "(* 0 ?a)" => "0"),
-        rw!("mul-1"; "(* 1 ?a)" => "?a"),
-        rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
+        // rw!("add-0"; "(+ 0 ?a)" => "?a"),
+        // rw!("mul-0"; "(* 0 ?a)" => "0"),
+        // rw!("mul-1"; "(* 1 ?a)" => "?a"),
+        // rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
         rw!("mul-1-inv"; "?a" => "(* 1 ?a)"),
-        rw!("div-1"; "(/ ?a 1)" => "?a"),
-        rw!("div-1-inv"; "?a" => "(/ ?a 1)"),
+        // rw!("div-1"; "(/ ?a 1)" => "?a"),
+        // rw!("div-1-inv"; "?a" => "(/ ?a 1)"),
         rw!("expand-zero-get"; "0" => "(Get 0 0)"),
         // Literal vectors, that use the same memory or no memory in every lane,
         // are cheaper
