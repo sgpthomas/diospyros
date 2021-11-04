@@ -4,6 +4,7 @@ pub mod cost;
 pub mod macsearcher;
 pub mod rewriteconcats;
 pub mod rules;
+pub mod scheduler;
 pub mod searchutils;
 pub mod stringconversion;
 pub mod veclang;

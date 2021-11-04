@@ -3881,7 +3881,7 @@ Cost: 163590.465
 #+name: q-prod-no-ruler-raw-data
 #+call: egg-rewrite(bench="q-prod", rules="")
 
-#+RESULTS: q-prod-no-ruler-raw-data
+#+RESULTS[d1d66ca9a2f7d2905f62daf180ce017cc4cf948d]: q-prod-no-ruler-raw-data
 #+begin_example
    Compiling dios-egraphs v0.1.0 (/Users/sgt/Research/dios/src/dios-egraphs)
 warning: function is never used: `filter_applicable_rules`
@@ -3894,57 +3894,57 @@ warning: function is never used: `filter_applicable_rules`
 
 warning: 1 warning emitted
 
-    Finished release [optimized] target(s) in 2.88s
+    Finished release [optimized] target(s) in 3.07s
      Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules ''`
 Running egg with timeout 180s, width: 2
-Starting run with 29 rules
+Starting run with 30 rules
 Egraph big big? 102
 Egraph cost? 503.5590000000001
 Egraph big big? 601
 Egraph cost? 502.659
-Egraph big big? 1184
-Egraph cost? 501.759
-Egraph big big? 1984
-Egraph cost? 494.359
-Egraph big big? 3760
-Egraph cost? 391.16299999999995
-Egraph big big? 5979
-Egraph cost? 289.76699999999994
-Egraph big big? 7874
-Egraph cost? 289.76699999999994
-Egraph big big? 9387
-Egraph cost? 282.17499999999995
-Egraph big big? 10870
-Egraph cost? 282.17499999999995
-Egraph big big? 12231
-Egraph cost? 270.17499999999995
-Egraph big big? 13164
-Egraph cost? 70.58600000000001
-Egraph big big? 13652
-Egraph cost? 70.58600000000001
-Egraph big big? 13798
-Egraph cost? 70.58600000000001
-Egraph big big? 13832
-Egraph cost? 70.58600000000001
-Egraph big big? 13864
-Egraph cost? 70.58600000000001
-Egraph big big? 13874
-Egraph cost? 70.58600000000001
-Egraph big big? 13874
+Egraph big big? 1186
+Egraph cost? 501.6600000000001
+Egraph big big? 1993
+Egraph cost? 494.161
+Egraph big big? 3781
+Egraph cost? 390.07399999999996
+Egraph big big? 6008
+Egraph cost? 288.084
+Egraph big big? 7904
+Egraph cost? 287.985
+Egraph big big? 9422
+Egraph cost? 279.601
+Egraph big big? 10906
+Egraph cost? 279.502
+Egraph big big? 12268
+Egraph cost? 266.71000000000004
+Egraph big big? 13201
+Egraph cost? 66.527
+Egraph big big? 13689
+Egraph cost? 66.527
+Egraph big big? 13835
+Egraph cost? 66.527
+Egraph big big? 13871
+Egraph cost? 66.527
+Egraph big big? 13903
+Egraph cost? 66.527
+Egraph big big? 13913
+Egraph cost? 66.527
+Egraph big big? 13913
 Runner report
 =============
   Stop reason: Saturated
   Iterations: 17
-  Egraph size: 13874 nodes, 1569 classes, 13874 memo
+  Egraph size: 13913 nodes, 1569 classes, 13913 memo
   Rebuilds: 2358, 138.71 per iter
-  Total time: 0.15881562000000002
-    Search:  (0.59) 0.09448603600000001
-    Apply:   (0.33) 0.051933578
-    Rebuild: (0.08) 0.012394246999999999
+  Total time: 0.15244837
+    Search:  (0.60) 0.091449326
+    Apply:   (0.33) 0.049590538
+    Rebuild: (0.07) 0.011407120000000001
 Stopped after 17 iterations, reason: Some(Saturated)
-Egraph cost? 70.58600000000001
+Egraph cost? 66.527
 
-Cost: 70.58600000000001
+Cost: 66.527
 #+end_example
 
 **** Baseline
@@ -3974,23 +3974,23 @@ Egraph big big? 724
 Egraph cost? 502.659
 Egraph big big? 2378
 Egraph cost? 501.6600000000001
-Egraph big big? 34391
+Egraph big big? 34381
 Egraph cost? 385.56600000000003
-Egraph big big? 966603
+Egraph big big? 2325021
 Runner report
 =============
-  Stop reason: NodeLimit(966603)
+  Stop reason: NodeLimit(2325021)
   Iterations: 5
-  Egraph size: 965775 nodes, 19144 classes, 966603 memo
-  Rebuilds: 9195, 1839.00 per iter
-  Total time: 5.740741999
-    Search:  (0.10) 0.5682530819999999
-    Apply:   (0.45) 2.5847965399999997
-    Rebuild: (0.45) 2.587691957
-Stopped after 5 iterations, reason: Some(NodeLimit(966603))
-Egraph cost? 379.876
+  Egraph size: 2324994 nodes, 45860 classes, 2325021 memo
+  Rebuilds: 10716, 2143.20 per iter
+  Total time: 4.615439041
+    Search:  (0.13) 0.5797707900000001
+    Apply:   (0.57) 2.6186445810000003
+    Rebuild: (0.31) 1.417023457
+Stopped after 5 iterations, reason: Some(NodeLimit(2325021))
+Egraph cost? 379.873
 
-Cost: 379.876
+Cost: 379.873
 #+end_example
 
 **** Tuning
@@ -4167,23 +4167,21 @@ Egraph big big? 86996
 Egraph cost? 278.809
 Egraph big big? 239460
 Egraph cost? 269.015
-Egraph big big? 733545
-Egraph cost? 65.24
-Egraph big big? 1979605
+Egraph big big? 628297
 Runner report
 =============
-  Stop reason: NodeLimit(1979605)
-  Iterations: 11
-  Egraph size: 1979605 nodes, 55929 classes, 1979605 memo
-  Rebuilds: 37194, 3381.27 per iter
-  Total time: 4.285131079
-    Search:  (0.20) 0.861662372
-    Apply:   (0.46) 1.960962498
-    Rebuild: (0.34) 1.462505331
-Stopped after 11 iterations, reason: Some(NodeLimit(1979605))
-Egraph cost? 65.24
+  Stop reason: NodeLimit(628297)
+  Iterations: 10
+  Egraph size: 628297 nodes, 19105 classes, 628297 memo
+  Rebuilds: 14349, 1434.90 per iter
+  Total time: 1.25554754
+    Search:  (0.27) 0.341611079
+    Apply:   (0.44) 0.556578247
+    Rebuild: (0.28) 0.357357455
+Stopped after 10 iterations, reason: Some(NodeLimit(628297))
+Egraph cost? 65.249
 
-Cost: 65.24
+Cost: 65.249
 #+end_example
 
 **** Commutativity
@@ -5722,23 +5720,23 @@ size_plot = ggplot() +
         stat = "identity",
         position = "identity") +
 
-  layer(data = mm_baseline,
-        mapping = aes(x = Size, y = Cost, color = "baseline"),
-        geom = "point",
-        stat = "identity",
-        position = "identity") +
-  layer(data = mm_baseline,
-        mapping = aes(x = Size, y = Cost, color = "baseline"),
-        geom = "line",
-        stat = "identity",
-        position = "identity") +
-  layer(data = mm_baseline,
-        mapping = aes(x = tail(Size, n=1),
-                      y = tail(Cost, n=1),
-                      label = tail(Cost, n=1)),
-        geom = "label",
-        stat = "identity",
-        position = "identity") +
+  ## layer(data = mm_baseline,
+  ##       mapping = aes(x = Size, y = Cost, color = "baseline"),
+  ##       geom = "point",
+  ##       stat = "identity",
+  ##       position = "identity") +
+  ## layer(data = mm_baseline,
+  ##       mapping = aes(x = Size, y = Cost, color = "baseline"),
+  ##       geom = "line",
+  ##       stat = "identity",
+  ##       position = "identity") +
+  ## layer(data = mm_baseline,
+  ##       mapping = aes(x = tail(Size, n=1),
+  ##                     y = tail(Cost, n=1),
+  ##                     label = tail(Cost, n=1)),
+  ##       geom = "label",
+  ##       stat = "identity",
+  ##       position = "identity") +
 
   layer(data = mm_tuning,
         mapping = aes(x = Size, y = Cost, color = "tuning"),
@@ -5781,25 +5779,25 @@ iter_plot = ggplot() +
         stat = "identity",
         position = "identity") +
 
-  layer(data = mm_baseline,
-        mapping = aes(x = as.numeric(seq(1,length(Cost))),
-                      y = Cost, color = "baseline"),
-        geom = "point",
-        stat = "identity",
-        position = "identity") +
-  layer(data = mm_baseline,
-        mapping = aes(x = as.numeric(seq(1,length(Cost))),
-                      y = Cost, color = "baseline"),
-        geom = "line",
-        stat = "identity",
-        position = "identity") +
-  layer(data = mm_baseline,
-        mapping = aes(x = length(Cost),
-                      y = tail(Cost, n=1),
-                      label = tail(Cost, n=1)),
-        geom = "label",
-        stat = "identity",
-        position = "identity") +
+  ## layer(data = mm_baseline,
+  ##       mapping = aes(x = as.numeric(seq(1,length(Cost))),
+  ##                     y = Cost, color = "baseline"),
+  ##       geom = "point",
+  ##       stat = "identity",
+  ##       position = "identity") +
+  ## layer(data = mm_baseline,
+  ##       mapping = aes(x = as.numeric(seq(1,length(Cost))),
+  ##                     y = Cost, color = "baseline"),
+  ##       geom = "line",
+  ##       stat = "identity",
+  ##       position = "identity") +
+  ## layer(data = mm_baseline,
+  ##       mapping = aes(x = length(Cost),
+  ##                     y = tail(Cost, n=1),
+  ##                     label = tail(Cost, n=1)),
+  ##       geom = "label",
+  ##       stat = "identity",
+  ##       position = "identity") +
 
   layer(data = mm_tuning,
         mapping = aes(x = as.numeric(seq(1,length(Cost))),
@@ -5823,8 +5821,8 @@ iter_plot = ggplot() +
 
   theme(legend.position = "bottom")
 
-iter_plot
-## size_plot
+## iter_plot
+size_plot
 #+end_src
 
 #+RESULTS:
@@ -5832,7 +5830,7 @@ iter_plot
 
 ** Trying to figure out the why
 
-Using =unop_rule("neg" "VecNeg")=, =unop_rule("sqrt", "VecSqrt")=, and =unop_rule("sgn", "VecSgn")= but almost nothing else makes =no_ruler= significantly better than any of the ruler rulesets.
+Using =unop_rule("neg" "VecNeg")=, =unop_rule("sqrt", "VecSqrt")=, and =unop_rule("sgn", "VecSgn")= but almost nothing else (in the vector rule set) makes =no_ruler= significantly better than any of the ruler rulesets.
 
 The funny thing is that ruler also has access to these rules.
 
@@ -5973,7 +5971,6 @@ I swapped the =lhs= and =rhs= of this rule and it made it better. Although the g
 {
     "lhs": "(+ ?a ?a)",
     "rhs": "(* ?a 2)",
-    "bidirectional": true
 }
 #+end_src
 
@@ -5993,7 +5990,37 @@ Removing just the =div-1-inv= rule. Found optimal for not having the =* 2= rule.
 
 Ok, removing the =mul-1-inv= rule improved the final program. Interesting. Removing =add-0-inv= made things ever so slightly better. Removing =mul-1= made almost no difference. =mul-0= rule; no difference. =add-0=; no difference. What if we remove all the "no-difference" rules? Slightly worse now. Let's add them back in 1-by-1. =add-0-inv= was a rule that got us back to the best dios program.
 
-I would be very surprised if this were not just a benchmark specific thing.
+I would be very surprised if the above were not just a benchmark specific thing.
+
+So what about the bidirectional rules? Let's start by removing them all. Unsurprisingly it performs far worse.
+
+Then let's do the thing were we comment them out one by one and find the rules that significantly impact performance.
+
+| rule           | affects performance | comment            |
+|----------------+---------------------+--------------------|
+| neg-neg        | no                  |                    |
+| neg-sgn        | no                  | longer to saturate |
+| neg-zero-inv   | yes!                | performance tanks  |
+| neg-minus      | no                  | longer to saturate |
+| neg-minus-zero | no                  | longer             |
+| sqrt-1-inv     | no                  | longer             |
+
+Now let's do the opposite and comment them all out and then slowly add them in to see which ones help performance. 
+
+| rule                       | affects performance | comment        |
+|----------------------------+---------------------+----------------|
+| neg-neg                    | no                  |                |
+| neg-sgn                    | no                  | faster to sat? |
+| neg-zero-inv               | yes!                | much better    |
+| neg-minus                  | yes!                | much better    |
+| neg-minus-zero             | yes!                | much better    |
+| sqrt-1-inv                 | no                  |                |
+| zero-inv & minus           | yes                 | good           |
+| zero-inv & minus & minus-0 | yes                 | good           |
+
+Hmm. the =neg-zero-inv= rule is confusing. It must be interacting poorly with some other rule to make it be so bad. You know what actually having that rule makes sense. In some sense it's the rule that enables all the other rules.
+
+It would be cool to measure what rules /enable/ other rules.
 
 I have this theory that the =no ruler= graph stops getting bigger because once all the vector stuff is generated, there stop being "new" programs that rewrite rules can apply to. However, I don't know why this isn't true for the =tuning= set. Maybe it just takes much longer for the graph to reach that point? How do I test this? (TO-RESUME)
 
@@ -6002,17 +6029,19 @@ I have this theory that the =no ruler= graph stops getting bigger because once a
 Ok, what I have I learned.
 1) Most ruler rules seem to be strictly worse than just using the default dios rules. I haven't tried every possible combination of ruler rules. Just informally removed and added rules. There are some sets (usually very small sets) that end up finding programs that are similarly as good. However, they are either slower and/or require a searching and generating a larger e-graph.
 2) Maybe interesting? I'm not sure. You can either plot iter vs. cost or size vs. cost. Naively I would expect these graphs to follow similar trends. As you run more iterations, the size of the egraph gets bigger and because there are more programs, you would expect the cost to go down. However, this is not quite what you see. For at least one set of rules, the =tuning= set gets better faster (fewer iterations needed) but it's cost vs. size ratio is much worse. Here are those two images.
+
+[[file:../q-prod-iter-v-cost.png]] 
+
+[[file:../q-prod-size-v-cost.png]] 
+
 3) For the base dios =no ruler= set, once the optimal program is found (more or less, I didn't test this precisely) the graph stops getting that much bigger? I wonder why this is? It's good to have rules that apply early on that then cease to apply later? I guess once you find the vector programs there aren't all that many transformations the apply on top of the vector programs.
-
-[[file:~/Research/diospyros/q-prod-iter-v-cost.png]] 
-
-[[file:~/Research/diospyros/q-prod-size-v-cost.png]] 
 
 Some generated questions:
 1) What are the "important" dios rules for =q-prod=? Is this the same set of all 4 benchmarks? Do we / can we generate similar rules from =ruler= (at the moment I'm only using non-vector ruler rules).
-2) Can we get =ruler= rules to be better by increasing the node limit or time limit?
+2) Can we get =ruler= rules to be better by increasing the node limit or time limit? (in brief testing the answer is no)
 3) Is there some way to get a sense about whether a particular rule is "useful" without running the search for very long?
 4) Do these trends hold for other benchmarks?
 5) How important are rules that generate "intermediate" states? In other words, do rules tend to generate programs that then let other important rules apply? I would imagine that the answer is yes. Would be interesting to actually find out.
 6) Another tangential thought: is the dios ruleset orthogonal? Is this methodology of just commenting out one rule at a time say anything about anything?
+7) What rules /enable/ other rules? How would I measure this?
 

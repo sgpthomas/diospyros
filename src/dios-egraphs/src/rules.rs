@@ -8,6 +8,7 @@ use crate::{
     config::*,
     cost::VecCostFn,
     macsearcher::build_mac_rule,
+    scheduler::{LoggingData, LoggingScheduler},
     searchutils::*,
     veclang::{EGraph, VecLang},
 };
@@ -49,7 +50,7 @@ fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr
     }
 }
 
-fn report(runner: &Runner<VecLang, ()>) {
+fn report(runner: &Runner<VecLang, (), LoggingData>) {
     let search_time: f64 = runner.iterations.iter().map(|i| i.search_time).sum();
     let apply_time: f64 = runner.iterations.iter().map(|i| i.apply_time).sum();
     let rebuild_time: f64 = runner.iterations.iter().map(|i| i.rebuild_time).sum();
@@ -92,6 +93,8 @@ fn report(runner: &Runner<VecLang, ()>) {
     );
 }
 
+pub type LoggingRunner = Runner<VecLang, (), LoggingData>;
+
 /// Run the rewrite rules over the input program and return the best (cost, program)
 pub fn run(
     prog: &RecExpr<VecLang>,
@@ -104,10 +107,11 @@ pub fn run(
     // filter_applicable_rules(&mut rules, prog);
     let mut init_eg: EGraph = EGraph::new(());
     init_eg.add(VecLang::Num(0));
-    let mut runner: Runner<VecLang, ()> = Runner::default()
+    let scheduler = LoggingScheduler::default();
+    let mut runner: LoggingRunner = LoggingRunner::new(Default::default())
         .with_egraph(init_eg)
         .with_expr(&prog)
-        .with_node_limit(1_000_000)
+        .with_node_limit(500_000)
         .with_time_limit(std::time::Duration::from_secs(timeout))
         .with_hook(|runner| {
             eprintln!("Egraph big big? {}", runner.egraph.total_size());
@@ -121,7 +125,7 @@ pub fn run(
             Ok(())
         })
         .with_iter_limit(200)
-        .with_scheduler(SimpleScheduler);
+        .with_scheduler(scheduler);
 
     // eprintln!("{:#?}", rules);
     eprintln!("Starting run with {} rules", rules.len());
@@ -194,13 +198,13 @@ pub fn build_litvec_rule() -> Rewrite<VecLang, ()> {
 
 pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<VecLang, ()>> {
     let mut rules: Vec<Rewrite<VecLang, ()>> = vec![
-        // rw!("add-0"; "(+ 0 ?a)" => "?a"),
-        // rw!("mul-0"; "(* 0 ?a)" => "0"),
-        // rw!("mul-1"; "(* 1 ?a)" => "?a"),
-        // rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
+        rw!("add-0"; "(+ 0 ?a)" => "?a"),
+        rw!("mul-0"; "(* 0 ?a)" => "0"),
+        rw!("mul-1"; "(* 1 ?a)" => "?a"),
+        rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
         rw!("mul-1-inv"; "?a" => "(* 1 ?a)"),
-        // rw!("div-1"; "(/ ?a 1)" => "?a"),
-        // rw!("div-1-inv"; "?a" => "(/ ?a 1)"),
+        rw!("div-1"; "(/ ?a 1)" => "?a"),
+        rw!("div-1-inv"; "?a" => "(/ ?a 1)"),
         rw!("expand-zero-get"; "0" => "(Get 0 0)"),
         // Literal vectors, that use the same memory or no memory in every lane,
         // are cheaper
