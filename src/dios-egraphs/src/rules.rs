@@ -26,6 +26,7 @@ fn is_all_same_memory_or_zero(vars: &Vec<String>) -> impl Fn(&mut EGraph, Id, &S
     }
 }
 
+#[allow(unused)]
 fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
     let prog_str: String = prog.pretty(80);
     let ops_to_filter = vec!["neg", "sqrt", "/"];
@@ -48,6 +49,11 @@ fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr
     if dropped != "" {
         eprintln!("Dropping inapplicable rules:{}", dropped);
     }
+}
+
+#[allow(unused)]
+fn filter_rules_by_name(rules: &mut Vec<Rewrite<VecLang, ()>>, names: &[&str]) {
+    rules.retain(|rewrite| names.contains(&rewrite.name()))
 }
 
 fn report(runner: &Runner<VecLang, (), LoggingData>) {
@@ -105,9 +111,30 @@ pub fn run(
 ) -> (f64, RecExpr<VecLang>) {
     let rules = rules(no_ac, no_vec, ruleset);
     // filter_applicable_rules(&mut rules, prog);
+
+    // filter_rules_by_name(
+    //     &mut rules,
+    //     &[
+    //         "sqrt-1-inv",
+    //         "neg-neg-rev",
+    //         "expand-zero-get",
+    //         "add-0-inv",
+    //         "mul-1-inv",
+    //         "neg-minus",
+    //         "div-1-inv",
+    //         "+_binop_or_zero",
+    //         "neg_unop",
+    //         "litvec",
+    //         "*_binop_or_zero",
+    //         "/_binop",
+    //         "-_binop_or_zero",
+    //         "vec-mac",
+    //         "sqrt_unop",
+    //     ],
+    // );
+
     let mut init_eg: EGraph = EGraph::new(());
     init_eg.add(VecLang::Num(0));
-    let scheduler = LoggingScheduler::default();
     let mut runner: LoggingRunner = LoggingRunner::new(Default::default())
         .with_egraph(init_eg)
         .with_expr(&prog)
@@ -115,6 +142,7 @@ pub fn run(
         .with_time_limit(std::time::Duration::from_secs(timeout))
         .with_hook(|runner| {
             eprintln!("Egraph big big? {}", runner.egraph.total_size());
+            eprintln!("Egraph class big? {}", runner.egraph.number_of_classes());
             Ok(())
         })
         .with_hook(|runner| {
@@ -124,8 +152,11 @@ pub fn run(
             eprintln!("Egraph cost? {}", cost);
             Ok(())
         })
-        .with_iter_limit(200)
-        .with_scheduler(scheduler);
+        .with_iter_limit(200);
+
+    // add scheduler
+    let scheduler = LoggingScheduler::new(runner.roots[0]);
+    runner = runner.with_scheduler(scheduler);
 
     // eprintln!("{:#?}", rules);
     eprintln!("Starting run with {} rules", rules.len());

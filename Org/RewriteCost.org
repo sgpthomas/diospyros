@@ -1,0 +1,793 @@
+#+title: Finding out how each rewrite rule effects cost
+
+* Rewrite Rule Cost
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
+
+** Defining experiment functions
+
+#+name: egg-rewrite
+#+begin_src sh :var bench="" rules="" :results output :cache yes
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      --features vec_width_2 \
+      -- \
+      "$bench"-out/spec.rkt \
+      --no-ac \
+      --rules "$rules" 3>&1 1>"$bench"-out/err.out 2>&3
+#+end_src
+
+** Extraction
+
+#+name: extraction-results
+#+call: egg-rewrite(bench="q-prod", rules="")
+
+#+RESULTS[85bab39c2a33cd2be0470570dc1aefe7e09b5850]: extraction-results
+#+begin_example
+   Compiling dios-egraphs v0.1.0 (/home/samthomas/Research/diospyros/src/dios-egraphs)
+    Finished release [optimized] target(s) in 2.57s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules ''`
+Running egg with timeout 180s, width: 2
+Starting run with 30 rules
+Egraph big big? 102
+Egraph class big? 102
+Egraph cost? 503.5590000000001
+Rewrite add-0-inv cost 0 total 102 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 1 eclasses 0
+Rewrite +_binop_or_zero cost 0.900000000000091 total 12 eclasses 8
+Rewrite neg-neg-rev cost 0 total 168 eclasses 78
+Rewrite neg-minus-zero cost 0 total 12 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses -1
+Rewrite div-1-inv cost 0 total 102 eclasses 0
+Rewrite expand-zero-get cost 0 total 1 eclasses 0
+Rewrite mul-1-inv cost 0 total 102 eclasses 0
+iter
+Egraph big big? 601
+Egraph class big? 187
+Egraph cost? 502.659
+Rewrite add-0-inv cost 0 total 85 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 24 eclasses 12
+Rewrite *_binop_or_zero cost 0 total 16 eclasses 3
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0.8999999999999773 total 58 eclasses 31
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 16 eclasses 8
+Rewrite neg-minus-zero cost 0 total 167 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 1 eclasses 0
+Rewrite /_binop cost 0 total 12 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 85 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 85 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0.0989999999999327 total 2 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 34 eclasses 1
+iter
+Egraph big big? 1186
+Egraph class big? 242
+Egraph cost? 501.6600000000001
+Rewrite add-0-inv cost 0 total 55 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 81 eclasses 34
+Rewrite *_binop_or_zero cost 4.600000000000023 total 76 eclasses 17
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 121 eclasses 36
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 94 eclasses 47
+Rewrite neg-minus-zero cost 0 total 16 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 58 eclasses 0
+Rewrite /_binop cost 0 total 47 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 55 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 55 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0.09900000000004638 total 7 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 2.8000000000000114 total 141 eclasses 21
+Rewrite sqrt_unop cost 0 total 1 eclasses 0
+iter
+Egraph big big? 1993
+Egraph class big? 397
+Egraph cost? 494.161
+Rewrite add-0-inv cost 0 total 155 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 182 eclasses 74
+Rewrite *_binop_or_zero cost 103.19600000000003 total 198 eclasses 33
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 167 eclasses 22
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 216 eclasses 108
+Rewrite neg-minus-zero cost 0 total 94 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 108 eclasses 0
+Rewrite /_binop cost 0 total 108 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 155 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 155 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0.8910000000000196 total 12 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 238 eclasses 3
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 3781
+Egraph class big? 637
+Egraph cost? 390.07399999999996
+Rewrite add-0-inv cost 0 total 240 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 190 eclasses 58
+Rewrite *_binop_or_zero cost 101.594 total 171 eclasses 11
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 188 eclasses 24
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 264 eclasses 132
+Rewrite neg-minus-zero cost 0 total 216 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 132 eclasses 0
+Rewrite /_binop cost 0 total 132 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 240 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 240 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0.39599999999995816 total 8 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 206 eclasses 1
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 6008
+Egraph class big? 863
+Egraph cost? 288.084
+Rewrite add-0-inv cost 0 total 226 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 130 eclasses 36
+Rewrite *_binop_or_zero cost 0 total 165 eclasses 30
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 120 eclasses 7
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 188 eclasses 94
+Rewrite neg-minus-zero cost 0 total 264 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 94 eclasses 0
+Rewrite /_binop cost 0 total 94 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 226 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 226 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0.09899999999998954 total 1 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 162 eclasses 3
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 7904
+Egraph class big? 1033
+Egraph cost? 287.985
+Rewrite add-0-inv cost 0 total 170 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 116 eclasses 40
+Rewrite *_binop_or_zero cost 8.185999999999979 total 154 eclasses 33
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 102 eclasses 12
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 152 eclasses 76
+Rewrite neg-minus-zero cost 0 total 188 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 76 eclasses 0
+Rewrite /_binop cost 0 total 76 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 170 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 170 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0.19800000000003593 total 5 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 139 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 9422
+Egraph class big? 1194
+Egraph cost? 279.601
+Rewrite add-0-inv cost 0 total 161 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 130 eclasses 45
+Rewrite *_binop_or_zero cost 0 total 123 eclasses 13
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 120 eclasses 15
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 170 eclasses 85
+Rewrite neg-minus-zero cost 0 total 152 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 85 eclasses 0
+Rewrite /_binop cost 0 total 85 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 161 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 161 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0.09899999999998954 total 1 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 135 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 10906
+Egraph class big? 1352
+Egraph cost? 279.502
+Rewrite add-0-inv cost 0 total 158 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 101 eclasses 28
+Rewrite *_binop_or_zero cost 12.791999999999973 total 117 eclasses 14
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 88 eclasses 2
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 146 eclasses 73
+Rewrite neg-minus-zero cost 0 total 170 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 73 eclasses 0
+Rewrite /_binop cost 0 total 73 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 158 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 158 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0 total 1 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 119 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 12268
+Egraph class big? 1469
+Egraph cost? 266.71000000000004
+Rewrite add-0-inv cost 0 total 117 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 60 eclasses 16
+Rewrite *_binop_or_zero cost 200.18300000000005 total 68 eclasses 2
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 56 eclasses 4
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 88 eclasses 44
+Rewrite neg-minus-zero cost 0 total 146 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 44 eclasses 0
+Rewrite /_binop cost 0 total 44 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 117 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 117 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 76 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 13201
+Egraph class big? 1535
+Egraph cost? 66.527
+Rewrite add-0-inv cost 0 total 66 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 24 eclasses 2
+Rewrite *_binop_or_zero cost 0 total 32 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 24 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 44 eclasses 22
+Rewrite neg-minus-zero cost 0 total 88 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 22 eclasses 0
+Rewrite /_binop cost 0 total 22 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 66 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 66 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 34 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 13689
+Egraph class big? 1559
+Egraph cost? 66.527
+Rewrite add-0-inv cost 0 total 24 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 2 eclasses 0
+Rewrite *_binop_or_zero cost 0 total 10 eclasses 2
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 2 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 4 eclasses 2
+Rewrite neg-minus-zero cost 0 total 44 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 2 eclasses 0
+Rewrite /_binop cost 0 total 2 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 24 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 24 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 8 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 13835
+Egraph class big? 1563
+Egraph cost? 66.527
+Rewrite add-0-inv cost 0 total 4 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 4 eclasses 2
+Rewrite *_binop_or_zero cost 0 total 2 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 2 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 4 eclasses 2
+Rewrite neg-minus-zero cost 0 total 4 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 2 eclasses 0
+Rewrite /_binop cost 0 total 2 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 4 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 4 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0 total 2 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 2 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 13871
+Egraph class big? 1567
+Egraph cost? 66.527
+Rewrite add-0-inv cost 0 total 4 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 2 eclasses 0
+Rewrite *_binop_or_zero cost 0 total 2 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 2 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 4 eclasses 2
+Rewrite neg-minus-zero cost 0 total 4 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 2 eclasses 0
+Rewrite /_binop cost 0 total 2 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 4 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 4 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 2 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 13903
+Egraph class big? 1569
+Egraph cost? 66.527
+Rewrite add-0-inv cost 0 total 2 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 0 eclasses 0
+Rewrite *_binop_or_zero cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 4 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 0 eclasses 0
+Rewrite /_binop cost 0 total 0 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 2 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 2 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 0 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+Egraph big big? 13913
+Egraph class big? 1569
+Egraph cost? 66.527
+Rewrite add-0-inv cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 0 eclasses 0
+Rewrite *_binop_or_zero cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero cost 0 total 0 eclasses 0
+Rewrite /_binop cost 0 total 0 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 0 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite litvec cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 0 eclasses 0
+Rewrite sqrt_unop cost 0 total 0 eclasses 0
+iter
+iter
+Egraph big big? 13913
+Runner report
+=============
+  Stop reason: Saturated
+  Iterations: 17
+  Egraph size: 13913 nodes, 1569 classes, 13913 memo
+  Rebuilds: 2358, 138.71 per iter
+  Total time: 5.773292372000001
+    Search:  (0.01) 0.078632101
+    Apply:   (0.98) 5.678525596
+    Rebuild: (0.00) 0.016096632
+Stopped after 17 iterations, reason: Some(Saturated)
+Egraph cost? 66.527
+
+Cost: 66.527
+#+end_example
+
+Let's do some manual look at the data.
+
+First let's only look at the rules that actually did anything for an iteration.
+#+begin_src python :results output verbatim :var data=extraction-results
+non_zero_rule = []
+for line in data.split("\n"):
+    if "Rewrite" in line:
+        parts = line.split(" ")
+        name, cost , size = parts[1], parts[3], parts[5]
+        if cost != "0" or size != "0":
+            if name not in non_zero_rule: non_zero_rule.append(name)
+            print(f"{name}: {cost}, {size}")
+    elif "iter" in line:
+        print("===============")
+    elif "Cost:" in line:
+        print(line)
+
+non_zero_rule.sort()
+print(non_zero_rule)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+sqrt-1-inv: 0, 1
+neg-neg-rev: 0, 168
+mul-1-inv: 0, 102
+div-1-inv: 0, 102
++_binop_or_zero: 0.900000000000091, 12
+add-0-inv: 0, 102
+expand-zero-get: 0, 1
+neg-minus: 0, 12
+===============
+litvec: 0.0989999999999327, 2
+neg-neg-rev: 0, 16
+mul-1-inv: 0, 85
+/_binop: 0, 13
+div-1-inv: 0, 85
+-_binop_or_zero: 0, 3
+,*_binop_or_zero: 0, 15
+vec-mac: 0.7980000000000018, 64
++_binop_or_zero: 0.10199999999997544, 27
+neg_unop: 0, 23
+add-0-inv: 0, 85
+neg-minus: 0, 167
+===============
+litvec: 0.09900000000004638, 7
+neg-neg-rev: 0, 94
+mul-1-inv: 0, 55
+/_binop: 0, 47
+div-1-inv: 0, 55
+-_binop_or_zero: 0, 92
+,*_binop_or_zero: 4.600000000000023, 76
+vec-mac: 2.8000000000000114, 177
++_binop_or_zero: 0, 85
+neg_unop: 0, 47
+add-0-inv: 0, 55
+neg-minus: 0, 16
+sqrt_unop: 0, 1
+===============
+litvec: 0.5939999999999941, 12
+neg-neg-rev: 0, 216
+mul-1-inv: 0, 155
+/_binop: 0, 108
+div-1-inv: 0, 155
+-_binop_or_zero: 0, 182
+,*_binop_or_zero: 103.49300000000005, 198
+vec-mac: 0, 260
++_binop_or_zero: 0, 145
+neg_unop: 0, 108
+add-0-inv: 0, 155
+neg-minus: 0, 94
+===============
+litvec: 0.2969999999999686, 8
+neg-neg-rev: 0, 264
+mul-1-inv: 0, 240
+/_binop: 0, 132
+div-1-inv: 0, 240
+-_binop_or_zero: 0, 190
+,*_binop_or_zero: 101.69299999999998, 171
+vec-mac: 0, 230
++_binop_or_zero: 0, 164
+neg_unop: 0, 132
+add-0-inv: 0, 240
+neg-minus: 0, 216
+===============
+litvec: 0.09899999999998954, 1
+neg-neg-rev: 0, 188
+mul-1-inv: 0, 226
+/_binop: 0, 94
+div-1-inv: 0, 226
+-_binop_or_zero: 0, 130
+,*_binop_or_zero: 0, 165
+vec-mac: 0, 169
++_binop_or_zero: 0, 113
+neg_unop: 0, 94
+add-0-inv: 0, 226
+neg-minus: 0, 264
+===============
+litvec: 0, 5
+neg-neg-rev: 0, 152
+mul-1-inv: 0, 170
+/_binop: 0, 76
+div-1-inv: 0, 170
+-_binop_or_zero: 0, 116
+,*_binop_or_zero: 8.384000000000015, 154
+vec-mac: 0, 151
++_binop_or_zero: 0, 90
+neg_unop: 0, 76
+add-0-inv: 0, 170
+neg-minus: 0, 188
+===============
+litvec: 0.09899999999998954, 1
+neg-neg-rev: 0, 170
+mul-1-inv: 0, 161
+/_binop: 0, 85
+div-1-inv: 0, 161
+-_binop_or_zero: 0, 130
+,*_binop_or_zero: 0, 123
+vec-mac: 0, 150
++_binop_or_zero: 0, 105
+neg_unop: 0, 85
+add-0-inv: 0, 161
+neg-minus: 0, 152
+===============
+litvec: 0, 1
+neg-neg-rev: 0, 146
+mul-1-inv: 0, 158
+/_binop: 0, 73
+div-1-inv: 0, 158
+-_binop_or_zero: 0, 101
+,*_binop_or_zero: 12.788999999999987, 117
+vec-mac: 0, 121
++_binop_or_zero: 0, 86
+neg_unop: 0.002999999999985903, 73
+add-0-inv: 0, 158
+neg-minus: 0, 170
+===============
+neg-neg-rev: 0, 88
+mul-1-inv: 0, 117
+/_binop: 0, 44
+div-1-inv: 0, 117
+-_binop_or_zero: 0, 60
+,*_binop_or_zero: 200.18300000000005, 68
+vec-mac: 0, 80
++_binop_or_zero: 0, 52
+neg_unop: 0, 44
+add-0-inv: 0, 117
+neg-minus: 0, 146
+===============
+neg-neg-rev: 0, 44
+mul-1-inv: 0, 66
+/_binop: 0, 22
+div-1-inv: 0, 66
+-_binop_or_zero: 0, 24
+,*_binop_or_zero: 0, 32
+vec-mac: 0, 34
++_binop_or_zero: 0, 24
+neg_unop: 0, 22
+add-0-inv: 0, 66
+neg-minus: 0, 88
+===============
+neg-neg-rev: 0, 4
+mul-1-inv: 0, 24
+/_binop: 0, 2
+div-1-inv: 0, 24
+-_binop_or_zero: 0, 2
+,*_binop_or_zero: 0, 10
+vec-mac: 0, 8
++_binop_or_zero: 0, 2
+neg_unop: 0, 2
+add-0-inv: 0, 24
+neg-minus: 0, 44
+===============
+litvec: 0, 2
+neg-neg-rev: 0, 4
+mul-1-inv: 0, 4
+/_binop: 0, 2
+div-1-inv: 0, 4
+-_binop_or_zero: 0, 4
+,*_binop_or_zero: 0, 2
+vec-mac: 0, 2
++_binop_or_zero: 0, 2
+neg_unop: 0, 2
+add-0-inv: 0, 4
+neg-minus: 0, 4
+===============
+neg-neg-rev: 0, 4
+mul-1-inv: 0, 4
+/_binop: 0, 2
+div-1-inv: 0, 4
+-_binop_or_zero: 0, 2
+,*_binop_or_zero: 0, 2
+vec-mac: 0, 2
++_binop_or_zero: 0, 2
+neg_unop: 0, 2
+add-0-inv: 0, 4
+neg-minus: 0, 4
+===============
+mul-1-inv: 0, 2
+div-1-inv: 0, 2
+add-0-inv: 0, 2
+neg-minus: 0, 4
+===============
+===============
+===============
+===============
+===============
+Cost: 66.527
+['*_binop_or_zero', '+_binop_or_zero', '-_binop_or_zero', '/_binop', 'add-0-inv', 'div-1-inv', 'expand-zero-get', 'litvec', 'mul-1-inv', 'neg-minus', 'neg-neg-rev', 'neg_unop', 'sqrt-1-inv', 'sqrt_unop', 'vec-mac']
+#+end_example
+
+I'm trying to see if I can use this data to select only the rules that actually do anything. However, strangely enough if I filter out rules that never change the cost or the size of the graph, the final cost is way higher than when I leave those rules in.
+
+Let's look at the rules that never do anything
+
+#+begin_src python :results output verbatim :var data=extraction-results
+zero_rules = {}
+n_iters = 0
+for line in data.split("\n"):
+    if "Rewrite" in line:
+        parts = line.split(" ")
+        name, cost , size = parts[1], parts[3], parts[5]
+        if cost == "0" and size == "0":
+            if name not in zero_rules:
+                zero_rules[name] = 1
+            else:
+                zero_rules[name] += 1
+    elif "iter" in line:
+        n_iters += 1
+    elif "Cost:" in line:
+        print(line)
+
+for name, n in zero_rules.items():
+    if n == n_iters:
+        print(name)
+    else:
+        print(f"not {name} {n} {n_iters}")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Cost: 66.527
+not neg-zero-inv 16 19
+not neg-minus-zero 16 19
+not sqrt-1-inv 15 19
+not neg-neg 15 19
+not sqrt-1-inv-rev 15 19
+not neg-minus-zero-rev 15 19
+not div-1 15 19
+not neg-minus-rev 15 19
+not add-0 15 19
+not mul-1 15 19
+not expand-zero-get 15 19
+not neg-zero-inv-rev 15 19
+not vec-mac-add-mul 14 19
+not sqrt_unop 13 19
+not litvec 6 19
+not neg-neg-rev 2 19
+not /_binop 2 19
+not -_binop_or_zero 2 19
+not *_binop_or_zero 2 19
+not vec-mac 2 19
+not +_binop_or_zero 2 19
+not neg_unop 2 19
+not mul-1-inv 1 19
+not div-1-inv 1 19
+not add-0-inv 1 19
+not neg-minus 1 19
+#+end_example
+
+So that didn't tell me anything. There are no rules that never have any effect. That makes sense. So what does =.total_size()= actually give me.
+
+Total size seems to give me the total number of =enodes=. There is also a way to get the total number of =eclasses=. I added some logging to get the size of =eclasses=.
+
+*** Tangent: Why do some rules increase the number of elcasses?
+
+**** Motivation for asking this question. 
+1) Some rules increase the number of eclasses.
+2) Intuitively is feels like rewrite rules need to preserve equivalences, otherwise the whole technique breaks (exploring what happens when you do this intentionally would be interesting). If eclasses represent terms that are all equivalent, why would the number of eclasses ever increase?
+
+**** Some answers
+1) Rules can introduce previously unseen terms. Consider: =x * 2 -> x >> 1=. assuming that 1 has never been seen before in the graph, then applying this rewrite rule would increase the number of eclasses by 1, because you need a new eclass for the =1=.
