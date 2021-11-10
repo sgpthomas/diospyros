@@ -1,8 +1,12 @@
 use egg::{rewrite as rw, *};
 
-use std::str::FromStr;
+use std::{borrow::Cow, str::FromStr};
 
-use crate::{config::*, searchutils::*, veclang::VecLang};
+use crate::{
+    config::*,
+    searchutils::*,
+    veclang::{DiosRwrite, VecLang},
+};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct MacSearcher {
@@ -17,7 +21,7 @@ pub struct MacSearcher {
     pub zero_pattern: Pattern<VecLang>,
 }
 
-pub fn build_mac_rule() -> Rewrite<VecLang, ()> {
+pub fn build_mac_rule() -> DiosRwrite {
     let acc_var = "a".to_string();
     let left_var = "b".to_string();
     let right_var = "c".to_string();
@@ -82,7 +86,11 @@ impl MacSearcher {}
 //     (* ?b ?c)           here, map ?a -> 0
 //     0                   here, map ?a -> 0, ?b -> 0, ?c -> 0
 impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
-    fn search_eclass(&self, egraph: &EGraph<VecLang, A>, eclass: Id) -> Option<SearchMatches> {
+    fn search_eclass(
+        &self,
+        egraph: &EGraph<VecLang, A>,
+        eclass: Id,
+    ) -> Option<SearchMatches<VecLang>> {
         let vec_matches = self.vec_pattern.search_eclass(egraph, eclass);
         let vec_mac_compatible = match vec_matches {
             None => None,
@@ -190,6 +198,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                     Some(SearchMatches {
                         eclass: matches.eclass,
                         substs: new_substs,
+                        ast: matches.ast,
                     })
                 }
             }

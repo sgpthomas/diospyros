@@ -1,8 +1,11 @@
 use egg::{rewrite as rw, *};
 
-use std::str::FromStr;
+use std::{borrow::Cow, str::FromStr};
 
-use crate::{searchutils::*, veclang::VecLang};
+use crate::{
+    searchutils::*,
+    veclang::{DiosRwrite, VecLang},
+};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct BinOpSearcher {
@@ -14,7 +17,7 @@ pub struct BinOpSearcher {
     pub zero_pattern: Pattern<VecLang>,
 }
 
-pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> Rewrite<VecLang, ()> {
+pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
     let left_var = "a".to_string();
     let right_var = "b".to_string();
     let full_pattern = vec_fold_op(&op_str.to_string(), &left_var, &right_var)
@@ -40,6 +43,11 @@ pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> Rewrite<VecLang,
     .parse()
     .unwrap();
 
+    println!("full: {}", full_pattern);
+    println!("vec: {}", vec_pattern);
+    println!("op: {}", op_pattern);
+    println!("zero: {}", zero_pattern);
+
     let searcher = BinOpSearcher {
         left_var,
         right_var,
@@ -49,7 +57,7 @@ pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> Rewrite<VecLang,
         zero_pattern,
     };
 
-    rw!(format!("{}_binop_or_zero", op_str); { searcher } => { applier })
+    rw!(format!("{}_binop_or_zero_vec", op_str); { searcher } => { applier })
 }
 
 impl BinOpSearcher {}
@@ -58,7 +66,11 @@ impl BinOpSearcher {}
 //     (<binop> ?a ?b)
 //     0               here, map ?a -> 0, ?b -> 0
 impl<A: Analysis<VecLang>> Searcher<VecLang, A> for BinOpSearcher {
-    fn search_eclass(&self, egraph: &EGraph<VecLang, A>, eclass: Id) -> Option<SearchMatches> {
+    fn search_eclass(
+        &self,
+        egraph: &EGraph<VecLang, A>,
+        eclass: Id,
+    ) -> Option<SearchMatches<VecLang>> {
         let vec_matches = self.vec_pattern.search_eclass(egraph, eclass);
         let vec_binop_compatible = match vec_matches {
             None => None,
@@ -127,9 +139,12 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for BinOpSearcher {
                 if new_substs.is_empty() {
                     None
                 } else {
+                    println!("subs: {:?}", new_substs);
+                    println!("ast: {:?}", matches.ast);
                     Some(SearchMatches {
                         eclass: matches.eclass,
                         substs: new_substs,
+                        ast: matches.ast,
                     })
                 }
             }

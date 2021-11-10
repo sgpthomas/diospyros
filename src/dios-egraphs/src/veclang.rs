@@ -1,5 +1,7 @@
 use egg::*;
 
+use crate::tracking::TrackRewrites;
+
 define_language! {
     pub enum VecLang {
         Num(i32),
@@ -56,4 +58,5 @@ define_language! {
     }
 }
 
-pub type EGraph = egg::EGraph<VecLang, ()>;
+pub type EGraph = egg::EGraph<VecLang, TrackRewrites>;
+pub type DiosRwrite = egg::Rewrite<VecLang, TrackRewrites>;

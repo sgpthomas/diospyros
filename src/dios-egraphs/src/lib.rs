@@ -7,4 +7,5 @@ pub mod rules;
 pub mod scheduler;
 pub mod searchutils;
 pub mod stringconversion;
+pub mod tracking;
 pub mod veclang;

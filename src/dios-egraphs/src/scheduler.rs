@@ -2,6 +2,7 @@ use egg::{Extractor, Id, Rewrite, RewriteScheduler};
 
 use crate::{
     cost::VecCostFn,
+    tracking::TrackRewrites,
     veclang::{EGraph, VecLang},
 };
 
@@ -17,23 +18,29 @@ impl LoggingScheduler {
     }
 }
 
-impl RewriteScheduler<VecLang, ()> for LoggingScheduler {
+impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
     fn apply_rewrite(
         &mut self,
         _iteration: usize,
         egraph: &mut EGraph,
-        rewrite: &Rewrite<VecLang, ()>,
-        matches: Vec<egg::SearchMatches>,
+        rewrite: &Rewrite<VecLang, TrackRewrites>,
+        matches: Vec<egg::SearchMatches<VecLang>>,
     ) -> usize {
-        let mut extractor = Extractor::new(&egraph, VecCostFn { egraph });
-        let (bef_cost, _) = extractor.find_best(self.root);
+        let (bef_cost, _) = {
+            let extractor = Extractor::new(&egraph, VecCostFn { egraph });
+            extractor.find_best(self.root)
+        };
         let bef_size = egraph.total_size();
         let bef_classes = egraph.number_of_classes();
 
         // apply the rule
         let applications = rewrite.apply(egraph, &matches);
+        // for id in &applications {
+        //     // egraph[*id].data.insert(rewrite.name().to_string());
+        //     egraph[*id].data.push(rewrite.name().to_string());
+        // }
 
-        let mut extractor = Extractor::new(&egraph, VecCostFn { egraph });
+        let extractor = Extractor::new(&egraph, VecCostFn { egraph });
         let (aft_cost, _) = extractor.find_best(self.root);
         let aft_size = egraph.total_size();
         let aft_classes = egraph.number_of_classes();

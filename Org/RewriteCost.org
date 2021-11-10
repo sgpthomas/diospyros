@@ -25,471 +25,471 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 #+RESULTS[85bab39c2a33cd2be0470570dc1aefe7e09b5850]: extraction-results
 #+begin_example
    Compiling dios-egraphs v0.1.0 (/home/samthomas/Research/diospyros/src/dios-egraphs)
-    Finished release [optimized] target(s) in 2.57s
+    Finished release [optimized] target(s) in 2.59s
      Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --rules ''`
 Running egg with timeout 180s, width: 2
 Starting run with 30 rules
 Egraph big big? 102
 Egraph class big? 102
 Egraph cost? 503.5590000000001
-Rewrite add-0-inv cost 0 total 102 eclasses 0
-Rewrite sqrt-1-inv cost 0 total 1 eclasses 0
-Rewrite +_binop_or_zero cost 0.900000000000091 total 12 eclasses 8
 Rewrite neg-neg-rev cost 0 total 168 eclasses 78
-Rewrite neg-minus-zero cost 0 total 12 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses -1
+Rewrite sqrt-1-inv cost 0 total 1 eclasses 0
+Rewrite neg-minus cost 0 total 12 eclasses 0
 Rewrite div-1-inv cost 0 total 102 eclasses 0
-Rewrite expand-zero-get cost 0 total 1 eclasses 0
 Rewrite mul-1-inv cost 0 total 102 eclasses 0
+Rewrite add-0-inv cost 0 total 102 eclasses 0
+Rewrite expand-zero-get cost 0 total 1 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0.900000000000091 total 12 eclasses 8
+Rewrite neg-zero-inv cost 0 total 0 eclasses -1
 iter
 Egraph big big? 601
 Egraph class big? 187
 Egraph cost? 502.659
-Rewrite add-0-inv cost 0 total 85 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 24 eclasses 12
-Rewrite *_binop_or_zero cost 0 total 16 eclasses 3
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0.8999999999999773 total 58 eclasses 31
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 16 eclasses 8
-Rewrite neg-minus-zero cost 0 total 167 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 1 eclasses 0
-Rewrite /_binop cost 0 total 12 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 85 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 85 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0.0989999999999327 total 2 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0.7980000000000018 total 68 eclasses 35
+Rewrite neg-neg-rev cost 0 total 16 eclasses 8
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 24 eclasses 12
+Rewrite neg-minus cost 0 total 167 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 34 eclasses 1
+Rewrite div-1-inv cost 0 total 85 eclasses 0
+Rewrite /_binop_vec cost 0 total 12 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 1 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 13 eclasses 0
+Rewrite mul-1-inv cost 0 total 85 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 85 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0.10199999999997544 total 27 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 1186
 Egraph class big? 242
 Egraph cost? 501.6600000000001
-Rewrite add-0-inv cost 0 total 55 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 81 eclasses 34
-Rewrite *_binop_or_zero cost 4.600000000000023 total 76 eclasses 17
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 121 eclasses 36
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 94 eclasses 47
-Rewrite neg-minus-zero cost 0 total 16 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 58 eclasses 0
-Rewrite /_binop cost 0 total 47 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 55 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 55 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0.09900000000004638 total 7 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 7.3940000000000055 total 194 eclasses 74
+Rewrite neg-neg-rev cost 0 total 94 eclasses 47
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 81 eclasses 34
+Rewrite neg-minus cost 0 total 16 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 2.8000000000000114 total 141 eclasses 21
+Rewrite div-1-inv cost 0 total 55 eclasses 0
+Rewrite /_binop_vec cost 0 total 47 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 58 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0.006000000000028649 total 59 eclasses 0
+Rewrite mul-1-inv cost 0 total 55 eclasses 0
 Rewrite sqrt_unop cost 0 total 1 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 55 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 85 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 1993
 Egraph class big? 397
 Egraph cost? 494.161
-Rewrite add-0-inv cost 0 total 155 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 182 eclasses 74
-Rewrite *_binop_or_zero cost 103.19600000000003 total 198 eclasses 33
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 167 eclasses 22
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 216 eclasses 108
-Rewrite neg-minus-zero cost 0 total 94 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 108 eclasses 0
-Rewrite /_binop cost 0 total 108 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 155 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 155 eclasses 0
+Rewrite litvec cost 0.5939999999999941 total 12 eclasses 0
 Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
-Rewrite litvec cost 0.8910000000000196 total 12 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 103.48700000000008 total 293 eclasses 58
+Rewrite neg-neg-rev cost 0 total 216 eclasses 108
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 182 eclasses 74
+Rewrite neg-minus cost 0 total 94 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 238 eclasses 3
+Rewrite div-1-inv cost 0 total 155 eclasses 0
+Rewrite /_binop_vec cost 0 total 108 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 108 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0.005999999999971806 total 165 eclasses 0
+Rewrite mul-1-inv cost 0 total 155 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 155 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 145 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 3781
 Egraph class big? 637
 Egraph cost? 390.07399999999996
-Rewrite add-0-inv cost 0 total 240 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 190 eclasses 58
-Rewrite *_binop_or_zero cost 101.594 total 171 eclasses 11
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 188 eclasses 24
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 264 eclasses 132
-Rewrite neg-minus-zero cost 0 total 216 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 132 eclasses 0
-Rewrite /_binop cost 0 total 132 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 240 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 240 eclasses 0
+Rewrite litvec cost 0.2969999999999686 total 8 eclasses 0
 Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
-Rewrite litvec cost 0.39599999999995816 total 8 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 101.68700000000001 total 242 eclasses 37
+Rewrite neg-neg-rev cost 0 total 264 eclasses 132
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 189 eclasses 57
+Rewrite neg-minus cost 0 total 216 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 206 eclasses 1
+Rewrite div-1-inv cost 0 total 240 eclasses 0
+Rewrite /_binop_vec cost 0 total 132 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 132 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0.005999999999971806 total 160 eclasses 0
+Rewrite mul-1-inv cost 0 total 240 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 240 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 164 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 6008
 Egraph class big? 863
 Egraph cost? 288.084
-Rewrite add-0-inv cost 0 total 226 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 130 eclasses 36
-Rewrite *_binop_or_zero cost 0 total 165 eclasses 30
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 120 eclasses 7
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 188 eclasses 94
-Rewrite neg-minus-zero cost 0 total 264 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 94 eclasses 0
-Rewrite /_binop cost 0 total 94 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 226 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 226 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0.09899999999998954 total 1 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 200 eclasses 41
+Rewrite neg-neg-rev cost 0 total 188 eclasses 94
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 129 eclasses 35
+Rewrite neg-minus cost 0 total 264 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 162 eclasses 3
+Rewrite div-1-inv cost 0 total 226 eclasses 0
+Rewrite /_binop_vec cost 0 total 94 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 94 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 135 eclasses 0
+Rewrite mul-1-inv cost 0 total 226 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 226 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 113 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 7904
 Egraph class big? 1033
 Egraph cost? 287.985
-Rewrite add-0-inv cost 0 total 170 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 116 eclasses 40
-Rewrite *_binop_or_zero cost 8.185999999999979 total 154 eclasses 33
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 102 eclasses 12
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 152 eclasses 76
-Rewrite neg-minus-zero cost 0 total 188 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 76 eclasses 0
-Rewrite /_binop cost 0 total 76 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 170 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 170 eclasses 0
+Rewrite litvec cost 0 total 5 eclasses 0
 Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
-Rewrite litvec cost 0.19800000000003593 total 5 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 8.377999999999986 total 185 eclasses 46
+Rewrite neg-neg-rev cost 0 total 152 eclasses 76
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 115 eclasses 39
+Rewrite neg-minus cost 0 total 188 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 139 eclasses 0
+Rewrite div-1-inv cost 0 total 170 eclasses 0
+Rewrite /_binop_vec cost 0 total 76 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 76 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0.006000000000028649 total 121 eclasses 0
+Rewrite mul-1-inv cost 0 total 170 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 170 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 90 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 9422
 Egraph class big? 1194
 Egraph cost? 279.601
-Rewrite add-0-inv cost 0 total 161 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 130 eclasses 45
-Rewrite *_binop_or_zero cost 0 total 123 eclasses 13
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 120 eclasses 15
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 170 eclasses 85
-Rewrite neg-minus-zero cost 0 total 152 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 85 eclasses 0
-Rewrite /_binop cost 0 total 85 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 161 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 161 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0.09899999999998954 total 1 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 166 eclasses 31
+Rewrite neg-neg-rev cost 0 total 170 eclasses 85
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 127 eclasses 42
+Rewrite neg-minus cost 0 total 152 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 135 eclasses 0
+Rewrite div-1-inv cost 0 total 161 eclasses 0
+Rewrite /_binop_vec cost 0 total 85 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 85 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 110 eclasses 0
+Rewrite mul-1-inv cost 0 total 161 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 161 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 105 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 10906
 Egraph class big? 1352
 Egraph cost? 279.502
-Rewrite add-0-inv cost 0 total 158 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 101 eclasses 28
-Rewrite *_binop_or_zero cost 12.791999999999973 total 117 eclasses 14
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 88 eclasses 2
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 146 eclasses 73
-Rewrite neg-minus-zero cost 0 total 170 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 73 eclasses 0
-Rewrite /_binop cost 0 total 73 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 158 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 158 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0 total 1 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 11.786000000000001 total 137 eclasses 18
+Rewrite neg-neg-rev cost 0 total 146 eclasses 73
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 1 total 99 eclasses 26
+Rewrite neg-minus cost 0 total 170 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 119 eclasses 0
+Rewrite div-1-inv cost 0 total 158 eclasses 0
+Rewrite /_binop_vec cost 0 total 73 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 73 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0.005999999999971806 total 103 eclasses 0
+Rewrite mul-1-inv cost 0 total 158 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 158 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 86 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 12268
 Egraph class big? 1469
 Egraph cost? 266.71000000000004
-Rewrite add-0-inv cost 0 total 117 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 60 eclasses 16
-Rewrite *_binop_or_zero cost 200.18300000000005 total 68 eclasses 2
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 56 eclasses 4
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 88 eclasses 44
-Rewrite neg-minus-zero cost 0 total 146 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 44 eclasses 0
-Rewrite /_binop cost 0 total 44 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 117 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 117 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0 total 0 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 200.17700000000002 total 84 eclasses 8
+Rewrite neg-neg-rev cost 0 total 88 eclasses 44
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 58 eclasses 14
+Rewrite neg-minus cost 0 total 146 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 76 eclasses 0
+Rewrite div-1-inv cost 0 total 117 eclasses 0
+Rewrite /_binop_vec cost 0 total 44 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 44 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0.006000000000000227 total 66 eclasses 0
+Rewrite mul-1-inv cost 0 total 117 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 117 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 52 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 13201
 Egraph class big? 1535
 Egraph cost? 66.527
-Rewrite add-0-inv cost 0 total 66 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 24 eclasses 2
-Rewrite *_binop_or_zero cost 0 total 32 eclasses 0
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 24 eclasses 0
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 44 eclasses 22
-Rewrite neg-minus-zero cost 0 total 88 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 22 eclasses 0
-Rewrite /_binop cost 0 total 22 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 66 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 66 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0 total 0 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
-Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
 Rewrite vec-mac cost 0 total 34 eclasses 0
+Rewrite neg-neg-rev cost 0 total 44 eclasses 22
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 24 eclasses 2
+Rewrite neg-minus cost 0 total 88 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 66 eclasses 0
+Rewrite /_binop_vec cost 0 total 22 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 22 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 32 eclasses 0
+Rewrite mul-1-inv cost 0 total 66 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 66 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 24 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 13689
 Egraph class big? 1559
 Egraph cost? 66.527
-Rewrite add-0-inv cost 0 total 24 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 2 eclasses 0
-Rewrite *_binop_or_zero cost 0 total 10 eclasses 2
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 2 eclasses 0
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 4 eclasses 2
-Rewrite neg-minus-zero cost 0 total 44 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 2 eclasses 0
-Rewrite /_binop cost 0 total 2 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 24 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 24 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0 total 0 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac cost 0 total 10 eclasses 2
+Rewrite neg-neg-rev cost 0 total 4 eclasses 2
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 2 eclasses 0
+Rewrite neg-minus cost 0 total 44 eclasses 0
 Rewrite mul-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac cost 0 total 8 eclasses 0
+Rewrite div-1-inv cost 0 total 24 eclasses 0
+Rewrite /_binop_vec cost 0 total 2 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 2 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 8 eclasses 0
+Rewrite mul-1-inv cost 0 total 24 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 24 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 2 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 13835
 Egraph class big? 1563
 Egraph cost? 66.527
-Rewrite add-0-inv cost 0 total 4 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 4 eclasses 2
-Rewrite *_binop_or_zero cost 0 total 2 eclasses 0
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 2 eclasses 0
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 4 eclasses 2
-Rewrite neg-minus-zero cost 0 total 4 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 2 eclasses 0
-Rewrite /_binop cost 0 total 2 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 4 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 4 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0 total 2 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
-Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
 Rewrite vec-mac cost 0 total 2 eclasses 0
+Rewrite neg-neg-rev cost 0 total 4 eclasses 2
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 4 eclasses 2
+Rewrite neg-minus cost 0 total 4 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 4 eclasses 0
+Rewrite /_binop_vec cost 0 total 2 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 2 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 2 eclasses 0
+Rewrite mul-1-inv cost 0 total 4 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 4 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 2 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 13871
 Egraph class big? 1567
 Egraph cost? 66.527
-Rewrite add-0-inv cost 0 total 4 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 2 eclasses 0
-Rewrite *_binop_or_zero cost 0 total 2 eclasses 0
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 2 eclasses 0
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 4 eclasses 2
-Rewrite neg-minus-zero cost 0 total 4 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 2 eclasses 0
-Rewrite /_binop cost 0 total 2 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 4 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 4 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0 total 0 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
-Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
 Rewrite vec-mac cost 0 total 2 eclasses 0
+Rewrite neg-neg-rev cost 0 total 4 eclasses 2
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 2 eclasses 0
+Rewrite neg-minus cost 0 total 4 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 4 eclasses 0
+Rewrite /_binop_vec cost 0 total 2 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 2 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 2 eclasses 0
+Rewrite mul-1-inv cost 0 total 4 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 4 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 2 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 13903
 Egraph class big? 1569
 Egraph cost? 66.527
-Rewrite add-0-inv cost 0 total 2 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 0 eclasses 0
-Rewrite *_binop_or_zero cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 0 eclasses 0
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 0 eclasses 0
-Rewrite neg-minus-zero cost 0 total 4 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 0 eclasses 0
-Rewrite /_binop cost 0 total 0 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 2 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 2 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0 total 0 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
-Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
 Rewrite vec-mac cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 0 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 0 eclasses 0
+Rewrite neg-minus cost 0 total 4 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 2 eclasses 0
+Rewrite /_binop_vec cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 0 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 2 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 2 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 Egraph big big? 13913
 Egraph class big? 1569
 Egraph cost? 66.527
-Rewrite add-0-inv cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
-Rewrite neg_unop cost 0 total 0 eclasses 0
-Rewrite *_binop_or_zero cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
-Rewrite +_binop_or_zero cost 0 total 0 eclasses 0
-Rewrite add-0 cost 0 total 0 eclasses 0
-Rewrite neg-neg-rev cost 0 total 0 eclasses 0
-Rewrite neg-minus-zero cost 0 total 0 eclasses 0
-Rewrite neg-minus cost 0 total 0 eclasses 0
-Rewrite neg-neg cost 0 total 0 eclasses 0
-Rewrite neg-zero-inv cost 0 total 0 eclasses 0
-Rewrite -_binop_or_zero cost 0 total 0 eclasses 0
-Rewrite /_binop cost 0 total 0 eclasses 0
-Rewrite neg-minus-rev cost 0 total 0 eclasses 0
-Rewrite div-1-inv cost 0 total 0 eclasses 0
-Rewrite expand-zero-get cost 0 total 0 eclasses 0
-Rewrite mul-1-inv cost 0 total 0 eclasses 0
-Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
-Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
 Rewrite litvec cost 0 total 0 eclasses 0
-Rewrite div-1 cost 0 total 0 eclasses 0
-Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
-Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero-rev cost 0 total 0 eclasses 0
 Rewrite vec-mac cost 0 total 0 eclasses 0
+Rewrite neg-neg-rev cost 0 total 0 eclasses 0
+Rewrite neg-minus-rev cost 0 total 0 eclasses 0
+Rewrite add-0 cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv-rev cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv cost 0 total 0 eclasses 0
+Rewrite neg_unop cost 0 total 0 eclasses 0
+Rewrite neg-minus cost 0 total 0 eclasses 0
+Rewrite mul-1 cost 0 total 0 eclasses 0
+Rewrite div-1-inv cost 0 total 0 eclasses 0
+Rewrite /_binop_vec cost 0 total 0 eclasses 0
+Rewrite -_binop_or_zero_vec cost 0 total 0 eclasses 0
+Rewrite *_binop_or_zero_vec cost 0 total 0 eclasses 0
+Rewrite mul-1-inv cost 0 total 0 eclasses 0
 Rewrite sqrt_unop cost 0 total 0 eclasses 0
+Rewrite div-1 cost 0 total 0 eclasses 0
+Rewrite sqrt-1-inv-rev cost 0 total 0 eclasses 0
+Rewrite vec-mac-add-mul cost 0 total 0 eclasses 0
+Rewrite add-0-inv cost 0 total 0 eclasses 0
+Rewrite expand-zero-get cost 0 total 0 eclasses 0
+Rewrite neg-neg cost 0 total 0 eclasses 0
+Rewrite neg-minus-zero cost 0 total 0 eclasses 0
+Rewrite +_binop_or_zero_vec cost 0 total 0 eclasses 0
+Rewrite neg-zero-inv cost 0 total 0 eclasses 0
 iter
 iter
 Egraph big big? 13913
@@ -499,10 +499,10 @@ Runner report
   Iterations: 17
   Egraph size: 13913 nodes, 1569 classes, 13913 memo
   Rebuilds: 2358, 138.71 per iter
-  Total time: 5.773292372000001
-    Search:  (0.01) 0.078632101
-    Apply:   (0.98) 5.678525596
-    Rebuild: (0.00) 0.016096632
+  Total time: 5.705600538
+    Search:  (0.01) 0.07843709
+    Apply:   (0.98) 5.612467701000001
+    Rebuild: (0.00) 0.014664583
 Stopped after 17 iterations, reason: Some(Saturated)
 Egraph cost? 66.527
 
@@ -514,15 +514,17 @@ Let's do some manual look at the data.
 First let's only look at the rules that actually did anything for an iteration.
 #+begin_src python :results output verbatim :var data=extraction-results
 non_zero_rule = []
+n_iters = 0
 for line in data.split("\n"):
     if "Rewrite" in line:
         parts = line.split(" ")
-        name, cost , size = parts[1], parts[3], parts[5]
-        if cost != "0" or size != "0":
+        name, cost, total, eclasses = parts[1], parts[3], parts[5], parts[7]
+        if cost != "0" or total != "0" or eclasses != "0":
             if name not in non_zero_rule: non_zero_rule.append(name)
-            print(f"{name}: {cost}, {size}")
+            print(f"{name}: {cost}, {total}, {eclasses}")
     elif "iter" in line:
-        print("===============")
+        print(f"======.{n_iters}.=======")
+        n_iters += 1
     elif "Cost:" in line:
         print(line)
 
@@ -532,192 +534,193 @@ print(non_zero_rule)
 
 #+RESULTS:
 #+begin_example
-sqrt-1-inv: 0, 1
-neg-neg-rev: 0, 168
-mul-1-inv: 0, 102
-div-1-inv: 0, 102
-+_binop_or_zero: 0.900000000000091, 12
-add-0-inv: 0, 102
-expand-zero-get: 0, 1
-neg-minus: 0, 12
-===============
-litvec: 0.0989999999999327, 2
-neg-neg-rev: 0, 16
-mul-1-inv: 0, 85
-/_binop: 0, 13
-div-1-inv: 0, 85
--_binop_or_zero: 0, 3
-,*_binop_or_zero: 0, 15
-vec-mac: 0.7980000000000018, 64
-+_binop_or_zero: 0.10199999999997544, 27
-neg_unop: 0, 23
-add-0-inv: 0, 85
-neg-minus: 0, 167
-===============
-litvec: 0.09900000000004638, 7
-neg-neg-rev: 0, 94
-mul-1-inv: 0, 55
-/_binop: 0, 47
-div-1-inv: 0, 55
--_binop_or_zero: 0, 92
-,*_binop_or_zero: 4.600000000000023, 76
-vec-mac: 2.8000000000000114, 177
-+_binop_or_zero: 0, 85
-neg_unop: 0, 47
-add-0-inv: 0, 55
-neg-minus: 0, 16
-sqrt_unop: 0, 1
-===============
-litvec: 0.5939999999999941, 12
-neg-neg-rev: 0, 216
-mul-1-inv: 0, 155
-/_binop: 0, 108
-div-1-inv: 0, 155
--_binop_or_zero: 0, 182
-,*_binop_or_zero: 103.49300000000005, 198
-vec-mac: 0, 260
-+_binop_or_zero: 0, 145
-neg_unop: 0, 108
-add-0-inv: 0, 155
-neg-minus: 0, 94
-===============
-litvec: 0.2969999999999686, 8
-neg-neg-rev: 0, 264
-mul-1-inv: 0, 240
-/_binop: 0, 132
-div-1-inv: 0, 240
--_binop_or_zero: 0, 190
-,*_binop_or_zero: 101.69299999999998, 171
-vec-mac: 0, 230
-+_binop_or_zero: 0, 164
-neg_unop: 0, 132
-add-0-inv: 0, 240
-neg-minus: 0, 216
-===============
-litvec: 0.09899999999998954, 1
-neg-neg-rev: 0, 188
-mul-1-inv: 0, 226
-/_binop: 0, 94
-div-1-inv: 0, 226
--_binop_or_zero: 0, 130
-,*_binop_or_zero: 0, 165
-vec-mac: 0, 169
-+_binop_or_zero: 0, 113
-neg_unop: 0, 94
-add-0-inv: 0, 226
-neg-minus: 0, 264
-===============
-litvec: 0, 5
-neg-neg-rev: 0, 152
-mul-1-inv: 0, 170
-/_binop: 0, 76
-div-1-inv: 0, 170
--_binop_or_zero: 0, 116
-,*_binop_or_zero: 8.384000000000015, 154
-vec-mac: 0, 151
-+_binop_or_zero: 0, 90
-neg_unop: 0, 76
-add-0-inv: 0, 170
-neg-minus: 0, 188
-===============
-litvec: 0.09899999999998954, 1
-neg-neg-rev: 0, 170
-mul-1-inv: 0, 161
-/_binop: 0, 85
-div-1-inv: 0, 161
--_binop_or_zero: 0, 130
-,*_binop_or_zero: 0, 123
-vec-mac: 0, 150
-+_binop_or_zero: 0, 105
-neg_unop: 0, 85
-add-0-inv: 0, 161
-neg-minus: 0, 152
-===============
-litvec: 0, 1
-neg-neg-rev: 0, 146
-mul-1-inv: 0, 158
-/_binop: 0, 73
-div-1-inv: 0, 158
--_binop_or_zero: 0, 101
-,*_binop_or_zero: 12.788999999999987, 117
-vec-mac: 0, 121
-+_binop_or_zero: 0, 86
-neg_unop: 0.002999999999985903, 73
-add-0-inv: 0, 158
-neg-minus: 0, 170
-===============
-neg-neg-rev: 0, 88
-mul-1-inv: 0, 117
-/_binop: 0, 44
-div-1-inv: 0, 117
--_binop_or_zero: 0, 60
-,*_binop_or_zero: 200.18300000000005, 68
-vec-mac: 0, 80
-+_binop_or_zero: 0, 52
-neg_unop: 0, 44
-add-0-inv: 0, 117
-neg-minus: 0, 146
-===============
-neg-neg-rev: 0, 44
-mul-1-inv: 0, 66
-/_binop: 0, 22
-div-1-inv: 0, 66
--_binop_or_zero: 0, 24
-,*_binop_or_zero: 0, 32
-vec-mac: 0, 34
-+_binop_or_zero: 0, 24
-neg_unop: 0, 22
-add-0-inv: 0, 66
-neg-minus: 0, 88
-===============
-neg-neg-rev: 0, 4
-mul-1-inv: 0, 24
-/_binop: 0, 2
-div-1-inv: 0, 24
--_binop_or_zero: 0, 2
-,*_binop_or_zero: 0, 10
-vec-mac: 0, 8
-+_binop_or_zero: 0, 2
-neg_unop: 0, 2
-add-0-inv: 0, 24
-neg-minus: 0, 44
-===============
-litvec: 0, 2
-neg-neg-rev: 0, 4
-mul-1-inv: 0, 4
-/_binop: 0, 2
-div-1-inv: 0, 4
--_binop_or_zero: 0, 4
-,*_binop_or_zero: 0, 2
-vec-mac: 0, 2
-+_binop_or_zero: 0, 2
-neg_unop: 0, 2
-add-0-inv: 0, 4
-neg-minus: 0, 4
-===============
-neg-neg-rev: 0, 4
-mul-1-inv: 0, 4
-/_binop: 0, 2
-div-1-inv: 0, 4
--_binop_or_zero: 0, 2
-,*_binop_or_zero: 0, 2
-vec-mac: 0, 2
-+_binop_or_zero: 0, 2
-neg_unop: 0, 2
-add-0-inv: 0, 4
-neg-minus: 0, 4
-===============
-mul-1-inv: 0, 2
-div-1-inv: 0, 2
-add-0-inv: 0, 2
-neg-minus: 0, 4
-===============
-===============
-===============
-===============
-===============
+neg-neg-rev: 0, 168, 78
+sqrt-1-inv: 0, 1, 0
+neg-minus: 0, 12, 0
+div-1-inv: 0, 102, 0
+mul-1-inv: 0, 102, 0
+add-0-inv: 0, 102, 0
+expand-zero-get: 0, 1, 0
++_binop_or_zero_vec: 0.900000000000091, 12, 8
+neg-zero-inv: 0, 0, -1
+======.0.=======
+litvec: 0.0989999999999327, 2, 0
+vec-mac: 0.7980000000000018, 68, 35
+neg-neg-rev: 0, 16, 8
+neg_unop: 0, 24, 12
+neg-minus: 0, 167, 0
+div-1-inv: 0, 85, 0
+/_binop_vec: 0, 12, 0
+-_binop_or_zero_vec: 0, 1, 0
+,*_binop_or_zero_vec: 0, 13, 0
+mul-1-inv: 0, 85, 0
+add-0-inv: 0, 85, 0
++_binop_or_zero_vec: 0.10199999999997544, 27, 0
+======.1.=======
+litvec: 0.09900000000004638, 7, 0
+vec-mac: 7.3940000000000055, 194, 74
+neg-neg-rev: 0, 94, 47
+neg_unop: 0, 81, 34
+neg-minus: 0, 16, 0
+div-1-inv: 0, 55, 0
+/_binop_vec: 0, 47, 0
+-_binop_or_zero_vec: 0, 58, 0
+,*_binop_or_zero_vec: 0.006000000000028649, 59, 0
+mul-1-inv: 0, 55, 0
+sqrt_unop: 0, 1, 0
+add-0-inv: 0, 55, 0
++_binop_or_zero_vec: 0, 85, 0
+======.2.=======
+litvec: 0.5939999999999941, 12, 0
+vec-mac: 103.48700000000008, 293, 58
+neg-neg-rev: 0, 216, 108
+neg_unop: 0, 182, 74
+neg-minus: 0, 94, 0
+div-1-inv: 0, 155, 0
+/_binop_vec: 0, 108, 0
+-_binop_or_zero_vec: 0, 108, 0
+,*_binop_or_zero_vec: 0.005999999999971806, 165, 0
+mul-1-inv: 0, 155, 0
+add-0-inv: 0, 155, 0
++_binop_or_zero_vec: 0, 145, 0
+======.3.=======
+litvec: 0.2969999999999686, 8, 0
+vec-mac: 101.68700000000001, 242, 37
+neg-neg-rev: 0, 264, 132
+neg_unop: 0, 189, 57
+neg-minus: 0, 216, 0
+div-1-inv: 0, 240, 0
+/_binop_vec: 0, 132, 0
+-_binop_or_zero_vec: 0, 132, 0
+,*_binop_or_zero_vec: 0.005999999999971806, 160, 0
+mul-1-inv: 0, 240, 0
+add-0-inv: 0, 240, 0
++_binop_or_zero_vec: 0, 164, 0
+======.4.=======
+litvec: 0.09899999999998954, 1, 0
+vec-mac: 0, 200, 41
+neg-neg-rev: 0, 188, 94
+neg_unop: 0, 129, 35
+neg-minus: 0, 264, 0
+div-1-inv: 0, 226, 0
+/_binop_vec: 0, 94, 0
+-_binop_or_zero_vec: 0, 94, 0
+,*_binop_or_zero_vec: 0, 135, 0
+mul-1-inv: 0, 226, 0
+add-0-inv: 0, 226, 0
++_binop_or_zero_vec: 0, 113, 0
+======.5.=======
+litvec: 0, 5, 0
+vec-mac: 8.377999999999986, 185, 46
+neg-neg-rev: 0, 152, 76
+neg_unop: 0, 115, 39
+neg-minus: 0, 188, 0
+div-1-inv: 0, 170, 0
+/_binop_vec: 0, 76, 0
+-_binop_or_zero_vec: 0, 76, 0
+,*_binop_or_zero_vec: 0.006000000000028649, 121, 0
+mul-1-inv: 0, 170, 0
+add-0-inv: 0, 170, 0
++_binop_or_zero_vec: 0, 90, 0
+======.6.=======
+litvec: 0.09899999999998954, 1, 0
+vec-mac: 0, 166, 31
+neg-neg-rev: 0, 170, 85
+neg_unop: 0, 127, 42
+neg-minus: 0, 152, 0
+div-1-inv: 0, 161, 0
+/_binop_vec: 0, 85, 0
+-_binop_or_zero_vec: 0, 85, 0
+,*_binop_or_zero_vec: 0, 110, 0
+mul-1-inv: 0, 161, 0
+add-0-inv: 0, 161, 0
++_binop_or_zero_vec: 0, 105, 0
+======.7.=======
+litvec: 0, 1, 0
+vec-mac: 11.786000000000001, 137, 18
+neg-neg-rev: 0, 146, 73
+neg_unop: 1, 99, 26
+neg-minus: 0, 170, 0
+div-1-inv: 0, 158, 0
+/_binop_vec: 0, 73, 0
+-_binop_or_zero_vec: 0, 73, 0
+,*_binop_or_zero_vec: 0.005999999999971806, 103, 0
+mul-1-inv: 0, 158, 0
+add-0-inv: 0, 158, 0
++_binop_or_zero_vec: 0, 86, 0
+======.8.=======
+vec-mac: 200.17700000000002, 84, 8
+neg-neg-rev: 0, 88, 44
+neg_unop: 0, 58, 14
+neg-minus: 0, 146, 0
+div-1-inv: 0, 117, 0
+/_binop_vec: 0, 44, 0
+-_binop_or_zero_vec: 0, 44, 0
+,*_binop_or_zero_vec: 0.006000000000000227, 66, 0
+mul-1-inv: 0, 117, 0
+add-0-inv: 0, 117, 0
++_binop_or_zero_vec: 0, 52, 0
+======.9.=======
+vec-mac: 0, 34, 0
+neg-neg-rev: 0, 44, 22
+neg_unop: 0, 24, 2
+neg-minus: 0, 88, 0
+div-1-inv: 0, 66, 0
+/_binop_vec: 0, 22, 0
+-_binop_or_zero_vec: 0, 22, 0
+,*_binop_or_zero_vec: 0, 32, 0
+mul-1-inv: 0, 66, 0
+add-0-inv: 0, 66, 0
++_binop_or_zero_vec: 0, 24, 0
+======.10.=======
+vec-mac: 0, 10, 2
+neg-neg-rev: 0, 4, 2
+neg_unop: 0, 2, 0
+neg-minus: 0, 44, 0
+div-1-inv: 0, 24, 0
+/_binop_vec: 0, 2, 0
+-_binop_or_zero_vec: 0, 2, 0
+,*_binop_or_zero_vec: 0, 8, 0
+mul-1-inv: 0, 24, 0
+add-0-inv: 0, 24, 0
++_binop_or_zero_vec: 0, 2, 0
+======.11.=======
+litvec: 0, 2, 0
+vec-mac: 0, 2, 0
+neg-neg-rev: 0, 4, 2
+neg_unop: 0, 4, 2
+neg-minus: 0, 4, 0
+div-1-inv: 0, 4, 0
+/_binop_vec: 0, 2, 0
+-_binop_or_zero_vec: 0, 2, 0
+,*_binop_or_zero_vec: 0, 2, 0
+mul-1-inv: 0, 4, 0
+add-0-inv: 0, 4, 0
++_binop_or_zero_vec: 0, 2, 0
+======.12.=======
+vec-mac: 0, 2, 0
+neg-neg-rev: 0, 4, 2
+neg_unop: 0, 2, 0
+neg-minus: 0, 4, 0
+div-1-inv: 0, 4, 0
+/_binop_vec: 0, 2, 0
+-_binop_or_zero_vec: 0, 2, 0
+,*_binop_or_zero_vec: 0, 2, 0
+mul-1-inv: 0, 4, 0
+add-0-inv: 0, 4, 0
++_binop_or_zero_vec: 0, 2, 0
+======.13.=======
+neg-minus: 0, 4, 0
+div-1-inv: 0, 2, 0
+mul-1-inv: 0, 2, 0
+add-0-inv: 0, 2, 0
+======.14.=======
+======.15.=======
+======.16.=======
+======.17.=======
+======.18.=======
 Cost: 66.527
-['*_binop_or_zero', '+_binop_or_zero', '-_binop_or_zero', '/_binop', 'add-0-inv', 'div-1-inv', 'expand-zero-get', 'litvec', 'mul-1-inv', 'neg-minus', 'neg-neg-rev', 'neg_unop', 'sqrt-1-inv', 'sqrt_unop', 'vec-mac']
+['*_binop_or_zero_vec', '+_binop_or_zero_vec', '-_binop_or_zero_vec', '/_binop_vec', 'add-0-inv', 'div-1-inv', 'expand-zero-get', 'litvec', 'mul-1-inv', 'neg-minus', 'neg-neg-rev', 'neg-zero-inv', 'neg_unop', 'sqrt-1-inv', 'sqrt_unop', 'vec-mac']
 #+end_example
 
 I'm trying to see if I can use this data to select only the rules that actually do anything. However, strangely enough if I filter out rules that never change the cost or the size of the graph, the final cost is way higher than when I leave those rules in.
@@ -791,3 +794,1800 @@ Total size seems to give me the total number of =enodes=. There is also a way to
 
 **** Some answers
 1) Rules can introduce previously unseen terms. Consider: =x * 2 -> x >> 1=. assuming that 1 has never been seen before in the graph, then applying this rewrite rule would increase the number of eclasses by 1, because you need a new eclass for the =1=.
+
+
+*** Examining =vec-mac= rule more closely:
+
+I've copied this analysis code again so that this document makes more sense linearly. 
+#+name: non-zero
+#+begin_src python :results output verbatim :var data=extraction-results
+non_zero_rule = []
+for line in data.split("\n"):
+    if "Rewrite" in line:
+        parts = line.split(" ")
+        name, cost, total, eclasses = parts[1], parts[3], parts[5], parts[7]
+        if cost != "0" or total != "0" or eclasses != "0":
+            if name not in non_zero_rule: non_zero_rule.append(name)
+            print(f"{name}: {cost}, {total}, {eclasses}")
+    elif "iter" in line:
+        print("===============")
+    elif "Cost:" in line:
+        print(line)
+
+non_zero_rule.sort()
+print(non_zero_rule)
+#+end_src
+
+#+call: non-zero()
+
+#+RESULTS:
+#+begin_example
+neg-neg-rev: 0, 168, 78
+sqrt-1-inv: 0, 1, 0
+neg-minus: 0, 12, 0
+div-1-inv: 0, 102, 0
+mul-1-inv: 0, 102, 0
+add-0-inv: 0, 102, 0
+expand-zero-get: 0, 1, 0
++_binop_or_zero_vec: 0.900000000000091, 12, 8
+neg-zero-inv: 0, 0, -1
+===============
+litvec: 0.0989999999999327, 2, 0
+vec-mac: 0.7980000000000018, 68, 35
+neg-neg-rev: 0, 16, 8
+neg_unop: 0, 24, 12
+neg-minus: 0, 167, 0
+div-1-inv: 0, 85, 0
+/_binop_vec: 0, 12, 0
+-_binop_or_zero_vec: 0, 1, 0
+,*_binop_or_zero_vec: 0, 13, 0
+mul-1-inv: 0, 85, 0
+add-0-inv: 0, 85, 0
++_binop_or_zero_vec: 0.10199999999997544, 27, 0
+===============
+litvec: 0.09900000000004638, 7, 0
+vec-mac: 7.3940000000000055, 194, 74
+neg-neg-rev: 0, 94, 47
+neg_unop: 0, 81, 34
+neg-minus: 0, 16, 0
+div-1-inv: 0, 55, 0
+/_binop_vec: 0, 47, 0
+-_binop_or_zero_vec: 0, 58, 0
+,*_binop_or_zero_vec: 0.006000000000028649, 59, 0
+mul-1-inv: 0, 55, 0
+sqrt_unop: 0, 1, 0
+add-0-inv: 0, 55, 0
++_binop_or_zero_vec: 0, 85, 0
+===============
+litvec: 0.5939999999999941, 12, 0
+vec-mac: 103.48700000000008, 293, 58
+neg-neg-rev: 0, 216, 108
+neg_unop: 0, 182, 74
+neg-minus: 0, 94, 0
+div-1-inv: 0, 155, 0
+/_binop_vec: 0, 108, 0
+-_binop_or_zero_vec: 0, 108, 0
+,*_binop_or_zero_vec: 0.005999999999971806, 165, 0
+mul-1-inv: 0, 155, 0
+add-0-inv: 0, 155, 0
++_binop_or_zero_vec: 0, 145, 0
+===============
+litvec: 0.2969999999999686, 8, 0
+vec-mac: 101.68700000000001, 242, 37
+neg-neg-rev: 0, 264, 132
+neg_unop: 0, 189, 57
+neg-minus: 0, 216, 0
+div-1-inv: 0, 240, 0
+/_binop_vec: 0, 132, 0
+-_binop_or_zero_vec: 0, 132, 0
+,*_binop_or_zero_vec: 0.005999999999971806, 160, 0
+mul-1-inv: 0, 240, 0
+add-0-inv: 0, 240, 0
++_binop_or_zero_vec: 0, 164, 0
+===============
+litvec: 0.09899999999998954, 1, 0
+vec-mac: 0, 200, 41
+neg-neg-rev: 0, 188, 94
+neg_unop: 0, 129, 35
+neg-minus: 0, 264, 0
+div-1-inv: 0, 226, 0
+/_binop_vec: 0, 94, 0
+-_binop_or_zero_vec: 0, 94, 0
+,*_binop_or_zero_vec: 0, 135, 0
+mul-1-inv: 0, 226, 0
+add-0-inv: 0, 226, 0
++_binop_or_zero_vec: 0, 113, 0
+===============
+litvec: 0, 5, 0
+vec-mac: 8.377999999999986, 185, 46
+neg-neg-rev: 0, 152, 76
+neg_unop: 0, 115, 39
+neg-minus: 0, 188, 0
+div-1-inv: 0, 170, 0
+/_binop_vec: 0, 76, 0
+-_binop_or_zero_vec: 0, 76, 0
+,*_binop_or_zero_vec: 0.006000000000028649, 121, 0
+mul-1-inv: 0, 170, 0
+add-0-inv: 0, 170, 0
++_binop_or_zero_vec: 0, 90, 0
+===============
+litvec: 0.09899999999998954, 1, 0
+vec-mac: 0, 166, 31
+neg-neg-rev: 0, 170, 85
+neg_unop: 0, 127, 42
+neg-minus: 0, 152, 0
+div-1-inv: 0, 161, 0
+/_binop_vec: 0, 85, 0
+-_binop_or_zero_vec: 0, 85, 0
+,*_binop_or_zero_vec: 0, 110, 0
+mul-1-inv: 0, 161, 0
+add-0-inv: 0, 161, 0
++_binop_or_zero_vec: 0, 105, 0
+===============
+litvec: 0, 1, 0
+vec-mac: 11.786000000000001, 137, 18
+neg-neg-rev: 0, 146, 73
+neg_unop: 1, 99, 26
+neg-minus: 0, 170, 0
+div-1-inv: 0, 158, 0
+/_binop_vec: 0, 73, 0
+-_binop_or_zero_vec: 0, 73, 0
+,*_binop_or_zero_vec: 0.005999999999971806, 103, 0
+mul-1-inv: 0, 158, 0
+add-0-inv: 0, 158, 0
++_binop_or_zero_vec: 0, 86, 0
+===============
+vec-mac: 200.17700000000002, 84, 8
+neg-neg-rev: 0, 88, 44
+neg_unop: 0, 58, 14
+neg-minus: 0, 146, 0
+div-1-inv: 0, 117, 0
+/_binop_vec: 0, 44, 0
+-_binop_or_zero_vec: 0, 44, 0
+,*_binop_or_zero_vec: 0.006000000000000227, 66, 0
+mul-1-inv: 0, 117, 0
+add-0-inv: 0, 117, 0
++_binop_or_zero_vec: 0, 52, 0
+===============
+vec-mac: 0, 34, 0
+neg-neg-rev: 0, 44, 22
+neg_unop: 0, 24, 2
+neg-minus: 0, 88, 0
+div-1-inv: 0, 66, 0
+/_binop_vec: 0, 22, 0
+-_binop_or_zero_vec: 0, 22, 0
+,*_binop_or_zero_vec: 0, 32, 0
+mul-1-inv: 0, 66, 0
+add-0-inv: 0, 66, 0
++_binop_or_zero_vec: 0, 24, 0
+===============
+vec-mac: 0, 10, 2
+neg-neg-rev: 0, 4, 2
+neg_unop: 0, 2, 0
+neg-minus: 0, 44, 0
+div-1-inv: 0, 24, 0
+/_binop_vec: 0, 2, 0
+-_binop_or_zero_vec: 0, 2, 0
+,*_binop_or_zero_vec: 0, 8, 0
+mul-1-inv: 0, 24, 0
+add-0-inv: 0, 24, 0
++_binop_or_zero_vec: 0, 2, 0
+===============
+litvec: 0, 2, 0
+vec-mac: 0, 2, 0
+neg-neg-rev: 0, 4, 2
+neg_unop: 0, 4, 2
+neg-minus: 0, 4, 0
+div-1-inv: 0, 4, 0
+/_binop_vec: 0, 2, 0
+-_binop_or_zero_vec: 0, 2, 0
+,*_binop_or_zero_vec: 0, 2, 0
+mul-1-inv: 0, 4, 0
+add-0-inv: 0, 4, 0
++_binop_or_zero_vec: 0, 2, 0
+===============
+vec-mac: 0, 2, 0
+neg-neg-rev: 0, 4, 2
+neg_unop: 0, 2, 0
+neg-minus: 0, 4, 0
+div-1-inv: 0, 4, 0
+/_binop_vec: 0, 2, 0
+-_binop_or_zero_vec: 0, 2, 0
+,*_binop_or_zero_vec: 0, 2, 0
+mul-1-inv: 0, 4, 0
+add-0-inv: 0, 4, 0
++_binop_or_zero_vec: 0, 2, 0
+===============
+neg-minus: 0, 4, 0
+div-1-inv: 0, 2, 0
+mul-1-inv: 0, 2, 0
+add-0-inv: 0, 2, 0
+===============
+===============
+===============
+===============
+===============
+Cost: 66.527
+['*_binop_or_zero_vec', '+_binop_or_zero_vec', '-_binop_or_zero_vec', '/_binop_vec', 'add-0-inv', 'div-1-inv', 'expand-zero-get', 'litvec', 'mul-1-inv', 'neg-minus', 'neg-neg-rev', 'neg-zero-inv', 'neg_unop', 'sqrt-1-inv', 'sqrt_unop', 'vec-mac']
+#+end_example
+
+Notice that the =vec-mac= rule is the single rule that is responsible for the vast majority of cost lowering. However, this rule is not doing all the work by itself. This is just the rule that lowers the cost function the most. The other rules must be responsible for enabling the application of this rule.
+
+With that in mind, I want to look at what each best program looks like before and after the application of this rule to try and figure out just intuitively the changes that need to happen for the rule to apply.
+
+It would also be interesting to tag each program with the set of rules that were needed to create that program. Hopefully I can then look at the final program (or the programs at the intermediate stages) to see which rules were important for generating that program. I'm not entirely certain what one would use this information for, but maybe that just becomes obvious once you look at it. That's what I'm hoping anyways.
+
+Let's work on this first task first.
+
+**** What do programs look like before and after the application of =vec-mac=?
+
+#+name: look-glass
+#+begin_src sh :var bench="" rules="" iter="" :results output :cache yes
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      --features vec_width_2 \
+      -- \
+      "$bench"-out/spec.rkt \
+      --no-ac \
+      --iter-limit "$iter" \
+      --rules "$rules" 2>&1 || true
+#+end_src
+
+#+name: diff
+#+begin_src bash :var a="" b="" :results verbatim :wrap src diff
+diff -u --label "a" <(echo "$a") --label "b" <(echo "$b") || true
+#+end_src
+
+#+name: prog-a
+#+call: look-glass[:cache no](bench="q-prod", rules="", iter="1")
+
+#+RESULTS: prog-a
+#+begin_example
+warning: unused import: `std::convert::TryInto`
+ --> src/rules.rs:1:5
+  |
+1 | use std::convert::TryInto;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `CustomExtractor`, `LoggingScheduler`
+  --> src/rules.rs:13:30
+   |
+13 |     scheduler::{LoggingData, LoggingScheduler},
+   |                              ^^^^^^^^^^^^^^^^
+14 |     searchutils::*,
+15 |     tracking::{CustomExtractor, TrackRewrites},
+   |                ^^^^^^^^^^^^^^^
+
+warning: unused import: `HashSet`
+ --> src/tracking.rs:1:33
+  |
+1 | use std::collections::{HashMap, HashSet};
+  |                                 ^^^^^^^
+
+warning: unused variable: `to`
+  --> src/tracking.rs:21:21
+   |
+21 |     fn merge(&self, to: &mut Self::Data, from: Self::Data) -> DidMerge {
+   |                     ^^ help: if this is intentional, prefix it with an underscore: `_to`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `from`
+  --> src/tracking.rs:21:42
+   |
+21 |     fn merge(&self, to: &mut Self::Data, from: Self::Data) -> DidMerge {
+   |                                          ^^^^ help: if this is intentional, prefix it with an underscore: `_from`
+
+warning: `dios-egraphs` (lib) generated 5 warnings
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --no-ac --iter-limit 1 --rules ''`
+Running egg with timeout 180s, width: 2
+Starting run with 30 rules
+Egraph big big? 102
+Egraph class big? 102
+Egraph cost? 503.5590000000001
+iter
+iter
+Egraph big big? 614
+Runner report
+=============
+  Stop reason: IterationLimit(1)
+  Iterations: 2
+  Egraph size: 601 nodes, 187 classes, 614 memo
+  Rebuilds: 0, 0.00 per iter
+  Total time: 0.000342838
+    Search:  (0.27) 0.00009335800000000001
+    Apply:   (0.44) 0.000152115
+    Rebuild: (0.27) 0.00009407
+Stopped after 2 iterations, reason: Some(IterationLimit(1))
+thread 'main' panicked at 'Use runner.with_explanations_enabled() or egraph.with_explanations_enabled() before running to get explanations.', /home/samthomas/Research/egg/src/egraph.rs:197:13
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+#+end_example
+
+#+name: prog-b
+#+call: look-glass(bench="q-prod", rules="", iter="5")
+
+#+RESULTS[797d49c923016fc2af2ae20d3c890958e23a3f4e]: prog-b
+#+begin_example
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([0, 1]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([3, 4]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([2, 5]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([7, 8]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([10, 11]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([9, 12]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: VecMul([6, 13]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([15, 16]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([18, 19]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([17, 20]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([22, 23]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([25, 26]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([24, 27]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
+expr: VecMul([21, 28]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([30, 31]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([33, 34]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([32, 35]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([37, 38]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([40, 41]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([39, 42]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: VecMAC([29, 36, 43]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
+expr: VecAdd([14, 44]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([46, 47]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([49, 50]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([48, 51]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([53, 54]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([56, 57]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([55, 58]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: VecMul([52, 59]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
+expr: VecNeg([60]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: VecAdd([45, 61]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg_unop", "neg-minus", "/_binop_vec", "*_binop_or_zero_vec", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "-_binop_or_zero_vec"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([63, 64]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Vec([65, 66]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([68, 69]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: LitVec([70, 71]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: VecMul([67, 72]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([74, 75]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Vec([76, 77]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([79, 80]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: LitVec([81, 82]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
+expr: VecMul([78, 83]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([85, 86]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([88, 89]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([87, 90]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([92, 93]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([95, 96]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([94, 97]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: VecMAC([84, 91, 98]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
+expr: VecAdd([73, 99]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([102, 103]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Vec([101, 104]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([107, 108]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([106, 109]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
+expr: VecMul([105, 110]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus"]
+expr: VecNeg([111]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([114, 115]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Vec([113, 116]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([119, 120]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([118, 121]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: VecMul([117, 122]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac"]
+expr: VecNeg([123]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([125, 126]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([128, 129]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([127, 130]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([132, 133]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([135, 136]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Vec([134, 137]) []
+expr: VecMul([131, 138]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac"]
+expr: VecNeg([139]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: VecAdd([124, 140]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus"]
+expr: VecAdd([112, 141]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
+expr: VecAdd([100, 142]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg_unop", "neg-minus", "/_binop_vec", "*_binop_or_zero_vec", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "-_binop_or_zero_vec"]
+expr: Symbol("at") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([144, 145]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("at") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([147, 148]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([146, 149]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([151, 152]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([154, 155]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: LitVec([153, 156]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([158, 159]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([162, 163]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([165, 166]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([164, 167]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([169, 170]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([172, 173]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([171, 174]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([175]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([168, 176]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([161, 177]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([160, 178]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([180, 181]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([184, 185]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([187, 188]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([186, 189]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([191, 192]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([194, 195]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([193, 196]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([197]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([190, 198]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([183, 199]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([182, 200]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([201]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([179, 202]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([204, 205]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([208, 209]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([211, 212]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([210, 213]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([215, 216]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([218, 219]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([217, 220]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([221]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([214, 222]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([207, 223]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([206, 224]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Add([203, 225]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([227, 228]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([231, 232]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([234, 235]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([233, 236]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([238, 239]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([241, 242]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([240, 243]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([244]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([237, 245]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([230, 246]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([229, 247]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([249, 250]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([253, 254]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([256, 257]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([255, 258]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([260, 261]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([263, 264]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([262, 265]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([266]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([259, 267]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([252, 268]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([251, 269]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([270]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([248, 271]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([273, 274]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([277, 278]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([280, 281]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([279, 282]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([284, 285]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([287, 288]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([286, 289]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([290]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([283, 291]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([276, 292]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([275, 293]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Add([272, 294]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Vec([226, 295]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
+expr: VecAdd([157, 296]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
+expr: VecAdd([150, 297]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg_unop", "neg-minus", "/_binop_vec", "*_binop_or_zero_vec", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "-_binop_or_zero_vec"]
+expr: Symbol("at") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([299, 300]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([302, 303]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([305, 306]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([309, 310]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([312, 313]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([311, 314]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([316, 317]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([319, 320]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([318, 321]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([322]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([315, 323]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([308, 324]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([307, 325]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([327, 328]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([331, 332]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([334, 335]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([333, 336]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([338, 339]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([341, 342]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([340, 343]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([344]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([337, 345]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([330, 346]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([329, 347]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([348]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([326, 349]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([351, 352]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([355, 356]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([358, 359]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([357, 360]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
+expr: Get([362, 363]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Get([365, 366]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([364, 367]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Neg([368]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
+expr: Add([361, 369]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([354, 370]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Mul([353, 371]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Add([350, 372]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Add([304, 373]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Add([301, 374]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
+expr: Vec([375, 376]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "+_binop_or_zero_vec", "neg_unop", "neg-minus", "/_binop_vec", "*_binop_or_zero_vec", "vec-mac", "vec-mac", "-_binop_or_zero_vec"]
+expr: Concat([298, 377]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Concat([143, 378]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+expr: Concat([62, 379]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+(Concat
+  (VecAdd
+    (VecAdd
+      (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
+      (VecMAC
+        (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
+        (LitVec (Get aq 1) (Get aq 2))
+        (LitVec (Get bq 2) (Get bq 0))))
+    (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))
+  (Concat
+    (VecAdd
+      (VecAdd
+        (VecMul (Vec (Get aq 3) 1) (LitVec (Get bq 2) 0))
+        (VecMAC
+          (VecMul (Vec (Get aq 2) 1) (LitVec (Get bq 3) 0))
+          (LitVec (Get aq 0) (Get aq 3))
+          (LitVec (Get bq 1) (Get bq 3))))
+      (VecAdd
+        (VecNeg (VecMul (Vec 1 (Get aq 0)) (LitVec 0 (Get bq 0))))
+        (VecAdd
+          (VecNeg (VecMul (Vec 1 (Get aq 1)) (LitVec 0 (Get bq 1))))
+          (VecNeg (VecMul (LitVec (Get aq 1) (Get aq 2)) (Vec (Get bq 0) (Get bq 2)))))))
+    (Concat
+      (VecAdd
+        (LitVec (Get at 0) (Get at 1))
+        (VecAdd
+          (LitVec (Get bt 0) (Get bt 1))
+          (Vec
+            (+
+              (+
+                (*
+                  (Get aq 1)
+                  (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))
+                (neg
+                  (*
+                    (Get aq 2)
+                    (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1)))))))
+            (+
+              (+
+                (*
+                  (Get aq 2)
+                  (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))
+                (neg
+                  (*
+                    (Get aq 0)
+                    (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))))
+      (Vec
+        (+
+          (Get at 2)
+          (+
+            (Get bt 2)
+            (+
+              (+
+                (*
+                  (Get aq 0)
+                  (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+                (neg
+                  (*
+                    (Get aq 1)
+                    (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))))
+        0))))
+#+end_example
+
+#+RESULTS:
+#+begin_example
+(Concat
+  (VecAdd
+    (VecAdd
+      (VecMul (Vec (Get aq 3) (Get aq 3)) (Vec (Get bq 0) (Get bq 1)))
+      (VecMAC
+        (Vec (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 3)))
+        (Vec (Get aq 1) (Get aq 2))
+        (Vec (Get bq 2) (Get bq 0))))
+    (VecNeg (VecMul (Vec (Get aq 2) (Get aq 0)) (Vec (Get bq 1) (Get bq 2)))))
+  (Concat
+    (Vec
+      (+
+        (+
+          (* (Get aq 3) (Get bq 2))
+          (+ (* (Get aq 2) (Get bq 3)) (* (Get aq 0) (Get bq 1))))
+        (neg (* (Get aq 1) (Get bq 0))))
+      (+
+        (* (Get aq 3) (Get bq 3))
+        (+
+          (neg (* (Get aq 0) (Get bq 0)))
+          (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
+    (Concat
+      (VecAdd
+        (LitVec (Get at 0) (Get at 1))
+        (VecAdd
+          (LitVec (Get bt 0) (Get bt 1))
+          (Vec
+            (+
+              (+
+                (*
+                  (Get aq 1)
+                  (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))
+                (neg
+                  (*
+                    (Get aq 2)
+                    (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1)))))))
+            (+
+              (+
+                (*
+                  (Get aq 2)
+                  (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))
+                (neg
+                  (*
+                    (Get aq 0)
+                    (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))))
+      (Vec
+        (+
+          (Get at 2)
+          (+
+            (Get bt 2)
+            (+
+              (+
+                (*
+                  (Get aq 0)
+                  (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+                (neg
+                  (*
+                    (Get aq 1)
+                    (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))))
+        0))))
+#+end_example
+
+#+call: diff(a=prog-a, b=prog-b)
+
+#+RESULTS:
+#+begin_src diff
+--- a
++++ b
+@@ -1,383 +1,390 @@
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([0, 1]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([3, 4]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([2, 5]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([7, 8]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([10, 11]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([9, 12]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: VecMul([6, 13]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([15, 16]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([18, 19]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Vec([17, 20]) []
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([22, 23]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([25, 26]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Vec([24, 27]) []
+-expr: VecMul([21, 28]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "div-1-inv"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([30, 31]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([33, 34]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([32, 35]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([37, 38]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([40, 41]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([39, 42]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: VecMAC([29, 36, 43]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus"]
+-expr: VecAdd([14, 44]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus", "-_binop_or_zero_vec"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([46, 47]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([49, 50]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([48, 51]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([53, 54]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([56, 57]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([55, 58]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: VecMul([52, 59]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus"]
+-expr: VecNeg([60]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus"]
+-expr: VecAdd([45, 61]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "+_binop_or_zero_vec", "div-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-minus", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "-_binop_or_zero_vec"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([63, 64]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Vec([65, 66]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "div-1-inv"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([68, 69]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: LitVec([70, 71]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: VecMul([67, 72]) ["mul-1-inv", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([74, 75]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Vec([76, 77]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "div-1-inv"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([79, 80]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Vec([81, 82]) []
+-expr: VecMul([78, 83]) ["mul-1-inv", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "div-1-inv"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([85, 86]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([88, 89]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([87, 90]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([92, 93]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([95, 96]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([94, 97]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv"]
+-expr: VecMAC([84, 91, 98]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus"]
+-expr: VecAdd([73, 99]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus", "-_binop_or_zero_vec"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([101, 102]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([104, 105]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([103, 106]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([107]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([109, 110]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([112, 113]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([111, 114]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([115]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([117, 118]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([120, 121]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([119, 122]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([123]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([125, 126]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([128, 129]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([127, 130]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([131]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([124, 132]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Add([116, 133]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Vec([108, 134]) ["mul-1-inv", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus", "-_binop_or_zero_vec"]
+-expr: VecAdd([100, 135]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "+_binop_or_zero_vec", "div-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-minus", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "-_binop_or_zero_vec"]
+-expr: Symbol("at") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([137, 138]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("at") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([140, 141]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([139, 142]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv", "neg-minus", "-_binop_or_zero_vec"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([144, 145]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([147, 148]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: LitVec([146, 149]) ["mul-1-inv", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "litvec", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([151, 152]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([155, 156]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([158, 159]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([157, 160]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([162, 163]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([165, 166]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([164, 167]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([168]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([161, 169]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([154, 170]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([153, 171]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([173, 174]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([177, 178]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([180, 181]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([179, 182]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([184, 185]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([187, 188]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([186, 189]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([190]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([183, 191]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([176, 192]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([175, 193]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([194]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([172, 195]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([197, 198]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([201, 202]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([204, 205]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([203, 206]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([208, 209]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([211, 212]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([210, 213]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([214]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([207, 215]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([200, 216]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([199, 217]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Add([196, 218]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([220, 221]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([224, 225]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([227, 228]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([226, 229]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([231, 232]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([234, 235]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([233, 236]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([237]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([230, 238]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([223, 239]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([222, 240]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([242, 243]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([246, 247]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([249, 250]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([248, 251]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([253, 254]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([256, 257]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([255, 258]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([259]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([252, 260]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([245, 261]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([244, 262]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([263]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([241, 264]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([266, 267]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([270, 271]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([273, 274]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([272, 275]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([277, 278]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([280, 281]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([279, 282]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([283]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([276, 284]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([269, 285]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([268, 286]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Add([265, 287]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Vec([219, 288]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "-_binop_or_zero_vec", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus"]
+-expr: VecAdd([150, 289]) ["mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "div-1-inv", "neg-minus", "-_binop_or_zero_vec"]
+-expr: VecAdd([143, 290]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "+_binop_or_zero_vec", "div-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-minus", "/_binop_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "-_binop_or_zero_vec"]
+-expr: Symbol("at") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([292, 293]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([295, 296]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([298, 299]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([302, 303]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([305, 306]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([304, 307]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([309, 310]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([312, 313]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([311, 314]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([315]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([308, 316]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([301, 317]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([300, 318]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([320, 321]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([324, 325]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([327, 328]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([326, 329]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([331, 332]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([334, 335]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([333, 336]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([337]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([330, 338]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([323, 339]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([322, 340]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([341]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([319, 342]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(3) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Get([344, 345]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(2) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([348, 349]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([351, 352]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([350, 353]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("aq") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(1) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "sqrt-1-inv", "div-1-inv", "neg-minus"]
+-expr: Get([355, 356]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Symbol("bt") ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Get([358, 359]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([357, 360]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Neg([361]) ["mul-1-inv", "neg-minus", "add-0-inv", "div-1-inv"]
+-expr: Add([354, 362]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([347, 363]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Mul([346, 364]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Add([343, 365]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Add([297, 366]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Add([294, 367]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Num(0) ["mul-1-inv", "neg-zero-inv", "add-0-inv", "expand-zero-get", "div-1-inv", "neg-minus"]
+-expr: Vec([368, 369]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "+_binop_or_zero_vec", "div-1-inv", "vec-mac", "vec-mac", "neg_unop", "*_binop_or_zero_vec", "neg-minus", "/_binop_vec", "+_binop_or_zero_vec", "-_binop_or_zero_vec"]
+-expr: Concat([291, 370]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Concat([136, 371]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
+-expr: Concat([62, 372]) ["mul-1-inv", "neg-neg-rev", "add-0-inv", "div-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([0, 1]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([3, 4]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([2, 5]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([7, 8]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([10, 11]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([9, 12]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: VecMul([6, 13]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([15, 16]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([18, 19]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([17, 20]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([22, 23]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([25, 26]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([24, 27]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
++expr: VecMul([21, 28]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([30, 31]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([33, 34]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([32, 35]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([37, 38]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([40, 41]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([39, 42]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: VecMAC([29, 36, 43]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
++expr: VecAdd([14, 44]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([46, 47]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([49, 50]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([48, 51]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([53, 54]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([56, 57]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([55, 58]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: VecMul([52, 59]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
++expr: VecNeg([60]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: VecAdd([45, 61]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg_unop", "neg-minus", "/_binop_vec", "*_binop_or_zero_vec", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "-_binop_or_zero_vec"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([63, 64]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Vec([65, 66]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([68, 69]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: LitVec([70, 71]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: VecMul([67, 72]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([74, 75]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Vec([76, 77]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([79, 80]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: LitVec([81, 82]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
++expr: VecMul([78, 83]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([85, 86]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([88, 89]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([87, 90]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([92, 93]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([95, 96]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([94, 97]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: VecMAC([84, 91, 98]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
++expr: VecAdd([73, 99]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([102, 103]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Vec([101, 104]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([107, 108]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([106, 109]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
++expr: VecMul([105, 110]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus"]
++expr: VecNeg([111]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([114, 115]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Vec([113, 116]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([119, 120]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([118, 121]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: VecMul([117, 122]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac"]
++expr: VecNeg([123]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([125, 126]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([128, 129]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([127, 130]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([132, 133]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([135, 136]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Vec([134, 137]) []
++expr: VecMul([131, 138]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac"]
++expr: VecNeg([139]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: VecAdd([124, 140]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus"]
++expr: VecAdd([112, 141]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
++expr: VecAdd([100, 142]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg_unop", "neg-minus", "/_binop_vec", "*_binop_or_zero_vec", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "-_binop_or_zero_vec"]
++expr: Symbol("at") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([144, 145]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("at") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([147, 148]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([146, 149]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([151, 152]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([154, 155]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: LitVec([153, 156]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "litvec", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([158, 159]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([162, 163]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([165, 166]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([164, 167]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([169, 170]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([172, 173]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([171, 174]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([175]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([168, 176]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([161, 177]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([160, 178]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([180, 181]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([184, 185]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([187, 188]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([186, 189]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([191, 192]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([194, 195]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([193, 196]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([197]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([190, 198]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([183, 199]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([182, 200]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([201]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([179, 202]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([204, 205]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([208, 209]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([211, 212]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([210, 213]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([215, 216]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([218, 219]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([217, 220]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([221]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([214, 222]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([207, 223]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([206, 224]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Add([203, 225]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([227, 228]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([231, 232]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([234, 235]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([233, 236]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([238, 239]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([241, 242]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([240, 243]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([244]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([237, 245]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([230, 246]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([229, 247]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([249, 250]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([253, 254]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([256, 257]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([255, 258]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([260, 261]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([263, 264]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([262, 265]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([266]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([259, 267]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([252, 268]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([251, 269]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([270]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([248, 271]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([273, 274]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([277, 278]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([280, 281]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([279, 282]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([284, 285]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([287, 288]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([286, 289]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([290]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([283, 291]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([276, 292]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([275, 293]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Add([272, 294]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Vec([226, 295]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "-_binop_or_zero_vec", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus"]
++expr: VecAdd([157, 296]) ["+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "neg_unop", "/_binop_vec", "div-1-inv", "*_binop_or_zero_vec", "mul-1-inv", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "neg-minus", "-_binop_or_zero_vec"]
++expr: VecAdd([150, 297]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "+_binop_or_zero_vec", "neg_unop", "neg-minus", "/_binop_vec", "*_binop_or_zero_vec", "vec-mac", "vec-mac", "vec-mac", "vec-mac", "-_binop_or_zero_vec"]
++expr: Symbol("at") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([299, 300]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([302, 303]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([305, 306]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([309, 310]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([312, 313]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([311, 314]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([316, 317]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([319, 320]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([318, 321]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([322]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([315, 323]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([308, 324]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([307, 325]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([327, 328]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([331, 332]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([334, 335]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([333, 336]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([338, 339]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([341, 342]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([340, 343]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([344]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([337, 345]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([330, 346]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([329, 347]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([348]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([326, 349]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(3) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([351, 352]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(2) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([355, 356]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([358, 359]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([357, 360]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("aq") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(1) ["neg-neg-rev", "add-0-inv", "div-1-inv", "sqrt-1-inv", "mul-1-inv", "neg-minus"]
++expr: Get([362, 363]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Symbol("bt") ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Get([365, 366]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([364, 367]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Neg([368]) ["add-0-inv", "neg-minus", "div-1-inv", "mul-1-inv"]
++expr: Add([361, 369]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([354, 370]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Mul([353, 371]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Add([350, 372]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Add([304, 373]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Add([301, 374]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Num(0) ["neg-neg-rev", "add-0-inv", "div-1-inv", "neg-zero-inv", "expand-zero-get", "mul-1-inv", "neg-minus"]
++expr: Vec([375, 376]) ["+_binop_or_zero_vec", "neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "+_binop_or_zero_vec", "neg_unop", "neg-minus", "/_binop_vec", "*_binop_or_zero_vec", "vec-mac", "vec-mac", "-_binop_or_zero_vec"]
++expr: Concat([298, 377]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Concat([143, 378]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
++expr: Concat([62, 379]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "neg-minus"]
+(Concat
+(VecAdd
+(VecAdd
+(VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
+(VecMAC
+-        (VecMul (Vec (Get aq 0) (Get aq 1)) (Vec (Get bq 3) (Get bq 3)))
++        (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
+(LitVec (Get aq 1) (Get aq 2))
+(LitVec (Get bq 2) (Get bq 0))))
+(VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))
+@@ -386,14 +393,14 @@
+(VecAdd
+(VecMul (Vec (Get aq 3) 1) (LitVec (Get bq 2) 0))
+(VecMAC
+-          (VecMul (Vec (Get aq 2) 1) (Vec (Get bq 3) 0))
++          (VecMul (Vec (Get aq 2) 1) (LitVec (Get bq 3) 0))
+(LitVec (Get aq 0) (Get aq 3))
+(LitVec (Get bq 1) (Get bq 3))))
+-      (Vec
+-        (neg (* (Get aq 1) (Get bq 0)))
+-        (+
+-          (neg (* (Get aq 0) (Get bq 0)))
+-          (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
++      (VecAdd
++        (VecNeg (VecMul (Vec 1 (Get aq 0)) (LitVec 0 (Get bq 0))))
++        (VecAdd
++          (VecNeg (VecMul (Vec 1 (Get aq 1)) (LitVec 0 (Get bq 1))))
++          (VecNeg (VecMul (LitVec (Get aq 1) (Get aq 2)) (Vec (Get bq 0) (Get bq 2)))))))
+(Concat
+(VecAdd
+(LitVec (Get at 0) (Get at 1))
+#+end_src
+
+
+
+#+begin_src diff
+--- a
++++ b
+@@ -1,77 +1,78 @@
+(Concat
+-  (Vec
+-    (+
+-      (+
+-        (* (Get aq 3) (Get bq 0))
+-        (+ (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 2))))
+-      (neg (* (Get aq 2) (Get bq 1))))
+-    (+
+-      (+
+-        (* (Get aq 3) (Get bq 1))
+-        (+ (* (Get aq 1) (Get bq 3)) (* (Get aq 2) (Get bq 0))))
+-      (neg (* (Get aq 0) (Get bq 2)))))
++  (VecAdd
++    (VecAdd
++      (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
++      (VecMAC
++        (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
++        (LitVec (Get aq 1) (Get aq 2))
++        (LitVec (Get bq 2) (Get bq 0))))
++    (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))
+(Concat
+-    (Vec
+-      (+
+-        (+
+-          (* (Get aq 3) (Get bq 2))
+-          (+ (* (Get aq 2) (Get bq 3)) (* (Get aq 0) (Get bq 1))))
+-        (neg (* (Get aq 1) (Get bq 0))))
+-      (+
+-        (* (Get aq 3) (Get bq 3))
+-        (+
+-          (neg (* (Get aq 0) (Get bq 0)))
+-          (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
++    (VecAdd
++      (VecAdd
++        (VecMul (Vec (Get aq 3) 1) (LitVec (Get bq 2) 0))
++        (VecMAC
++          (VecMul (Vec (Get aq 2) 1) (LitVec (Get bq 3) 0))
++          (LitVec (Get aq 0) (Get aq 3))
++          (LitVec (Get bq 1) (Get bq 3))))
++      (VecAdd
++        (VecNeg (VecMul (Vec 1 (Get aq 0)) (LitVec 0 (Get bq 0))))
++        (VecAdd
++          (VecNeg (VecMul (Vec 1 (Get aq 1)) (LitVec 0 (Get bq 1))))
++          (VecNeg (VecMul (LitVec (Get aq 1) (Get aq 2)) (LitVec (Get bq 0) (Get bq 2)))))))
+(Concat
+-      (Vec
+-        (+
+-          (Get at 0)
+-          (+
+-            (Get bt 0)
+-            (+
+-              (+
+-                (*
+-                  (Get aq 1)
+-                  (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))
+-                (neg
+-                  (*
+-                    (Get aq 2)
+-                    (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))
+-              (*
+-                (Get aq 3)
+-                (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1)))))))))
+-        (+
+-          (Get at 1)
+-          (+
+-            (Get bt 1)
+-            (+
+-              (+
+-                (*
+-                  (Get aq 2)
+-                  (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))
+-                (neg
+-                  (*
+-                    (Get aq 0)
+-                    (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))))
+-              (*
+-                (Get aq 3)
+-                (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))))
+-      (Vec
+-        (+
+-          (Get at 2)
+-          (+
+-            (Get bt 2)
+-            (+
+-              (+
+-                (*
+-                  (Get aq 0)
+-                  (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+-                (neg
+-                  (*
+-                    (Get aq 1)
+-                    (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+-              (*
+-                (Get aq 3)
+-                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))))
+-        0))))
++      (VecAdd
++        (LitVec (Get at 0) (Get at 1))
++        (VecAdd
++          (LitVec (Get bt 0) (Get bt 1))
++          (VecMAC
++            (VecAdd
++              (VecMul
++                (LitVec (Get aq 1) (Get aq 2))
++                (VecMul
++                  (Vec 2 2)
++                  (VecAdd
++                    (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bt 1) (Get bt 2)))
++                    (VecNeg (VecMul (LitVec (Get aq 1) (Get aq 2)) (LitVec (Get bt 0) (Get bt 1)))))))
++              (VecNeg
++                (VecMul
++                  (LitVec (Get aq 2) (Get aq 0))
++                  (VecMul
++                    (Vec 2 2)
++                    (VecAdd
++                      (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bt 0) (Get bt 1)))
++                      (VecNeg (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bt 2) (Get bt 0)))))))))
++            (LitVec (Get aq 3) (Get aq 3))
++            (VecMul
++              (Vec 2 2)
++              (VecAdd
++                (VecMul (LitVec (Get aq 1) (Get aq 2)) (LitVec (Get bt 2) (Get bt 0)))
++                (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bt 1) (Get bt 2)))))))))
++      (VecAdd
++        (LitVec (Get at 2) 0)
++        (VecAdd
++          (LitVec (Get bt 2) 0)
++          (VecMAC
++            (VecAdd
++              (VecMul
++                (Vec (Get aq 0) 1)
++                (VecMul
++                  (Vec 2 1)
++                  (VecAdd
++                    (VecMul (Vec (Get aq 2) 1) (LitVec (Get bt 0) 0))
++                    (VecNeg (VecMul (Vec (Get aq 0) 1) (LitVec (Get bt 2) 0))))))
++              (VecNeg
++                (VecMul
++                  (Vec (Get aq 1) 1)
++                  (VecMul
++                    (Vec 2 1)
++                    (VecAdd
++                      (VecMul (Vec (Get aq 1) 1) (LitVec (Get bt 2) 0))
++                      (VecNeg (VecMul (Vec (Get aq 2) 1) (LitVec (Get bt 1) 0))))))))
++            (Vec (Get aq 3) 1)
++            (VecMul
++              (Vec 2 1)
++              (VecAdd
++                (VecMul (Vec (Get aq 0) 1) (LitVec (Get bt 1) 0))
++                (VecNeg (VecMul (Vec (Get aq 1) 1) (LitVec (Get bt 0) 0)))))))))))
+
+#+end_src
+
+Ok, so the biggest changes are when we can apply the vector rules that transform programs so that they can use the =vec-op= version of things. This then lets the =vec-mac= apply (I think). Let's look and see if that's true.

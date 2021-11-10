@@ -10,7 +10,8 @@ edition = "2018"
 name = "dioslib"
 
 [dependencies]
-egg =  "0.6.0"
+# egg =  "0.6.0"
+egg = { path = "/home/samthomas/Research/egg" }
 assert_approx_eq = "1.1.0"
 itertools = "0.9.0"
 clap = "2.33.2"

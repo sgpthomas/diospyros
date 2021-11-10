@@ -10,7 +10,8 @@ use crate::{
     macsearcher::build_mac_rule,
     scheduler::{LoggingData, LoggingScheduler},
     searchutils::*,
-    veclang::{EGraph, VecLang},
+    tracking::{CustomExtractor, TrackRewrites},
+    veclang::{DiosRwrite, EGraph, VecLang},
 };
 
 // Check if all the variables, in this case memories, are equivalent
@@ -27,7 +28,7 @@ fn is_all_same_memory_or_zero(vars: &Vec<String>) -> impl Fn(&mut EGraph, Id, &S
 }
 
 #[allow(unused)]
-fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr<VecLang>) {
+fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>) {
     let prog_str: String = prog.pretty(80);
     let ops_to_filter = vec!["neg", "sqrt", "/"];
     let unused_ops: Vec<&&str> = ops_to_filter
@@ -52,11 +53,11 @@ fn filter_applicable_rules(rules: &mut Vec<Rewrite<VecLang, ()>>, prog: &RecExpr
 }
 
 #[allow(unused)]
-fn filter_rules_by_name(rules: &mut Vec<Rewrite<VecLang, ()>>, names: &[&str]) {
+fn filter_rules_by_name(rules: &mut Vec<DiosRwrite>, names: &[&str]) {
     rules.retain(|rewrite| names.contains(&rewrite.name()))
 }
 
-fn report(runner: &Runner<VecLang, (), LoggingData>) {
+fn report(runner: &Runner<VecLang, TrackRewrites, LoggingData>) {
     let search_time: f64 = runner.iterations.iter().map(|i| i.search_time).sum();
     let apply_time: f64 = runner.iterations.iter().map(|i| i.apply_time).sum();
     let rebuild_time: f64 = runner.iterations.iter().map(|i| i.rebuild_time).sum();
@@ -99,7 +100,7 @@ fn report(runner: &Runner<VecLang, (), LoggingData>) {
     );
 }
 
-pub type LoggingRunner = Runner<VecLang, (), LoggingData>;
+pub type LoggingRunner = Runner<VecLang, TrackRewrites, LoggingData>;
 
 /// Run the rewrite rules over the input program and return the best (cost, program)
 pub fn run(
@@ -107,6 +108,7 @@ pub fn run(
     timeout: u64,
     no_ac: bool,
     no_vec: bool,
+    iter_limit: usize,
     ruleset: Option<&str>,
 ) -> (f64, RecExpr<VecLang>) {
     let rules = rules(no_ac, no_vec, ruleset);
@@ -133,9 +135,9 @@ pub fn run(
     //     ],
     // );
 
-    let mut init_eg: EGraph = EGraph::new(());
+    let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
     init_eg.add(VecLang::Num(0));
-    let mut runner: LoggingRunner = LoggingRunner::new(Default::default())
+    let mut runner = Runner::new(Default::default())
         .with_egraph(init_eg)
         .with_expr(&prog)
         .with_node_limit(500_000)
@@ -147,20 +149,52 @@ pub fn run(
         })
         .with_hook(|runner| {
             let (eg, root) = (&runner.egraph, &runner.roots[0]);
-            let mut extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
+            let extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
             let (cost, _) = extractor.find_best(*root);
             eprintln!("Egraph cost? {}", cost);
             Ok(())
         })
-        .with_iter_limit(200);
+        .with_iter_limit(iter_limit);
 
     // add scheduler
-    let scheduler = LoggingScheduler::new(runner.roots[0]);
+    // let scheduler = LoggingScheduler::new(runner.roots[0]);
+    let scheduler = SimpleScheduler;
     runner = runner.with_scheduler(scheduler);
 
     // eprintln!("{:#?}", rules);
     eprintln!("Starting run with {} rules", rules.len());
     runner = runner.run(&rules);
+
+    let start = "(Vec
+    (+
+      (+
+        (* (Get aq 3) (Get bq 0))
+        (+ (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 2))))
+      (neg (* (Get aq 2) (Get bq 1))))
+    (+
+      (+
+        (* (Get aq 3) (Get bq 1))
+        (+ (* (Get aq 1) (Get bq 3)) (* (Get aq 2) (Get bq 0))))
+      (neg (* (Get aq 0) (Get bq 2)))))"
+        .parse()
+        .unwrap();
+
+    let end = "(VecAdd
+    (VecAdd
+      (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
+      (VecMAC
+        (VecMul (Vec (Get aq 0) (Get aq 1)) (Vec (Get bq 3) (Get bq 3)))
+        (LitVec (Get aq 1) (Get aq 2))
+        (LitVec (Get bq 2) (Get bq 0))))
+    (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))"
+        .parse()
+        .unwrap();
+
+    eprintln!("enabled?: {}", runner.egraph.are_explanations_enabled());
+    eprintln!(
+        "Explanation: {}",
+        runner.explain_equivalence(&start, &end).get_flat_string()
+    );
 
     eprintln!("Egraph big big? {}", runner.egraph.total_size());
 
@@ -176,13 +210,14 @@ pub fn run(
     let (eg, root) = (runner.egraph, runner.roots[0]);
 
     // Always add the literal zero
-    let mut extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
+    let extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
     let (cost, prog) = extractor.find_best(root);
     eprintln!("Egraph cost? {}", cost);
+
     (cost, prog)
 }
 
-pub fn build_binop_rule(op_str: &str, vec_str: &str) -> Rewrite<VecLang, ()> {
+pub fn build_binop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
     let searcher: Pattern<VecLang> =
         vec_fold_op(&op_str.to_string(), &"a".to_string(), &"b".to_string())
             .parse()
@@ -197,10 +232,10 @@ pub fn build_binop_rule(op_str: &str, vec_str: &str) -> Rewrite<VecLang, ()> {
     .parse()
     .unwrap();
 
-    rw!(format!("{}_binop", op_str); { searcher } => { applier })
+    rw!(format!("{}_binop_vec", op_str); { searcher } => { applier })
 }
 
-pub fn build_unop_rule(op_str: &str, vec_str: &str) -> Rewrite<VecLang, ()> {
+pub fn build_unop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
     let searcher: Pattern<VecLang> = vec_map_op(&op_str.to_string(), &"a".to_string())
         .parse()
         .unwrap();
@@ -211,7 +246,7 @@ pub fn build_unop_rule(op_str: &str, vec_str: &str) -> Rewrite<VecLang, ()> {
     rw!(format!("{}_unop", op_str); { searcher } => { applier })
 }
 
-pub fn build_litvec_rule() -> Rewrite<VecLang, ()> {
+pub fn build_litvec_rule() -> DiosRwrite {
     let mem_vars = ids_with_prefix(&"a".to_string(), vector_width());
     let mut gets: Vec<String> = Vec::with_capacity(vector_width());
     for i in 0..vector_width() {
@@ -227,8 +262,8 @@ pub fn build_litvec_rule() -> Rewrite<VecLang, ()> {
         if is_all_same_memory_or_zero(&mem_vars))
 }
 
-pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<VecLang, ()>> {
-    let mut rules: Vec<Rewrite<VecLang, ()>> = vec![
+pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<DiosRwrite> {
+    let mut rules: Vec<DiosRwrite> = vec![
         rw!("add-0"; "(+ 0 ?a)" => "?a"),
         rw!("mul-0"; "(* 0 ?a)" => "0"),
         rw!("mul-1"; "(* 1 ?a)" => "?a"),
@@ -297,7 +332,7 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<Rewrite<Ve
     rules
 }
 
-fn ruler_rules(filename: &str) -> Vec<Rewrite<VecLang, ()>> {
+fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
     if filename == "" {
         return vec![];
     }
