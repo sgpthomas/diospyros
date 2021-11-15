@@ -53,7 +53,7 @@ fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>)
 }
 
 #[allow(unused)]
-fn filter_rules_by_name(rules: &mut Vec<DiosRwrite>, names: &[&str]) {
+fn retain_rules_by_name(rules: &mut Vec<DiosRwrite>, names: &[&str]) {
     rules.retain(|rewrite| names.contains(&rewrite.name()))
 }
 
@@ -111,29 +111,28 @@ pub fn run(
     iter_limit: usize,
     ruleset: Option<&str>,
 ) -> (f64, RecExpr<VecLang>) {
-    let rules = rules(no_ac, no_vec, ruleset);
+    let mut rules = rules(no_ac, no_vec, ruleset);
     // filter_applicable_rules(&mut rules, prog);
 
-    // filter_rules_by_name(
-    //     &mut rules,
-    //     &[
-    //         "sqrt-1-inv",
-    //         "neg-neg-rev",
-    //         "expand-zero-get",
-    //         "add-0-inv",
-    //         "mul-1-inv",
-    //         "neg-minus",
-    //         "div-1-inv",
-    //         "+_binop_or_zero",
-    //         "neg_unop",
-    //         "litvec",
-    //         "*_binop_or_zero",
-    //         "/_binop",
-    //         "-_binop_or_zero",
-    //         "vec-mac",
-    //         "sqrt_unop",
-    //     ],
-    // );
+    retain_rules_by_name(
+        &mut rules,
+        &[
+            "+_binop_or_zero_vec",
+            "*_binop_or_zero_vec",
+            "litvec",
+            "add-0-inv",
+            "mul-1-inv",
+            "vec-mac-add-mul",
+            "vec-mac",
+            "mul-1-inv",
+            "add-0-inv",
+            "vec-mac",
+            "neg_unop",
+            "expand-zero-get",
+            "expand-zero-get",
+            "neg-zero-inv",
+        ],
+    );
 
     let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
     init_eg.add(VecLang::Num(0));
@@ -165,36 +164,7 @@ pub fn run(
     eprintln!("Starting run with {} rules", rules.len());
     runner = runner.run(&rules);
 
-    let start = "(Vec
-    (+
-      (+
-        (* (Get aq 3) (Get bq 0))
-        (+ (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 2))))
-      (neg (* (Get aq 2) (Get bq 1))))
-    (+
-      (+
-        (* (Get aq 3) (Get bq 1))
-        (+ (* (Get aq 1) (Get bq 3)) (* (Get aq 2) (Get bq 0))))
-      (neg (* (Get aq 0) (Get bq 2)))))"
-        .parse()
-        .unwrap();
-
-    let end = "(VecAdd
-    (VecAdd
-      (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
-      (VecMAC
-        (VecMul (Vec (Get aq 0) (Get aq 1)) (Vec (Get bq 3) (Get bq 3)))
-        (LitVec (Get aq 1) (Get aq 2))
-        (LitVec (Get bq 2) (Get bq 0))))
-    (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))"
-        .parse()
-        .unwrap();
-
     eprintln!("enabled?: {}", runner.egraph.are_explanations_enabled());
-    eprintln!(
-        "Explanation: {}",
-        runner.explain_equivalence(&start, &end).get_flat_string()
-    );
 
     eprintln!("Egraph big big? {}", runner.egraph.total_size());
 
@@ -207,14 +177,20 @@ pub fn run(
         runner.stop_reason
     );
 
-    let (eg, root) = (runner.egraph, runner.roots[0]);
+    let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
 
     // Always add the literal zero
     let extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
-    let (cost, prog) = extractor.find_best(root);
+    let (cost, out_prog) = extractor.find_best(root);
     eprintln!("Egraph cost? {}", cost);
 
-    (cost, prog)
+    print_rewrites_used(
+        &runner
+            .explain_equivalence(&prog, &out_prog)
+            .explanation_trees,
+    );
+
+    (cost, out_prog)
 }
 
 pub fn build_binop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
@@ -353,4 +329,19 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
     }
 
     rules
+}
+
+fn print_rewrites_used(tree: &TreeExplanation<VecLang>) {
+    for term in tree {
+        if let Some(r) = &term.backward_rule {
+            println!("<={:?}", r);
+        }
+
+        if let Some(r) = &term.forward_rule {
+            println!("=>{:?}", r);
+        }
+        for child in &term.child_proofs {
+            print_rewrites_used(&child);
+        }
+    }
 }

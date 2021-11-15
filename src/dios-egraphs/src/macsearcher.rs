@@ -98,6 +98,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                 // Now we know the eclass is a Vec. The question is: does it
                 // match a pattern compatible with a MAC?
                 let mut new_substs: Vec<Subst> = Vec::new();
+                let mut lane_asts: Vec<String> = Vec::new();
                 let zero_id = egraph.lookup(VecLang::Num(0)).unwrap();
 
                 // For each set of substitutions
@@ -113,6 +114,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                         let mut new_var_substs: Vec<Vec<(Var, Id)>> = Vec::new();
 
                         // Check if that variable matches add/mul
+                        // (+ ?{} (* ?{} ?{}))
                         let child_eclass = substs.get(*vec_var).unwrap();
                         if let Some(add_mul_match) =
                             self.add_mul_pattern1.search_eclass(egraph, *child_eclass)
@@ -125,6 +127,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                                     subs.push((new_v, *s.get(*add_mul_var).unwrap()));
                                 }
                                 new_var_substs.push(subs);
+                                lane_asts.push(format!("(+ ?a{0} (* ?b{0} ?c{0}))", i));
                             }
                         } else if let Some(add_mul_match) =
                             self.add_mul_pattern2.search_eclass(egraph, *child_eclass)
@@ -137,6 +140,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                                     subs.push((new_v, *s.get(*add_mul_var).unwrap()));
                                 }
                                 new_var_substs.push(subs);
+                                lane_asts.push(format!("(+ (* ?a{0} ?b{0}) ?c{0})", i));
                             }
                         // Check if that variable matches just a mul
                         } else if let Some(mul_match) =
@@ -155,6 +159,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                                     Var::from_str(&format!("?{}{}", self.acc_var, i)).unwrap();
                                 subs.push((var_a, zero_id));
                                 new_var_substs.push(subs);
+                                lane_asts.push(format!("(* ?b{0} ?c{0})", i));
                             }
                         // This lane is just 0
                         } else if let Some(_) =
@@ -176,6 +181,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                                 ),
                             ];
                             new_var_substs.push(subs);
+                            lane_asts.push("0".to_string());
 
                         // This lane isn't compatible, so the whole Vec can't
                         // be a MAC
@@ -195,10 +201,11 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                 if new_substs.is_empty() {
                     None
                 } else {
+                    let ast = format!("(Vec {})", lane_asts.join(" ")).parse().unwrap();
                     Some(SearchMatches {
                         eclass: matches.eclass,
                         substs: new_substs,
-                        ast: matches.ast,
+                        ast: Some(Cow::Owned(ast)),
                     })
                 }
             }

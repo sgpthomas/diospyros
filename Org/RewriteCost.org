@@ -2591,3 +2591,5 @@ expr: Concat([62, 379]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "
 #+end_src
 
 Ok, so the biggest changes are when we can apply the vector rules that transform programs so that they can use the =vec-op= version of things. This then lets the =vec-mac= apply (I think). Let's look and see if that's true.
+
+** 

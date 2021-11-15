@@ -15,6 +15,7 @@ pub struct BinOpSearcher {
     pub vec_pattern: Pattern<VecLang>,
     pub op_pattern: Pattern<VecLang>,
     pub zero_pattern: Pattern<VecLang>,
+    pub op_str: String,
 }
 
 pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
@@ -43,11 +44,6 @@ pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
     .parse()
     .unwrap();
 
-    println!("full: {}", full_pattern);
-    println!("vec: {}", vec_pattern);
-    println!("op: {}", op_pattern);
-    println!("zero: {}", zero_pattern);
-
     let searcher = BinOpSearcher {
         left_var,
         right_var,
@@ -55,6 +51,7 @@ pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
         vec_pattern,
         op_pattern,
         zero_pattern,
+        op_str: op_str.to_string(),
     };
 
     rw!(format!("{}_binop_or_zero_vec", op_str); { searcher } => { applier })
@@ -78,6 +75,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for BinOpSearcher {
                 // Now we know the eclass is a Vec. The question is: does it
                 // match a pattern compatible with this binary operation?
                 let mut new_substs: Vec<Subst> = Vec::new();
+                let mut lane_asts: Vec<String> = Vec::new();
                 let zero_id = egraph.lookup(VecLang::Num(0)).unwrap();
 
                 // For each set of substitutions
@@ -105,6 +103,16 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for BinOpSearcher {
                                 }
                                 new_var_substs.push(subs);
                             }
+                            lane_asts.push(format!(
+                                "({} {})",
+                                self.op_str,
+                                self.op_pattern
+                                    .vars()
+                                    .iter()
+                                    .map(|v| format!("{}{}", v, i))
+                                    .collect::<Vec<_>>()
+                                    .join(" ")
+                            ));
                         // This lane is just 0
                         } else if let Some(_) =
                             self.zero_pattern.search_eclass(egraph, *child_eclass)
@@ -121,6 +129,7 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for BinOpSearcher {
                                 ),
                             ];
                             new_var_substs.push(subs);
+                            lane_asts.push("0".to_string());
 
                         // This lane isn't compatible, so whole Vec not a match
                         } else {
@@ -139,12 +148,11 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for BinOpSearcher {
                 if new_substs.is_empty() {
                     None
                 } else {
-                    println!("subs: {:?}", new_substs);
-                    println!("ast: {:?}", matches.ast);
+                    let ast = format!("(Vec {})", lane_asts.join(" ")).parse().unwrap();
                     Some(SearchMatches {
                         eclass: matches.eclass,
                         substs: new_substs,
-                        ast: matches.ast,
+                        ast: Some(Cow::Owned(ast)),
                     })
                 }
             }
