@@ -136,7 +136,7 @@ pub fn run(
 
     let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
     init_eg.add(VecLang::Num(0));
-    let mut runner = Runner::new(Default::default())
+    let mut runner = LoggingRunner::new(Default::default())
         .with_egraph(init_eg)
         .with_expr(&prog)
         .with_node_limit(500_000)
@@ -144,9 +144,6 @@ pub fn run(
         .with_hook(|runner| {
             eprintln!("Egraph big big? {}", runner.egraph.total_size());
             eprintln!("Egraph class big? {}", runner.egraph.number_of_classes());
-            Ok(())
-        })
-        .with_hook(|runner| {
             let (eg, root) = (&runner.egraph, &runner.roots[0]);
             let extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
             let (cost, _) = extractor.find_best(*root);
@@ -156,15 +153,13 @@ pub fn run(
         .with_iter_limit(iter_limit);
 
     // add scheduler
-    // let scheduler = LoggingScheduler::new(runner.roots[0]);
-    let scheduler = SimpleScheduler;
+    let scheduler = LoggingScheduler::new(runner.roots[0], prog.clone());
+    // let scheduler = SimpleScheduler;
     runner = runner.with_scheduler(scheduler);
 
     // eprintln!("{:#?}", rules);
     eprintln!("Starting run with {} rules", rules.len());
     runner = runner.run(&rules);
-
-    eprintln!("enabled?: {}", runner.egraph.are_explanations_enabled());
 
     eprintln!("Egraph big big? {}", runner.egraph.total_size());
 
@@ -185,6 +180,7 @@ pub fn run(
     eprintln!("Egraph cost? {}", cost);
 
     print_rewrites_used(
+        "",
         &runner
             .explain_equivalence(&prog, &out_prog)
             .explanation_trees,
@@ -331,17 +327,17 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
     rules
 }
 
-fn print_rewrites_used(tree: &TreeExplanation<VecLang>) {
+pub fn print_rewrites_used(pre: &str, tree: &TreeExplanation<VecLang>) {
     for term in tree {
         if let Some(r) = &term.backward_rule {
-            println!("<={:?}", r);
+            println!("{}<={:?}", pre, r);
         }
 
         if let Some(r) = &term.forward_rule {
-            println!("=>{:?}", r);
+            println!("{}=>{:?}", pre, r);
         }
         for child in &term.child_proofs {
-            print_rewrites_used(&child);
+            print_rewrites_used(pre, &child);
         }
     }
 }

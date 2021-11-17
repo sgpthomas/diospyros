@@ -2592,4 +2592,63 @@ expr: Concat([62, 379]) ["neg-neg-rev", "add-0-inv", "div-1-inv", "mul-1-inv", "
 
 Ok, so the biggest changes are when we can apply the vector rules that transform programs so that they can use the =vec-op= version of things. This then lets the =vec-mac= apply (I think). Let's look and see if that's true.
 
-** 
+
+* Looking at explanation trees
+
+** Let's look at the explanation trees for all the rules that lower cost
+
+*** Looking at the tree "difference" between before and after applying each rewrite rule that affects the cost
+
+In each iteration, the number of rules between the best program before and after a rewrite rule increases dramatically, even if the cost doesn't change much (I think). Why does this happen? Does the growth just follow the same trend as the growth of the graph?
+
+#+name: rule-difference
+| iteration | rule                |           cost_diff | n_rules_between | size_graph |
+|-----------+---------------------+---------------------+-----------------+------------|
+|         0 | +_binop_or_zero_vec |                 0.9 |               1 |        217 |
+|         1 | +_binop_or_zero_vec |  0.8999999999999773 |               3 |        404 |
+|         1 | litvec              |  0.0989999999999327 |               5 |        457 |
+|         2 | *_binop_or_zero_vec |   4.600000000000023 |              11 |        519 |
+|         2 | litvec              | 0.09900000000004638 |              17 |        885 |
+|         3 | *_binop_or_zero_vec |  103.99600000000004 |              31 |       1041 |
+|         3 | vec-mac-add-mul     |                   2 |              81 |       1642 |
+|         3 | litvec              |  0.8910000000000196 |             129 |       1320 |
+|         4 | *_binop_or_zero_vec |             101.594 |             158 |       1735 |
+|         4 | litvec              | 0.39599999999995816 |             184 |       2242 |
+|         5 | litvec              | 0.09899999999998954 |             193 |       2683 |
+|         6 | *_binop_or_zero_vec |   8.185999999999979 |             164 |       2758 |
+|         6 | litvec              | 0.19800000000003593 |             338 |       3062 |
+|         7 | litvec              | 0.09899999999998954 |             343 |       3337 |
+|         8 | *_binop_or_zero_vec |  11.791999999999973 |             364 |       3373 |
+|         8 | neg_unop            |                   1 |             385 |       3414 |
+|         9 | *_binop_or_zero_vec |  200.18300000000005 |             429 |       3534 |
+
+#+header: :width 600 :height 500
+#+header: :var data=rule-difference
+#+begin_src R :session graphs :results graphics file :file rule-diff.png
+library(tidyverse)
+
+ggplot(data = data) +
+  geom_line(mapping = aes(x = n_rules_between, y = size_graph), size = 1.2)
+#+end_src
+
+#+RESULTS:
+[[file:rule-diff.png]]
+
+* Agenda
+
+** TODO Figure out what to do with the list of rule applications that are needed to go from the initial program to the final program [1/9].
+
+- [ ] Rank rules in terms of importance. The way to do this is to notice rules that drastically improve the cost function and figure out the rules that were important to get this rule to apply. These rules + the rule that lowered the cost function are the important ones.
+- [X] Does the cost go down because of graph compaction?? No. I just have to =rebuild= the graph before gathering stats.
+- [ ] Run what I have on the other 3 benchmarks that I have and see if the trends hold up.
+- [ ] Do most rewriting systems have this property of having a few rules do the bulk of the work lowering the cost function and the rest of the rules "enable" these rules?
+- [ ] Think about automatically generating these rules? Is there someway of looping these ideas into the ruler rule generation process to generate better rules?
+- [ ] Is the program we find really the best?
+- [ ] What happens when we add the ruler rule that improves performance?
+- [ ] Would the trace I generate work in a straight-line destructive rewrite system? Is there a way I can answer that without implementing the thing myself? If this were true would this be remotely interesting? I highly doubt that this would generalize across different benchmarks.
+- [ ] Can I "compact" any of the rules so that saturation happens faster?
+
+** TODO Write egg PR for extending the extractor
+
+Probably the way that this would work is by making all the different methods default implementations in a trait. Then you could implement the trait on your own custom struct to extend / change the behavior. I'm using this to implement custom logging of rule applications.
+
