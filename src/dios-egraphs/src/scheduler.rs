@@ -7,8 +7,8 @@ use egg::{Extractor, Id, RecExpr, Rewrite, RewriteScheduler};
 
 use crate::{
     cost::VecCostFn,
-    rules::{get_rewrites_used, print_rewrites_used},
     tracking::TrackRewrites,
+    tree::{get_rewrites_used, is_rewrite_used, print_rewrites_used},
     veclang::{EGraph, VecLang},
 };
 
@@ -18,7 +18,7 @@ pub struct LoggingScheduler {
     root: Id,
     #[allow(unused)]
     init_prog: RecExpr<VecLang>,
-    pub counts: HashMap<String, HashSet<String>>,
+    pub counts: HashMap<String, HashMap<String, u64>>,
 }
 
 impl LoggingScheduler {
@@ -51,6 +51,25 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
         let applications = rewrite.apply(egraph, &matches);
 
         egraph.rebuild();
+        eprintln!("apps({})= {:?}", rewrite.name.as_str(), applications);
+        eprintln!("{{");
+        for id in &applications {
+            let extractor = Extractor::new(&egraph, VecCostFn { egraph });
+            let (_, l) = extractor.find_best(*id);
+            let ex = &mut egraph.clone().explain_existance(&l);
+            let ex_tree = &ex.explanation_trees;
+
+            eprintln!("{}, {}", id, l.pretty(80));
+            // if is_rewrite_used(rewrite.name.as_str(), &ex_tree) {
+            // }
+
+            // if let Some(&VecLang::VecAdd(_)) = l.as_ref().last() {
+            //     eprintln!("* {}, {}", id, l.pretty(80));
+            //     eprintln!("{}", &ex.get_flat_string());
+            // }
+        }
+        eprintln!("}}");
+
         let extractor = Extractor::new(&egraph, VecCostFn { egraph });
         let (aft_cost, aft_prog) = extractor.find_best(self.root);
         let aft_size = egraph.total_size();
@@ -64,8 +83,12 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
         );
         self.counts
             .entry(rewrite.name.to_string())
-            .and_modify(|hs| hs.extend(rules.iter().cloned()))
-            .or_insert_with(|| HashSet::from_iter(rules.iter().cloned()));
+            .and_modify(|hm| {
+                for r in &rules {
+                    hm.entry(r.to_string()).and_modify(|n| *n += 1).or_insert(1);
+                }
+            })
+            .or_insert_with(|| HashMap::from_iter(rules.iter().cloned().map(|r| (r, 1))));
 
         let diff_cost = bef_cost - aft_cost;
         if diff_cost != 0.0 {

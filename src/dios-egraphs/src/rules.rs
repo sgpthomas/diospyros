@@ -11,6 +11,7 @@ use crate::{
     scheduler::{LoggingData, LoggingScheduler},
     searchutils::*,
     tracking::{CustomExtractor, TrackRewrites},
+    tree::{get_rewrites_used, print_rewrites_used},
     veclang::{DiosRwrite, EGraph, VecLang},
 };
 
@@ -129,7 +130,6 @@ pub fn run(
             "vec-mac",
             "neg_unop",
             "expand-zero-get",
-            "expand-zero-get",
             "neg-zero-inv",
         ],
     );
@@ -188,6 +188,24 @@ pub fn run(
                 .explain_equivalence(&prog, &out_prog)
                 .explanation_trees,
         ),
+    );
+
+    eprintln!(
+        "{}",
+        &runner
+            .explain_existance(
+                &"(VecAdd
+    (VecAdd
+      (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
+      (VecMAC
+        (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
+        (LitVec (Get aq 1) (Get aq 2))
+        (LitVec (Get bq 2) (Get bq 0))))
+    (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))"
+                    .parse()
+                    .unwrap()
+            )
+            .get_flat_string()
     );
 
     (cost, out_prog)
@@ -329,29 +347,4 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
     }
 
     rules
-}
-
-/// Get a flat list of all the rewrites used in a tree explanation
-pub fn get_rewrites_used(tree: &TreeExplanation<VecLang>) -> Vec<String> {
-    let mut rules: Vec<String> = vec![];
-    for term in tree {
-        if let Some(r) = &term.backward_rule {
-            rules.push(format!("<={}", r.as_str()));
-        }
-
-        if let Some(r) = &term.forward_rule {
-            rules.push(format!("=>{}", r.as_str()));
-        }
-
-        for child in &term.child_proofs {
-            rules.append(&mut get_rewrites_used(&child));
-        }
-    }
-    rules
-}
-
-pub fn print_rewrites_used(pre: &str, rules: &[String]) {
-    for r in rules {
-        eprintln!("{}{}", pre, r);
-    }
 }
