@@ -43,7 +43,7 @@ fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>)
             rule_sr.contains(op)
         });
         if drop {
-            dropped = format!("{} {}", dropped, r.name())
+            dropped = format!("{} {}", dropped, r.name)
         };
         !drop
     });
@@ -54,7 +54,7 @@ fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>)
 
 #[allow(unused)]
 fn retain_rules_by_name(rules: &mut Vec<DiosRwrite>, names: &[&str]) {
-    rules.retain(|rewrite| names.contains(&rewrite.name()))
+    rules.retain(|rewrite| names.contains(&rewrite.name.as_str()))
 }
 
 fn report(runner: &Runner<VecLang, TrackRewrites, LoggingData>) {

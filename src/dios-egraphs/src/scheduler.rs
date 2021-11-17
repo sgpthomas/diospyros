@@ -66,17 +66,9 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
                     .explanation_trees,
             );
 
-            eprintln!("== bef prog ==");
-            eprintln!("{}", bef_prog);
-            eprintln!("== bef prog ==");
-
-            eprintln!("== aft prog ==");
-            eprintln!("{}", aft_prog);
-            eprintln!("== aft prog ==");
-
             eprintln!(
                 "Rewrite {} cost {} total ({} - {}) eclasses {}",
-                rewrite.name(),
+                rewrite.name,
                 bef_cost - aft_cost,
                 aft_size,
                 bef_size,

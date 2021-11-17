@@ -18,7 +18,7 @@ impl Analysis<VecLang> for TrackRewrites {
         ()
     }
 
-    fn merge(&self, to: &mut Self::Data, from: Self::Data) -> DidMerge {
+    fn merge(&mut self, to: &mut Self::Data, from: Self::Data) -> DidMerge {
         // *to = &*to | &from;
         // to.extend(from);
         DidMerge(false, false)
