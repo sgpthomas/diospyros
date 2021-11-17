@@ -172,6 +172,8 @@ pub fn run(
         runner.stop_reason
     );
 
+    runner.scheduler.log();
+
     let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
 
     // Always add the literal zero
@@ -181,9 +183,11 @@ pub fn run(
 
     print_rewrites_used(
         "",
-        &runner
-            .explain_equivalence(&prog, &out_prog)
-            .explanation_trees,
+        &get_rewrites_used(
+            &runner
+                .explain_equivalence(&prog, &out_prog)
+                .explanation_trees,
+        ),
     );
 
     (cost, out_prog)
@@ -327,17 +331,27 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
     rules
 }
 
-pub fn print_rewrites_used(pre: &str, tree: &TreeExplanation<VecLang>) {
+/// Get a flat list of all the rewrites used in a tree explanation
+pub fn get_rewrites_used(tree: &TreeExplanation<VecLang>) -> Vec<String> {
+    let mut rules: Vec<String> = vec![];
     for term in tree {
         if let Some(r) = &term.backward_rule {
-            println!("{}<={:?}", pre, r);
+            rules.push(format!("<={}", r.as_str()));
         }
 
         if let Some(r) = &term.forward_rule {
-            println!("{}=>{:?}", pre, r);
+            rules.push(format!("=>{}", r.as_str()));
         }
+
         for child in &term.child_proofs {
-            print_rewrites_used(pre, &child);
+            rules.append(&mut get_rewrites_used(&child));
         }
+    }
+    rules
+}
+
+pub fn print_rewrites_used(pre: &str, rules: &[String]) {
+    for r in rules {
+        eprintln!("{}{}", pre, r);
     }
 }
