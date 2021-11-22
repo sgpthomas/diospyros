@@ -1,0 +1,47 @@
+{
+    "constants": [
+	{
+	"type": "int",
+	"value": 0
+    },
+	{
+	"type": "int",
+	"value": 1
+    }
+    ],
+    "seed_rules": [
+	{
+	"lhs": "(+ ?a ?b)",
+	"rhs": "(+ ?b ?a)"
+    },
+	{
+	"lhs": "(* ?a ?b)",
+	"rhs": "(* ?b ?a)"
+    },
+	{
+	"lhs": "(+ ?a i0)",
+	"rhs": "?a"
+    },
+	{
+	"lhs": "(* ?a i1)",
+	"rhs": "?a"
+    },
+	{
+	"lhs": "(Vec (+ ?a ?b) (+ ?c ?d))",
+	"rhs": "(VecAdd (Vec ?a ?c) (Vec ?b ?d))"
+    },
+	{
+	"lhs": "(Vec (* ?a ?b) (* ?c ?d))",
+	"rhs": "(VecMul (Vec ?a ?c) (Vec ?b ?d))"
+    }
+    ],
+    "binops": [
+	"+",
+	"*"
+    ],
+    "use_vector": true,
+    "vector_binops": [
+	"+", "*"
+    ],
+    "vector_mac": true
+}

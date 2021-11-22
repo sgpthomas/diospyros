@@ -50,7 +50,7 @@ fn main() {
 
     // Rewrite a list of expressions to a concatenation of vectors
     let concats = rewriteconcats::list_to_concats(&converted);
-    let prog = concats.unwrap().parse().unwrap();
+    let prog: egg::RecExpr<veclang::VecLang> = concats.unwrap().parse().unwrap();
 
     // Rules to disable flags
     let no_ac = matches.is_present("no-ac");
@@ -66,6 +66,7 @@ fn main() {
         timeout,
         config::vector_width()
     );
+    eprintln!("Input prog:\n{}", &prog.pretty(80));
     let (cost, best) = rules::run(&prog, timeout, no_ac, no_vec, iter_limit, ruleset);
 
     println!("{}", best.pretty(80)); /* Pretty print with width 80 */

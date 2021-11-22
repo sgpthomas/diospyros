@@ -10,7 +10,7 @@ use crate::{
     macsearcher::build_mac_rule,
     scheduler::{LoggingData, LoggingScheduler},
     searchutils::*,
-    tracking::{CustomExtractor, TrackRewrites},
+    tracking::TrackRewrites,
     tree::{get_rewrites_used, print_rewrites_used},
     veclang::{DiosRwrite, EGraph, VecLang},
 };
@@ -157,7 +157,6 @@ pub fn run(
     // let scheduler = SimpleScheduler;
     runner = runner.with_scheduler(scheduler);
 
-    // eprintln!("{:#?}", rules);
     eprintln!("Starting run with {} rules", rules.len());
     runner = runner.run(&rules);
 

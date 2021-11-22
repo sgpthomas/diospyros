@@ -124,6 +124,21 @@ impl Value {
         }
     }
 
+    fn vec3<F>(v1: &Self, v2: &Self, v3: &Self, f: F) -> Option<Value>
+    where
+        F: Fn(&[Value], &[Value], &[Value]) -> Option<Value>,
+    {
+        if let (Value::Vec(v1), Value::Vec(v2), Value::Vec(v3)) = (v1, v2, v3) {
+            if v1.len() == v2.len() && v2.len() == v3.len() {
+                f(v1, v2, v3)
+            } else {
+                None
+            }
+        } else {
+            None
+        }
+    }
+
     fn vec2_op<F>(lhs: &Self, rhs: &Self, f: F) -> Option<Value>
     where
         F: Fn(&Value, &Value) -> Option<Value>,
@@ -219,7 +234,7 @@ define_language! {
         "VecSgn" = VecSgn([Id; 1]),
 
         // MAC takes 3 lists: acc, v1, v2
-        // "VecMAC" = VecMAC([Id; 3]),
+        "VecMAC" = VecMAC([Id; 3]),
 
         Const(Value),
 
@@ -396,7 +411,7 @@ impl SynthLanguage for VecLang {
                 map!(get, l => Value::vec1(l, |l| {
                     Value::Vec(l.iter().map(|tup| match tup {
                     Value::Int(a) => Value::Int(-a),
-                        _ => panic!("Ill-formed")
+                        _ => panic!("NEG: Ill-formed")
                     }).collect::<Vec<_>>())
                 }))
             }
@@ -404,7 +419,7 @@ impl SynthLanguage for VecLang {
                 map!(get, l => Value::vec1(l, |l| {
                     Value::Vec(l.iter().map(|tup| match tup {
                     Value::Int(a) => Value::Int(a.sqrt()),
-                        _ => panic!("Ill-formed")
+                        _ => panic!("SQRT: Ill-formed")
                     }).collect::<Vec<_>>())
                 }))
             }
@@ -412,11 +427,19 @@ impl SynthLanguage for VecLang {
                 map!(get, l => Value::vec1(l, |l| {
                     Value::Vec(l.iter().map(|tup| match tup {
                     Value::Int(a) => Value::Int(sgn(*a)),
-                        _ => panic!("Ill-formed")
+                        _ => panic!("SGN: Ill-formed")
                     }).collect::<Vec<_>>())
                 }))
             }
-            // VecLang::VecMAC([a, b, c]) => todo!(),
+            VecLang::VecMAC([acc, v1, v2]) => {
+                map!(get, v1, v2, acc => Value::vec3(v1, v2, acc, |v1, v2, acc| {
+                            v1.iter().zip(v2.iter()).zip(acc.iter()).map(|tup| match tup {
+                    ((Value::Int(v1), Value::Int(v2)), Value::Int(acc)) => Some(Value::Int((v1 * v2) + acc)),
+                _ => None
+                            }).collect::<Option<Vec<Value>>>()
+                .map(|x| Value::Vec(x))
+                        }))
+            }
             VecLang::Symbol(_) => vec![],
         }
     }
@@ -564,7 +587,15 @@ impl SynthLanguage for VecLang {
                 .map(|x| vec![VecLang::Vec(x.into_boxed_slice())])
                 .flatten();
 
-            Some(vec_binops.chain(vec))
+            let vec_mac = (0..3)
+                .map(|_| ids.clone())
+                .multi_cartesian_product()
+                .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
+                .map(|ids| [ids[0], ids[1], ids[2]])
+                .map(move |x| VecLang::VecMAC(x));
+
+            // TODO: read conf "vector_mac"
+            Some(vec_binops.chain(vec).chain(vec_mac))
         } else {
             None
         };
@@ -760,82 +791,84 @@ fn main() {
 }
 
 fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>, Vec<Bool<'a>>)> {
-    let mut buf: Vec<Datatype> = vec![];
-    let mut assumes: Vec<Bool> = vec![];
+    // let mut buf: Vec<Datatype> = vec![];
+    // let mut assumes: Vec<Bool> = vec![];
 
-    // data type representing either ints or bools
-    let int_bool = DatatypeBuilder::new(&ctx, "Int+Bool")
-        .variant(
-            "Int",
-            vec![("Int.v", DatatypeAccessor::Sort(Sort::int(&ctx)))],
-        )
-        .variant(
-            "Bool",
-            vec![("Bool.v", DatatypeAccessor::Sort(Sort::bool(&ctx)))],
-        )
-        .finish();
+    // // data type representing either ints or bools
+    // let int_bool = DatatypeBuilder::new(&ctx, "Int+Bool")
+    //     .variant(
+    //         "Int",
+    //         vec![("Int.v", DatatypeAccessor::Sort(Sort::int(&ctx)))],
+    //     )
+    //     .variant(
+    //         "Bool",
+    //         vec![("Bool.v", DatatypeAccessor::Sort(Sort::bool(&ctx)))],
+    //     )
+    //     .finish();
 
-    let int_cons = &int_bool.variants[0].constructor;
-    let int_get = &int_bool.variants[0].accessors[0];
-    let bool_cons = &int_bool.variants[1].constructor;
-    let _bool_get = &int_bool.variants[1].accessors[0];
+    // let int_cons = &int_bool.variants[0].constructor;
+    // let int_get = &int_bool.variants[0].accessors[0];
+    // let bool_cons = &int_bool.variants[1].constructor;
+    // let _bool_get = &int_bool.variants[1].accessors[0];
 
-    let mut vars: Vec<_> = vec![];
+    // let mut vars: Vec<_> = vec![];
 
-    for node in expr.as_ref().iter() {
-        match node {
-            VecLang::Const(Value::Int(i)) => buf.push(
-                int_cons
-                    .apply(&[&Int::from_i64(&ctx, *i as i64)])
-                    .as_datatype()
-                    .unwrap(),
-            ),
-            VecLang::Symbol(v) => {
-                let var = Datatype::new_const(&ctx, v.to_string(), &int_bool.sort);
-                vars.push(buf.len());
-                buf.push(var)
-            }
-            VecLang::Add([x, y]) => {
-                let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
-                let y_int = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
-                let res = int_cons.apply(&[&(x_int + y_int)]).as_datatype().unwrap();
-                buf.push(res)
-            }
-            VecLang::Mul([x, y]) => {
-                let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
-                let y_int = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
-                let res = int_cons.apply(&[&(x_int * y_int)]).as_datatype().unwrap();
-                buf.push(res)
-            }
-            VecLang::Div([x, y]) => {
-                let denom = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
-                // let eqz = Int::le(&denom, &Int::from_i64(&ctx, 0));
-                let lez = Int::le(&denom, &Int::from_i64(&ctx, 0));
-                let gez = Int::ge(&denom, &Int::from_i64(&ctx, 0));
-                let assume = Bool::not(&Bool::and(&ctx, &[&lez, &gez]));
-                assumes.push(assume);
-                let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
-                let term = Int::div(&x_int, &denom);
+    // for node in expr.as_ref().iter() {
+    //     match node {
+    //         VecLang::Const(Value::Int(i)) => buf.push(
+    //             int_cons
+    //                 .apply(&[&Int::from_i64(&ctx, *i as i64)])
+    //                 .as_datatype()
+    //                 .unwrap(),
+    //         ),
+    //         VecLang::Symbol(v) => {
+    //             let var = Datatype::new_const(&ctx, v.to_string(), &int_bool.sort);
+    //             vars.push(buf.len());
+    //             buf.push(var)
+    //         }
+    //         VecLang::Add([x, y]) => {
+    //             let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
+    //             // println!("buf: {:?}[{}]", buf, y);
+    //             let y_int = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
+    //             let res = int_cons.apply(&[&(x_int + y_int)]).as_datatype().unwrap();
+    //             buf.push(res)
+    //         }
+    //         VecLang::Mul([x, y]) => {
+    //             let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
+    //             let y_int = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
+    //             let res = int_cons.apply(&[&(x_int * y_int)]).as_datatype().unwrap();
+    //             buf.push(res)
+    //         }
+    //         VecLang::Div([x, y]) => {
+    //             let denom = int_get.apply(&[&buf[usize::from(*y)]]).as_int().unwrap();
+    //             // let eqz = Int::le(&denom, &Int::from_i64(&ctx, 0));
+    //             let lez = Int::le(&denom, &Int::from_i64(&ctx, 0));
+    //             let gez = Int::ge(&denom, &Int::from_i64(&ctx, 0));
+    //             let assume = Bool::not(&Bool::and(&ctx, &[&lez, &gez]));
+    //             assumes.push(assume);
+    //             let x_int = int_get.apply(&[&buf[usize::from(*x)]]).as_int().unwrap();
+    //             let term = Int::div(&x_int, &denom);
 
-                buf.push(int_cons.apply(&[&term]).as_datatype().unwrap())
-            }
-            VecLang::Lt([a, b]) => {
-                let a_int = int_get.apply(&[&buf[usize::from(*a)]]).as_int().unwrap();
-                let b_int = int_get.apply(&[&buf[usize::from(*b)]]).as_int().unwrap();
-                let term = Int::lt(&a_int, &b_int);
+    //             buf.push(int_cons.apply(&[&term]).as_datatype().unwrap())
+    //         }
+    //         VecLang::Lt([a, b]) => {
+    //             let a_int = int_get.apply(&[&buf[usize::from(*a)]]).as_int().unwrap();
+    //             let b_int = int_get.apply(&[&buf[usize::from(*b)]]).as_int().unwrap();
+    //             let term = Int::lt(&a_int, &b_int);
 
-                // let pattern = z3::Pattern::new(&ctx, &[&term]);
-                // let vs: Vec<&dyn Ast> = vars.iter().map(|i| &buf[usize::from(*i)] as _).collect();
-                // let forall: Bool = forall_const(&ctx, vs.as_slice(), &[&pattern], &term);
+    //             // let pattern = z3::Pattern::new(&ctx, &[&term]);
+    //             // let vs: Vec<&dyn Ast> = vars.iter().map(|i| &buf[usize::from(*i)] as _).collect();
+    //             // let forall: Bool = forall_const(&ctx, vs.as_slice(), &[&pattern], &term);
 
-                let res = bool_cons.apply(&[&term]).as_datatype().unwrap();
+    //             let res = bool_cons.apply(&[&term]).as_datatype().unwrap();
 
-                // assumes.push(forall);
-                buf.push(res)
-            }
-            _ => (),
-        }
-    }
+    //             // assumes.push(forall);
+    //             buf.push(res)
+    //         }
+    //         _ => (),
+    //     }
+    // }
 
-    buf.pop().map(|head| (head, assumes))
+    // buf.pop().map(|head| (head, assumes))
+    None
 }

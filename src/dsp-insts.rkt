@@ -117,6 +117,14 @@
         (check-equal? (vector-shuffle (list inp) idxs) gold)))
 
     (test-case
+        "VECTOR-MAC"
+      (let ([acc (v-list 0 0 0 0)]
+            [a (v-list 1 2 3 4)]
+            [b (v-list 11 12 13 14)]
+            [gold (v-list 11 24 39 56)])
+        (check-equal? (vector-mac acc a b) gold)))
+
+    (test-case
       "VECTOR-SHUFFLE: synthesize indices"
       (define idxs-gold (v-list 6 2 4 3))
       (define-symbolic* idxs-lst real? [4])

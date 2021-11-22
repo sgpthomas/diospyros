@@ -1,0 +1,176 @@
+#+title: Automatically Generating Rules for Diospyros
+
+The top-level goal is to have some kind of "push-button" automation that can generate our egg rules for us. We of course need to give this tool some kind of description of our problem.
+
+The description that =ruler= needs at the moment is an interpreter for the language. This is a simple thing to provide and is much more straightforward to reason about from a human perspective. In contrast, the process of figuring out the right rewrite rules that work well is difficult and error prone.
+
+I'm thinking that it might be useful to also bring the =dios= cost function into the picture. Hopefully this can guide which rules seem important. At the very least, it might provide some metric for deciding which rules are "good".
+
+* By hand exploration
+
+Let's start by just looking at a dios program, looking at the cost function, and looking at some ruler generated rules and seeing if there seems like there is some path to go from the ruler generated rules to a "good" set of rules procedurally.
+
+I'm going to be looking for rules that "enable" other rules, in particular enable rules that lower the cost function. I also want to look and see if there is a way to guess that we want to generate vector rules based on the cost function.
+
+** q-prod spec
+
+#+begin_src emacs-lisp
+(Concat
+  (Vec
+    (+
+      (+
+        (* (Get aq 3) (Get bq 0))
+        (+ (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 2))))
+      (neg (* (Get aq 2) (Get bq 1))))
+    (+
+      (+
+        (* (Get aq 3) (Get bq 1))
+        (+ (* (Get aq 1) (Get bq 3)) (* (Get aq 2) (Get bq 0))))
+      (neg (* (Get aq 0) (Get bq 2)))))
+  (Concat
+    (Vec
+      (+
+        (+
+          (* (Get aq 3) (Get bq 2))
+          (+ (* (Get aq 2) (Get bq 3)) (* (Get aq 0) (Get bq 1))))
+        (neg (* (Get aq 1) (Get bq 0))))
+      (+
+        (* (Get aq 3) (Get bq 3))
+        (+
+          (neg (* (Get aq 0) (Get bq 0)))
+          (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
+    (Concat
+      (Vec
+        (+
+          (Get at 0)
+          (+
+            (Get bt 0)
+            (+
+              (+
+                (*
+                  (Get aq 1)
+                  (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))
+                (neg
+                  (*
+                    (Get aq 2)
+                    (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1)))))))))
+        (+
+          (Get at 1)
+          (+
+            (Get bt 1)
+            (+
+              (+
+                (*
+                  (Get aq 2)
+                  (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))
+                (neg
+                  (*
+                    (Get aq 0)
+                    (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))))
+      (Vec
+        (+
+          (Get at 2)
+          (+
+            (Get bt 2)
+            (+
+              (+
+                (*
+                  (Get aq 0)
+                  (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+                (neg
+                  (*
+                    (Get aq 1)
+                    (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))))
+        0))))
+#+end_src
+
+** cost function
+
+#+begin_example
+const LITERAL: f64 = 0.001;
+const STRUCTURE: f64 = 0.1;
+const VEC_OP: f64 = 1.;
+const OP: f64 = 1.;
+const BIG: f64 = 100.0;
+let op_cost = match enode {
+    // You get literals for extremely cheap
+    VecLang::Num(..) => LITERAL,
+    VecLang::Symbol(..) => LITERAL,
+    VecLang::Get(..) => LITERAL,
+
+    // And list structures for quite cheap
+    VecLang::List(..) => STRUCTURE,
+    VecLang::Concat(..) => STRUCTURE,
+
+    // Vectors are cheap if they have literal values
+    VecLang::Vec(vals) => {
+        // For now, workaround to determine if children are num, symbol,
+        // or get
+        let non_literals = vals.iter().any(|&x| costs(x) > 3. * LITERAL);
+        if non_literals {
+            BIG
+        } else {
+            STRUCTURE
+        }
+    }
+    VecLang::LitVec(..) => LITERAL,
+
+    // But scalar and vector ops cost something
+    VecLang::Add(vals) => OP * (vals.iter().count() as f64 - 1.),
+    VecLang::Mul(vals) => OP * (vals.iter().count() as f64 - 1.),
+    VecLang::Minus(vals) => OP * (vals.iter().count() as f64 - 1.),
+    VecLang::Div(vals) => OP * (vals.iter().count() as f64 - 1.),
+
+    VecLang::Sgn(..) => OP,
+    VecLang::Neg(..) => OP,
+    VecLang::Sqrt(..) => OP,
+
+    VecLang::VecAdd(..) => VEC_OP,
+    VecLang::VecMinus(..) => VEC_OP,
+    VecLang::VecMul(..) => VEC_OP,
+    VecLang::VecMAC(..) => VEC_OP,
+    VecLang::VecDiv(..) => VEC_OP,
+    VecLang::VecNeg(..) => VEC_OP,
+    VecLang::VecSqrt(..) => VEC_OP,
+    VecLang::VecSgn(..) => VEC_OP,
+    _ => VEC_OP,
+};
+#+end_example
+
+Seems like basically the way that the cost function works is that it strongly penalizes =Vec= from having large children. In other words, we want to push =Vec= as far in as possible and have =VecOp= be the top level nodes.
+
+I wonder if we can figure that out by scoring some of the rules.
+
+** Hand scoring some rules
+
+#+begin_example
+(Vec (+ ?a0 ?b0) (+ ?a1 ?b1)) => (VecAdd (Vec ?a0 ?a1) (Vec ?b0 ?b1))
+#+end_example
+
+This rule does the thing of pushing =Vec= down the tree. What is it's cost?
+
+LHS: =BIG + (OP * 2) + (OP * 2) + (LITERAL * 4)= = 104.004
+RHS: =VEC_OP + (2 * STRUCTURE) + (LITERAL * 4)= = 1.204
+
+Ok, so the left hand side indeed as a much larger cost than the right hand side.
+
+* Ideas that came up while working on other sections
+
+** Scoring rules via the cost function to estimate how much their application could help
+
+** How do we find "redundant" rules? Maybe having the redundant rules are better than having the composite rules?
+
+** Building up programs that don't cost that much, then build up programs that cost a lot, and use ruler to find equivalences between them. This will encourage it to find rules that decrease the cost by a lot.
+
+We could also do the simpler thing of first getting all the ruler rules, and then scoring them and only keeping the rules above a certain threshold.
+
+
