@@ -41,17 +41,25 @@ class Lit(Node):
 
     item: Any
 
+def parse(raw):
+    """Do f."""
+    if type(raw) == list:
+        head = raw[0]._val
+        rest = raw[1:]
+        if head in ["Get", "LitVec"]:
+            return Lit(raw)
+        elif head in ["+", "*", "/", "-", "or", "&&", "ite", "<", "sgn", "sqrt", "neg"]:
+            return Op(head, [parse(c) for c in rest])
+        elif head in ["VecAdd", "VecMinus", "VecMul", "VecDiv", "VecNeg", "VecSqrt", "VecSgn", "VecMAC"]:
+            return VecOp(head, [parse(c) for c in rest])
+        elif head in ["Vec"]:
+            return Vec([parse(c) for c in rest])
+        else:
+            raise Exception(f"Unknown class: {head}, ({raw})")
+    else:
+        return Lit(raw)
 
-# def getheads(l):
-#     """Do f."""
-#     if type(l) == list:
-#         heads = []
-#         for it in l[1:]:
-#             heads += getheads(it)
-#         return heads + [l[0]]
-#     return []
-
-
+    
 COSTS = {
     "Struct": 0.1,
     "Lit": 0.001,
@@ -79,23 +87,36 @@ def cost(prog):
         raise Exception("something went wrong")
 
 
-def parse(raw):
-    """Do f."""
-    if type(raw) == list:
-        head = raw[0]._val
-        rest = raw[1:]
-        if head in ["Get", "LitVec"]:
-            return Lit(raw)
-        elif head in ["+", "*", "/", "-", "or", "&&", "ite", "<", "sgn", "sqrt", "neg"]:
-            return Op(head, [parse(c) for c in rest])
-        elif head in ["VecAdd", "VecMinus", "VecMul", "VecDiv", "VecNeg", "VecSqrt", "VecSgn", "VecMAC"]:
-            return VecOp(head, [parse(c) for c in rest])
-        elif head in ["Vec"]:
-            return Vec([parse(c) for c in rest])
+def leaves(prog):
+    if type(prog) == VecOp:
+        return sum([leaves(c) for c in prog.children], [])
+    elif type(prog) == Op:
+        return sum([leaves(c) for c in prog.children], [])
+    elif type(prog) == Lit:
+        if type(prog.item) == sexp.Symbol:
+            return [prog.item._val]
         else:
-            raise Exception(f"Unknown class: {head}, ({raw})")
+            return []
+    elif type(prog) == Vec:
+        return sum([leaves(c) for c in prog.children], [])
     else:
-        return Lit(raw)
+        raise Exception(f"unknown: {prog}")
+
+
+def uses_vec_mac(prog):
+    if type(prog) == VecOp:
+        return prog.op == "VecMAC"
+    else:
+        return False
+
+
+def tree_depth(prog):
+    if type(prog) == VecOp or type(prog) == Op or type(prog) == Vec:
+        return 1 + max([tree_depth(c) for c in prog.children])
+    elif type(prog) == Lit:
+        return 0
+    else:
+        raise Exception(f"unknown: {prog}")
 
 
 def main():
@@ -110,10 +131,14 @@ def main():
             lhs = parse(sexp.loads(eq["lhs"]))
             rhs = parse(sexp.loads(eq["rhs"]))
             # if getheads(lhs) != getheads(rhs):
-            if abs(cost(lhs) - cost(rhs)) > 3:
+            cost_diff = abs(cost(lhs) - cost(rhs)) > 2
+            all_vars = len(set(leaves(lhs))) == 4 and len(set(leaves(rhs))) == 4
+            vec_mac = (uses_vec_mac(lhs) and tree_depth(lhs) == 1) or (tree_depth(rhs) == 1 and uses_vec_mac(rhs))
+            if vec_mac:
                 n_kept += 1
                 print(f"{eq['lhs']} <=> {eq['rhs']}")
                 print("cost: {}".format(abs(cost(lhs) - cost(rhs))))
+
             # if limit > 3:
             #     break
             # limit += 1

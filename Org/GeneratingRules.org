@@ -7,6 +7,9 @@ The description that =ruler= needs at the moment is an interpreter for the langu
 I'm thinking that it might be useful to also bring the =dios= cost function into the picture. Hopefully this can guide which rules seem important. At the very least, it might provide some metric for deciding which rules are "good".
 
 * By hand exploration
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
 
 Let's start by just looking at a dios program, looking at the cost function, and looking at some ruler generated rules and seeing if there seems like there is some path to go from the ruler generated rules to a "good" set of rules procedurally.
 
@@ -163,14 +166,1346 @@ RHS: =VEC_OP + (2 * STRUCTURE) + (LITERAL * 4)= = 1.204
 
 Ok, so the left hand side indeed as a much larger cost than the right hand side.
 
+** Automate the scoring of rules
+
+#+begin_src sh :results output
+./scripts/filter.py t0.json
+#+end_src
+
+#+RESULTS:
+#+begin_example
+(VecMul (Vec ?a ?b) (Vec ?c ?d)) <=> (Vec (* ?a ?c) (* ?b ?d))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?c ?d)) <=> (Vec (+ ?a ?c) (+ ?b ?d))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?c ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ ?c ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ ?a ?c))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ ?c ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?a ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?b ?c))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ ?b ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?a ?c)) <=> (Vec (* ?a ?a) (* ?b ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?c ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?a ?c)) <=> (Vec (+ ?a ?a) (+ ?b ?c))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec ?a (+ ?b ?c))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b ?c)) <=> (Vec ?b (* ?c ?a))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec ?a (* ?c ?b))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec ?a (* ?b ?c))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b ?c)) <=> (Vec ?b (* ?a ?c))
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (+ ?b ?a) ?c)
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (+ ?a ?c) ?b)
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (+ ?c ?a) ?b)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) ?c)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?c 1)) <=> (Vec (* ?a ?c) ?b)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (* ?a ?b) ?c)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (* ?b ?a) ?c)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?c 1)) <=> (Vec (* ?c ?a) ?b)
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec ?b (+ ?a ?c))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec ?b (+ ?c ?a))
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec ?a (+ ?c ?b))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?c ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?b ?a) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec 0 (* ?c ?a))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec 0 (* ?b ?c))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec 0 (* ?c ?b))
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec ?c 1)) <=> (Vec (+ ?a ?c) (+ 1 ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* ?c 0) (* ?c ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* ?c 0) (* ?c ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* ?b 0) (* ?b ?c))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* ?a 0) (* ?a ?c))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?c 1)) <=> (Vec (+ ?a ?c) (+ ?b 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (+ ?b ?a) (+ ?c 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?c 1)) <=> (Vec (+ ?c ?a) (+ ?b 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ ?c 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ 1 ?c))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?c 1)) <=> (Vec (+ ?c ?a) (+ 1 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (+ ?b ?a) (+ 1 ?c))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?c)) <=> (Vec (+ ?b 1) (+ ?c ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec (+ ?a 1) (+ ?c ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec (+ ?a 1) (+ ?b ?c))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?c)) <=> (Vec (+ ?b 1) (+ ?a ?c))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 0 ?c) (Vec ?c ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* ?a 0) (* ?c ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec ?b ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec ?b ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec ?c ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* ?b 0) (* ?a ?c))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 0 ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* ?a 0) (* ?b ?c))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 0 ?b) (Vec ?c ?c))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* ?b 0) (* ?c ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* 0 ?c) (* ?b ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* 0 ?b) (* ?c ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* 0 ?c) (* ?a ?c))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* 0 ?a) (* ?c ?a))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 0 ?c) (Vec ?b ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec ?c ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 0 ?b) (Vec ?b ?c))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 0 ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?a 0) (Vec ?b ?b))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?a 0) (Vec ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?c ?a) (* ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?a 0) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?b 0) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?a ?a) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?b 0) (Vec ?a ?b))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?b ?b) (Vec ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?a ?c) (* ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?b ?a) (Vec ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?b ?a) (* ?c 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?b 0) (Vec ?a ?a))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?a ?b) (Vec ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?c 0))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?c)) <=> (Vec (+ 1 ?b) (+ ?c ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec (+ 1 ?a) (+ ?c ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec (+ 1 ?a) (+ ?b ?c))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?c)) <=> (Vec (+ 1 ?b) (+ ?a ?c))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?a ?b) (Vec ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?a ?c) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?c ?a) (* ?c 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?a ?c) (* 0 ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?c ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?a ?c) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?a ?c) (* ?c 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?b 0) (Vec ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* 0 ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?c ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?c ?a) (* ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?b ?a) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?b ?b) (Vec ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?a ?c) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?c 0)) <=> (Vec (* ?c ?a) (* 0 ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?b ?a) (* 0 ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?b ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?a 0) (Vec ?b ?a))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?a 0) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?b 0) (Vec ?a ?b))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?b 0) (Vec ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* 0 ?a) (* ?a ?c))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* 0 ?c) (* ?c ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* 0 ?b) (* ?b ?c))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec ?b ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec 0 ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* 0 ?b) (* ?a ?c))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec ?c ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec 0 ?c) (Vec ?c ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec 0 ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec ?c ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec 0 ?c) (Vec ?b ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* 0 ?b) (* ?c ?a))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec ?b ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* 0 ?a) (* ?b ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* 0 ?c) (* ?c ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* 0 ?a) (* ?c ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* ?c 0) (* ?a ?c))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?c)) <=> (Vec (* ?a 0) (* ?c ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* ?c 0) (* ?b ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* ?b 0) (* ?c ?b))
+cost: 100.80000000000001
+(Vec (+ ?a ?b) (* ?c 0)) <=> (VecAdd (Vec ?a 0) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (+ ?a ?b) (* ?c 0)) <=> (VecAdd (Vec ?b 0) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (+ ?a ?b) (* 0 ?c)) <=> (VecAdd (Vec ?a 0) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (+ ?a ?b) (* 0 ?c)) <=> (VecAdd (Vec ?b 0) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (+ ?b ?c)) <=> (VecAdd (Vec 0 ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (+ ?b ?c)) <=> (VecAdd (Vec 0 ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (+ ?b ?c)) <=> (VecAdd (Vec 0 ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(Vec (* ?a 0) (+ ?b ?c)) <=> (VecAdd (Vec 0 ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 1 ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 0 ?b) (Vec 1 ?c))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 0 ?c) (Vec 1 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?c)) <=> (VecMul (Vec 1 ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?a 0) (Vec ?b 1))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?b 1) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?a 1) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* ?c 0)) <=> (VecMul (Vec ?b 0) (Vec ?a 1))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?a 1) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?a 0) (Vec ?b 1))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?b 0) (Vec ?a 1))
+cost: 100.80000000000001
+(Vec (* ?a ?b) (* 0 ?c)) <=> (VecMul (Vec ?b 1) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec 1 ?b) (Vec 0 ?c))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec 0 ?c) (Vec 1 ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec 1 ?c) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?c)) <=> (VecMul (Vec 0 ?b) (Vec 1 ?c))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b ?a)) <=> (Vec (* ?b ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b ?b)) <=> (Vec (* ?a ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b ?b)) <=> (Vec (* ?b ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b ?a)) <=> (Vec (* ?a ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b ?b)) <=> (Vec (+ ?b ?a) (+ ?b ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b ?a)) <=> (Vec (+ ?a ?b) (+ ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?a ?b)) <=> (Vec (* ?a ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?a ?a)) <=> (Vec (* ?a ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b ?a)) <=> (Vec (* ?a ?b) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b ?b)) <=> (Vec (* ?b ?a) (* ?b ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?a ?b)) <=> (Vec (+ ?a ?a) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?a ?a)) <=> (Vec (+ ?a ?a) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b ?a)) <=> (Vec (+ ?b ?a) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b ?b)) <=> (Vec (+ ?a ?b) (+ ?b ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?a ?b)) <=> (Vec (+ ?a ?a) (+ ?b ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b ?a)) <=> (Vec (* ?b ?a) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b ?b)) <=> (Vec (* ?a ?b) (* ?b ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?a ?a)) <=> (Vec (+ ?a ?a) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?a ?b)) <=> (Vec (+ ?a ?a) (+ ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?a ?b)) <=> (Vec (* ?a ?a) (* ?b ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b ?a)) <=> (Vec (+ ?b ?a) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b ?b)) <=> (Vec (+ ?b ?a) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b ?b)) <=> (Vec (+ ?a ?b) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b ?a)) <=> (Vec (+ ?a ?b) (+ ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?a ?a)) <=> (Vec (* ?a ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?a ?b)) <=> (Vec (* ?a ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?a ?b)) <=> (Vec (* ?a ?a) ?b)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?a 1)) <=> (Vec (* ?a ?a) ?b)
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec 1 ?b)) <=> (Vec ?a (* ?b ?a))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec ?b (+ ?a ?b))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec ?a (+ ?b ?a))
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec ?a (+ ?b ?a))
+cost: 99.799
+(VecAdd (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec ?a (+ ?b ?a))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b ?a)) <=> (Vec ?b (* ?a ?a))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 1 ?b)) <=> (Vec ?a (* ?b ?b))
+cost: 99.799
+(VecAdd (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec ?a (+ ?a ?b))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec ?a (+ ?a ?b))
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec ?a (+ ?a ?b))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec ?b (+ ?b ?a))
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b ?a)) <=> (Vec (* ?a ?b) ?a)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?b 1)) <=> (Vec (* ?b ?a) ?b)
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec ?b 1)) <=> (Vec (* ?a ?b) ?a)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b ?b)) <=> (Vec (* ?b ?a) ?b)
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?b ?a)) <=> (Vec ?b (+ ?a ?a))
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec 0 ?b)) <=> (Vec ?a (+ ?b ?b))
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (+ ?b ?a) ?b)
+cost: 99.799
+(VecAdd (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (+ ?a ?b) ?a)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (+ ?a ?b) ?a)
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (+ ?b ?a) ?b)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (+ ?a ?b) ?b)
+cost: 99.799
+(VecAdd (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (+ ?b ?a) ?a)
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (+ ?a ?b) ?b)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (+ ?b ?a) ?a)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 1 ?a)) <=> (Vec ?a (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b ?b)) <=> (Vec ?b (* ?a ?b))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?a ?b)) <=> (Vec ?a (* ?b ?a))
+cost: 99.799
+(VecAdd (Vec ?a ?b) (Vec ?a 0)) <=> (Vec (+ ?a ?a) ?b)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?a ?b)) <=> (Vec (+ ?a ?a) ?b)
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec ?b 1)) <=> (Vec (* ?b ?a) ?a)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b ?b)) <=> (Vec (* ?a ?b) ?b)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b ?a)) <=> (Vec (* ?b ?a) ?a)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?b 1)) <=> (Vec (* ?a ?b) ?b)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 1 ?a)) <=> (Vec ?a (* ?a ?b))
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec 1 ?b)) <=> (Vec ?a (* ?a ?b))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b ?b)) <=> (Vec ?b (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?a ?b)) <=> (Vec ?a (* ?a ?b))
+cost: 99.799
+(Vec ?a (* ?b 0)) <=> (Vec ?a 0)
+cost: 100.901
+(Vec (* ?a 0) ?b) <=> (Vec 0 ?b)
+cost: 100.901
+(VecMul (Vec ?a 1) (Vec ?b 1)) <=> (Vec (* ?a ?b) 1)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b 1)) <=> (Vec (* ?b ?a) 1)
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec 1 ?b)) <=> (Vec 1 (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec 1 ?b)) <=> (Vec 1 (* ?a ?b))
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b 0)) <=> (Vec (+ ?a ?b) 0)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b 0)) <=> (Vec (+ ?b ?a) 0)
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec 0 (+ ?a ?b))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec 0 (+ ?b ?a))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?a 0)) <=> (Vec (* ?a ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?a ?b)) <=> (Vec (* ?a ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?a ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?a ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?a ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?b ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?b ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?b ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?a ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?a ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?b ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?b ?a) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec 0 (* ?b 0))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* ?b 0) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec 0 (* ?a 0))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* ?a 0) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec 0 (* ?a 0))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* ?a 0) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec 0 (* ?b 0))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* ?b 0) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* 0 ?a) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* 0 ?b) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec 0 (* 0 ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec 0 (* 0 ?b))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* 0 ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* 0 ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec 0 (* 0 ?b))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec 0 (* 0 ?a))
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec 0 (* ?a ?b))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec 0 (* ?a ?b))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec 0 (* ?a ?b))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec 0 (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec 0 (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec 0 (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec 0 (* ?a ?b))
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec 0 (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec 0 (* ?b ?a))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec 0 (* ?a ?b))
+cost: 99.799
+(VecMul (Vec ?a ?b) (Vec 0 ?b)) <=> (Vec 0 (* ?b ?b))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b ?a)) <=> (Vec (* ?a 0) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?b)) <=> (Vec (* ?b 0) (* ?b ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?a)) <=> (Vec (+ ?a 1) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b 1)) <=> (Vec (+ 1 ?b) (+ ?a 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec 1 ?b)) <=> (Vec (+ 1 ?a) (+ ?b 1))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a ?b)) <=> (Vec (* ?a ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?a)) <=> (Vec (+ ?b ?a) (+ 1 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec 1 ?b)) <=> (Vec (+ 1 ?a) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?b)) <=> (Vec (+ 1 ?b) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?a)) <=> (Vec (+ 1 ?a) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?a ?b)) <=> (Vec (+ 1 ?a) (+ ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec (* ?a 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec (* ?b 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec (* ?a 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* ?a 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec (* ?b 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec (* ?a 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec (* ?b 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?b)) <=> (Vec (+ 1 ?a) (+ ?b ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?a)) <=> (Vec (+ 1 ?b) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b 1)) <=> (Vec (+ ?a ?b) (+ 1 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b 1)) <=> (Vec (+ ?b ?a) (+ 1 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?b)) <=> (Vec (+ ?a ?b) (+ 1 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?b)) <=> (Vec (+ ?a ?b) (+ ?b 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?a)) <=> (Vec (+ ?b ?a) (+ ?a 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b 1)) <=> (Vec (+ ?a ?b) (+ ?b 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b 1)) <=> (Vec (+ ?b ?a) (+ ?a 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec 1 ?b)) <=> (Vec (+ ?a 1) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?a ?b)) <=> (Vec (+ ?a 1) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?b)) <=> (Vec (+ ?b 1) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?a)) <=> (Vec (+ ?a 1) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec 1 ?b)) <=> (Vec (+ ?a 1) (+ 1 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b 1)) <=> (Vec (+ ?b 1) (+ 1 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?b)) <=> (Vec (+ ?a 1) (+ ?b ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?a)) <=> (Vec (+ ?b 1) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?a ?b)) <=> (Vec (+ ?a ?a) (+ 1 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?a 1)) <=> (Vec (+ ?a ?a) (+ 1 ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec (* 0 ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec (* 0 ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec (* 0 ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec (* 0 ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec (* 0 ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec (* 0 ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec 1 ?a)) <=> (Vec (+ 1 ?a) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec 1 ?b)) <=> (Vec (+ 1 ?a) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?a ?b)) <=> (Vec (+ 1 ?a) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?b)) <=> (Vec (+ 1 ?b) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?b)) <=> (Vec (+ ?b ?a) (+ ?b 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?a)) <=> (Vec (+ ?a ?b) (+ ?a 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b 1)) <=> (Vec (+ ?b ?a) (+ ?b 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b 1)) <=> (Vec (+ ?a ?b) (+ ?a 1))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?a ?b)) <=> (Vec (+ ?a 1) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b ?b)) <=> (Vec (+ ?b 1) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec 1 ?b)) <=> (Vec (+ ?a 1) (+ ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* 0 ?b)) <=> (VecMul (Vec ?a 0) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* ?b 0)) <=> (VecMul (Vec ?a 0) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* 0 ?b)) <=> (VecMul (Vec ?a ?a) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* ?b 0)) <=> (VecMul (Vec ?a ?a) (Vec ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a ?b)) <=> (Vec (* ?a ?a) (* ?b 0))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* 0 ?b)) <=> (VecMul (Vec ?a 0) (Vec ?a ?a))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* ?b 0)) <=> (VecMul (Vec ?a 0) (Vec ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a ?b)) <=> (Vec (* ?a ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a ?b)) <=> (Vec (* ?a ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?b 1)) <=> (Vec (+ ?b ?a) (+ 1 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?b)) <=> (Vec (+ ?b ?a) (+ 1 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?b 1)) <=> (Vec (+ ?a ?b) (+ 1 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?b ?a)) <=> (Vec (+ ?a ?b) (+ 1 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?b) (Vec ?a 1)) <=> (Vec (+ ?a ?a) (+ ?b 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?a ?b)) <=> (Vec (+ ?a ?a) (+ ?b 1))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?a ?b) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?a ?b) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?b ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (Vec (* ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?b ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (Vec (* ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* ?b 0) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* ?a 0) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* ?a 0) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* ?b 0) (* ?b 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* 0 ?b)) <=> (VecMul (Vec 0 ?b) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* 0 ?b)) <=> (VecMul (Vec 0 ?a) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* 0 ?b)) <=> (VecMul (Vec ?b 0) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* 0 ?b)) <=> (VecMul (Vec ?a 0) (Vec 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* 0 ?a) (* ?b 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b 0)) <=> (VecMul (Vec 0 ?b) (Vec ?b 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b 0)) <=> (VecMul (Vec 0 ?a) (Vec ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* 0 ?b) (* ?a 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b 0)) <=> (VecMul (Vec ?a 0) (Vec 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* ?b 0))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b 0)) <=> (VecMul (Vec ?b 0) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* 0 ?b)) <=> (VecMul (Vec ?b 0) (Vec 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* ?a 0) (* 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* 0 ?b)) <=> (VecMul (Vec 0 ?a) (Vec ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* ?a 0) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* ?b 0) (* 0 ?a))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* 0 ?b)) <=> (VecMul (Vec 0 ?b) (Vec ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* ?b 0) (* 0 ?a))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* 0 ?b)) <=> (VecMul (Vec ?a 0) (Vec 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* 0 ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* 0 ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* 0 ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b 0)) <=> (Vec (* 0 ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec (* 0 ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec (* 0 ?b) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec (* 0 ?b) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec (* 0 ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec (* 0 ?b) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec (* 0 ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec (* ?b 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* ?b 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec (* ?b 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec (* ?a 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (Vec (* ?a 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* ?a 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec (* ?b 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (Vec (* ?a 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (Vec (* ?a 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (Vec (* ?b 0) (* ?a ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?b)) <=> (VecMul (Vec 0 ?b) (Vec 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* ?b ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?a)) <=> (Vec (* 0 ?b) (* ?a ?a))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?b)) <=> (VecMul (Vec 0 ?b) (Vec ?b ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?b)) <=> (VecMul (Vec 0 ?b) (Vec 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?b)) <=> (Vec (* ?a 0) (* ?b ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?a)) <=> (Vec (* ?b 0) (* ?a ?a))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?b)) <=> (VecMul (Vec 0 ?b) (Vec ?b ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?b)) <=> (VecMul (Vec ?b ?b) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?b)) <=> (VecMul (Vec ?b ?b) (Vec 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?b) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* ?b ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?b ?a)) <=> (Vec (* 0 ?a) (* ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec 1 ?b)) <=> (Vec (+ ?a 1) (+ ?b 1))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?b 1)) <=> (Vec (+ ?b 1) (+ ?a 1))
+cost: 100.80000000000001
+(Vec (+ ?a ?a) (* ?b 0)) <=> (VecAdd (Vec ?a 0) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (+ ?a ?a) (* 0 ?b)) <=> (VecAdd (Vec ?a 0) (Vec ?a 0))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?b 0)) <=> (Vec (+ ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?b 0)) <=> (Vec (+ ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* ?a 0) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* ?b 0) (+ ?b ?a))
+cost: 100.80000000000001
+(Vec (* ?a 0) (+ ?b ?b)) <=> (VecAdd (Vec 0 ?b) (Vec 0 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?b 0)) <=> (Vec (+ ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?b 0)) <=> (Vec (+ ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?b 0)) <=> (Vec (+ ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?b 0)) <=> (Vec (+ ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (+ ?b ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (+ ?a ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (+ ?b ?a))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (+ ?b ?b)) <=> (VecAdd (Vec 0 ?b) (Vec 0 ?b))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec 1 (+ ?b ?a))
+cost: 99.799
+(VecAdd (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec 1 (+ ?b ?a))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec 1 (+ ?a ?b))
+cost: 99.799
+(VecAdd (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec 1 (+ ?a ?b))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 1)) <=> (Vec (* ?a 0) ?a)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec 0 ?b)) <=> (Vec (* ?b 0) ?b)
+cost: 99.799
+(VecAdd (Vec ?a 1) (Vec 0 ?b)) <=> (Vec ?a (+ ?b 1))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?b 1)) <=> (Vec ?b (+ ?a 1))
+cost: 99.799
+(VecAdd (Vec ?a 1) (Vec ?b 0)) <=> (Vec (+ ?b ?a) 1)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b 1)) <=> (Vec (+ ?a ?b) 1)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?b 1)) <=> (Vec (+ ?b ?a) 1)
+cost: 99.799
+(VecAdd (Vec ?a 1) (Vec ?b 0)) <=> (Vec (+ ?a ?b) 1)
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b 0)) <=> (Vec ?b (* ?a 0))
+cost: 99.799
+(Vec ?a (* ?b 0)) <=> (VecMul (Vec 1 ?a) (Vec ?a 0))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 1 ?b)) <=> (Vec ?a (* ?b 0))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b 0)) <=> (Vec ?b (* 0 ?b))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 1 ?b)) <=> (Vec ?a (* 0 ?a))
+cost: 99.799
+(Vec ?a (* ?b 0)) <=> (VecMul (Vec ?a 0) (Vec 1 ?a))
+cost: 99.799
+(Vec (* ?a 0) ?b) <=> (VecMul (Vec ?b 1) (Vec 0 ?b))
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec 0 ?b)) <=> (Vec (* ?a 0) ?b)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 1)) <=> (Vec (* ?b 0) ?a)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 1)) <=> (Vec (* 0 ?a) ?a)
+cost: 99.799
+(Vec (* 0 ?a) ?b) <=> (VecMul (Vec ?b 1) (Vec 0 ?b))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?b 1)) <=> (Vec (* 0 ?b) ?a)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec 0 ?b)) <=> (Vec (* 0 ?a) ?b)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec 0 ?b)) <=> (Vec (* 0 ?b) ?b)
+cost: 99.799
+(Vec (* ?a 0) ?b) <=> (VecMul (Vec 0 ?b) (Vec ?b 1))
+cost: 99.799
+(Vec (* 0 ?a) ?b) <=> (VecMul (Vec 0 ?b) (Vec ?b 1))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b 0)) <=> (Vec ?b (* ?b 0))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?b 0)) <=> (Vec ?b (* 0 ?a))
+cost: 99.799
+(Vec ?a (* 0 ?b)) <=> (VecMul (Vec ?a 0) (Vec 1 ?a))
+cost: 99.799
+(Vec ?a (* 0 ?b)) <=> (VecMul (Vec 1 ?a) (Vec ?a 0))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 1 ?b)) <=> (Vec ?a (* ?a 0))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 1 ?b)) <=> (Vec ?a (* 0 ?b))
+cost: 99.799
+(VecAdd (Vec 1 ?a) (Vec ?b 0)) <=> (Vec (+ ?b 1) ?a)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec 1 ?b)) <=> (Vec (+ ?a 1) ?b)
+cost: 99.799
+(VecAdd (Vec 1 ?a) (Vec ?b 0)) <=> (Vec (+ 1 ?b) ?a)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec 1 ?b)) <=> (Vec (+ 1 ?a) ?b)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?a ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?a ?b) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?b ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?b ?a) 0)
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec 0 (* ?a ?b))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec 0 (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec 0 (* ?b ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec 0 (* ?a ?b))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?b 1)) <=> (Vec ?b (+ 1 ?a))
+cost: 99.799
+(VecAdd (Vec ?a 1) (Vec 0 ?b)) <=> (Vec ?a (+ 1 ?b))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec (* ?a 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec (* ?b 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec (* ?a 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec (* 0 ?b) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec (* 0 ?a) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* ?b ?a))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* 0 ?b)) <=> (VecMul (Vec ?a 1) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* 0 ?b)) <=> (VecMul (Vec ?a 0) (Vec ?a 1))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* ?b 0)) <=> (VecMul (Vec ?a 1) (Vec ?a 0))
+cost: 100.80000000000001
+(Vec (* ?a ?a) (* ?b 0)) <=> (VecMul (Vec ?a 0) (Vec ?a 1))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?a ?b) (* ?b 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?b ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?a ?b) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (Vec (* ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (Vec (* ?b ?a) (* 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec (* 0 ?b) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec (* 0 ?b) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec (* 0 ?a) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec (* ?b 0) (* ?a ?b))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec (* ?a 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (Vec (* ?a 0) (* ?b ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (Vec (* ?b 0) (* ?a ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?b)) <=> (VecMul (Vec 0 ?b) (Vec 1 ?b))
+cost: 100.80000000000001
+(Vec (* 0 ?a) (* ?b ?b)) <=> (VecMul (Vec 1 ?b) (Vec 0 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?b)) <=> (VecMul (Vec 0 ?b) (Vec 1 ?b))
+cost: 100.80000000000001
+(Vec (* ?a 0) (* ?b ?b)) <=> (VecMul (Vec 1 ?b) (Vec 0 ?b))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?a ?a)) <=> (Vec (* ?a ?a) (* ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?a ?a)) <=> (Vec (+ ?a ?a) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?a ?a)) <=> (Vec (+ ?a ?a) ?a)
+cost: 99.799
+(VecAdd (Vec ?a ?a) (Vec ?a 0)) <=> (Vec (+ ?a ?a) ?a)
+cost: 99.799
+(VecAdd (Vec ?a ?a) (Vec 0 ?a)) <=> (Vec ?a (+ ?a ?a))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?a ?a)) <=> (Vec ?a (+ ?a ?a))
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?a ?a)) <=> (Vec (* ?a ?a) ?a)
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec ?a 1)) <=> (Vec (* ?a ?a) ?a)
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?a ?a)) <=> (Vec ?a (* ?a ?a))
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec 1 ?a)) <=> (Vec ?a (* ?a ?a))
+cost: 99.799
+(Vec 0 ?a) <=> (Vec (* ?a 0) ?a)
+cost: 100.901
+(Vec ?a 0) <=> (Vec ?a (* 0 ?a))
+cost: 100.901
+(Vec 0 ?a) <=> (Vec (* 0 ?a) ?a)
+cost: 100.901
+(Vec ?a 0) <=> (Vec ?a (* ?a 0))
+cost: 100.901
+(VecAdd (Vec ?a 0) (Vec ?a 0)) <=> (Vec (+ ?a ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?a 1)) <=> (Vec (* ?a ?a) 1)
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec 1 ?a)) <=> (Vec 1 (* ?a ?a))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?a 0)) <=> (Vec (* ?a ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec ?a 0)) <=> (Vec (* ?a ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?a ?a)) <=> (Vec (* ?a ?a) 0)
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec 0 ?a)) <=> (Vec 0 (+ ?a ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a 0)) <=> (Vec 0 (* ?a 0))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a 0)) <=> (Vec (* ?a 0) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a 0)) <=> (Vec (* 0 ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?a)) <=> (Vec (* 0 ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?a)) <=> (Vec 0 (* ?a 0))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?a)) <=> (Vec (* ?a 0) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a 0)) <=> (Vec 0 (* 0 ?a))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 0 ?a)) <=> (Vec 0 (* 0 ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec 0 ?a)) <=> (Vec 0 (* ?a ?a))
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a ?a)) <=> (Vec 0 (* ?a ?a))
+cost: 99.799
+(VecMul (Vec ?a ?a) (Vec 0 ?a)) <=> (Vec 0 (* ?a ?a))
+cost: 99.799
+(VecAdd (Vec 1 ?a) (Vec ?a 1)) <=> (Vec (+ 1 ?a) (+ 1 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec 1 ?a)) <=> (Vec (+ 1 ?a) (+ 1 ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?a)) <=> (Vec (* ?a 0) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?a)) <=> (Vec (* ?a 0) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?a)) <=> (Vec (* ?a 0) (* ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?a ?a)) <=> (Vec (+ ?a ?a) (+ 1 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?a 1)) <=> (Vec (+ ?a ?a) (+ 1 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?a 1)) <=> (Vec (+ ?a 1) (+ ?a 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec 1 ?a)) <=> (Vec (+ ?a 1) (+ ?a 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec 1 ?a)) <=> (Vec (+ ?a 1) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?a ?a)) <=> (Vec (+ ?a 1) (+ ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a ?a)) <=> (Vec (* ?a ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec 1 ?a)) <=> (Vec (+ 1 ?a) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 1 ?a) (Vec ?a ?a)) <=> (Vec (+ 1 ?a) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a ?a) (Vec ?a 1)) <=> (Vec (+ ?a ?a) (+ ?a 1))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec ?a ?a)) <=> (Vec (+ ?a ?a) (+ ?a 1))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a ?a)) <=> (Vec (* ?a ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a 0)) <=> (Vec (* ?a 0) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?a)) <=> (Vec (* ?a 0) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a 0)) <=> (Vec (* 0 ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec 0 ?a)) <=> (Vec (* 0 ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 0 ?a)) <=> (Vec (* 0 ?a) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec ?a ?a)) <=> (Vec (* 0 ?a) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a ?a) (Vec 0 ?a)) <=> (Vec (* 0 ?a) (* ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?a 0)) <=> (Vec (+ ?a ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 0) (Vec ?a 0)) <=> (Vec (+ ?a ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 0 ?a)) <=> (Vec (* 0 ?a) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec 0 ?a) (Vec 0 ?a)) <=> (Vec (* ?a 0) (+ ?a ?a))
+cost: 100.80000000000001
+(VecAdd (Vec ?a 1) (Vec 0 ?a)) <=> (Vec ?a (+ 1 ?a))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec 1 ?a)) <=> (Vec 1 (+ ?a ?a))
+cost: 99.799
+(VecAdd (Vec 1 ?a) (Vec 0 ?a)) <=> (Vec 1 (+ ?a ?a))
+cost: 99.799
+(VecAdd (Vec 1 ?a) (Vec ?a 0)) <=> (Vec (+ ?a 1) ?a)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec 1 ?a)) <=> (Vec (+ ?a 1) ?a)
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec 0 ?a)) <=> (Vec (* ?a 0) ?a)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a 1)) <=> (Vec (* ?a 0) ?a)
+cost: 99.799
+(VecAdd (Vec ?a 1) (Vec ?a 0)) <=> (Vec (+ ?a ?a) 1)
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec ?a 1)) <=> (Vec (+ ?a ?a) 1)
+cost: 99.799
+(VecAdd (Vec ?a 1) (Vec 0 ?a)) <=> (Vec ?a (+ ?a 1))
+cost: 99.799
+(VecAdd (Vec 0 ?a) (Vec ?a 1)) <=> (Vec ?a (+ ?a 1))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?a 0)) <=> (Vec ?a (* 0 ?a))
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 1 ?a)) <=> (Vec ?a (* 0 ?a))
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec 0 ?a)) <=> (Vec (* 0 ?a) ?a)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec ?a 1)) <=> (Vec (* 0 ?a) ?a)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec 1 ?a)) <=> (Vec ?a (* ?a 0))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec ?a 0)) <=> (Vec ?a (* ?a 0))
+cost: 99.799
+(VecMul (Vec ?a 1) (Vec ?a 0)) <=> (Vec (* ?a ?a) 0)
+cost: 99.799
+(VecMul (Vec ?a 0) (Vec ?a 1)) <=> (Vec (* ?a ?a) 0)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec 1 ?a)) <=> (Vec 0 (* ?a ?a))
+cost: 99.799
+(VecMul (Vec 1 ?a) (Vec 0 ?a)) <=> (Vec 0 (* ?a ?a))
+cost: 99.799
+(VecAdd (Vec ?a 0) (Vec 1 ?a)) <=> (Vec (+ 1 ?a) ?a)
+cost: 99.799
+(VecAdd (Vec 1 ?a) (Vec ?a 0)) <=> (Vec (+ 1 ?a) ?a)
+cost: 99.799
+(VecMul (Vec 0 ?a) (Vec 1 ?a)) <=> (Vec (* ?a 0) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?a)) <=> (Vec (* ?a 0) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a 1)) <=> (Vec (* ?a ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* ?a 0))
+cost: 100.80000000000001
+(VecMul (Vec ?a 1) (Vec ?a 0)) <=> (Vec (* ?a ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec ?a 0) (Vec ?a 1)) <=> (Vec (* ?a ?a) (* 0 ?a))
+cost: 100.80000000000001
+(VecMul (Vec 0 ?a) (Vec 1 ?a)) <=> (Vec (* 0 ?a) (* ?a ?a))
+cost: 100.80000000000001
+(VecMul (Vec 1 ?a) (Vec 0 ?a)) <=> (Vec (* 0 ?a) (* ?a ?a))
+cost: 100.80000000000001
+# kept/total: 654 / 2740
+#+end_example
+
+Ok, I'm not entirely certain what to do with these rules. I guess there are some objective (non-heuristic) questions. Are strictly more general rules always better? I'm going to postpone answering this question.
+
 * Ideas that came up while working on other sections
 
 ** Scoring rules via the cost function to estimate how much their application could help
 
 ** How do we find "redundant" rules? Maybe having the redundant rules are better than having the composite rules?
 
-** Building up programs that don't cost that much, then build up programs that cost a lot, and use ruler to find equivalences between them. This will encourage it to find rules that decrease the cost by a lot.
+** Building up programs that don't cost that much, then build up programs that cost a lot, and use ruler to find equivalences between them. 
 
 We could also do the simpler thing of first getting all the ruler rules, and then scoring them and only keeping the rules above a certain threshold.
 
+This will encourage it to find rules that decrease the cost by a lot.
+
+** Are strictly more general rules always better?
+
+For example, consider these two rules:
+#+begin_example
+(VecMul (Vec ?a ?b) (Vec ?c ?d)) <=> (Vec (* ?a ?c) (* ?b ?d))
+(VecMul (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?c ?b))
+#+end_example
+
+The second rule is a sub-case of the first one. Is there any difference between including both rules, just having the first rule, or just having the second rule?
 
