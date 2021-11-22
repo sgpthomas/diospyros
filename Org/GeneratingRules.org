@@ -1487,7 +1487,35 @@ cost: 100.80000000000001
 
 Ok, I'm not entirely certain what to do with these rules. I guess there are some objective (non-heuristic) questions. Are strictly more general rules always better? I'm going to postpone answering this question.
 
-* Ideas that came up while working on other sections
+** Summary
+
+*** Nov 22
+**** Progress
+
+You can use a /cost differential/ metric to score rules. The cost differential is just applying the cost function to the left and right hand sides of a rewrite rule. The idea is to capture the rules that "move in the right direction" w.r.t to the cost function. This metric seems to correctly select rules that push =Vec= down as far as they can go while retaining the program semantics by transforming =ops= to =vec-ops=.
+
+However, we still end up with lots of stupid and redundant rules which are all possible combinations of scalar rules but inside of vectors. The next step is to start looking for rules that increase the size of the graph in interesting ways (but don't have a cost differential directly). The trick will be to pin down what "interesting ways" means precisely. The broad idea I'm working with atm is that we sometimes need to make the graph bigger to discover when particular rewrite rules will be able to apply. One example is that we need to first change + into VecAdd and * into VecMul before we can use VecMAC at all. Finding a metric that captures this idea and using them to filter rewrite rules is the next step.
+
+To summarize, there are two types of rules that we are looking for:
+1) Rules that directly decrease the cost function (using this idea of the cost differential)
+2) Rules that increase the graph to create opportunities for the cost lowering rules to apply.
+
+There are still some scaling problems to be solved. With the Vector rules enabled, we generate an absurd number of rules (36448 with current settings). This is so many rules. Many of these are just small variations of each other. It would be nice to not generate these rules. Seeding some initial rules may be a good way around this problem. But it's still not an ideal solution in the long term.
+
+**** Vision progress
+
+This technique of automatically generating rewrite rules is moving in the direction of automatic synthesis of compilers. This is an interesting problem because compilers are widely used across domains (even in domains where you would not quite expect such as biology. There they are interested in creating programs that model the behavior of some biological system so that they can then study the program to try and find insight) and very difficult and time consuming to write. Most of the time you don't actually care all that much about the performance of the compiler and so it's fine to generate something that isn't necessarily the fastest.
+
+The problem that I'm currently working on can be phrased something like the following:
+Given a language, an interpreter that gives semantics to the language, and a monotonic cost function (in the egg sense), can we synthesize a compiler that transforms arbitrary subsets of the language into the optimal subset (as defined by the cost function).
+
+The general outline that is emerging:
+1) Run ruler with the language interpreter to generate a set of rewrite rules that covers the semantics of the language.
+2) Run a dios-like compiler that uses egraphs and the set of rules to search over a space of programs to find a low cost equivalent program.
+
+The hard question is coming up with a set of rewrite rules that enable the second part of the compiler to perform well. If we choose the wrong set of rewrite rules the dios compiler will take a long time (read fail to terminate) and or not find a good program.
+
+* ideas that came up while working on other sections
 
 ** Scoring rules via the cost function to estimate how much their application could help
 
