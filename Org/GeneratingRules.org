@@ -1487,7 +1487,21 @@ cost: 100.80000000000001
 
 Ok, I'm not entirely certain what to do with these rules. I guess there are some objective (non-heuristic) questions. Are strictly more general rules always better? I'm going to postpone answering this question.
 
-** Summary
+** Algorithm for finding which rules are dependent on other rules
+
+Given a set $R = \{ lhs \leftrightsquigarrow rhs \}$ of rules, construct a graph $G = (N, E)$ such that:
+$N = \{ ops(lhs) \cup ops(rhs) \mid lhs \leftrightsquigarrow rhs \in R \}$
+and an edge set such that there is an edge between $n$ and $m$ if $n \in ops(lhs)$ and $m \in ops(rhs)$.
+
+This will give me a graph where if there is a path between two nodes, we know that there is some sequence of rules that lets you derive one operator from another. I'm not entirely sure yet what to do with this graph, but it seems like it might be helpful in determining if a rule is worth adding even though it doesn't directly help the cost all that much.
+
+[[./dep_graph.png]]
+
+This is the graph I got. I suppose I should have seen this coming, but this graph is very obvious. But I guess cool that it's easy to generate.
+
+Ok, so now the question is can I use this graph to prune down the rule space somehow?
+
+** Summaries
 
 *** Nov 22
 **** Progress
