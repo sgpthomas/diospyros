@@ -1,5 +1,4 @@
 use egg::{rewrite as rw, *};
-use rand::prelude::*;
 
 use itertools::Itertools;
 
@@ -115,24 +114,21 @@ pub fn run(
     let mut rules = rules(no_ac, no_vec, ruleset);
     // filter_applicable_rules(&mut rules, prog);
 
-    retain_rules_by_name(
-        &mut rules,
-        &[
-            "+_binop_or_zero_vec",
-            "*_binop_or_zero_vec",
-            "litvec",
-            "add-0-inv",
-            "mul-1-inv",
-            "vec-mac-add-mul",
-            "vec-mac",
-            "mul-1-inv",
-            "add-0-inv",
-            "vec-mac",
-            "neg_unop",
-            "expand-zero-get",
-            "neg-zero-inv",
-        ],
-    );
+    // retain_rules_by_name(
+    //     &mut rules,
+    //     &[
+    //         "+_binop_or_zero_vec",
+    //         "*_binop_or_zero_vec",
+    //         "litvec",
+    //         "add-0-inv",
+    //         "mul-1-inv",
+    //         "vec-mac-add-mul",
+    //         "vec-mac",
+    //         "neg_unop",
+    //         "expand-zero-get",
+    //         "neg-zero-inv",
+    //     ],
+    // );
 
     let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
     init_eg.add(VecLang::Num(0));
@@ -153,8 +149,8 @@ pub fn run(
         .with_iter_limit(iter_limit);
 
     // add scheduler
-    let scheduler = LoggingScheduler::new(runner.roots[0], prog.clone());
-    // let scheduler = SimpleScheduler;
+    // let scheduler = LoggingScheduler::new(runner.roots[0], prog.clone());
+    let scheduler = SimpleScheduler;
     runner = runner.with_scheduler(scheduler);
 
     eprintln!("Starting run with {} rules", rules.len());
@@ -180,32 +176,32 @@ pub fn run(
     let (cost, out_prog) = extractor.find_best(root);
     eprintln!("Egraph cost? {}", cost);
 
-    print_rewrites_used(
-        "",
-        &get_rewrites_used(
-            &runner
-                .explain_equivalence(&prog, &out_prog)
-                .explanation_trees,
-        ),
-    );
+    // print_rewrites_used(
+    //     "",
+    //     &get_rewrites_used(
+    //         &runner
+    //             .explain_equivalence(&prog, &out_prog)
+    //             .explanation_trees,
+    //     ),
+    // );
 
-    eprintln!(
-        "{}",
-        &runner
-            .explain_existance(
-                &"(VecAdd
-    (VecAdd
-      (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
-      (VecMAC
-        (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
-        (LitVec (Get aq 1) (Get aq 2))
-        (LitVec (Get bq 2) (Get bq 0))))
-    (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))"
-                    .parse()
-                    .unwrap()
-            )
-            .get_flat_string()
-    );
+    // eprintln!(
+    //     "{}",
+    //     &runner
+    //         .explain_existance(
+    //             &"(VecAdd
+    // (VecAdd
+    //   (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
+    //   (VecMAC
+    //     (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
+    //     (LitVec (Get aq 1) (Get aq 2))
+    //     (LitVec (Get bq 2) (Get bq 0))))
+    // (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))"
+    //                 .parse()
+    //                 .unwrap()
+    //         )
+    //         .get_flat_string()
+    // );
 
     (cost, out_prog)
 }
@@ -319,8 +315,8 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<DiosRwrite
         rules.extend(ruler_rules(filename));
     }
 
-    let mut rng = rand::thread_rng();
-    rules.shuffle(&mut rng);
+    // let mut rng = rand::thread_rng();
+    // rules.shuffle(&mut rng);
 
     rules
 }
@@ -339,7 +335,8 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
 
         if eq["bidirectional"].as_bool().unwrap() {
             // we have to clone bc it is a bidirectional rule
-            rules.extend(rw!(format!("ruler_{}_lr", idx); { lpat.clone() } <=> { rpat.clone() }))
+            rules.extend(rw!(format!("ruler_{}_lr", idx);
+			     { lpat.clone() } <=> { rpat.clone() }))
         } else {
             rules.push(rw!(format!("ruler_{}_lr", idx); { lpat } => { rpat }))
         }

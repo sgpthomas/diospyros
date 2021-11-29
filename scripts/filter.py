@@ -188,7 +188,7 @@ def main():
             vec_mac_lhs = (uses_vec_mac(lhs) and tree_depth(lhs) == 1)
             vec_mac_rhs = (tree_depth(rhs) == 1 and uses_vec_mac(rhs))
             vec_mac = vec_mac_lhs or vec_mac_rhs
-            if cost_diff:
+            if not cost_diff:
                 n_kept += 1
                 print(f"[{c}] {pprint(lhs)} <=> {pprint(rhs)}")
 

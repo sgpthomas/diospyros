@@ -2,6 +2,7 @@ use crate::veclang::VecLang;
 use egg::TreeExplanation;
 
 /// Get a flat list of all the rewrites used in a tree explanation
+#[allow(unused)]
 pub fn get_rewrites_used(tree: &TreeExplanation<VecLang>) -> Vec<String> {
     let mut rules: Vec<String> = vec![];
     for term in tree {
@@ -20,6 +21,7 @@ pub fn get_rewrites_used(tree: &TreeExplanation<VecLang>) -> Vec<String> {
     rules
 }
 
+#[allow(unused)]
 pub fn print_rewrites_used(pre: &str, rules: &[String]) {
     for r in rules {
         eprintln!("{}{}", pre, r);
@@ -27,6 +29,7 @@ pub fn print_rewrites_used(pre: &str, rules: &[String]) {
 }
 
 /// Checks whether a rewrite rule is used at the toplevel.
+#[allow(unused)]
 pub fn is_rewrite_used<S>(rule_name: S, tree: &TreeExplanation<VecLang>) -> bool
 where
     S: AsRef<str>,

@@ -1529,7 +1529,15 @@ The general outline that is emerging:
 
 The hard question is coming up with a set of rewrite rules that enable the second part of the compiler to perform well. If we choose the wrong set of rewrite rules the dios compiler will take a long time (read fail to terminate) and or not find a good program.
 
-* ideas that came up while working on other sections
+*  Starting to build an algorithm
+
+** Starting with the simplest things
+
+The idea is that there are two types of rules, rules that improve the cost, and rules that increase the graph size and allow cost improving rules to apply. The first type of rules are easy to discover, you can use this idea of the cost differential (cost of lhs minus cost of rhs).
+
+The second type of rules are much harder to get a grasp on. My first idea which I want to try is take the existing set of rules that I know are good, add a single rule from some candidate set, and track what it does to the size vs. cost of the graph.
+
+*  ideas that came up while working on other sections
 
 ** Scoring rules via the cost function to estimate how much their application could help
 
@@ -1550,4 +1558,10 @@ For example, consider these two rules:
 #+end_example
 
 The second rule is a sub-case of the first one. Is there any difference between including both rules, just having the first rule, or just having the second rule?
+
+** Diospyros might be a substinatively different domain than the ones measured in the ruler evaluation
+
+The reason I think this is that Dios is really translating from one domain to a different one. Namely it is translating from a language of scalar operations to a language of vector operations. This makes Dios a more compilery task than something like Herbie or bitvectors.
+
+I think that implications of this is that their approach is a little too general. It justifies this idea of trying to bring a little more knowledge of the domains into the rule searching process.
 

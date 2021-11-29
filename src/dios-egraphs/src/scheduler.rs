@@ -1,7 +1,4 @@
-use std::{
-    collections::{HashMap, HashSet},
-    iter::FromIterator,
-};
+use std::{collections::HashMap, iter::FromIterator};
 
 use egg::{Extractor, Id, RecExpr, Rewrite, RewriteScheduler};
 
@@ -56,8 +53,8 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
         for id in &applications {
             let extractor = Extractor::new(&egraph, VecCostFn { egraph });
             let (_, l) = extractor.find_best(*id);
-            let ex = &mut egraph.clone().explain_existance(&l);
-            let ex_tree = &ex.explanation_trees;
+            // let ex = &mut egraph.clone().explain_existance(&l);
+            // let ex_tree = &ex.explanation_trees;
 
             eprintln!("{}, {}", id, l.pretty(80));
             // if is_rewrite_used(rewrite.name.as_str(), &ex_tree) {
