@@ -1529,7 +1529,7 @@ The general outline that is emerging:
 
 The hard question is coming up with a set of rewrite rules that enable the second part of the compiler to perform well. If we choose the wrong set of rewrite rules the dios compiler will take a long time (read fail to terminate) and or not find a good program.
 
-*  Starting to build an algorithm
+* Starting to build an algorithm
 
 ** Starting with the simplest things
 
@@ -1537,7 +1537,23 @@ The idea is that there are two types of rules, rules that improve the cost, and 
 
 The second type of rules are much harder to get a grasp on. My first idea which I want to try is take the existing set of rules that I know are good, add a single rule from some candidate set, and track what it does to the size vs. cost of the graph.
 
-*  ideas that came up while working on other sections
+** Most complicated version to simplest version
+
+The most advanced version of this algorithm assumes 0 rules to start off with and has to discover all the good rules by itself. This seems hard when we have a hundred thousand candidate rules. This would be a very cool problem to solve though.
+
+The simplest version of the algorithm is determining if the addition of a single rule is worthwhile. Let's start with this version. Here's the game plan. Let's start with just the rules that convert a vec of ops into a single VecOp and then see if we can come up with an algo that determines if a single additional rule is worthwhile to add or not.
+
+** Something
+
+The vague idea is that maybe we don't need to reify the ruler egraph full of rules until later in the saturation process. We can use particular programs to extract rules that will be good for it?
+
+Things we definitely can do:
+- fill an egraph with rules
+- find left hand sides with low cost right hand sides (these can represent combinations of rules)
+
+Is this actually better than saturating the graph with the rules directly? Probably because with 130,000 rules even a single iteration is prohibitively expensive and saturation would be infeasible.
+
+* ideas that came up while working on other sections
 
 ** Scoring rules via the cost function to estimate how much their application could help
 
@@ -1559,9 +1575,8 @@ For example, consider these two rules:
 
 The second rule is a sub-case of the first one. Is there any difference between including both rules, just having the first rule, or just having the second rule?
 
-** Diospyros might be a substinatively different domain than the ones measured in the ruler evaluation
+** Diospyros might be a substantively different domain than the ones measured in the ruler evaluation
 
 The reason I think this is that Dios is really translating from one domain to a different one. Namely it is translating from a language of scalar operations to a language of vector operations. This makes Dios a more compilery task than something like Herbie or bitvectors.
 
 I think that implications of this is that their approach is a little too general. It justifies this idea of trying to bring a little more knowledge of the domains into the rule searching process.
-

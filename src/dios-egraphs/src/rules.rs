@@ -114,21 +114,21 @@ pub fn run(
     let mut rules = rules(no_ac, no_vec, ruleset);
     // filter_applicable_rules(&mut rules, prog);
 
-    // retain_rules_by_name(
-    //     &mut rules,
-    //     &[
-    //         "+_binop_or_zero_vec",
-    //         "*_binop_or_zero_vec",
-    //         "litvec",
-    //         "add-0-inv",
-    //         "mul-1-inv",
-    //         "vec-mac-add-mul",
-    //         "vec-mac",
-    //         "neg_unop",
-    //         "expand-zero-get",
-    //         "neg-zero-inv",
-    //     ],
-    // );
+    retain_rules_by_name(
+        &mut rules,
+        &[
+            "+_binop_or_zero_vec",
+            "*_binop_or_zero_vec",
+            // "litvec",
+            "add-0-inv",
+            "mul-1-inv",
+            // "vec-mac-add-mul",
+            "vec-mac",
+            "neg_unop",
+            // "expand-zero-get",
+            "neg-zero-inv",
+        ],
+    );
 
     let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
     init_eg.add(VecLang::Num(0));
@@ -329,17 +329,55 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
     let data = json::parse(&contents).unwrap();
 
     let mut rules = vec![];
+    let mut egraph: EGraph = EGraph::new(TrackRewrites::default());
     for (idx, eq) in data["eqs"].members().enumerate() {
+        let lstr = eq["lhs"].as_str().unwrap();
+        let rstr = eq["rhs"].as_str().unwrap();
         let lpat: Pattern<VecLang> = eq["lhs"].as_str().unwrap().parse().unwrap();
         let rpat: Pattern<VecLang> = eq["rhs"].as_str().unwrap().parse().unwrap();
+
+        egraph.add_expr(&lstr.parse().unwrap());
+        egraph.add_expr(&rstr.parse().unwrap());
 
         if eq["bidirectional"].as_bool().unwrap() {
             // we have to clone bc it is a bidirectional rule
             rules.extend(rw!(format!("ruler_{}_lr", idx);
-			     { lpat.clone() } <=> { rpat.clone() }))
+        		     { lpat.clone() } <=> { rpat.clone() }))
         } else {
             rules.push(rw!(format!("ruler_{}_lr", idx); { lpat } => { rpat }))
         }
+    }
+
+    let mut runner = LoggingRunner::new(Default::default())
+        .with_egraph(egraph)
+        .with_node_limit(1_000_000)
+        .with_time_limit(std::time::Duration::from_secs(100))
+        .with_iter_limit(3);
+
+    runner = runner.run(&rules);
+    report(&runner);
+
+    let check_expr: RecExpr<VecLang> = "(Vec (+ ?b ?a) (+ ?c ?d))".parse().unwrap();
+    runner = LoggingRunner::new(Default::default())
+        .with_egraph(runner.egraph)
+        .with_node_limit(1_000_000)
+        .with_time_limit(std::time::Duration::from_secs(100))
+        .with_iter_limit(5);
+    runner.egraph.add_expr(&check_expr);
+    runner = runner.run(&rules);
+    report(&runner);
+
+    if let Some(class) = &runner.egraph.lookup_expr(&check_expr) {
+        let extractor = Extractor::new(
+            &runner.egraph,
+            VecCostFn {
+                egraph: &runner.egraph,
+            },
+        );
+        let (cost, prog) = extractor.find_best(*class);
+        eprintln!("[{}] {}", cost, prog);
+    } else {
+        eprintln!("nothing happened");
     }
 
     rules

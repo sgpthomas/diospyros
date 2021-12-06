@@ -3,105 +3,9 @@
 import sys
 import json
 import sexpdata as sexp
-from dataclasses import dataclass
-from typing import List, Any
+from veclang import *
 import networkx as nx
 import itertools
-
-
-@dataclass
-class Node:
-    """A type representing a node in an AST."""
-
-
-@dataclass
-class VecOp(Node):
-    """Vector Operation."""
-
-    op: str
-    children: List[Node]
-
-
-@dataclass
-class Op(Node):
-    """Non vector operation."""
-
-    op: str
-    children: List[Node]
-
-
-@dataclass
-class Vec(Node):
-    """A Vector."""
-
-    children: List[Node]
-
-
-@dataclass
-class Lit(Node):
-    """A literal."""
-
-    item: Any
-
-def parse(raw):
-    """Do f."""
-    if type(raw) == list:
-        head = raw[0]._val
-        rest = raw[1:]
-        if head in ["Get", "LitVec"]:
-            return Lit(raw)
-        elif head in ["+", "*", "/", "-", "or", "&&", "ite", "<", "sgn", "sqrt", "neg"]:
-            return Op(head, [parse(c) for c in rest])
-        elif head in ["VecAdd", "VecMinus", "VecMul", "VecDiv", "VecNeg", "VecSqrt", "VecSgn", "VecMAC"]:
-            return VecOp(head, [parse(c) for c in rest])
-        elif head in ["Vec"]:
-            return Vec([parse(c) for c in rest])
-        else:
-            raise Exception(f"Unknown class: {head}, ({raw})")
-    else:
-        return Lit(raw)
-
-
-def pprint(prog):
-    if type(prog) == VecOp or type(prog) == Op:
-        return "({} {})".format(prog.op, " ".join([pprint(c) for c in prog.children]))
-    elif type(prog) == Lit:
-        if type(prog.item) == sexp.Symbol:
-            return "{}".format(prog.item._val)
-        else:
-            return "{}".format(prog.item)
-    elif type(prog) == Vec:
-        return "(Vec {})".format(" ".join([pprint(c) for c in prog.children]))
-    else:
-        raise Exception(f"Unknown type: {prog}")
-
-    
-COSTS = {
-    "Struct": 0.1,
-    "Lit": 0.001,
-    "VecOp": 1,
-    "Op": 1,
-    "Big": 100
-}
-
-
-def cost(prog):
-    """Find the cost of a program tree."""
-    if type(prog) == VecOp:
-        return COSTS["VecOp"] + sum([cost(p) for p in prog.children])
-    elif type(prog) == Op:
-        return COSTS["Op"] + sum([cost(p) for p in prog.children])
-    elif type(prog) == Lit:
-        return COSTS["Lit"]
-    elif type(prog) == Vec:
-        vec_of_lits = all([type(c) == Lit for c in prog.children])
-        if vec_of_lits:
-            return COSTS["Struct"] + sum([cost(p) for p in prog.children])
-        else:
-            return COSTS["Big"] + sum([cost(p) for p in prog.children])
-    else:
-        raise Exception("something went wrong")
-
 
 def leaves(prog):
     if type(prog) == VecOp:
@@ -117,6 +21,10 @@ def leaves(prog):
         return sum([leaves(c) for c in prog.children], [])
     else:
         raise Exception(f"unknown: {prog}")
+
+
+def leaves_f(prog, typ):
+    return list(filter(lambda it: type(it), leaves(prog)))
 
 
 def uses_vec_mac(prog):
@@ -179,22 +87,34 @@ def main():
             rhs = parse(sexp.loads(eq["rhs"]))
             ruleset.append((lhs, rhs))
 
-        limit = 0
+        # limit = 0
         for (lhs, rhs) in ruleset:
             # if getheads(lhs) != getheads(rhs):
-            c = abs(cost(lhs) - cost(rhs))
+            c = cost(lhs) - cost(rhs)
             cost_diff = c > 2
             all_vars = len(set(leaves(lhs))) == 4 and len(set(leaves(rhs))) == 4
+            no_repeated = sorted(set(leaves_f(lhs, str))) == sorted(leaves(lhs))
             vec_mac_lhs = (uses_vec_mac(lhs) and tree_depth(lhs) == 1)
             vec_mac_rhs = (tree_depth(rhs) == 1 and uses_vec_mac(rhs))
             vec_mac = vec_mac_lhs or vec_mac_rhs
-            if not cost_diff:
+            if no_repeated and cost_diff:
                 n_kept += 1
-                print(f"[{c}] {pprint(lhs)} <=> {pprint(rhs)}")
-
+                if c > 0:
+                    print(f"[{c}] {pprint(lhs)} <=> {pprint(rhs)}")
+                else:
+                    print(f"[{-c}] {pprint(rhs)} <=> {pprint(lhs)}")
             # if limit > 3:
             #     break
             # limit += 1
+
+        # check = "(Vec ?a 0)"
+        # check_tree = parse(sexp.loads(check))
+
+        # for (lhs, rhs) in ruleset:
+        #     if lhs == check_tree or rhs == check_tree:
+        #         print(f"{pprint(lhs)} <=> {pprint(rhs)}")
+                
+
         print(f"# kept/total: {n_kept} / {len(j['eqs'])}")
 
         # G = dependency_graph(ruleset)
