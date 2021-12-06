@@ -152,6 +152,27 @@ def replace_leaves(prog, assgns=None):
     else:
         raise Exception("Unknown type.")
 
+def rename(prog, assgns=None):
+    if assgns is None:
+        assgns = {}
+
+    if type(prog) == Lit:
+        if type(prog.item) == sexp.Symbol:
+            val = prog.item._val
+            if val not in assgns:
+                assgns[val] = get_alph(len(assgns))
+            return Lit(sexp.Symbol(assgns[val]))
+        else:
+            return prog
+    elif type(prog) == VecOp:
+        return VecOp(op=prog.op, children=[rename(c, assgns) for c in prog.children])
+    elif type(prog) == Op:
+        return Op(op=prog.op, children=[rename(c, assgns) for c in prog.children])
+    elif type(prog) == Vec:
+        return Vec(children=[rename(c, assgns) for c in prog.children])
+    else:
+        raise Exception(f"Unknown prog: {prog}")
+
 
 def main():
     parsed = parse(sexp.loads(EXPR))
@@ -163,8 +184,11 @@ def main():
     all_pats = set()
 
     a = replace_leaves(inp)
-    for p in progs_of_depth(a, 2):
-        print(pprint(p))
+    for d in range(depth(a)):
+        print(f"==== {d} ====")
+
+        for p in set([pprint(rename(p)) for p in progs_of_depth(a, d)]):
+            print(p)
 
     # while depth(inp) > 0:
     #     nxt = top_down_pat(inp)

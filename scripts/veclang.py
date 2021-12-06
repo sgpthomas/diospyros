@@ -66,7 +66,7 @@ def pprint(prog):
     elif type(prog) == Vec:
         return "(Vec {})".format(" ".join([pprint(c) for c in prog.children]))
     else:
-        raise Exception(f"Unknown type: {prog}")
+        raise Exception(f"Unknown type: {type(prog)} ({prog})")
 
     
 COSTS = {
