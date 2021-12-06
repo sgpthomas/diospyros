@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from veclang import *
+from multiset import Multiset
 
 
 EXPR = """
@@ -181,29 +182,20 @@ def main():
     pats = []
     inp = parsed
 
-    all_pats = set()
+    all_pats = Multiset()
 
     a = replace_leaves(inp)
+
     for d in range(depth(a)):
-        print(f"==== {d} ====")
+        # print(f"==== {d} ====")
 
-        for p in set([pprint(rename(p)) for p in progs_of_depth(a, d)]):
-            print(p)
+        all_pats.update([pprint(rename(p)) for p in progs_of_depth(a, d)])
 
-    # while depth(inp) > 0:
-    #     nxt = top_down_pat(inp)
-    #     all_pats.update(bot_up_pat(inp))
-    #     pats.append(nxt)
-    #     inp = nxt
+        # for p, n in Multiset([pprint(rename(p)) for p in progs_of_depth(a, d)]).items():
+        #     print(f"[{n}] {p}")
 
-    for p in pats:
-        print(depth(p), pprint(p))
-
-    print("=====")
-
-    for p in all_pats:
-        print(p)
-
+    for p, n in sorted(all_pats.items(), key=lambda x: x[1], reverse=True):
+        print(f"[{n}] {p}")
 
 if __name__ == "__main__":
     main()
