@@ -42,8 +42,28 @@
       "bidirectional": false
   },
       {
+      "lhs": "(* ?a 1)",
+      "rhs": "?a",
+      "bidirectional": false
+  },
+      {
       "lhs": "(Vec (+ ?a ?b) (+ ?c ?d))",
       "rhs": "(VecAdd (Vec ?a ?c) (Vec ?b ?d))",
+      "bidirectional": true
+  },
+      {
+      "lhs": "(Vec (* ?a ?b) (* ?c ?d))",
+      "rhs": "(VecMul (Vec ?a ?c) (Vec ?b ?d))",
+      "bidirectional": true
+  },
+      {
+      "lhs": "(Vec (neg ?a))",
+      "rhs": "(VecNeg ?a)",
+      "bidirectional": true
+  },
+      {
+      "lhs": "0",
+      "rhs": "(neg 0)",
       "bidirectional": true
   }
   ]

@@ -177,24 +177,20 @@ def rename(prog, assgns=None):
 
 def main():
     parsed = parse(sexp.loads(EXPR))
-    # for p in top_down_pat(parsed):
-    #     print(p)
-    pats = []
-    inp = parsed
-
+    largest_depth = depth(parsed)
+    nxt = replace_leaves(parsed)
     all_pats = Multiset()
 
-    a = replace_leaves(inp)
+    while depth(nxt) > 0:
 
-    for d in range(depth(a)):
-        # print(f"==== {d} ====")
+        for d in range(depth(nxt)):
+            all_pats.update([pprint(rename(p)) for p in progs_of_depth(nxt, d)])
 
-        all_pats.update([pprint(rename(p)) for p in progs_of_depth(a, d)])
+        nxt = replace_leaves(nxt)
 
-        # for p, n in Multiset([pprint(rename(p)) for p in progs_of_depth(a, d)]).items():
-        #     print(f"[{n}] {p}")
-
-    for p, n in sorted(all_pats.items(), key=lambda x: x[1], reverse=True):
+    # display things
+    keyfn = lambda x: (x[1], largest_depth - depth(parse(sexp.loads(x[0]))))
+    for p, n in sorted(all_pats.items(), key=keyfn, reverse=True):
         print(f"[{n}] {p}")
 
 if __name__ == "__main__":

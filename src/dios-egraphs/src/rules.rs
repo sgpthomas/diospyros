@@ -318,7 +318,7 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<DiosRwrite
     // let mut rng = rand::thread_rng();
     // rules.shuffle(&mut rng);
 
-    rules
+    smart_select_rules(rules)
 }
 
 fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
@@ -329,56 +329,125 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
     let data = json::parse(&contents).unwrap();
 
     let mut rules = vec![];
-    let mut egraph: EGraph = EGraph::new(TrackRewrites::default());
     for (idx, eq) in data["eqs"].members().enumerate() {
-        let lstr = eq["lhs"].as_str().unwrap();
-        let rstr = eq["rhs"].as_str().unwrap();
         let lpat: Pattern<VecLang> = eq["lhs"].as_str().unwrap().parse().unwrap();
         let rpat: Pattern<VecLang> = eq["rhs"].as_str().unwrap().parse().unwrap();
 
-        egraph.add_expr(&lstr.parse().unwrap());
-        egraph.add_expr(&rstr.parse().unwrap());
-
         if eq["bidirectional"].as_bool().unwrap() {
             // we have to clone bc it is a bidirectional rule
-            rules.extend(rw!(format!("ruler_{}_lr", idx);
-        		     { lpat.clone() } <=> { rpat.clone() }))
+            rules.extend(rw!(format!("ruler_{}_lr", idx); { lpat.clone() } <=> { rpat.clone() }))
         } else {
             rules.push(rw!(format!("ruler_{}_lr", idx); { lpat } => { rpat }))
         }
     }
 
+    rules
+}
+
+fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
+    for r in &rules {
+        match (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast()) {
+            (Some(lhs), Some(rhs)) => eprintln!("{} => {}", lhs, rhs),
+            _ => eprintln!("custom: {}", r.name),
+        };
+    }
+
+    let check: &'static str = "(+ (* a b) (neg (* c d)))";
+
+    let mut egraph: EGraph = EGraph::new(TrackRewrites::default());
+    let root = egraph.add_expr(&check.parse().unwrap());
+
     let mut runner = LoggingRunner::new(Default::default())
         .with_egraph(egraph)
         .with_node_limit(1_000_000)
         .with_time_limit(std::time::Duration::from_secs(100))
-        .with_iter_limit(3);
+        .with_iter_limit(10);
 
     runner = runner.run(&rules);
-    report(&runner);
+    // report(&runner);
+    // runner = runner.run(&[
+    //     rw!("comm"; "(* ?a ?b)" => "(* ?b ?a)"),
+    //     rw!("comm2"; "(* ?b ?a)" => "(* ?a ?b)"),
+    //     rw!("+comm"; "(+ ?a ?b)" => "(+ ?b ?a)"),
+    //     rw!("+comm2"; "(+ ?b ?a)" => "(+ ?a ?b)"),
+    //     rw!("r1"; "(* ?a 0)" => "0"),
+    //     // rw!("r1.1"; "0" => "(* ?a 0)"),
+    //     rw!("r2"; "?a" => "(* 1 ?a)"),
+    //     rw!("r2.1"; "(* 1 ?a)" => "?a"),
+    //     rw!("r3"; "(+ ?a 0)" => "?a"),
+    //     rw!("r4"; "0" => "(neg 0)"),
+    //     rw!("r5"; "(neg 0)" => "0"),
+    //     rw!("r6"; "(neg ?a)" => "(- 0 ?a)"),
+    //     rw!("r7"; "(- 0 ?a)" => "neg ?a)"),
+    //     rw!("r8"; "(neg ?a)" => "- 0 ?a)"),
+    //     rw!("r9"; "(- 0 ?a)" => "neg ?a)"),
+    //     rw!("r10"; "1" => "sqrt 1)"),
+    //     rw!("r11"; "(sqrt 1)" => "1"),
+    //     rw!("r12"; "0" => "(neg 0)"),
+    //     rw!("r13"; "(neg 0)" => "0"),
+    //     rw!("r"; "(/ ?a 1)" => "?a"),
+    //     rw!("r"; "?a" => "(/ ?a 1)"),
+    //     rw!("r"; "0" => "(Get 0 0)"),
+    // ]);
 
-    let check_expr: RecExpr<VecLang> = "(Vec (+ ?b ?a) (+ ?c ?d))".parse().unwrap();
-    runner = LoggingRunner::new(Default::default())
-        .with_egraph(runner.egraph)
-        .with_node_limit(1_000_000)
-        .with_time_limit(std::time::Duration::from_secs(100))
-        .with_iter_limit(5);
-    runner.egraph.add_expr(&check_expr);
-    runner = runner.run(&rules);
-    report(&runner);
+    runner.egraph.dot().to_png("graph.png").unwrap();
 
-    if let Some(class) = &runner.egraph.lookup_expr(&check_expr) {
-        let extractor = Extractor::new(
-            &runner.egraph,
-            VecCostFn {
-                egraph: &runner.egraph,
-            },
-        );
-        let (cost, prog) = extractor.find_best(*class);
-        eprintln!("[{}] {}", cost, prog);
-    } else {
-        eprintln!("nothing happened");
+    let check_expr: Pattern<VecLang> = check.parse().unwrap();
+    let matches: Vec<Id> = check_expr
+        .search(&runner.egraph)
+        .iter()
+        .map(|m| m.eclass)
+        .collect();
+
+    eprintln!("matches: {:?}", matches);
+    let extractor = Extractor::new(
+        &runner.egraph,
+        VecCostFn {
+            egraph: &runner.egraph,
+        },
+    );
+    let mut best = None;
+    for m in matches {
+        let (cost, prog) = extractor.find_best(m);
+        if let Some((best_cost, _)) = &best {
+            if &cost < best_cost {
+                best = Some((cost, prog));
+            }
+        } else {
+            best = Some((cost, prog));
+        }
     }
+
+    if let Some((cost, prog)) = best {
+        eprintln!("best: [{}] {}", cost, prog);
+    } else {
+        eprintln!("no pattern found");
+    }
+
+    eprintln!("trying a different technique");
+    eprintln!("searching from the root: {}", extractor.find_best(root).1);
+
+    // runner = LoggingRunner::new(Default::default())
+    //     .with_egraph(runner.egraph)
+    //     .with_node_limit(1_000_000)
+    //     .with_time_limit(std::time::Duration::from_secs(100))
+    //     .with_iter_limit(5);
+    // runner.egraph.add_expr(&check_expr);
+    // runner = runner.run(&rules);
+    // report(&runner);
+
+    // if let Some(class) = &runner.egraph.lookup_expr(&check_expr) {
+    //     let extractor = Extractor::new(
+    //         &runner.egraph,
+    //         VecCostFn {
+    //             egraph: &runner.egraph,
+    //         },
+    //     );
+    //     let (cost, prog) = extractor.find_best(*class);
+    //     eprintln!("[{}] {}", cost, prog);
+    // } else {
+    //     eprintln!("nothing happened");
+    // }
 
     rules
 }
