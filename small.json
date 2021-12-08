@@ -38,7 +38,7 @@
   },
       {
       "lhs": "(+ ?a 0)",
-      "rhs": "0",
+      "rhs": "?a",
       "bidirectional": false
   },
       {

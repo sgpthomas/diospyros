@@ -119,13 +119,13 @@ pub fn run(
         &[
             "+_binop_or_zero_vec",
             "*_binop_or_zero_vec",
-            // "litvec",
+            "litvec",
             "add-0-inv",
             "mul-1-inv",
-            // "vec-mac-add-mul",
+            "vec-mac-add-mul",
             "vec-mac",
             "neg_unop",
-            // "expand-zero-get",
+            "expand-zero-get",
             "neg-zero-inv",
         ],
     );
@@ -137,15 +137,15 @@ pub fn run(
         .with_expr(&prog)
         .with_node_limit(500_000)
         .with_time_limit(std::time::Duration::from_secs(timeout))
-        .with_hook(|runner| {
-            eprintln!("Egraph big big? {}", runner.egraph.total_size());
-            eprintln!("Egraph class big? {}", runner.egraph.number_of_classes());
-            let (eg, root) = (&runner.egraph, &runner.roots[0]);
-            let extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
-            let (cost, _) = extractor.find_best(*root);
-            eprintln!("Egraph cost? {}", cost);
-            Ok(())
-        })
+        // .with_hook(|runner| {
+        //     eprintln!("Egraph big big? {}", runner.egraph.total_size());
+        //     eprintln!("Egraph class big? {}", runner.egraph.number_of_classes());
+        //     let (eg, root) = (&runner.egraph, &runner.roots[0]);
+        //     let extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
+        //     let (cost, _) = extractor.find_best(*root);
+        //     eprintln!("Egraph cost? {}", cost);
+        //     Ok(())
+        // })
         .with_iter_limit(iter_limit);
 
     // add scheduler
@@ -347,15 +347,23 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
 fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
     for r in &rules {
         match (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast()) {
-            (Some(lhs), Some(rhs)) => eprintln!("{} => {}", lhs, rhs),
+            (Some(lhs), Some(rhs)) => eprintln!("[{}] {} => {}", r.name, lhs, rhs),
             _ => eprintln!("custom: {}", r.name),
         };
     }
 
-    let check: &'static str = "(+ (* a b) (neg (* c d)))";
+    // rules.retain(|r| {
+    //     matches!(
+    //         (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast()),
+    //         (Some(_), Some(_))
+    //     )
+    // });
+
+    let check: &'static str = "(Vec (+ ?a ?b) (+ ?c (+ ?d ?e)))";
 
     let mut egraph: EGraph = EGraph::new(TrackRewrites::default());
     let root = egraph.add_expr(&check.parse().unwrap());
+    let _zero = egraph.add_expr(&"0".parse().unwrap());
 
     let mut runner = LoggingRunner::new(Default::default())
         .with_egraph(egraph)
@@ -364,33 +372,8 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
         .with_iter_limit(10);
 
     runner = runner.run(&rules);
-    // report(&runner);
-    // runner = runner.run(&[
-    //     rw!("comm"; "(* ?a ?b)" => "(* ?b ?a)"),
-    //     rw!("comm2"; "(* ?b ?a)" => "(* ?a ?b)"),
-    //     rw!("+comm"; "(+ ?a ?b)" => "(+ ?b ?a)"),
-    //     rw!("+comm2"; "(+ ?b ?a)" => "(+ ?a ?b)"),
-    //     rw!("r1"; "(* ?a 0)" => "0"),
-    //     // rw!("r1.1"; "0" => "(* ?a 0)"),
-    //     rw!("r2"; "?a" => "(* 1 ?a)"),
-    //     rw!("r2.1"; "(* 1 ?a)" => "?a"),
-    //     rw!("r3"; "(+ ?a 0)" => "?a"),
-    //     rw!("r4"; "0" => "(neg 0)"),
-    //     rw!("r5"; "(neg 0)" => "0"),
-    //     rw!("r6"; "(neg ?a)" => "(- 0 ?a)"),
-    //     rw!("r7"; "(- 0 ?a)" => "neg ?a)"),
-    //     rw!("r8"; "(neg ?a)" => "- 0 ?a)"),
-    //     rw!("r9"; "(- 0 ?a)" => "neg ?a)"),
-    //     rw!("r10"; "1" => "sqrt 1)"),
-    //     rw!("r11"; "(sqrt 1)" => "1"),
-    //     rw!("r12"; "0" => "(neg 0)"),
-    //     rw!("r13"; "(neg 0)" => "0"),
-    //     rw!("r"; "(/ ?a 1)" => "?a"),
-    //     rw!("r"; "?a" => "(/ ?a 1)"),
-    //     rw!("r"; "0" => "(Get 0 0)"),
-    // ]);
-
-    runner.egraph.dot().to_png("graph.png").unwrap();
+    report(&runner);
+    // runner.egraph.dot().to_png("graph.png").unwrap();
 
     let check_expr: Pattern<VecLang> = check.parse().unwrap();
     let matches: Vec<Id> = check_expr
@@ -418,6 +401,7 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
         }
     }
 
+    eprintln!("start: {}", check);
     if let Some((cost, prog)) = best {
         eprintln!("best: [{}] {}", cost, prog);
     } else {
