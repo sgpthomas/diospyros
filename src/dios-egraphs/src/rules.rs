@@ -154,13 +154,12 @@ pub fn run(
     let scheduler = SimpleScheduler;
     runner = runner.with_scheduler(scheduler);
 
-    let patterns = gen_patterns(&runner.roots[0], prog);
-    eprintln!("{:#?}", patterns);
-
-    panic!("stop here");
-
     eprintln!("Starting run with {} rules", rules.len());
     runner = runner.run(&rules);
+
+    let patterns = gen_patterns(&runner.roots[0], prog);
+    eprintln!("{:#?}", patterns);
+    panic!("stop here");
 
     eprintln!("Egraph big big? {}", runner.egraph.total_size());
 
