@@ -67,7 +67,7 @@ fn main() {
         config::vector_width()
     );
     // eprintln!("Input prog:\n{}", &prog.pretty(80));
-    let (cost, best) = rules::run(&prog, timeout, no_ac, no_vec, iter_limit, ruleset);
+    let (cost, _best) = rules::run(&prog, timeout, no_ac, no_vec, iter_limit, ruleset);
 
     // println!("{}", best.pretty(80)); /* Pretty print with width 80 */
     eprintln!("\nCost: {}", cost);

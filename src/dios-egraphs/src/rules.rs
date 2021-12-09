@@ -7,6 +7,7 @@ use crate::{
     config::*,
     cost::VecCostFn,
     macsearcher::build_mac_rule,
+    patterns::gen_patterns,
     scheduler::{LoggingData, LoggingScheduler},
     searchutils::*,
     tracking::TrackRewrites,
@@ -152,6 +153,11 @@ pub fn run(
     // let scheduler = LoggingScheduler::new(runner.roots[0], prog.clone());
     let scheduler = SimpleScheduler;
     runner = runner.with_scheduler(scheduler);
+
+    let patterns = gen_patterns(&runner.roots[0], prog);
+    eprintln!("{:#?}", patterns);
+
+    panic!("stop here");
 
     eprintln!("Starting run with {} rules", rules.len());
     runner = runner.run(&rules);
@@ -359,7 +365,8 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
     //     )
     // });
 
-    let check: &'static str = "(Vec (+ ?a ?b) (+ ?c (+ ?d ?e)))";
+    let check: &'static str =
+        "(Vec (+ ?a (+ ?b (+ (+ (* ?c (* ?d ?e)) (neg (* ?f (* ?d ?g)))) (* ?h (* ?d ?i))))) ?j)";
 
     let mut egraph: EGraph = EGraph::new(TrackRewrites::default());
     let root = egraph.add_expr(&check.parse().unwrap());
@@ -369,7 +376,7 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
         .with_egraph(egraph)
         .with_node_limit(1_000_000)
         .with_time_limit(std::time::Duration::from_secs(100))
-        .with_iter_limit(10);
+        .with_iter_limit(100);
 
     runner = runner.run(&rules);
     report(&runner);
@@ -401,7 +408,7 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
         }
     }
 
-    eprintln!("start: {}", check);
+    eprintln!("start:\n{}", check_expr.pretty(80));
     if let Some((cost, prog)) = best {
         eprintln!("best: [{}] {}", cost, prog);
     } else {
@@ -409,7 +416,8 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
     }
 
     eprintln!("trying a different technique");
-    eprintln!("searching from the root: {}", extractor.find_best(root).1);
+    let (cost, prog) = extractor.find_best(root);
+    eprintln!("searching from the root: [{}]\n{}", cost, prog.pretty(80));
 
     // runner = LoggingRunner::new(Default::default())
     //     .with_egraph(runner.egraph)

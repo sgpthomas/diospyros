@@ -2,6 +2,7 @@ pub mod binopsearcher;
 pub mod config;
 pub mod cost;
 pub mod macsearcher;
+mod patterns;
 pub mod rewriteconcats;
 pub mod rules;
 pub mod scheduler;
