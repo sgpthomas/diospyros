@@ -46,11 +46,11 @@ impl Display for Value {
             Value::List(l) => write!(f, "{:?}", l),
             Value::Vec(v) => write!(
                 f,
-                "<{}>",
+                "(Vec {})",
                 v.into_iter()
                     .map(|x| format!("{}", x))
                     .collect_vec()
-                    .join(",")
+                    .join(" ")
             ),
         }
     }
@@ -100,10 +100,10 @@ impl Value {
 
     fn vec1<F>(val: &Self, f: F) -> Option<Value>
     where
-        F: Fn(&[Value]) -> Value,
+        F: Fn(&[Value]) -> Option<Value>,
     {
         if let Value::Vec(v) = val {
-            Some(f(v))
+            f(v)
         } else {
             None
         }
@@ -409,27 +409,39 @@ impl SynthLanguage for VecLang {
             }
             VecLang::VecNeg([l]) => {
                 map!(get, l => Value::vec1(l, |l| {
-                    Value::Vec(l.iter().map(|tup| match tup {
-                    Value::Int(a) => Value::Int(-a),
-                        _ => panic!("NEG: Ill-formed")
-                    }).collect::<Vec<_>>())
-                }))
+                        if l.iter().all(|x| matches!(x, Value::Int(_))) {
+                        Some(Value::Vec(l.iter().map(|tup| match tup {
+                                Value::Int(a) => Value::Int(-a),
+                                    x => panic!("NEG: Ill-formed: {}", x)
+                                }).collect::<Vec<_>>()))
+                        } else {
+                    None
+                }
+                            }))
             }
             VecLang::VecSqrt([l]) => {
                 map!(get, l => Value::vec1(l, |l| {
-                    Value::Vec(l.iter().map(|tup| match tup {
-                    Value::Int(a) => Value::Int(a.sqrt()),
-                        _ => panic!("SQRT: Ill-formed")
-                    }).collect::<Vec<_>>())
-                }))
+                        if l.iter().all(|x| matches!(x, Value::Int(_))) {
+                        Some(Value::Vec(l.iter().map(|tup| match tup {
+                                Value::Int(a) => Value::Int(a.sqrt()),
+                                    x => panic!("SQRT: Ill-formed: {}", x)
+                                }).collect::<Vec<_>>()))
+                        } else {
+                    None
+                }
+                            }))
             }
             VecLang::VecSgn([l]) => {
                 map!(get, l => Value::vec1(l, |l| {
-                    Value::Vec(l.iter().map(|tup| match tup {
-                    Value::Int(a) => Value::Int(sgn(*a)),
-                        _ => panic!("SGN: Ill-formed")
-                    }).collect::<Vec<_>>())
-                }))
+                        if l.iter().all(|x| matches!(x, Value::Int(_))) {
+                        Some(Value::Vec(l.iter().map(|tup| match tup {
+                                Value::Int(a) => Value::Int(sgn(*a)),
+                                    x => panic!("SGN: Ill-formed: {}", x)
+                                }).collect::<Vec<_>>()))
+                        } else {
+                    None
+                }
+                            }))
             }
             VecLang::VecMAC([acc, v1, v2]) => {
                 map!(get, v1, v2, acc => Value::vec3(v1, v2, acc, |v1, v2, acc| {
