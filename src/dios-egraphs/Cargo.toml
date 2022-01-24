@@ -10,8 +10,8 @@ edition = "2018"
 name = "dioslib"
 
 [dependencies]
-# egg =  "0.6.0"
-egg = { git = "https://github.com/sgpthomas/egg.git", branch = "main" }
+egg =  "0.7.1"
+# egg = { git = "https://github.com/sgpthomas/egg.git", branch = "main" }
 assert_approx_eq = "1.1.0"
 itertools = "0.9.0"
 clap = "2.33.2"

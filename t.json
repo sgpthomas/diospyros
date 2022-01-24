@@ -16827,12 +16827,12 @@
       "bidirectional": true
     },
     {
-      "lhs": "(VecAdd <0,0> (Vec ?a ?a))",
+      "lhs": "(VecAdd (Vec 0 0) (Vec ?a ?a))",
       "rhs": "(Vec ?a ?a)",
       "bidirectional": true
     },
     {
-      "lhs": "(VecMul (Vec ?a ?a) <1,2>)",
+      "lhs": "(VecMul (Vec ?a ?a) (Vec 1 2))",
       "rhs": "(Vec ?a (+ ?a ?a))",
       "bidirectional": true
     },
@@ -17377,7 +17377,7 @@
       "bidirectional": true
     },
     {
-      "lhs": "(VecMul (Vec 0 ?a) <1,2>)",
+      "lhs": "(VecMul (Vec 0 ?a) (Vec 1 2))",
       "rhs": "(Vec 0 (+ ?a ?a))",
       "bidirectional": true
     },

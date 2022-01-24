@@ -38,7 +38,11 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
     ) -> usize {
         egraph.rebuild();
         let (bef_cost, _bef_prog) = {
-            let extractor = Extractor::new(&egraph, VecCostFn { egraph });
+            let extractor = Extractor::new(
+                &egraph,
+                VecCostFn { // egraph
+	    },
+            );
             extractor.find_best(self.root)
         };
         let bef_size = egraph.total_size();
@@ -51,7 +55,11 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
         eprintln!("apps({})= {:?}", rewrite.name.as_str(), applications);
         eprintln!("{{");
         for id in &applications {
-            let extractor = Extractor::new(&egraph, VecCostFn { egraph });
+            let extractor = Extractor::new(
+                &egraph,
+                VecCostFn { // egraph
+	    },
+            );
             let (_, l) = extractor.find_best(*id);
             // let ex = &mut egraph.clone().explain_existance(&l);
             // let ex_tree = &ex.explanation_trees;
@@ -67,7 +75,11 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
         }
         eprintln!("}}");
 
-        let extractor = Extractor::new(&egraph, VecCostFn { egraph });
+        let extractor = Extractor::new(
+            &egraph,
+            VecCostFn { // egraph
+	},
+        );
         let (aft_cost, aft_prog) = extractor.find_best(self.root);
         let aft_size = egraph.total_size();
         let aft_classes: i64 = egraph.number_of_classes() as i64;
@@ -107,9 +119,9 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
         applications.len()
     }
 
-    fn log(&self) {
-        eprintln!("{:#?}", self.counts);
-    }
+    // fn log(&self) {
+    //     eprintln!("{:#?}", self.counts);
+    // }
 }
 
 #[derive(Default)]
@@ -117,7 +129,7 @@ pub struct LoggingData;
 
 impl<L: egg::Language, N: egg::Analysis<L>> egg::IterationData<L, N> for LoggingData {
     fn make(runner: &egg::Runner<L, N, Self>) -> Self {
-        eprintln!("==^= iter {} =^==", runner.iterations.len() + 1);
+        // eprintln!("==^= iter {} =^==", runner.iterations.len() + 1);
         LoggingData
     }
 }

@@ -7,7 +7,9 @@ from veclang import *
 import networkx as nx
 import itertools
 
+
 def leaves(prog):
+    """Doc."""
     if type(prog) == VecOp:
         return sum([leaves(c) for c in prog.children], [])
     elif type(prog) == Op:
@@ -24,10 +26,12 @@ def leaves(prog):
 
 
 def leaves_f(prog, typ):
+    """Doc."""
     return list(filter(lambda it: type(it), leaves(prog)))
 
 
 def uses_vec_mac(prog):
+    """Doc."""
     if type(prog) == VecOp:
         return prog.op == "VecMAC"
     else:
@@ -35,6 +39,7 @@ def uses_vec_mac(prog):
 
 
 def tree_depth(prog):
+    """Doc."""
     if type(prog) == VecOp or type(prog) == Op or type(prog) == Vec:
         return 1 + max([tree_depth(c) for c in prog.children])
     elif type(prog) == Lit:
@@ -56,9 +61,11 @@ def operators(prog):
 
 
 def dependency_graph(ruleset):
-    """Build a graph where the nodes in the graph are all the operators covered
+    """
+    Build a graph where the nodes in the graph are all the operators covered
     by the rewrite rules and there is an edge between two nodes if there is a rewrite
-    rule that constructs the second node from the first."""
+    rule that constructs the second node from the first.
+    """
 
     G = nx.Graph()
 

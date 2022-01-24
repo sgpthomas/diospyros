@@ -1,6 +1,7 @@
 use egg::{rewrite as rw, *};
 
 use itertools::Itertools;
+use libc::thread_standard_policy;
 
 use crate::{
     binopsearcher::build_binop_or_zero_rule,
@@ -112,24 +113,44 @@ pub fn run(
     iter_limit: usize,
     ruleset: Option<&str>,
 ) -> (f64, RecExpr<VecLang>) {
-    let mut rules = rules(no_ac, no_vec, ruleset);
+    let use_only_ruler = true;
+    let (mut rules, snd_phase) = rules(no_ac, no_vec, ruleset, use_only_ruler);
     // filter_applicable_rules(&mut rules, prog);
 
-    retain_rules_by_name(
-        &mut rules,
-        &[
-            "+_binop_or_zero_vec",
-            "*_binop_or_zero_vec",
-            "litvec",
-            "add-0-inv",
-            "mul-1-inv",
-            "vec-mac-add-mul",
-            "vec-mac",
-            "neg_unop",
-            "expand-zero-get",
-            "neg-zero-inv",
-        ],
-    );
+    rules.extend(vec![
+        build_unop_rule("neg", "VecNeg"),
+        rw!("neg-zero-inv0"; "0" => "(neg 0)"),
+        rw!("neg-zero-inv1"; "(neg 0)" => "0"),
+        // rw!("add-0"; "(+ 0 ?a)" => "?a"),
+        // rw!("mul-0"; "(* 0 ?a)" => "0"),
+        // rw!("mul-1"; "(* 1 ?a)" => "?a"),
+        // rw!("add-0-inv"; "?a" => "(+ 0 ?a)"),
+        // rw!("mul-1-inv"; "?a" => "(* 1 ?a)"),
+        // rw!("div-1"; "(/ ?a 1)" => "?a"),
+        // rw!("div-1-inv"; "?a" => "(/ ?a 1)"),
+        // rw!("expand-zero-get"; "0" => "(Get 0 0)"),
+        // rw!("expand-zero-plus"; "0" => "(+ 0 0)"),
+        // rw!("vec-mac-add-mul";
+        //         "(VecAdd ?v0 (VecMul ?v1 ?v2))"
+        //         => "(VecMAC ?v0 ?v1 ?v2)"),
+        // build_litvec_rule(),
+    ]);
+
+    // retain_rules_by_name(
+    //     &mut rules,
+    //     &[
+    //         "+_binop_or_zero_vec",
+    //         "*_binop_or_zero_vec",
+    //         "litvec",
+    //         "add-0-inv",
+    //         "mul-1-inv",
+    //         "vec-mac-add-mul",
+    //         "vec-mac",
+    //         "neg_unop",
+    //         "expand-zero-get",
+    //         "neg-zero-inv",
+    //     ],
+    // );
 
     let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
     init_eg.add(VecLang::Num(0));
@@ -149,20 +170,31 @@ pub fn run(
         // })
         .with_iter_limit(iter_limit);
 
+    eprintln!("prog: {}", prog.pretty(80));
+    let patterns = gen_patterns(prog);
+    let mut fancy_rules: Vec<DiosRwrite> = vec![];
+    // let cost_effective_rules = &rules;
+    for (i, p) in patterns.into_iter().enumerate() {
+        if let Some(r) = smart_select_rules(&rules, &p) {
+            let name = format!("fancy_{}", i);
+            fancy_rules.push(rw!(name; p => r));
+        }
+    }
+    // eprintln!("{:#?}", patterns);
+    // panic!("stop here");
+
     // add scheduler
     // let scheduler = LoggingScheduler::new(runner.roots[0], prog.clone());
-    let scheduler = SimpleScheduler;
-    runner = runner.with_scheduler(scheduler);
+    // let scheduler = SimpleScheduler;
+    // runner = runner.with_scheduler(scheduler);
 
-    eprintln!("Starting run with {} rules", rules.len());
-    runner = runner.run(&rules);
+    let final_ruleset = fancy_rules.clone();
+    // final_ruleset.append(&mut rules);
 
-    let patterns = gen_patterns(&runner.roots[0], prog);
-    eprintln!("{:#?}", patterns);
-    panic!("stop here");
+    eprintln!("Starting run with {} rules", final_ruleset.len());
+    runner = runner.run(&final_ruleset);
 
     eprintln!("Egraph big big? {}", runner.egraph.total_size());
-
     report(&runner);
 
     // print reason to STDERR.
@@ -172,43 +204,38 @@ pub fn run(
         runner.stop_reason
     );
 
-    runner.scheduler.log();
+    // runner.scheduler.log();
 
     let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
 
     // Always add the literal zero
-    let extractor = Extractor::new(&eg, VecCostFn { egraph: &eg });
+    let extractor = Extractor::new(&eg, VecCostFn {});
     let (cost, out_prog) = extractor.find_best(root);
     eprintln!("Egraph cost? {}", cost);
+    eprintln!("{}", out_prog.pretty(80));
 
-    // print_rewrites_used(
-    //     "",
-    //     &get_rewrites_used(
-    //         &runner
-    //             .explain_equivalence(&prog, &out_prog)
-    //             .explanation_trees,
-    //     ),
-    // );
+    eprintln!("==== Starting Second Phase Optimization ====");
+    eprintln!("Using {} rules", snd_phase.len());
 
-    // eprintln!(
-    //     "{}",
-    //     &runner
-    //         .explain_existance(
-    //             &"(VecAdd
-    // (VecAdd
-    //   (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
-    //   (VecMAC
-    //     (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
-    //     (LitVec (Get aq 1) (Get aq 2))
-    //     (LitVec (Get bq 2) (Get bq 0))))
-    // (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))"
-    //                 .parse()
-    //                 .unwrap()
-    //         )
-    //         .get_flat_string()
-    // );
+    let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
+    init_eg.add(VecLang::Num(0));
+    let mut runner = LoggingRunner::new(Default::default())
+        .with_egraph(init_eg)
+        .with_expr(&out_prog)
+        .with_node_limit(1_000_000)
+        .with_time_limit(std::time::Duration::from_secs(300))
+        .with_iter_limit(iter_limit);
+    runner = runner.run(&snd_phase);
+    report(&runner);
 
-    (cost, out_prog)
+    let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
+
+    // Always add the literal zero
+    let extractor = Extractor::new(&eg, VecCostFn {});
+    let (cost, out_prog2) = extractor.find_best(root);
+    eprintln!("Egraph cost? {}", cost);
+
+    (cost, out_prog2)
 }
 
 pub fn build_binop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
@@ -256,8 +283,37 @@ pub fn build_litvec_rule() -> DiosRwrite {
         if is_all_same_memory_or_zero(&mem_vars))
 }
 
-pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<DiosRwrite> {
-    let mut rules: Vec<DiosRwrite> = vec![
+pub fn rules(
+    no_ac: bool,
+    no_vec: bool,
+    ruleset: Option<&str>,
+    only_ruleset: bool,
+) -> (Vec<DiosRwrite>, Vec<DiosRwrite>) {
+    let mut rules: Vec<DiosRwrite> = vec![];
+    let mut snd_rules: Vec<DiosRwrite> = vec![];
+
+    if let Some(filename) = ruleset {
+        let ruler = ruler_rules(filename);
+        let fst = retain_cost_effective_rules(&ruler, false, |x| x > 5.0);
+        let snd = retain_cost_effective_rules(&ruler, true, |x| x > 0.0 && x < 5.0);
+
+        for r in &snd {
+            eprintln!(
+                "{} => {}",
+                r.searcher.get_pattern_ast().unwrap().pretty(80),
+                r.applier.get_pattern_ast().unwrap().pretty(80)
+            );
+        }
+        // panic!("asdf");
+
+        rules.extend(fst);
+        snd_rules.extend(snd);
+        if only_ruleset {
+            return (rules, snd_rules);
+        }
+    }
+
+    rules.extend(vec![
         rw!("add-0"; "(+ 0 ?a)" => "?a"),
         rw!("mul-0"; "(* 0 ?a)" => "0"),
         rw!("mul-1"; "(* 1 ?a)" => "?a"),
@@ -269,7 +325,7 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<DiosRwrite
         // Literal vectors, that use the same memory or no memory in every lane,
         // are cheaper
         build_litvec_rule(),
-    ];
+    ]);
 
     // Bidirectional rules
     rules.extend(
@@ -316,14 +372,7 @@ pub fn rules(no_ac: bool, no_vec: bool, ruleset: Option<&str>) -> Vec<DiosRwrite
         ]);
     }
 
-    if let Some(filename) = ruleset {
-        rules.extend(ruler_rules(filename));
-    }
-
-    // let mut rng = rand::thread_rng();
-    // rules.shuffle(&mut rng);
-
-    smart_select_rules(rules)
+    (rules, snd_rules)
 }
 
 fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
@@ -349,13 +398,92 @@ fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
     rules
 }
 
-fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
-    for r in &rules {
-        match (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast()) {
-            (Some(lhs), Some(rhs)) => eprintln!("[{}] {} => {}", r.name, lhs, rhs),
-            _ => eprintln!("custom: {}", r.name),
-        };
+fn walk_recexpr_help<F>(expr: &RecExpr<VecLang>, id: Id, action: F) -> F
+where
+    F: FnMut(&VecLang),
+{
+    // let root: Id = (expr.as_ref().len() - 1).into();
+    let mut f = action;
+    f(&expr[id]);
+    for c in expr[id].children() {
+        let newf = walk_recexpr_help(expr, *c, f);
+        f = newf;
     }
+    f
+}
+
+fn walk_recexpr<F>(expr: &RecExpr<VecLang>, action: F)
+where
+    F: FnMut(&VecLang),
+{
+    walk_recexpr_help(expr, (expr.as_ref().len() - 1).into(), action);
+}
+
+fn fold_recexpr<F, T>(expr: &RecExpr<VecLang>, init: T, mut action: F) -> T
+where
+    F: FnMut(T, &VecLang) -> T,
+    T: Clone,
+{
+    let mut acc = init;
+    walk_recexpr(expr, |l| acc = action(acc.clone(), l));
+    acc
+}
+
+fn filter_vars(expr: &RecExpr<VecLang>) -> Vec<Var> {
+    fold_recexpr(expr, vec![], |mut acc, l| {
+        if let VecLang::Symbol(s) = l {
+            acc.push(format!("{}", s).parse().unwrap());
+        }
+        acc
+    })
+}
+
+fn retain_cost_effective_rules<F>(
+    rules: &[DiosRwrite],
+    all_vars: bool,
+    cutoff: F,
+) -> Vec<DiosRwrite>
+where
+    F: Fn(f64) -> bool,
+{
+    let mut costfn = VecCostFn {};
+    let result = rules
+        .iter()
+        .filter(|r| {
+            if let (Some(lhs), Some(rhs)) =
+                (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
+            {
+                let lexp: RecExpr<VecLang> = VecLang::from_pattern(lhs);
+                let rexp: RecExpr<VecLang> = VecLang::from_pattern(rhs);
+                let cost_differential = costfn.cost_rec(&lexp) - costfn.cost_rec(&rexp);
+
+                let lhs_vars = r.searcher.vars();
+                let all_vars_p = filter_vars(&lexp).len() == lhs_vars.len();
+
+                if all_vars {
+                    cutoff(cost_differential) && all_vars_p
+                } else {
+                    cutoff(cost_differential)
+                }
+            } else {
+                false
+            }
+        })
+        .cloned()
+        .collect_vec();
+
+    eprintln!("Retained {} rules", result.len());
+
+    result
+}
+
+fn smart_select_rules(rules: &[DiosRwrite], pat: &Pattern<VecLang>) -> Option<Pattern<VecLang>> {
+    // for r in rules.iter() {
+    //     match (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast()) {
+    //         (Some(lhs), Some(rhs)) => eprintln!("[{}] {} => {}", r.name, lhs, rhs),
+    //         _ => eprintln!("custom: {}", r.name),
+    //     };
+    // }
 
     // rules.retain(|r| {
     //     matches!(
@@ -364,35 +492,38 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
     //     )
     // });
 
-    let check: &'static str =
-        "(Vec (+ ?a (+ ?b (+ (+ (* ?c (* ?d ?e)) (neg (* ?f (* ?d ?g)))) (* ?h (* ?d ?i))))) ?j)";
+    // let check: &'static str =
+    //     "(Vec (+ ?a (+ ?b (+ (+ (* ?c (* ?d ?e)) (neg (* ?f (* ?d ?g)))) (* ?h (* ?d ?i))))) ?j)";
+
+    let expr: RecExpr<VecLang> = pat.ast.to_string().parse().unwrap();
 
     let mut egraph: EGraph = EGraph::new(TrackRewrites::default());
-    let root = egraph.add_expr(&check.parse().unwrap());
+    let root = egraph.add_expr(&expr);
     let _zero = egraph.add_expr(&"0".parse().unwrap());
 
     let mut runner = LoggingRunner::new(Default::default())
         .with_egraph(egraph)
         .with_node_limit(1_000_000)
-        .with_time_limit(std::time::Duration::from_secs(100))
+        .with_time_limit(std::time::Duration::from_secs(30))
         .with_iter_limit(100);
 
-    runner = runner.run(&rules);
-    report(&runner);
+    eprintln!("start:\n{}", pat.pretty(80));
+
+    runner = runner.run(rules);
     // runner.egraph.dot().to_png("graph.png").unwrap();
 
-    let check_expr: Pattern<VecLang> = check.parse().unwrap();
-    let matches: Vec<Id> = check_expr
+    // let check_expr: Pattern<VecLang> = check.parse().unwrap();
+    let matches: Vec<Id> = pat
         .search(&runner.egraph)
         .iter()
         .map(|m| m.eclass)
         .collect();
 
-    eprintln!("matches: {:?}", matches);
+    // eprintln!("matches: {:?}", matches);
     let extractor = Extractor::new(
         &runner.egraph,
         VecCostFn {
-            egraph: &runner.egraph,
+            // egraph: &runner.egraph,
         },
     );
     let mut best = None;
@@ -407,16 +538,17 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
         }
     }
 
-    eprintln!("start:\n{}", check_expr.pretty(80));
-    if let Some((cost, prog)) = best {
-        eprintln!("best: [{}] {}", cost, prog);
-    } else {
-        eprintln!("no pattern found");
-    }
+    // if let Some((cost, prog)) = best {
+    //     eprintln!("best: [{}] {}", cost, prog);
+    // } else {
+    //     eprintln!("no pattern found");
+    // }
 
-    eprintln!("trying a different technique");
+    // eprintln!("trying a different technique");
     let (cost, prog) = extractor.find_best(root);
     eprintln!("searching from the root: [{}]\n{}", cost, prog.pretty(80));
+
+    report(&runner);
 
     // runner = LoggingRunner::new(Default::default())
     //     .with_egraph(runner.egraph)
@@ -440,5 +572,19 @@ fn smart_select_rules(rules: Vec<DiosRwrite>) -> Vec<DiosRwrite> {
     //     eprintln!("nothing happened");
     // }
 
-    rules
+    // rw!("t"; expr => prog)
+
+    let mut c = VecCostFn {
+        // egraph: &runner.egraph,
+    };
+
+    let orig_cost = c.cost_rec(&expr);
+
+    // eprintln!("|{} - {}| = {}", cost, orig_cost, (cost - orig_cost).abs());
+
+    if (cost - orig_cost).abs() > 0.0 {
+        Some(format!("{}", prog).parse().unwrap())
+    } else {
+        None
+    }
 }

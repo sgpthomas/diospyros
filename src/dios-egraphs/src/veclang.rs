@@ -1,4 +1,5 @@
 use egg::*;
+use itertools::Itertools;
 
 use crate::tracking::TrackRewrites;
 
@@ -60,3 +61,16 @@ define_language! {
 
 pub type EGraph = egg::EGraph<VecLang, TrackRewrites>;
 pub type DiosRwrite = egg::Rewrite<VecLang, TrackRewrites>;
+
+impl VecLang {
+    pub fn from_pattern(pat: &PatternAst<Self>) -> RecExpr<Self> {
+        pat.as_ref()
+            .iter()
+            .map(|node| match node {
+                ENodeOrVar::Var(v) => VecLang::Symbol(v.to_string().into()),
+                ENodeOrVar::ENode(node) => node.clone(),
+            })
+            .collect_vec()
+            .into()
+    }
+}

@@ -2,12 +2,12 @@ use egg::*;
 
 use crate::veclang::{EGraph, VecLang};
 
-pub struct VecCostFn<'a> {
-    pub egraph: &'a EGraph,
+pub struct VecCostFn {
+    // pub egraph: &'a EGraph,
 }
 
 // &'a EGraph
-impl CostFunction<VecLang> for VecCostFn<'_> {
+impl CostFunction<VecLang> for VecCostFn {
     type Cost = f64;
     // you're passed in an enode whose children are costs instead of eclass ids
     fn cost<C>(&mut self, enode: &VecLang, mut costs: C) -> Self::Cost
@@ -17,7 +17,7 @@ impl CostFunction<VecLang> for VecCostFn<'_> {
         const LITERAL: f64 = 0.001;
         const STRUCTURE: f64 = 0.1;
         const VEC_OP: f64 = 1.;
-        const OP: f64 = 1.;
+        const OP: f64 = 2.;
         const BIG: f64 = 100.0;
         let op_cost = match enode {
             // You get literals for extremely cheap
@@ -55,7 +55,7 @@ impl CostFunction<VecLang> for VecCostFn<'_> {
             VecLang::VecAdd(..) => VEC_OP,
             VecLang::VecMinus(..) => VEC_OP,
             VecLang::VecMul(..) => VEC_OP,
-            VecLang::VecMAC(..) => VEC_OP,
+            VecLang::VecMAC(..) => 0.5, // VEC_OP,
             VecLang::VecDiv(..) => VEC_OP,
             VecLang::VecNeg(..) => VEC_OP,
             VecLang::VecSqrt(..) => VEC_OP,

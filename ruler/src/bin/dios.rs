@@ -559,6 +559,12 @@ impl SynthLanguage for VecLang {
         };
 
         let vec_stuff = if read_conf(synth)["use_vector"].as_bool().unwrap() {
+            let vec_unops = ids
+                .clone()
+                .into_iter()
+                .filter(move |x| !synth.egraph[*x].data.exact)
+                .map(|x| VecLang::VecNeg([x]));
+
             let vec_binops = (0..2)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
@@ -595,7 +601,7 @@ impl SynthLanguage for VecLang {
                 .map(move |x| VecLang::VecMAC(x));
 
             // TODO: read conf "vector_mac"
-            Some(vec_binops.chain(vec).chain(vec_mac))
+            Some(vec_unops.chain(vec_binops).chain(vec).chain(vec_mac))
         } else {
             None
         };
