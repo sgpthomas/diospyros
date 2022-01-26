@@ -1,6 +1,6 @@
 use egg::*;
 
-use crate::veclang::{EGraph, VecLang};
+use crate::veclang::VecLang;
 
 pub struct VecCostFn {
     // pub egraph: &'a EGraph,
@@ -55,7 +55,7 @@ impl CostFunction<VecLang> for VecCostFn {
             VecLang::VecAdd(..) => VEC_OP,
             VecLang::VecMinus(..) => VEC_OP,
             VecLang::VecMul(..) => VEC_OP,
-            VecLang::VecMAC(..) => 0.5, // VEC_OP,
+            VecLang::VecMAC(..) => VEC_OP,
             VecLang::VecDiv(..) => VEC_OP,
             VecLang::VecNeg(..) => VEC_OP,
             VecLang::VecSqrt(..) => VEC_OP,

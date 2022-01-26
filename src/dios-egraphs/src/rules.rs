@@ -1,7 +1,7 @@
 use egg::{rewrite as rw, *};
 
 use itertools::Itertools;
-use libc::thread_standard_policy;
+// use libc::thread_standard_policy;
 
 use crate::{
     binopsearcher::build_binop_or_zero_rule,
@@ -233,6 +233,7 @@ pub fn run(
     // Always add the literal zero
     let extractor = Extractor::new(&eg, VecCostFn {});
     let (cost, out_prog2) = extractor.find_best(root);
+    eprintln!("optimized:\n{}", out_prog2.pretty(80));
     eprintln!("Egraph cost? {}", cost);
 
     (cost, out_prog2)

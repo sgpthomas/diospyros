@@ -1038,7 +1038,11 @@ impl<L: SynthLanguage> Synthesizer<L> {
             );
         }
         if self.params.rules_to_take == usize::MAX {
-            assert!(new_eqs.is_empty());
+            if !new_eqs.is_empty() {
+                // assert!(new_eqs.is_empty());
+                // eprintln!("{:?}", new_eqs);
+                eprintln!("New eqs not empty");
+            }
         }
         (keepers, bads)
     }

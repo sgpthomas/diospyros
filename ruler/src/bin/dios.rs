@@ -421,7 +421,7 @@ impl SynthLanguage for VecLang {
             }
             VecLang::VecSqrt([l]) => {
                 map!(get, l => Value::vec1(l, |l| {
-                        if l.iter().all(|x| matches!(x, Value::Int(_))) {
+                    if l.iter().all(|x| {if let Value::Int(i) = x { *i >= 0 } else { false }}) {
                         Some(Value::Vec(l.iter().map(|tup| match tup {
                                 Value::Int(a) => Value::Int(a.sqrt()),
                                     x => panic!("SQRT: Ill-formed: {}", x)
@@ -575,7 +575,14 @@ impl SynthLanguage for VecLang {
                 .clone()
                 .into_iter()
                 .filter(move |x| !synth.egraph[*x].data.exact)
-                .map(|x| VecLang::VecNeg([x]));
+                .map(|x| {
+                    vec![
+                        VecLang::VecNeg([x]),
+                        // VecLang::VecSgn([x]),
+                        // VecLang::VecSqrt([x]),
+                    ]
+                })
+                .flatten();
 
             let vec_binops = (0..2)
                 .map(|_| ids.clone())
