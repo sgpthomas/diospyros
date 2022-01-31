@@ -9,10 +9,9 @@ use crate::{
     cost::VecCostFn,
     macsearcher::build_mac_rule,
     patterns::gen_patterns,
-    scheduler::{LoggingData, LoggingScheduler},
+    scheduler::LoggingData,
     searchutils::*,
     tracking::TrackRewrites,
-    tree::{get_rewrites_used, print_rewrites_used},
     veclang::{DiosRwrite, EGraph, VecLang},
 };
 
@@ -110,12 +109,23 @@ pub fn run(
     timeout: u64,
     no_ac: bool,
     no_vec: bool,
+    handwritten: bool,
     iter_limit: usize,
     ruleset: Option<&str>,
 ) -> (f64, RecExpr<VecLang>) {
     let use_only_ruler = true;
-    let (mut rules, snd_phase) = rules(no_ac, no_vec, ruleset, use_only_ruler);
-    // filter_applicable_rules(&mut rules, prog);
+
+    let mut rules: Vec<DiosRwrite> = vec![];
+
+    if handwritten {
+        rules.extend(handwritten_rules(no_ac, no_vec));
+    }
+
+    if let Some(filename) = ruleset {
+        rules.extend(external_rules(filename));
+    }
+
+    // let (mut rules, snd_phase) = rules(no_ac, no_vec, ruleset, use_only_ruler);
 
     rules.extend(vec![
         // build_unop_rule("neg", "VecNeg"),
@@ -284,35 +294,9 @@ pub fn build_litvec_rule() -> DiosRwrite {
         if is_all_same_memory_or_zero(&mem_vars))
 }
 
-pub fn rules(
-    no_ac: bool,
-    no_vec: bool,
-    ruleset: Option<&str>,
-    only_ruleset: bool,
-) -> (Vec<DiosRwrite>, Vec<DiosRwrite>) {
+/// Return a Vec of hand constructed rules.
+pub fn handwritten_rules(no_ac: bool, no_vec: bool) -> Vec<DiosRwrite> {
     let mut rules: Vec<DiosRwrite> = vec![];
-    let mut snd_rules: Vec<DiosRwrite> = vec![];
-
-    if let Some(filename) = ruleset {
-        let ruler = ruler_rules(filename);
-        let fst = retain_cost_effective_rules(&ruler, false, |x| x > 5.0);
-        let snd = retain_cost_effective_rules(&ruler, true, |x| x > 0.0 && x < 5.0);
-
-        for r in &snd {
-            eprintln!(
-                "{} => {}",
-                r.searcher.get_pattern_ast().unwrap().pretty(80),
-                r.applier.get_pattern_ast().unwrap().pretty(80)
-            );
-        }
-        // panic!("asdf");
-
-        rules.extend(fst);
-        snd_rules.extend(snd);
-        if only_ruleset {
-            return (rules, snd_rules);
-        }
-    }
 
     rules.extend(vec![
         rw!("add-0"; "(+ 0 ?a)" => "?a"),
@@ -373,13 +357,40 @@ pub fn rules(
         ]);
     }
 
-    (rules, snd_rules)
+    rules
 }
 
-fn ruler_rules(filename: &str) -> Vec<DiosRwrite> {
-    if filename == "" {
-        return vec![];
-    }
+// pub fn external_rules(ruleset: Option<&str>) -> Vec<DiosRwrite> {
+//     let mut rules: Vec<DiosRwrite> = vec![];
+//     // let mut snd_rules: Vec<DiosRwrite> = vec![];
+
+//     if let Some(filename) = ruleset {
+//         let ruler = ruler_rules(filename);
+//         rules.extend(ruler);
+//         // let fst = retain_cost_effective_rules(&ruler, false, |x| x > 5.0);
+//         // let snd = retain_cost_effective_rules(&ruler, true, |x| x > 0.0 && x < 5.0);
+
+//         // for r in &snd {
+//         //     eprintln!(
+//         //         "{} => {}",
+//         //         r.searcher.get_pattern_ast().unwrap().pretty(80),
+//         //         r.applier.get_pattern_ast().unwrap().pretty(80)
+//         //     );
+//         // }
+//         // panic!("asdf");
+
+//         // rules.extend(fst);
+//         // snd_rules.extend(snd);
+//         // if only_ruleset {
+//         //     return (rules, snd_rules);
+//         // }
+//     }
+
+//     rules
+// }
+
+/// Return rules read in from a json file.
+fn external_rules(filename: &str) -> Vec<DiosRwrite> {
     let contents = std::fs::read_to_string(filename).unwrap();
     let data = json::parse(&contents).unwrap();
 

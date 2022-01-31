@@ -21,6 +21,11 @@ fn main() {
                 .help("Disable vector rules"),
         )
         .arg(
+            Arg::with_name("handwritten")
+                .long("handwritten")
+                .help("Enable use of handwritten rules"),
+        )
+        .arg(
             Arg::with_name("rules")
                 .long("rules")
                 .takes_value(true)
