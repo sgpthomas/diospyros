@@ -5,6 +5,7 @@ use itertools::Itertools;
 
 use crate::{
     cost::VecCostFn,
+    handwritten::build_litvec_rule,
     rules::LoggingRunner,
     tracking::TrackRewrites,
     veclang::{DiosRwrite, EGraph, VecLang},
@@ -33,6 +34,7 @@ pub fn external_rules(filename: &PathBuf) -> Vec<DiosRwrite> {
         rw!("vec-neg"; "(Vec (neg ?a) (neg ?b))" => "(VecNeg (Vec ?a ?b))"),
         rw!("vec-neg0-l"; "(Vec 0 (neg ?b))" => "(VecNeg (Vec 0 ?b))"),
         rw!("vec-neg0-r"; "(Vec (neg ?a) 0)" => "(VecNeg (Vec ?a 0))"),
+        build_litvec_rule(),
     ]);
 
     rules

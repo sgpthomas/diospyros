@@ -60,7 +60,11 @@ impl CostFunction<VecLang> for VecCostFn {
             VecLang::VecNeg(..) => VEC_OP,
             VecLang::VecSqrt(..) => VEC_OP,
             VecLang::VecSgn(..) => VEC_OP,
-            _ => VEC_OP,
+            VecLang::Or(_) => VEC_OP,
+            VecLang::And(_) => VEC_OP,
+            VecLang::Ite(_) => VEC_OP,
+            VecLang::Lt(_) => VEC_OP,
+            // _ => VEC_OP,
         };
         enode.fold(op_cost, |sum, id| sum + costs(id))
     }

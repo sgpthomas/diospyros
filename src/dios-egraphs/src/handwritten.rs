@@ -51,7 +51,7 @@ fn build_unop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
     rw!(format!("{}_unop", op_str); { searcher } => { applier })
 }
 
-fn build_litvec_rule() -> DiosRwrite {
+pub fn build_litvec_rule() -> DiosRwrite {
     let mem_vars = ids_with_prefix(&"a".to_string(), vector_width());
     let mut gets: Vec<String> = Vec::with_capacity(vector_width());
     for i in 0..vector_width() {
