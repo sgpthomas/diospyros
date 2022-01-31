@@ -118,9 +118,9 @@ pub fn run(
     // filter_applicable_rules(&mut rules, prog);
 
     rules.extend(vec![
-        build_unop_rule("neg", "VecNeg"),
-        rw!("neg-zero-inv0"; "0" => "(neg 0)"),
-        rw!("neg-zero-inv1"; "(neg 0)" => "0"),
+        // build_unop_rule("neg", "VecNeg"),
+        // rw!("neg-zero-inv0"; "0" => "(neg 0)"),
+        // rw!("neg-zero-inv1"; "(neg 0)" => "0"),
         // rw!("add-0"; "(+ 0 ?a)" => "?a"),
         // rw!("mul-0"; "(* 0 ?a)" => "0"),
         // rw!("mul-1"; "(* 1 ?a)" => "?a"),
