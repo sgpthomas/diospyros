@@ -1,7 +1,10 @@
 pub mod binopsearcher;
 pub mod config;
 pub mod cost;
+mod external;
+mod handwritten;
 pub mod macsearcher;
+pub mod opts;
 mod patterns;
 pub mod rewriteconcats;
 pub mod rules;

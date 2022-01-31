@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 use crate::veclang::VecLang;
 use egg::{Analysis, CostFunction, DidMerge, EClass, Id, Language, RecExpr};
@@ -18,7 +18,7 @@ impl Analysis<VecLang> for TrackRewrites {
         ()
     }
 
-    fn merge(&mut self, to: &mut Self::Data, from: Self::Data) -> DidMerge {
+    fn merge(&mut self, _to: &mut Self::Data, _from: Self::Data) -> DidMerge {
         // *to = &*to | &from;
         // to.extend(from);
         DidMerge(false, false)

@@ -1,53 +1,20 @@
-extern crate clap;
-use clap::{App, Arg};
-use dioslib::*;
+use dioslib::{config, opts::Opts, rewriteconcats, rules, stringconversion, veclang};
+// use dioslib::{self::*, rules::handwritten_rules};
+use std::fs;
 
 fn main() {
-    let matches = App::new("Diospyros Rewriter")
-        .arg(
-            Arg::with_name("INPUT")
-                .help("Sets the input file")
-                .required(true)
-                .index(1),
-        )
-        .arg(
-            Arg::with_name("no-ac")
-                .long("no-ac")
-                .help("Disable associativity and commutativity rules"),
-        )
-        .arg(
-            Arg::with_name("no-vec")
-                .long("no-vec")
-                .help("Disable vector rules"),
-        )
-        .arg(
-            Arg::with_name("handwritten")
-                .long("handwritten")
-                .help("Enable use of handwritten rules"),
-        )
-        .arg(
-            Arg::with_name("rules")
-                .long("rules")
-                .takes_value(true)
-                .help("Pass in a json file with rules"),
-        )
-        .arg(
-            Arg::with_name("iter-limit")
-                .long("iter-limit")
-                .takes_value(true)
-                .help("Specify the max iterations to run eq-sat for"),
-        )
-        .get_matches();
+    let cli_opts: Opts = argh::from_env();
 
-    use std::{env, fs};
+    // use std::{env, fs};
 
     // Get a path string to parse a program.
-    let path = matches.value_of("INPUT").unwrap();
-    let timeout = env::var("TIMEOUT")
-        .ok()
-        .and_then(|t| t.parse::<u64>().ok())
-        .unwrap_or(180);
-    let prog_str = fs::read_to_string(path).expect("Failed to read the input file.");
+    // let path = matches.value_of("INPUT").unwrap();
+    // let timeout = env::var("TIMEOUT")
+    //     .ok()
+    //     .and_then(|t| t.parse::<u64>().ok())
+    //     .unwrap_or(180);
+    // let prog_str = fs::read_to_string(path).expect("Failed to read the input file.");
+    let prog_str = fs::read_to_string(&cli_opts.input).expect("Failed to read input.");
 
     // AST conversion: boxed Rosette terms to Egg syntax
     let converted: String = stringconversion::convert_string(&prog_str)
@@ -58,23 +25,23 @@ fn main() {
     let prog: egg::RecExpr<veclang::VecLang> = concats.unwrap().parse().unwrap();
 
     // Rules to disable flags
-    let no_ac = matches.is_present("no-ac");
-    let no_vec = matches.is_present("no-vec");
-    let ruleset = matches.value_of("rules");
-    let iter_limit = matches
-        .value_of("iter-limit")
-        .map_or(20, |x| x.parse::<usize>().unwrap());
+    // let no_ac = matches.is_present("no-ac");
+    // let no_vec = matches.is_present("no-vec");
+    // let ruleset = matches.value_of("rules");
+    // let iter_limit = matches
+    //     .value_of("iter-limit")
+    //     .map_or(20, |x| x.parse::<usize>().unwrap());
 
     // Run rewriter
     eprintln!(
         "Running egg with timeout {:?}s, width: {:?}",
-        timeout,
+        cli_opts.timeout,
         config::vector_width()
     );
-    // eprintln!("Input prog:\n{}", &prog.pretty(80));
-    let (cost, _best) = rules::run(&prog, timeout, no_ac, no_vec, iter_limit, ruleset);
+    eprintln!("Input prog:\n{}", &prog.pretty(80));
+    let (cost, best) = rules::run(&prog, &cli_opts);
 
-    // println!("{}", best.pretty(80)); /* Pretty print with width 80 */
+    println!("{}", best.pretty(80)); /* Pretty print with width 80 */
     eprintln!("\nCost: {}", cost);
 }
 

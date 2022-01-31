@@ -5,7 +5,7 @@ use egg::{Extractor, Id, RecExpr, Rewrite, RewriteScheduler};
 use crate::{
     cost::VecCostFn,
     tracking::TrackRewrites,
-    tree::{get_rewrites_used, is_rewrite_used, print_rewrites_used},
+    tree::{get_rewrites_used, print_rewrites_used},
     veclang::{EGraph, VecLang},
 };
 
@@ -128,7 +128,7 @@ impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
 pub struct LoggingData;
 
 impl<L: egg::Language, N: egg::Analysis<L>> egg::IterationData<L, N> for LoggingData {
-    fn make(runner: &egg::Runner<L, N, Self>) -> Self {
+    fn make(_runner: &egg::Runner<L, N, Self>) -> Self {
         // eprintln!("==^= iter {} =^==", runner.iterations.len() + 1);
         LoggingData
     }

@@ -1,4 +1,4 @@
-use std::{collections::HashMap, iter, str::FromStr};
+use std::{collections::HashMap, str::FromStr};
 
 use egg::{ENodeOrVar, Id, Language, Pattern, RecExpr, Var};
 use itertools::Itertools;
