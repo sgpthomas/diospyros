@@ -1,4 +1,4 @@
-use egg::{rewrite as rw, Id, Pattern, Subst, Var};
+use egg::{rewrite as rw, Id, Pattern, RecExpr, Subst, Var};
 
 use crate::{
     binopsearcher::build_binop_or_zero_rule,
@@ -67,8 +67,32 @@ fn build_litvec_rule() -> DiosRwrite {
         if is_all_same_memory_or_zero(&mem_vars))
 }
 
+fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>) {
+    let prog_str: String = prog.pretty(80);
+    let ops_to_filter = vec!["neg", "sqrt", "/"];
+    let unused_ops: Vec<&str> = ops_to_filter
+        .into_iter()
+        .filter(|&op| !prog_str.contains(op))
+        .collect();
+
+    let mut dropped = "".to_string();
+    rules.retain(|r| {
+        let drop = unused_ops.iter().any(|op| {
+            let rule_sr = format!("{:?}", r);
+            rule_sr.contains(op)
+        });
+        if drop {
+            dropped = format!("{} {}", dropped, r.name)
+        };
+        !drop
+    });
+    if dropped != "" {
+        eprintln!("Dropping inapplicable rules:{}", dropped);
+    }
+}
+
 /// Return a Vec of hand constructed rules.
-pub fn handwritten_rules(no_ac: bool, no_vec: bool) -> Vec<DiosRwrite> {
+pub fn handwritten_rules(prog: &RecExpr<VecLang>, no_ac: bool, no_vec: bool) -> Vec<DiosRwrite> {
     let mut rules: Vec<DiosRwrite> = vec![];
 
     rules.extend(vec![
@@ -101,6 +125,13 @@ pub fn handwritten_rules(no_ac: bool, no_vec: bool) -> Vec<DiosRwrite> {
 
     // Vector rules
     if !no_vec {
+        eprintln!(
+            "{}",
+            build_unop_rule("neg", "VecNeg")
+                .applier
+                .get_pattern_ast()
+                .unwrap()
+        );
         rules.extend(vec![
             // Special MAC fusion rule
             rw!("vec-mac-add-mul";
@@ -129,6 +160,8 @@ pub fn handwritten_rules(no_ac: bool, no_vec: bool) -> Vec<DiosRwrite> {
             rw!("assoc-mul"; "(* (* ?a ?b) ?c)" => "(* ?a (* ?b ?c))"),
         ]);
     }
+
+    filter_applicable_rules(&mut rules, prog);
 
     rules
 }

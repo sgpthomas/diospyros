@@ -12,31 +12,6 @@ use crate::{
 };
 
 #[allow(unused)]
-fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>) {
-    let prog_str: String = prog.pretty(80);
-    let ops_to_filter = vec!["neg", "sqrt", "/"];
-    let unused_ops: Vec<&&str> = ops_to_filter
-        .iter()
-        .filter(|&op| !prog_str.contains(op))
-        .collect();
-
-    let mut dropped = "".to_string();
-    rules.retain(|r| {
-        let drop = unused_ops.iter().any(|&op| {
-            let rule_sr = format!("{:?}", r);
-            rule_sr.contains(op)
-        });
-        if drop {
-            dropped = format!("{} {}", dropped, r.name)
-        };
-        !drop
-    });
-    if dropped != "" {
-        eprintln!("Dropping inapplicable rules:{}", dropped);
-    }
-}
-
-#[allow(unused)]
 fn retain_rules_by_name(rules: &mut Vec<DiosRwrite>, names: &[&str]) {
     rules.retain(|rewrite| names.contains(&rewrite.name.as_str()))
 }
@@ -91,10 +66,11 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     // let use_only_ruler = true;
 
     let mut rules: Vec<DiosRwrite> = vec![];
+    let mut snd_phase: Vec<DiosRwrite> = vec![];
 
     // add handwritten rules
     if opts.handwritten {
-        rules.extend(handwritten_rules(opts.no_ac, opts.no_vec));
+        rules.extend(handwritten_rules(prog, opts.no_ac, opts.no_vec));
     }
 
     // add external rules
@@ -104,6 +80,9 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
 
     // filter out rules that have a cost differential lower than cutoff
     if let Some(cutoff) = opts.cost_filter {
+        if opts.split_phase {
+            snd_phase = retain_cost_effective_rules(&rules, opts.no_dup_vars, |x| x <= cutoff);
+        }
         rules = retain_cost_effective_rules(&rules, opts.no_dup_vars, |x| x > cutoff);
     }
 
@@ -125,7 +104,7 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     let mut runner = LoggingRunner::new(Default::default())
         .with_egraph(init_eg)
         .with_expr(&prog)
-        .with_node_limit(500_000)
+        .with_node_limit(10_000_000)
         .with_time_limit(std::time::Duration::from_secs(opts.timeout as u64))
         // .with_hook(|runner| {
         //     eprintln!("Egraph big big? {}", runner.egraph.total_size());
@@ -169,29 +148,36 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
     let extractor = Extractor::new(&eg, VecCostFn {});
     let (cost, out_prog) = extractor.find_best(root);
-    (cost, out_prog)
 
-    // eprintln!("==== Starting Second Phase Optimization ====");
-    // eprintln!("Using {} rules", snd_phase.len());
+    // Second phase optimization
+    if opts.split_phase {
+        eprintln!("==== Starting Second Phase Optimization ====");
+        eprintln!("Using {} rules", snd_phase.len());
 
-    // let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
-    // init_eg.add(VecLang::Num(0));
-    // let mut runner = LoggingRunner::new(Default::default())
-    //     .with_egraph(init_eg)
-    //     .with_expr(&out_prog)
-    //     .with_node_limit(1_000_000)
-    //     .with_time_limit(std::time::Duration::from_secs(300))
-    //     .with_iter_limit(iter_limit);
-    // runner = runner.run(&snd_phase);
-    // report(&runner);
+        let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
+        init_eg.add(VecLang::Num(0));
+        let mut runner = LoggingRunner::new(Default::default())
+            .with_egraph(init_eg)
+            .with_expr(&out_prog)
+            .with_node_limit(1_000_000)
+            .with_time_limit(std::time::Duration::from_secs(opts.timeout as u64))
+            .with_iter_limit(opts.iter_limit);
+        runner = runner.run(&snd_phase);
+        // report(&runner);
 
-    // let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
+        let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
 
-    // // Always add the literal zero
-    // let extractor = Extractor::new(&eg, VecCostFn {});
-    // let (cost, out_prog2) = extractor.find_best(root);
-    // eprintln!("optimized:\n{}", out_prog2.pretty(80));
-    // eprintln!("Egraph cost? {}", cost);
-
-    // (cost, out_prog2)
+        // // Always add the literal zero
+        let extractor = Extractor::new(&eg, VecCostFn {});
+        let (new_cost, new_prog) = extractor.find_best(root);
+        eprintln!(
+            "Improved cost by {} ({} - {})",
+            cost - new_cost,
+            cost,
+            new_cost
+        );
+        (new_cost, new_prog)
+    } else {
+        (cost, out_prog)
+    }
 }

@@ -28,6 +28,13 @@ pub fn external_rules(filename: &PathBuf) -> Vec<DiosRwrite> {
         }
     }
 
+    // hack to add some important rules
+    rules.extend(vec![
+        rw!("vec-neg"; "(Vec (neg ?a) (neg ?b))" => "(VecNeg (Vec ?a ?b))"),
+        rw!("vec-neg0-l"; "(Vec 0 (neg ?b))" => "(VecNeg (Vec 0 ?b))"),
+        rw!("vec-neg0-r"; "(Vec (neg ?a) 0)" => "(VecNeg (Vec ?a 0))"),
+    ]);
+
     rules
 }
 
