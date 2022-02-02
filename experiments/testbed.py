@@ -94,7 +94,9 @@ def main():
     with open(config_file, "r") as f:
         config = json.load(f)
 
-    inputs = config["inputs"]
+    benchmarks = config["benchmarks"]
+    template = config["input_template"]
+    # inputs = config["inputs"]
     timeout = config["timeout"]
 
     params = []
@@ -105,7 +107,7 @@ def main():
     for e in experiments:
         print(list(filter(lambda x: x != "", e)))
 
-    n_experiments = len(experiments) * len(inputs)
+    n_experiments = len(experiments) * len(benchmarks)
     est_time = datetime.timedelta(seconds=n_experiments * timeout)
     print(f"Found {n_experiments} experiments.")
     print(f"Max time: {est_time}.")
@@ -122,12 +124,13 @@ def main():
 
     with keyf.open("w") as keyf_fp:
         for i, exp in enumerate(experiments):
-            for inp in inputs:
-                name = inp.split("/")[0]
-                print(f"[{i}/{n_experiments}] {name} {' '.join(exp)}")
+            for bench in enumerate(benchmarks):
+                inp = template.format(bench)
+                # name = inp.split("/")[0]
+                print(f"[{i}/{n_experiments}] {bench} {' '.join(exp)}")
 
-                result_fn_stdout = output_dir / f"{i}-{name}.out"
-                result_fn_stderr = output_dir / f"{i}-{name}.err"
+                result_fn_stdout = output_dir / f"{i}-{bench}.out"
+                result_fn_stderr = output_dir / f"{i}-{bench}.err"
                 (time, out, err) = run_experiment(config, inp, exp)
                 if out != "":
                     result_fn_stdout.touch()
@@ -137,6 +140,7 @@ def main():
                     result_fn_stderr.write_text(err)
 
                 results["experiments"] += [{
+                    "bench": bench,
                     "cmd": " ".join(exp),
                     "time": time,
                     "stdout": str(result_fn_stdout),
