@@ -27,12 +27,13 @@ class Parameter:
 
     def to_list(self):
         """Convert parameter to a list of strings."""
-        res = ['']
+        res = []
         if len(self.args) == 0:
-            res = [self.flag]
+            res += [self.flag]
         else:
             for arg_a in self.args:
                 res.append(f"{self.flag} {arg_a}")
+        res += [""]
         return res
 
     def __mul__(self, other):
@@ -41,6 +42,8 @@ class Parameter:
         for x in self.to_list():
             for y in other.to_list():
                 res.append([x, y])
+
+        print(self.to_list(), other.to_list(), res)
         return res
 
     def __rmul__(self, other):
@@ -65,19 +68,13 @@ def run_experiment(config, inp, exp):
     res = sp.run(full, timeout=config["timeout"], capture_output=True)
     end = time.time()
 
-    # print("=== stdout ===")
-    # print(res.stdout.decode("ascii"))
-    # print("=== stderr ===")
-    # print(res.stderr.decode("ascii"))
-
     return (end - start, res.stdout.decode("utf-8"), res.stderr.decode("utf-8"))
 
 
 def main():
     """Start testbed."""
-    assert(len(sys.argv) > 2)
+    assert(len(sys.argv) > 1)
     config_file = sys.argv[1]
-    output_dir = Path(sys.argv[2])
     config = None
 
     with open(config_file, "r") as f:
@@ -87,10 +84,12 @@ def main():
     timeout = config["timeout"]
 
     params = []
-    for param in config["parameters"][1:3]:
+    for param in config["parameters"]:
         params.append(Parameter(param["name"], param["flag"], param["args"]))
 
     experiments = reduce(lambda x, y: x * y, params)
+    for e in experiments:
+        print(list(filter(lambda x: x != "", e)))
 
     n_experiments = len(experiments) * len(inputs)
     est_time = datetime.timedelta(seconds=n_experiments * timeout)
@@ -101,6 +100,8 @@ def main():
     sp.run(config["compile_command"].split(" "))
 
     results = {"experiments": []}
+    assert(len(sys.argv) > 2)
+    output_dir = Path(sys.argv[2])
     output_dir.mkdir(exist_ok=False)
     keyf = output_dir / "key.json"
     keyf.touch()

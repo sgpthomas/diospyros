@@ -2,8 +2,8 @@
     "compile_command": "cargo build --release --manifest-path src/dios-egraphs/Cargo.toml",
     "base_command": "src/dios-egraphs/target/release/dios-egraphs",
     "extra": "--timeout 50",
-    "inputs": ["q-prod-out/spec.rkt"],
-    "other_inputs": ["2d-conv-out/spec.rkt", "mat-mul-out/spec.rkt"],
+    "inputs": ["q-prod-out/spec.rkt", "2d-conv-out/spec.rkt"],
+    "other_inputs": ["mat-mul-out/spec.rkt"],
     "timeout": 60,
     "parameters": [	
 	{
@@ -19,7 +19,7 @@
 	{
 	    "name": "cost-filter",
 	    "flag": "--cost-filter",
-	    "args": [0.0, 2.0, 10.0]
+	    "args": [0.0, 2.0, 5.0]
 	},
 	{
 	    "name": "no-dup-vars",
