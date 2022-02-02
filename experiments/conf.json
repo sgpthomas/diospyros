@@ -4,7 +4,7 @@
     "extra": "--timeout 50",
     "inputs": ["q-prod-out/spec.rkt", "2d-conv-out/spec.rkt"],
     "other_inputs": ["mat-mul-out/spec.rkt"],
-    "timeout": 4,
+    "timeout": 60,
     "parameters": [	
 	{
 	    "name": "handwritten",
