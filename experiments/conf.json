@@ -1,12 +1,12 @@
 {
     "compile_command": "cargo build --release --manifest-path src/dios-egraphs/Cargo.toml",
     "base_command": "src/dios-egraphs/target/release/dios-egraphs",
-    "extra": "--timeout 50",
-    "benchmarks": ["q-prod", "2d-conv"],
+    "extra": "--timeout 180",
+    "benchmarks": ["q-prod", "2d-conv", "mat-mul"],
     "input_template": "{}-out/spec.rkt",
     "inputs": ["q-prod-out/spec.rkt", "2d-conv-out/spec.rkt"],
     "other_inputs": ["mat-mul-out/spec.rkt"],
-    "timeout": 60,
+    "timeout": 240,
     "parameters": [	
 	{
 	    "name": "handwritten",

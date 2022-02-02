@@ -102,3 +102,91 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 | (VecNeg | (VecMul | (LitVec | (Get | bt        | 0)   |       0) | (Vec    |  (Get | aq      | 1)   |  1))) |    |      |    |        |
 | (LitVec | (Get    | aq      |   0) | 0)        |      |          |         |       |         |      |       |    |      |    |        |
 | (Vec    | (Get    | bt      |   1) | 1)))))))) |      |          |         |       |         |      |       |    |      |    |        |
+
+* Plots
+
+#+begin_src R :session graphics
+library(tidyverse)
+
+data <- read.csv("feb1-exp0.csv")
+#+end_src
+
+#+begin_src R :session graphics :results value
+data %>%
+  filter(handwritten == "False") %>%
+  filter(rules == "t2.json") %>%
+  ## filter(cost.filter == 0) %>%
+  filter(no.dup.vars == "True") %>%
+  ## filter(sub.prog == "True") %>%
+  filter(split.phase == "False") %>%
+  filter(bench == "2d-conv") %>%
+  ## filter(variable == "time") %>%
+  select(bench, sub.prog,cost.filter, variable, value)
+#+end_src
+
+#+RESULTS:
+| 2d-conv | True  | 0 | time |  59.73351001739502 |
+| 2d-conv | True  | 0 | cost | 29.739999999999995 |
+| 2d-conv | False | 0 | time |  49.28172492980957 |
+| 2d-conv | False | 0 | cost | 29.739999999999995 |
+| 2d-conv | True  | 2 | time |  3.545912265777588 |
+| 2d-conv | True  | 2 | cost | 45.748000000000005 |
+| 2d-conv | False | 2 | time |  3.419951915740967 |
+| 2d-conv | False | 2 | cost |              45.74 |
+| 2d-conv | True  | 5 | time |  3.509434938430786 |
+| 2d-conv | True  | 5 | cost | 45.748000000000005 |
+| 2d-conv | False | 5 | time | 3.3958888053894043 |
+| 2d-conv | False | 5 | cost |              45.74 |
+| 2d-conv | True  |   | time |         Timed out. |
+| 2d-conv | True  |   | cost |               -1.0 |
+| 2d-conv | False |   | time |  52.71812701225281 |
+| 2d-conv | False |   | cost | 462.64699999999993 |
+
+#+begin_src R :session graphics :reuslts value
+data %>%
+  filter(handwritten == "True") %>%
+  filter(rules == "") %>%
+  ## filter(cost.filter == "") %>%
+  filter(no.dup.vars == "False") %>%
+  filter(sub.prog == "False") %>%
+  ## filter(split.phase == "False") %>%
+  filter(bench == "2d-conv") %>%
+  ## filter(variable == "cost") %>%
+  select(bench, cost.filter, variable, value)
+#+end_src
+
+#+RESULTS:
+| 2d-conv | 0 | time | 0.009846925735473633 |
+| 2d-conv | 0 | cost |    912.9159999999999 |
+| 2d-conv | 0 | time | 0.003222227096557617 |
+| 2d-conv | 0 | cost |    912.9159999999999 |
+| 2d-conv | 2 | time | 0.010087013244628906 |
+| 2d-conv | 2 | cost |    912.9159999999999 |
+| 2d-conv | 2 | time | 0.003244638442993164 |
+| 2d-conv | 2 | cost |    912.9159999999999 |
+| 2d-conv | 5 | time | 0.011150360107421875 |
+| 2d-conv | 5 | cost |    912.9159999999999 |
+| 2d-conv | 5 | time | 0.003241300582885742 |
+| 2d-conv | 5 | cost |    912.9159999999999 |
+| 2d-conv |   | time |   1.9895203113555908 |
+| 2d-conv |   | cost |   26.175999999999988 |
+| 2d-conv |   | time |   1.9747657775878906 |
+| 2d-conv |   | cost |   26.175999999999988 |
+
+#+begin_src R :session graphics :results graphics file :file fig.png
+## ggplot() +
+##   layer(data = data,
+##         )
+colnames(data)
+#+end_src
+
+#+RESULTS:
+| handwritten |
+| rules       |
+| cost.filter |
+| no.dup.vars |
+| sub.prog    |
+| split.phase |
+| bench       |
+| variable    |
+| value       |
