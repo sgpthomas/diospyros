@@ -125,13 +125,6 @@ pub fn handwritten_rules(prog: &RecExpr<VecLang>, no_ac: bool, no_vec: bool) -> 
 
     // Vector rules
     if !no_vec {
-        eprintln!(
-            "{}",
-            build_unop_rule("neg", "VecNeg")
-                .applier
-                .get_pattern_ast()
-                .unwrap()
-        );
         rules.extend(vec![
             // Special MAC fusion rule
             rw!("vec-mac-add-mul";
