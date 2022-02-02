@@ -64,11 +64,25 @@ def run_experiment(config, inp, exp):
     """Run experiment on input `inp` using args from `exp`."""
     base = [config["base_command"], inp, config["extra"]]
     full = reform(base + exp)
-    start = time.time()
-    res = sp.run(full, timeout=config["timeout"], capture_output=True)
-    end = time.time()
+    stdout, stderr = "", ""
+    exec_time = None
 
-    return (end - start, res.stdout.decode("utf-8"), res.stderr.decode("utf-8"))
+    try:
+        start = time.time()
+        res = sp.run(full, timeout=config["timeout"], capture_output=True)
+        end = time.time()
+        exec_time = end - start
+        stdout = res.stdout.decode("utf-8")
+        stderr = res.stderr.decode("utf-8")
+    except sp.TimeoutExpired as e:
+        exec_time = "Timed out."
+        if e.stdout is not None:
+            stdout = e.stdout.decode("utf-8")
+
+        if e.stderr is not None:
+            stderr = e.stderr.decode("utf-8")
+
+    return (exec_time, stdout, stderr)
 
 
 def main():
