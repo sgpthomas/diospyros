@@ -9,7 +9,7 @@ import subprocess as sp
 from pathlib import Path
 import time
 from itertools import product
-from multiprocessing import Pool
+from multiprocessing import Pool, cpu_count
 
 
 def reform(arg_list):
@@ -115,7 +115,9 @@ def main():
     n_experiments = len(exps) * len(benchmarks)
     est_time = datetime.timedelta(seconds=n_experiments * timeout)
     print(f"Found {n_experiments} experiments.")
-    print(f"Max time: {est_time}.")
+    print(f"Max linear time: {est_time}.")
+    print(f"Using {cpu_count()} cores.")
+    print(f"Max parallel time: {est_time / cpu_count()}.")
 
     print("Compiling binary.")
     sp.run(config["compile_command"].split(" "))
@@ -128,7 +130,7 @@ def main():
     keyf.touch()
     keyf_fp = keyf.open("w")
 
-    with Pool(processes=2) as pool:
+    with Pool() as pool:
         jobs = {}
         for eid, (exp, bench) in enumerate(product(exps, benchmarks)):
             args = (eid, config, bench, exp)
