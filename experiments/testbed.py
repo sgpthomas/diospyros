@@ -117,8 +117,8 @@ def main():
     n_cores = round(cpu_count() * (2 / 3))
     print(f"Found {n_experiments} experiments.")
     print(f"Max linear time: {est_time}.")
-    print(f"Using {cpu_count()} cores.")
-    print(f"Max parallel time: {est_time / cpu_count()}.")
+    print(f"Using {n_cores} cores.")
+    print(f"Max parallel time: {est_time / n_cores}.")
 
     print("Compiling binary.")
     sp.run(config["compile_command"].split(" "))
@@ -131,7 +131,7 @@ def main():
     keyf.touch()
     keyf_fp = keyf.open("w")
 
-    with Pool(processes=) as pool:
+    with Pool(processes=n_cores) as pool:
         jobs = {}
         for eid, (exp, bench) in enumerate(product(exps, benchmarks)):
             args = (eid, config, bench, exp)
