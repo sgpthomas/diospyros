@@ -114,6 +114,7 @@ def main():
 
     n_experiments = len(exps) * len(benchmarks)
     est_time = datetime.timedelta(seconds=n_experiments * timeout)
+    n_cores = round(cpu_count() * (2 / 3))
     print(f"Found {n_experiments} experiments.")
     print(f"Max linear time: {est_time}.")
     print(f"Using {cpu_count()} cores.")
@@ -130,7 +131,7 @@ def main():
     keyf.touch()
     keyf_fp = keyf.open("w")
 
-    with Pool() as pool:
+    with Pool(processes=) as pool:
         jobs = {}
         for eid, (exp, bench) in enumerate(product(exps, benchmarks)):
             args = (eid, config, bench, exp)

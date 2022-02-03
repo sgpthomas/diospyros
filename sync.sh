@@ -10,4 +10,4 @@ rsync -rP --exclude=.git \
       --exclude=target \
       --exclude=*-results \
       -e "ssh -i ~/.ssh/thelio.pem" \
-      ~/Research/$dir/ "ubuntu@$ADDR:~/$dir/"
+      `pwd`/ "ubuntu@$ADDR:~/$dir/"
