@@ -114,7 +114,7 @@ def main():
 
     n_experiments = len(exps) * len(benchmarks)
     est_time = datetime.timedelta(seconds=n_experiments * timeout)
-    n_cores = round(cpu_count() * (2 / 3))
+    n_cores = round(cpu_count() * config["percent_cpus"])
     print(f"Found {n_experiments} experiments.")
     print(f"Max linear time: {est_time}.")
     print(f"Using {n_cores} cores.")

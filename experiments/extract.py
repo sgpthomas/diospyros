@@ -7,9 +7,9 @@ import csv
 from pathlib import Path
 
 
-def get_cost(exp):
+def get_cost(res_dir, exp):
     """Extract program cost from an experiment."""
-    err_file = Path(exp["stderr"])
+    err_file = res_dir / Path(exp["stderr"])
     with err_file.open("r") as f:
         lines = f.readlines()
         if "Cost:" in lines[-1]:
@@ -50,7 +50,7 @@ def main():
 
     data_fields = [
         ("time", lambda e: e["time"]),
-        ("cost", get_cost)
+        ("cost", lambda e: get_cost(result_dir, e))
     ]
 
     headers = [p["name"] for p in parameters] + ["bench", "variable", "value"]

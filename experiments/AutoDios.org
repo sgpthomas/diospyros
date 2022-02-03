@@ -1,192 +1,138 @@
-* Setup
+* Rule Distribution
+
+#+begin_src R :session rule-distribution :results graphics file :file t2-hist.png
+library(tidyverse)
+
+read.csv("t2-distribution.csv") %>%
+  ggplot(aes(x = cost)) + geom_histogram(binwidth = 1)
+
+#+end_src
+
+#+RESULTS:
+[[file:t2-hist.png]]
+
 * Experiments
 :PROPERTIES:
 :header-args: :dir (magit-toplevel)
 :END:
 
-** Configuration Space
+Ablation 1 configuration.
 
-- =--handwritten= (baseline) 
-- =--rules t2.json etc.=
-- =--sub-prog=
-- =--no-dup-vars=
-- =--cost-filter 0..10= at increments of 2.0
-- =--split-phase=
-
-** Baseline numbers
-
-#+begin_src sh :async :results text
-cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
-      q-prod-out/spec.rkt \
-      --timeout 180 \
-      --handwritten
+#+begin_src json :results file silent :file experiments/conf.json
+{
+    "compile_command": "cargo build --release --manifest-path src/dios-egraphs/Cargo.toml",
+    "base_command": "src/dios-egraphs/target/release/dios-egraphs",
+    "extra": "--timeout 180",
+    "benchmarks": ["q-prod", "2d-conv", "mat-mul"],
+    "input_template": "{}-out/spec.rkt",
+    "timeout": 240,
+    "percent_cpus": 0.5,
+    "parameters": [	
+	{
+	    "name": "handwritten",
+	    "flag": "--handwritten",
+	    "args": []
+	},
+	{
+	    "name": "rules",
+	    "flag": "--rules",
+	    "args": ["t2.json"]
+	},
+	{
+	    "name": "cost-filter",
+	    "flag": "--cost-filter",
+	    "args": [-10.0, 0.0, 1.0, 10.0]
+	},
+	{
+	    "name": "no-dup-vars",
+	    "flag": "--no-dup-vars",
+	    "args": []
+	},
+	{
+	    "name": "sub-prog",
+	    "flag": "--sub-prog",
+	    "args": []
+	},
+	{
+	    "name": "split-phase",
+	    "flag": "--split-phase",
+	    "args": []
+	}
+    ]
+}
 #+end_src
-
-#+RESULTS:
-| (Concat |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (LitVec | (Get | aq        | 2)   |     (Get | aq      |   0)) | (LitVec | (Get |    bq | 1) | (Get | bq |  2)))) |
-| (LitVec | (Get    | bq      |   3) | (Get      | bq   |      3)) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | aq      |   0) | (Get      | aq   |     1))) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | aq      |   1) | (Get      | aq   |      2)) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | bq      |   2) | (Get      | bq   |     0))) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | aq      |   3) | (Get      | aq   |      3)) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | bq      |   0) | (Get      | bq   |     1))) |         |       |         |      |       |    |      |    |        |
-| (Concat |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecAdd |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (Vec    |    1 | (Get      | aq   |      2)) | (LitVec |     0 | (Get    | bq   | 2)))) |    |      |    |        |
-| (VecNeg | (VecMul | (LitVec | (Get | bq        | 0)   |     (Get | bq      |   1)) | (LitVec | (Get |    aq | 1) | (Get | aq | 1))))) |
-| (LitVec | (Get    | aq      |   0) | (Get      | aq   |      3)) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | bq      |   1) | (Get      | bq   |     3))) |         |       |         |      |       |    |      |    |        |
-| (VecAdd |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (Vec    |    1 | (Get      | bq   |      0)) | (LitVec |     0 | (Get    | aq   | 0)))) |    |      |    |        |
-| (LitVec | (Get    | bq      |   2) | 0))       |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | (Get    | aq      |   3) | 1))       |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | (Get    | aq      |   2) | 1)        |      |          |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | bq      |   3) | 0))       |      |          |         |       |         |      |       |    |      |    |        |
-| (Concat |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecAdd |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecAdd |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | bt      |   0) | (Get      | bt   |      1)) |         |       |         |      |       |    |      |    |        |
-| (VecNeg |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMul |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | aq      |   2) | (Get      | aq   |      0)) |         |       |         |      |       |    |      |    |        |
-| (VecMul |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | 2       | 2)      |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (LitVec | (Get | aq        | 0)   |     (Get | aq      |   1)) | (LitVec | (Get |    bt | 2) | (Get | bt |  0)))) |
-| (LitVec | (Get    | bt      |   0) | (Get      | bt   |      1)) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | aq      |   2) | (Get      | aq   | 0))))))) |         |       |         |      |       |    |      |    |        |
-| (VecMul |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | 2       | 2)      |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (LitVec | (Get | aq        | 2)   |     (Get | aq      |   0)) | (LitVec | (Get |    bt | 1) | (Get | bt |  2)))) |
-| (LitVec | (Get    | aq      |   1) | (Get      | aq   |      2)) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | bt      |   2) | (Get      | bt   |    0)))) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | aq      |   3) | (Get      | aq   |     3))) |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | at      |   0) | (Get      | at   |      1)) |         |       |         |      |       |    |      |    |        |
-| (VecMul |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | 2       | 2)      |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (LitVec | (Get | bt        | 0)   |     (Get | bt      |   1)) | (LitVec | (Get |    aq | 1) | (Get | aq |  2)))) |
-| (LitVec | (Get    | aq      |   0) | (Get      | aq   |      1)) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | bt      |   1) | (Get      | bt   |    2)))) |         |       |         |      |       |    |      |    |        |
-| (LitVec | (Get    | aq      |   1) | (Get      | aq   |    2)))) |         |       |         |      |       |    |      |    |        |
-| (VecAdd |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMul |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (Vec    | (Get | aq        | 2)   |       1) | (LitVec |  (Get | bt      | 1)   |  0))) |    |      |    |        |
-| (LitVec | (Get    | bt      |   2) | 0)        |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | (Get    | aq      |   1) | 1))       |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMul | (Vec    | (Get    |   aq | 1)        | 1)   |     (Vec | 2       | 1)))) |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (LitVec | (Get | bt        | 2)   |       0) | (Vec    |  (Get | aq      | 0)   |  1))) |    |      |    |        |
-| (LitVec | (Get    | bt      |   0) | 0)        |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | (Get    | aq      |   2) | 1))       |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMul | (Vec    | 2       |   1) | (Vec      | (Get |       aq | 0)      |  1))) |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecAdd | (LitVec | (Get    |   at | 2)        | 0)   |  (LitVec | (Get    |    bt | 2)      | 0))  |       |    |      |    |        |
-| (Vec    | 2       | 1)      |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMul |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | (Get    | aq      |   3) | 1)        |      |          |         |       |         |      |       |    |      |    |        |
-| (VecMAC |         |         |      |           |      |          |         |       |         |      |       |    |      |    |        |
-| (VecNeg | (VecMul | (LitVec | (Get | bt        | 0)   |       0) | (Vec    |  (Get | aq      | 1)   |  1))) |    |      |    |        |
-| (LitVec | (Get    | aq      |   0) | 0)        |      |          |         |       |         |      |       |    |      |    |        |
-| (Vec    | (Get    | bt      |   1) | 1)))))))) |      |          |         |       |         |      |       |    |      |    |        |
 
 * Plots
+:PROPERTIES:
+:header-args: :session graphics :colnames yes
+:END:
 
-#+begin_src R :session graphics
+#+begin_src R :results none
 library(tidyverse)
 
-data <- read.csv("feb1-exp0.csv")
+data <- read.csv("feb3-exp0.csv")
 #+end_src
 
-#+begin_src R :session graphics :results value
+#+begin_src R :results value
 data %>%
   filter(handwritten == "False") %>%
   filter(rules == "t2.json") %>%
   ## filter(cost.filter == 0) %>%
   filter(no.dup.vars == "True") %>%
-  ## filter(sub.prog == "True") %>%
-  filter(split.phase == "False") %>%
-  filter(bench == "2d-conv") %>%
+  filter(sub.prog == "False") %>%
+  ## filter(split.phase == "False") %>%
+  filter(bench == "q-prod") %>%
   ## filter(variable == "time") %>%
-  select(bench, sub.prog,cost.filter, variable, value)
+  select(bench, split.phase, cost.filter, variable, value)
 #+end_src
 
 #+RESULTS:
-| 2d-conv | True  | 0 | time |  59.73351001739502 |
-| 2d-conv | True  | 0 | cost | 29.739999999999995 |
-| 2d-conv | False | 0 | time |  49.28172492980957 |
-| 2d-conv | False | 0 | cost | 29.739999999999995 |
-| 2d-conv | True  | 2 | time |  3.545912265777588 |
-| 2d-conv | True  | 2 | cost | 45.748000000000005 |
-| 2d-conv | False | 2 | time |  3.419951915740967 |
-| 2d-conv | False | 2 | cost |              45.74 |
-| 2d-conv | True  | 5 | time |  3.509434938430786 |
-| 2d-conv | True  | 5 | cost | 45.748000000000005 |
-| 2d-conv | False | 5 | time | 3.3958888053894043 |
-| 2d-conv | False | 5 | cost |              45.74 |
-| 2d-conv | True  |   | time |         Timed out. |
-| 2d-conv | True  |   | cost |               -1.0 |
-| 2d-conv | False |   | time |  52.71812701225281 |
-| 2d-conv | False |   | cost | 462.64699999999993 |
+| bench  | split.phase | cost.filter | variable |              value |
+|--------+-------------+-------------+----------+--------------------|
+| q-prod | True        |         -10 | time     | 202.86399388313293 |
+| q-prod | True        |         -10 | cost     |  567.3729999999999 |
+| q-prod | False       |         -10 | time     | 127.20071935653687 |
+| q-prod | False       |         -10 | cost     |               -1.0 |
+| q-prod | True        |           0 | time     |         Timed out. |
+| q-prod | True        |           0 | cost     |               -1.0 |
+| q-prod | False       |           0 | time     | 185.90627360343933 |
+| q-prod | False       |           0 | cost     |  55.87199999999999 |
+| q-prod | True        |           1 | time     |         Timed out. |
+| q-prod | True        |           1 | cost     |               -1.0 |
+| q-prod | False       |           1 | time     |  4.889495372772217 |
+| q-prod | False       |           1 | cost     |  69.87199999999999 |
+| q-prod | True        |          10 | time     |  232.4630937576294 |
+| q-prod | True        |          10 | cost     |  63.87199999999999 |
+| q-prod | False       |          10 | time     |  4.590515613555908 |
+| q-prod | False       |          10 | cost     |  69.87199999999999 |
+| q-prod | True        |             | time     | 183.33219528198242 |
+| q-prod | True        |             | cost     |  597.0640000000001 |
+| q-prod | False       |             | time     | 183.36682105064392 |
+| q-prod | False       |             | cost     |  597.0640000000001 |
 
-#+begin_src R :session graphics :reuslts value
+#+begin_src R :reuslts value
 data %>%
   filter(handwritten == "True") %>%
   filter(rules == "") %>%
   ## filter(cost.filter == "") %>%
   filter(no.dup.vars == "False") %>%
   filter(sub.prog == "False") %>%
-  ## filter(split.phase == "False") %>%
-  filter(bench == "2d-conv") %>%
+  filter(split.phase == "False") %>%
+  filter(bench == "q-prod") %>%
   ## filter(variable == "cost") %>%
   select(bench, cost.filter, variable, value)
 #+end_src
 
 #+RESULTS:
-| 2d-conv | 0 | time | 0.009846925735473633 |
-| 2d-conv | 0 | cost |    912.9159999999999 |
-| 2d-conv | 0 | time | 0.003222227096557617 |
-| 2d-conv | 0 | cost |    912.9159999999999 |
-| 2d-conv | 2 | time | 0.010087013244628906 |
-| 2d-conv | 2 | cost |    912.9159999999999 |
-| 2d-conv | 2 | time | 0.003244638442993164 |
-| 2d-conv | 2 | cost |    912.9159999999999 |
-| 2d-conv | 5 | time | 0.011150360107421875 |
-| 2d-conv | 5 | cost |    912.9159999999999 |
-| 2d-conv | 5 | time | 0.003241300582885742 |
-| 2d-conv | 5 | cost |    912.9159999999999 |
-| 2d-conv |   | time |   1.9895203113555908 |
-| 2d-conv |   | cost |   26.175999999999988 |
-| 2d-conv |   | time |   1.9747657775878906 |
-| 2d-conv |   | cost |   26.175999999999988 |
-
-#+begin_src R :session graphics :results graphics file :file fig.png
-## ggplot() +
-##   layer(data = data,
-##         )
-colnames(data)
-#+end_src
-
-#+RESULTS:
-| handwritten |
-| rules       |
-| cost.filter |
-| no.dup.vars |
-| sub.prog    |
-| split.phase |
-| bench       |
-| variable    |
-| value       |
+| bench  | cost.filter | variable |                value |
+|--------+-------------+----------+----------------------|
+| q-prod |         -10 | time     |    89.73254108428955 |
+| q-prod |         -10 | cost     |   54.526999999999994 |
+| q-prod |           0 | time     |  0.01189422607421875 |
+| q-prod |           0 | cost     |   306.08600000000007 |
+| q-prod |           1 | time     | 0.011783123016357422 |
+| q-prod |           1 | cost     |   306.08600000000007 |
+| q-prod |          10 | time     | 0.011668682098388672 |
+| q-prod |          10 | cost     |   306.08600000000007 |
+| q-prod |             | time     |    89.12637639045715 |
+| q-prod |             | cost     |   54.526999999999994 |
