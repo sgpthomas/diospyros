@@ -8,6 +8,8 @@ import datetime
 import subprocess as sp
 from pathlib import Path
 import time
+from itertools import product
+from multiprocessing import Pool
 
 
 def reform(arg_list):
@@ -60,8 +62,11 @@ class Parameter:
         return f"<'{self.name}' {self.flag} {self.args}>"
 
 
-def run_experiment(config, inp, exp):
+def run_experiment(exp_id, config, benchmark, exp):
     """Run experiment on input `inp` using args from `exp`."""
+    print(f"[{exp_id}] Started {benchmark} {' '.join(exp)}")
+
+    inp = config["input_template"].format(benchmark)
     base = [config["base_command"], inp, config["extra"]]
     full = reform(base + exp)
     stdout, stderr = "", ""
@@ -95,19 +100,19 @@ def main():
         config = json.load(f)
 
     benchmarks = config["benchmarks"]
-    template = config["input_template"]
-    # inputs = config["inputs"]
     timeout = config["timeout"]
 
     params = []
     for param in config["parameters"]:
         params.append(Parameter(param["name"], param["flag"], param["args"]))
 
-    experiments = reduce(lambda x, y: x * y, params)
-    for e in experiments:
-        print(list(filter(lambda x: x != "", e)))
+    exps = reduce(lambda x, y: x * y, params)
+    exps = map(lambda x: list(filter(lambda y: y != "", x)), exps)
+    exps = list(exps)
+    for e in exps:
+        print(list(e))
 
-    n_experiments = len(experiments) * len(benchmarks)
+    n_experiments = len(exps) * len(benchmarks)
     est_time = datetime.timedelta(seconds=n_experiments * timeout)
     print(f"Found {n_experiments} experiments.")
     print(f"Max time: {est_time}.")
@@ -121,34 +126,49 @@ def main():
     output_dir.mkdir(exist_ok=False)
     keyf = output_dir / "key.json"
     keyf.touch()
+    keyf_fp = keyf.open("w")
 
-    with keyf.open("w") as keyf_fp:
-        for i, exp in enumerate(experiments):
-            for bench in enumerate(benchmarks):
-                inp = template.format(bench)
-                # name = inp.split("/")[0]
-                print(f"[{i}/{n_experiments}] {bench} {' '.join(exp)}")
+    with Pool(processes=2) as pool:
+        jobs = {}
+        for eid, (exp, bench) in enumerate(product(exps, benchmarks)):
+            args = (eid, config, bench, exp)
+            jobs[eid] = {
+                "result": pool.apply_async(run_experiment, args),
+                "bench": bench,
+                "exp": exp
+            }
 
-                result_fn_stdout = output_dir / f"{i}-{bench}.out"
-                result_fn_stderr = output_dir / f"{i}-{bench}.err"
-                (time, out, err) = run_experiment(config, inp, exp)
-                if out != "":
-                    result_fn_stdout.touch()
-                    result_fn_stdout.write_text(out)
-                if err != "":
-                    result_fn_stderr.touch()
-                    result_fn_stderr.write_text(err)
+        # We have queued all the jobs.
+        pool.close()
 
-                results["experiments"] += [{
-                    "bench": bench,
-                    "cmd": " ".join(exp),
-                    "time": time,
-                    "stdout": str(result_fn_stdout),
-                    "stderr": str(result_fn_stderr),
-                }]
-                keyf_fp.seek(0)
-                json.dump(results, keyf_fp, indent=2)
-                keyf_fp.flush()
+        # collect jobs and commit results
+        for eid, j in jobs.items():
+            (time, out, err) = j["result"].get()
+            bench = j["bench"]
+            exp = j["exp"]
+            print(f"[{eid}/{n_experiments}] {bench} took {time}")
+
+            result_fn_stdout = output_dir / f"{eid}-{bench}.out"
+            result_fn_stderr = output_dir / f"{eid}-{bench}.err"
+            if out != "":
+                result_fn_stdout.touch()
+                result_fn_stdout.write_text(out)
+            if err != "":
+                result_fn_stderr.touch()
+                result_fn_stderr.write_text(err)
+
+            results["experiments"] += [{
+                "bench": bench,
+                "cmd": " ".join(exp),
+                "time": time,
+                "stdout": result_fn_stdout.parts[-1],
+                "stderr": result_fn_stderr.parts[-1],
+            }]
+            keyf_fp.seek(0)
+            json.dump(results, keyf_fp, indent=2)
+            keyf_fp.flush()
+
+        pool.join()
 
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@
 	{
 	    "name": "cost-filter",
 	    "flag": "--cost-filter",
-	    "args": [0.0, 2.0, 5.0]
+	    "args": [-10.0, 0.0, 1.0, 10.0]
 	},
 	{
 	    "name": "no-dup-vars",

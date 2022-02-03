@@ -108,7 +108,9 @@ where
                     cutoff(cost_differential)
                 }
             } else {
-                false
+                // a hack to make experiments work. The reason we return true here is that we only hit this case
+                // for `--handwritten` rules. We want these rules to pass the cost filter.
+                true
             }
         })
         .cloned()
