@@ -1,0 +1,52 @@
+{
+  "compile_command": "cargo build --release --manifest-path src/dios-egraphs/Cargo.toml",
+  "base_command": "src/dios-egraphs/target/release/dios-egraphs",
+  "extra": "--timeout 3900",
+  "benchmarks": [
+    "q-prod",
+    "2d-conv",
+    "mat-mul"
+  ],
+  "input_template": "{}-out/spec.rkt",
+  "timeout": 4000,
+  "percent_cpus": 0.5,
+  "parameters": [
+    {
+      "name": "handwritten",
+      "flag": "--handwritten",
+      "args": []
+    },
+    {
+      "name": "rules",
+      "flag": "--rules",
+      "args": [
+        "t2.json"
+      ]
+    },
+    {
+      "name": "cost-filter",
+      "flag": "--cost-filter",
+      "args": [
+        -10,
+        0,
+        1,
+        10
+      ]
+    },
+    {
+      "name": "no-dup-vars",
+      "flag": "--no-dup-vars",
+      "args": []
+    },
+    {
+      "name": "sub-prog",
+      "flag": "--sub-prog",
+      "args": []
+    },
+    {
+      "name": "split-phase",
+      "flag": "--split-phase",
+      "args": []
+    }
+  ]
+}

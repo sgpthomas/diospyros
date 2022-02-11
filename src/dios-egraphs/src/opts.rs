@@ -55,6 +55,14 @@ pub struct Opts {
     /// scheduler to use for equality saturation
     #[argh(option, default = "SchedulerOpt::default()")]
     pub scheduler: SchedulerOpt,
+
+    /// don't run eq saturation at all.
+    #[argh(switch)]
+    pub dry_run: bool,
+
+    /// dump rules.
+    #[argh(switch)]
+    pub dump_rules: bool,
 }
 
 fn read_path(path: &str) -> Result<PathBuf, String> {

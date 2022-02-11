@@ -99,6 +99,39 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
         rules = fancy_rules;
     }
 
+    if opts.dump_rules {
+        if opts.split_phase {
+            eprintln!("==== First phase rules ====");
+        }
+        for r in &rules {
+            if let (Some(lhs), Some(rhs)) =
+                (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
+            {
+                eprintln!("[{}] {} => {}", r.name, lhs, rhs);
+            } else {
+                eprintln!("[{}] <opaque>", r.name);
+            }
+        }
+
+        if opts.split_phase {
+            eprintln!("==== Second phase rules ====");
+            for r in &snd_phase {
+                if let (Some(lhs), Some(rhs)) =
+                    (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
+                {
+                    eprintln!("[{}] {} => {}", r.name, lhs, rhs);
+                } else {
+                    eprintln!("[{}] <opaque>", r.name);
+                }
+            }
+        }
+    }
+
+    if opts.dry_run {
+        eprintln!("Doing dry run. Aborting early.");
+        return (f64::NAN, prog.clone());
+    }
+
     let mut init_eg: EGraph = EGraph::new(TrackRewrites::default()).with_explanations_enabled();
     init_eg.add(VecLang::Num(0));
     let mut runner = LoggingRunner::new(Default::default())
