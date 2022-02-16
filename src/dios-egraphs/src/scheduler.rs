@@ -88,10 +88,6 @@ impl LoggingScheduler {
     }
 }
 
-// CSV format
-// iteration, rule name, n_applications, bef_size, bef_classes, bef_cost,
-//    aft_size, aft_classes, aft_cost
-
 impl RewriteScheduler<VecLang, TrackRewrites> for LoggingScheduler {
     fn apply_rewrite(
         &mut self,

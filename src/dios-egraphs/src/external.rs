@@ -4,7 +4,7 @@ use egg::{rewrite as rw, CostFunction, Extractor, Id, Language, Pattern, RecExpr
 use itertools::Itertools;
 
 use crate::{
-    cost::{cost_differential, VecCostFn},
+    cost::VecCostFn,
     handwritten::build_litvec_rule,
     rules::LoggingRunner,
     tracking::TrackRewrites,
@@ -80,25 +80,29 @@ fn filter_vars(expr: &RecExpr<VecLang>) -> Vec<Var> {
     })
 }
 
-pub fn retain_cost_effective_rules<F>(
+pub fn retain_cost_effective_rules<F, G>(
     rules: &[DiosRwrite],
     all_vars: bool,
-    cutoff: F,
+    metric: F,
+    cutoff: G,
 ) -> Vec<DiosRwrite>
 where
-    F: Fn(f64) -> bool,
+    F: Fn(&DiosRwrite) -> f64,
+    G: Fn(f64) -> bool,
 {
     let result = rules
         .iter()
         .filter(|r| {
-            let cost_diff = cost_differential(r);
-            let lexp: RecExpr<VecLang> =
-                VecLang::from_pattern(r.searcher.get_pattern_ast().unwrap());
-            let lhs_vars = r.searcher.vars();
-            let all_vars_p = filter_vars(&lexp).len() == lhs_vars.len();
-
-            if all_vars {
-                cutoff(cost_diff) && all_vars_p
+            let cost_diff = metric(r);
+            if let Some(lhs) = r.searcher.get_pattern_ast() {
+                if all_vars {
+                    let lexp: RecExpr<VecLang> = VecLang::from_pattern(lhs);
+                    let lhs_vars = r.searcher.vars();
+                    let all_vars_p = filter_vars(&lexp).len() == lhs_vars.len();
+                    cutoff(cost_diff) && all_vars_p
+                } else {
+                    cutoff(cost_diff)
+                }
             } else {
                 cutoff(cost_diff)
             }

@@ -40,6 +40,10 @@ pub struct Opts {
     #[argh(option)]
     pub split_phase: Option<SplitPhase>,
 
+    /// start from a new egraph for each phase.
+    #[argh(switch)]
+    pub new_egraph: bool,
+
     /// run eqsat on extracted sub programs instead of on the whole program.
     #[argh(switch)]
     pub sub_prog: bool,

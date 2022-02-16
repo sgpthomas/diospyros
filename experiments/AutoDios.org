@@ -1603,7 +1603,7 @@ return list(map(lambda x: [x], set(rules0val) - set(rules1val)))
 
 * Proving the phase effect
 :PROPERTIES:
-:header-args: :session graphics :colnames yes :width 800 :height 800
+:header-args: :session graphics :colnames yes :width 600 :height 600
 :END:
 
 Load csv file
@@ -1612,52 +1612,39 @@ Load csv file
 library(tidyverse)
 theme_set(theme_minimal())
 
-## data <- read.csv("log-t2-0.out")
-data <- read.csv("log-handwritten.out")
+data <- read.csv("log-t2-0.out")
+## data <- read.csv("log-handwritten.out")
 #+end_src
 
 #+begin_src R
 data %>%
   ## filter(iteration == 0) %>%
-  ## filter(diff_cost > 0) %>%
-  ## filter(cd > 0) %>%
-  ## select(iteration, name, cd, n_apps, diff_cost, aft_size)
-  distinct(name)
+  filter(diff_cost > 0) %>%
+  filter(cd > 0) %>%
+  select(iteration, name, cd, n_apps, diff_cost, aft_size)
+  ## distinct(name)
 #+end_src
 
 #+RESULTS:
-| name                |
-|---------------------|
-| add-0               |
-| mul-0               |
-| mul-1               |
-| add-0-inv           |
-| mul-1-inv           |
-| div-1               |
-| div-1-inv           |
-| expand-zero-get     |
-| litvec              |
-| neg-neg             |
-| neg-neg-rev         |
-| neg-sgn             |
-| neg-sgn-rev         |
-| neg-zero-inv        |
-| neg-zero-inv-rev    |
-| neg-minus           |
-| neg-minus-rev       |
-| neg-minus-zero      |
-| neg-minus-zero-rev  |
-| vec-mac-add-mul     |
-| neg_unop            |
-| sgn_unop            |
-| +_binop_or_zero_vec |
-| *_binop_or_zero_vec |
-| -_binop_or_zero_vec |
-| vec-mac             |
-| commute-add         |
-| commute-mul         |
-| assoc-add           |
-| assoc-mul           |
+| iteration | name                |    cd | n_apps |          diff_cost | aft_size |
+|-----------+---------------------+-------+--------+--------------------+----------|
+|         0 | +_binop_or_zero_vec | 102.8 |      4 |   3.79900000000009 |      613 |
+|         1 | litvec              | 0.099 |      2 |  0.197999999999979 |      961 |
+|         1 | +_binop_or_zero_vec | 102.8 |     66 |   3.79899999999998 |     1324 |
+|         2 | litvec              | 0.099 |     10 |  0.197999999999979 |     2412 |
+|         2 | *_binop_or_zero_vec | 102.8 |    613 |             21.796 |     5846 |
+|         2 | vec-mac             | 106.7 |   5603 |                  1 |    12030 |
+|         3 | litvec              | 0.099 |     35 |  0.197999999999979 |    17260 |
+|         3 | vec-mac-add-mul     |     1 |   2814 |   6.99800000000005 |    20362 |
+|         3 | *_binop_or_zero_vec | 102.8 |   7045 |            114.693 |    49748 |
+|         3 | vec-mac             | 106.7 |  89322 |                  1 |   137280 |
+|         4 | litvec              | 0.099 |     12 | 0.0989999999999895 |   153883 |
+|         4 | vec-mac-add-mul     |     1 |  60957 |                  2 |   164343 |
+|         4 | *_binop_or_zero_vec | 102.8 |  12566 |            103.792 |   241662 |
+|         5 | *_binop_or_zero_vec | 102.8 |  15746 |            183.259 |   637463 |
+|         6 | vec-mac-add-mul     |     1 | 116380 |   5.00200000000001 |  1055817 |
+|         6 | neg_unop            | 102.9 |   2010 |   1.20299999999997 |  1058626 |
+|         7 | *_binop_or_zero_vec | 102.8 |   6221 |            102.998 |  1262105 |
 
 #+begin_src R :result :results graphics file :file cost.png
 g <- data %>%
@@ -1668,7 +1655,7 @@ g <- data %>%
                  alpha = n_apps)) +
   scale_color_gradient(low = "gray", high = "red", na.value = NA) +
   scale_size(range = c(0, 5)) +
-  scale_alpha(range = c(0.01, 1))
+  scale_alpha(range = c(0.3, 1))
 
 ## add vertical iteration lines
 d <- nrow(data %>% filter(iteration == 0))

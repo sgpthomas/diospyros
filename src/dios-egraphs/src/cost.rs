@@ -68,6 +68,24 @@ impl CostFunction<VecLang> for VecCostFn {
     }
 }
 
+pub fn cost_average(r: &DiosRwrite) -> f64 {
+    if let (Some(lhs), Some(rhs)) = (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast()) {
+        let lexp: RecExpr<VecLang> = VecLang::from_pattern(lhs);
+        let rexp: RecExpr<VecLang> = VecLang::from_pattern(rhs);
+        let mut costfn = VecCostFn {};
+        (costfn.cost_rec(&lexp) + costfn.cost_rec(&rexp)) / 2.
+    } else {
+        match r.name.as_str() {
+            "litvec" => 100.,
+            "+_binop_or_zero_vec" => 50.,
+            "*_binop_or_zero_vec" => 50.,
+            "-_binop_or_zero_vec" => 50.,
+            "vec-mac" => 100.,
+            _ => panic!("rule: {:?}", r),
+        }
+    }
+}
+
 pub fn cost_differential(r: &DiosRwrite) -> f64 {
     if let (Some(lhs), Some(rhs)) = (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast()) {
         let lexp: RecExpr<VecLang> = VecLang::from_pattern(lhs);

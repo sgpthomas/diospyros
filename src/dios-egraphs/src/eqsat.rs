@@ -1,13 +1,10 @@
-use std::{collections::HashMap, fs::File, io::BufWriter};
+use std::{fs::File, io::BufWriter};
 
-use egg::{rewrite as rw, BackoffScheduler, Extractor, RecExpr, Runner, SimpleScheduler};
+use egg::{BackoffScheduler, Extractor, RecExpr, Runner, SimpleScheduler};
 
 use crate::{
     cost::VecCostFn,
-    external::{external_rules, retain_cost_effective_rules, smart_select_rules},
-    handwritten::{handwritten_rules, phases},
-    opts::{self, SplitPhase},
-    patterns::gen_patterns,
+    opts,
     rules::LoggingRunner,
     scheduler::{LoggingData, LoggingScheduler},
     tracking::TrackRewrites,
@@ -24,34 +21,37 @@ fn report(runner: &Runner<VecLang, TrackRewrites, LoggingData>) {
     let rebuilds: usize = runner.iterations.iter().map(|i| i.n_rebuilds).sum();
 
     let eg = &runner.egraph;
-    eprintln!("Runner report");
-    eprintln!("=============");
-    eprintln!("  Stop reason: {:?}", runner.stop_reason.as_ref().unwrap());
-    eprintln!("  Iterations: {}", iters);
+    eprintln!("  Runner report");
+    eprintln!("  =============");
     eprintln!(
-        "  Egraph size: {} nodes, {} classes, {} memo",
+        "    Stop reason: {:?}",
+        runner.stop_reason.as_ref().unwrap()
+    );
+    eprintln!("    Iterations: {}", iters);
+    eprintln!(
+        "    Egraph size: {} nodes, {} classes, {} memo",
         eg.total_number_of_nodes(),
         eg.number_of_classes(),
         eg.total_size()
     );
     eprintln!(
-        "  Rebuilds: {}, {:.2} per iter",
+        "    Rebuilds: {}, {:.2} per iter",
         rebuilds,
         (rebuilds as f64) / (iters as f64)
     );
-    eprintln!("  Total time: {}", total_time);
+    eprintln!("    Total time: {}", total_time);
     eprintln!(
-        "    Search:  ({:.2}) {}",
+        "      Search:  ({:.2}) {}",
         search_time / total_time,
         search_time
     );
     eprintln!(
-        "    Apply:   ({:.2}) {}",
+        "      Apply:   ({:.2}) {}",
         apply_time / total_time,
         apply_time
     );
     eprintln!(
-        "    Rebuild: ({:.2}) {}",
+        "      Rebuild: ({:.2}) {}",
         rebuild_time / total_time,
         rebuild_time
     );
