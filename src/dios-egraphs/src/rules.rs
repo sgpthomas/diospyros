@@ -1,11 +1,16 @@
 use std::{collections::HashMap, fmt::Display, fs::File, io::BufWriter};
 
-use egg::{rewrite as rw, BackoffScheduler, Extractor, RecExpr, Runner, SimpleScheduler};
+use egg::{
+    rewrite as rw, BackoffScheduler, Extractor, RecExpr, Runner,
+    SimpleScheduler,
+};
 
 use crate::{
     cost::{cost_average, cost_differential, VecCostFn},
     eqsat::{self, do_eqsat},
-    external::{external_rules, retain_cost_effective_rules, smart_select_rules},
+    external::{
+        external_rules, retain_cost_effective_rules, smart_select_rules,
+    },
     handwritten::{handwritten_rules, phases},
     opts::{self, SplitPhase},
     patterns::gen_patterns,
@@ -22,7 +27,10 @@ pub enum Phase {
 }
 
 impl Display for Phase {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+    fn fmt(
+        &self,
+        f: &mut std::fmt::Formatter<'_>,
+    ) -> Result<(), std::fmt::Error> {
         let s = match self {
             Phase::PreCompile => "Pre-compilation",
             Phase::Compile => "Compilation",
@@ -45,7 +53,8 @@ fn print_rules(rules: &[DiosRwrite]) {
             cost_differential(r),
             cost_average(r)
         );
-        if let (Some(lhs), Some(rhs)) = (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
+        if let (Some(lhs), Some(rhs)) =
+            (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
         {
             eprintln!("{} => {}", lhs, rhs);
         } else {
@@ -57,7 +66,10 @@ fn print_rules(rules: &[DiosRwrite]) {
 pub type LoggingRunner = Runner<VecLang, TrackRewrites, LoggingData>;
 
 /// Run the rewrite rules over the input program and return the best (cost, program)
-pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>) {
+pub fn run(
+    prog: &RecExpr<VecLang>,
+    opts: &opts::Opts,
+) -> (f64, RecExpr<VecLang>) {
     // let use_only_ruler = true;
 
     // let mut rules: Vec<DiosRwrite> = vec![];
@@ -85,10 +97,12 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     }
 
     if let Some(cutoff) = opts.cost_filter {
-        initial_rules =
-            retain_cost_effective_rules(&initial_rules, opts.no_dup_vars, cost_differential, |x| {
-                x > cutoff
-            });
+        initial_rules = retain_cost_effective_rules(
+            &initial_rules,
+            opts.no_dup_vars,
+            cost_differential,
+            |x| x > cutoff,
+        );
     }
 
     // ================================
@@ -104,14 +118,24 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     if let Some(split_phase_opt) = &opts.split_phase {
         match split_phase_opt {
             SplitPhase::Auto => {
-                let pre_compile =
-                    retain_cost_effective_rules(&initial_rules, false, cost_average, |x| x < 10.);
-                let compile =
-                    retain_cost_effective_rules(&initial_rules, false, cost_average, |x| {
-                        10.0 <= x && x < 70.
-                    });
-                let opt =
-                    retain_cost_effective_rules(&initial_rules, false, cost_average, |x| 70. <= x);
+                let pre_compile = retain_cost_effective_rules(
+                    &initial_rules,
+                    false,
+                    cost_average,
+                    |x| x < 10.,
+                );
+                let compile = retain_cost_effective_rules(
+                    &initial_rules,
+                    false,
+                    cost_average,
+                    |x| 10.0 <= x && x < 70.,
+                );
+                let opt = retain_cost_effective_rules(
+                    &initial_rules,
+                    false,
+                    cost_average,
+                    |x| 70. <= x,
+                );
                 rules
                     .entry(Phase::PreCompile)
                     .and_modify(|rules| rules.extend(pre_compile));
@@ -212,7 +236,8 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
             print_rules(&rules[phase]);
         }
 
-        let (new_cost, new_prog, new_eg) = do_eqsat(&rules[phase], eg, &prog, opts);
+        let (new_cost, new_prog, new_eg) =
+            do_eqsat(&rules[phase], eg, &prog, opts);
         if let Some(old_cost) = cost {
             eprintln!("Cost: {} (improved {})", new_cost, old_cost - new_cost);
         } else {

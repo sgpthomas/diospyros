@@ -86,7 +86,8 @@ pub fn do_eqsat(
                     1024,
                     File::create(filename).unwrap(),
                 ));
-                let mut sched = LoggingScheduler::new_w_write(runner.roots[0], prog.clone(), write);
+                let mut sched =
+                    LoggingScheduler::new_w_write(runner.roots[0], prog.clone(), write);
                 sched.write_headers();
                 runner.with_scheduler(sched)
             } else {
