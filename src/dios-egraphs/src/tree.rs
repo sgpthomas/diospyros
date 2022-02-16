@@ -1,3 +1,5 @@
+use std::io::Write;
+
 use crate::veclang::VecLang;
 use egg::TreeExplanation;
 
@@ -22,9 +24,9 @@ pub fn get_rewrites_used(tree: &TreeExplanation<VecLang>) -> Vec<String> {
 }
 
 #[allow(unused)]
-pub fn print_rewrites_used(pre: &str, rules: &[String]) {
+pub fn print_rewrites_used(write: &mut Box<dyn Write>, pre: &str, rules: &[String]) {
     for r in rules {
-        eprintln!("{}{}", pre, r);
+        writeln!(write, "{}{}", pre, r);
     }
 }
 

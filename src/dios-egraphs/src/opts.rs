@@ -35,10 +35,10 @@ pub struct Opts {
     #[argh(switch)]
     pub no_dup_vars: bool,
 
-    /// perform the compilation and optimization phases separately.
-    /// only is meaningful when `--cost-filter x.x` is provided.
-    #[argh(switch)]
-    pub split_phase: bool,
+    /// perform pre-compilation, compilation, and optimization
+    /// phases separately.
+    #[argh(option)]
+    pub split_phase: Option<SplitPhase>,
 
     /// run eqsat on extracted sub programs instead of on the whole program.
     #[argh(switch)]
@@ -63,6 +63,10 @@ pub struct Opts {
     /// dump rules.
     #[argh(switch)]
     pub dump_rules: bool,
+
+    /// instrument the eq sat process
+    #[argh(option, from_str_fn(read_path))]
+    pub instrument: Option<PathBuf>,
 }
 
 fn read_path(path: &str) -> Result<PathBuf, String> {
@@ -95,8 +99,31 @@ impl FromStr for SchedulerOpt {
             "backoff" => Ok(SchedulerOpt::Backoff),
             "logging" => Ok(SchedulerOpt::Logging),
             s => Err(format!(
-                "Unknown compilation mode: {}. Valid options are `file` or `project`",
-                s
+                "Unknown compilation mode: {}. Valid options are {}",
+                s, "[`simple`, `backoff`, `logging`]"
+            )),
+        }
+    }
+}
+
+pub enum SplitPhase {
+    /// Automatically split phases by performing a rule analysis.
+    Auto,
+
+    /// Split rules according to a hand specified split.
+    Handwritten,
+}
+
+impl FromStr for SplitPhase {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "auto" => Ok(SplitPhase::Auto),
+            "hand" | "handwritten" => Ok(SplitPhase::Handwritten),
+            s => Err(format!(
+                "Unknown split phase method: {}. Valid options are {}",
+                s, "[`auto`, `handwritten`]"
             )),
         }
     }

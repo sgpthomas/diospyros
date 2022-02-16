@@ -4,6 +4,7 @@ use crate::{
     binopsearcher::build_binop_or_zero_rule,
     config::vector_width,
     macsearcher::build_mac_rule,
+    rules::Phase,
     searchutils::{ids_with_prefix, vec_fold_op, vec_map_op, vec_with_var},
     veclang::{DiosRwrite, EGraph, VecLang},
 };
@@ -60,7 +61,6 @@ pub fn build_litvec_rule() -> DiosRwrite {
     let all_gets = gets.join(" ");
 
     let searcher: Pattern<VecLang> = format!("(Vec {})", all_gets).parse().unwrap();
-
     let applier: Pattern<VecLang> = format!("(LitVec {})", all_gets).parse().unwrap();
 
     rw!("litvec"; { searcher } => { applier }
@@ -157,4 +157,31 @@ pub fn handwritten_rules(prog: &RecExpr<VecLang>, no_ac: bool, no_vec: bool) -> 
     filter_applicable_rules(&mut rules, prog);
 
     rules
+}
+
+pub fn phases(rule: &DiosRwrite) -> Phase {
+    match rule.name.as_str() {
+        // pre-compile rules
+        "add-0" | "mul-0" | "mul-1" | "add-0-inv" | "mul-1-inv" | "div-1" | "div-1-inv"
+        | "expand-zero-get" | "neg-neg" | "neg-neg-rev" | "neg-sgn" | "neg-sgn-rev"
+        | "neg-zero-inv" | "neg-zero-inv-rev" | "neg-minus" | "neg-minus-rev"
+        | "neg-minus-zero" | "neg-minus-zero-rev" | "sqrt-1-inv" | "sqrt-1-inv-rev"
+        | "commute-add" | "commute-mul" | "assoc-add" | "assoc-mul" => Phase::PreCompile,
+
+        // compile rules
+        "neg_unop"
+        | "sqrt_unop"
+        | "sgn_unop"
+        | "/_binop_vec"
+        | "+_binop_or_zero_vec"
+        | "*_binop_or_zero_vec"
+        | "-_binop_or_zero_vec"
+        | "vec-mac" => Phase::Compile,
+
+        // optimization rules
+        "litvec" | "vec-mac-add-mul" => Phase::Opt,
+
+        // panic if we find a rule that isn't defined
+        x => panic!("No phase defined for {}: {:?}", x, rule),
+    }
 }

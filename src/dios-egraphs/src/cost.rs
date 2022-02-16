@@ -1,10 +1,8 @@
 use egg::*;
 
-use crate::veclang::VecLang;
+use crate::veclang::{DiosRwrite, VecLang};
 
-pub struct VecCostFn {
-    // pub egraph: &'a EGraph,
-}
+pub struct VecCostFn;
 
 // &'a EGraph
 impl CostFunction<VecLang> for VecCostFn {
@@ -67,5 +65,23 @@ impl CostFunction<VecLang> for VecCostFn {
             // _ => VEC_OP,
         };
         enode.fold(op_cost, |sum, id| sum + costs(id))
+    }
+}
+
+pub fn cost_differential(r: &DiosRwrite) -> f64 {
+    if let (Some(lhs), Some(rhs)) = (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast()) {
+        let lexp: RecExpr<VecLang> = VecLang::from_pattern(lhs);
+        let rexp: RecExpr<VecLang> = VecLang::from_pattern(rhs);
+        let mut costfn = VecCostFn {};
+        costfn.cost_rec(&lexp) - costfn.cost_rec(&rexp)
+    } else {
+        match r.name.as_str() {
+            "litvec" => 0.099,
+            "+_binop_or_zero_vec" => 102.8,
+            "*_binop_or_zero_vec" => 102.8,
+            "-_binop_or_zero_vec" => 102.8,
+            "vec-mac" => 106.7,
+            _ => panic!("rule: {:?}", r),
+        }
     }
 }

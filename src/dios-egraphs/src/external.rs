@@ -4,7 +4,7 @@ use egg::{rewrite as rw, CostFunction, Extractor, Id, Language, Pattern, RecExpr
 use itertools::Itertools;
 
 use crate::{
-    cost::VecCostFn,
+    cost::{cost_differential, VecCostFn},
     handwritten::build_litvec_rule,
     rules::LoggingRunner,
     tracking::TrackRewrites,
@@ -88,29 +88,19 @@ pub fn retain_cost_effective_rules<F>(
 where
     F: Fn(f64) -> bool,
 {
-    let mut costfn = VecCostFn {};
     let result = rules
         .iter()
         .filter(|r| {
-            if let (Some(lhs), Some(rhs)) =
-                (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
-            {
-                let lexp: RecExpr<VecLang> = VecLang::from_pattern(lhs);
-                let rexp: RecExpr<VecLang> = VecLang::from_pattern(rhs);
-                let cost_differential = costfn.cost_rec(&lexp) - costfn.cost_rec(&rexp);
+            let cost_diff = cost_differential(r);
+            let lexp: RecExpr<VecLang> =
+                VecLang::from_pattern(r.searcher.get_pattern_ast().unwrap());
+            let lhs_vars = r.searcher.vars();
+            let all_vars_p = filter_vars(&lexp).len() == lhs_vars.len();
 
-                let lhs_vars = r.searcher.vars();
-                let all_vars_p = filter_vars(&lexp).len() == lhs_vars.len();
-
-                if all_vars {
-                    cutoff(cost_differential) && all_vars_p
-                } else {
-                    cutoff(cost_differential)
-                }
+            if all_vars {
+                cutoff(cost_diff) && all_vars_p
             } else {
-                // a hack to make experiments work. The reason we return true here is that we only hit this case
-                // for `--handwritten` rules. We want these rules to pass the cost filter.
-                true
+                cutoff(cost_diff)
             }
         })
         .cloned()
@@ -221,9 +211,7 @@ pub fn smart_select_rules(
 
     // rw!("t"; expr => prog)
 
-    let mut c = VecCostFn {
-        // egraph: &runner.egraph,
-    };
+    let mut c = VecCostFn {};
 
     let orig_cost = c.cost_rec(&expr);
 
