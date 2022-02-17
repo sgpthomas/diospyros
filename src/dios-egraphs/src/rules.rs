@@ -1,16 +1,11 @@
 use std::{collections::HashMap, fmt::Display, fs::File, io::BufWriter};
 
-use egg::{
-    rewrite as rw, BackoffScheduler, Extractor, RecExpr, Runner,
-    SimpleScheduler,
-};
+use egg::{rewrite as rw, BackoffScheduler, Extractor, RecExpr, Runner, SimpleScheduler};
 
 use crate::{
     cost::{cost_average, cost_differential, VecCostFn},
     eqsat::{self, do_eqsat},
-    external::{
-        external_rules, retain_cost_effective_rules, smart_select_rules,
-    },
+    external::{external_rules, retain_cost_effective_rules, smart_select_rules},
     handwritten::{handwritten_rules, phases},
     opts::{self, SplitPhase},
     patterns::gen_patterns,
@@ -27,10 +22,7 @@ pub enum Phase {
 }
 
 impl Display for Phase {
-    fn fmt(
-        &self,
-        f: &mut std::fmt::Formatter<'_>,
-    ) -> Result<(), std::fmt::Error> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
         let s = match self {
             Phase::PreCompile => "Pre-compilation",
             Phase::Compile => "Compilation",
@@ -66,10 +58,7 @@ fn print_rules(rules: &[DiosRwrite]) {
 pub type LoggingRunner = Runner<VecLang, TrackRewrites, LoggingData>;
 
 /// Run the rewrite rules over the input program and return the best (cost, program)
-pub fn run(
-    prog: &RecExpr<VecLang>,
-    opts: &opts::Opts,
-) -> (f64, RecExpr<VecLang>) {
+pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>) {
     // let use_only_ruler = true;
 
     // let mut rules: Vec<DiosRwrite> = vec![];
@@ -236,8 +225,7 @@ pub fn run(
             print_rules(&rules[phase]);
         }
 
-        let (new_cost, new_prog, new_eg) =
-            do_eqsat(&rules[phase], eg, &prog, opts);
+        let (new_cost, new_prog, new_eg) = do_eqsat(&rules[phase], eg, &prog, opts);
         if let Some(old_cost) = cost {
             eprintln!("Cost: {} (improved {})", new_cost, old_cost - new_cost);
         } else {
