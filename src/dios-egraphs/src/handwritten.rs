@@ -11,7 +11,9 @@ use crate::{
 use itertools::Itertools;
 
 /// Check if all the variables, in this case memories, are equivalent
-fn is_all_same_memory_or_zero(vars: &Vec<String>) -> impl Fn(&mut EGraph, Id, &Subst) -> bool {
+fn is_all_same_memory_or_zero(
+    vars: &Vec<String>,
+) -> impl Fn(&mut EGraph, Id, &Subst) -> bool {
     let vars: Vec<Var> = vars.iter().map(|v| v.parse().unwrap()).collect();
     let zero = VecLang::Num(0);
     move |egraph, _, subst| {
@@ -45,9 +47,10 @@ fn build_unop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
     let searcher: Pattern<VecLang> = vec_map_op(&op_str.to_string(), &"a".to_string())
         .parse()
         .unwrap();
-    let applier: Pattern<VecLang> = format!("({} {})", vec_str, vec_with_var(&"a".to_string()))
-        .parse()
-        .unwrap();
+    let applier: Pattern<VecLang> =
+        format!("({} {})", vec_str, vec_with_var(&"a".to_string()))
+            .parse()
+            .unwrap();
 
     rw!(format!("{}_unop", op_str); { searcher } => { applier })
 }
@@ -67,6 +70,13 @@ pub fn build_litvec_rule() -> DiosRwrite {
         if is_all_same_memory_or_zero(&mem_vars))
 }
 
+#[allow(unused)]
+fn retain_rules_by_name(rules: &mut Vec<DiosRwrite>, names: &[&str]) {
+    rules.retain(|rewrite| names.contains(&rewrite.name.as_str()))
+}
+
+/// Filter rules based on whether the lhs of a rule can match an expressioin in
+/// `prog`.
 fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>) {
     let prog_str: String = prog.pretty(80);
     let ops_to_filter = vec!["neg", "sqrt", "/"];
@@ -92,7 +102,11 @@ fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>)
 }
 
 /// Return a Vec of hand constructed rules.
-pub fn handwritten_rules(prog: &RecExpr<VecLang>, no_ac: bool, no_vec: bool) -> Vec<DiosRwrite> {
+pub fn handwritten_rules(
+    prog: &RecExpr<VecLang>,
+    no_ac: bool,
+    no_vec: bool,
+) -> Vec<DiosRwrite> {
     let mut rules: Vec<DiosRwrite> = vec![];
 
     rules.extend(vec![
@@ -162,11 +176,12 @@ pub fn handwritten_rules(prog: &RecExpr<VecLang>, no_ac: bool, no_vec: bool) -> 
 pub fn phases(rule: &DiosRwrite) -> Phase {
     match rule.name.as_str() {
         // pre-compile rules
-        "add-0" | "mul-0" | "mul-1" | "add-0-inv" | "mul-1-inv" | "div-1" | "div-1-inv"
-        | "expand-zero-get" | "neg-neg" | "neg-neg-rev" | "neg-sgn" | "neg-sgn-rev"
-        | "neg-zero-inv" | "neg-zero-inv-rev" | "neg-minus" | "neg-minus-rev"
-        | "neg-minus-zero" | "neg-minus-zero-rev" | "sqrt-1-inv" | "sqrt-1-inv-rev"
-        | "commute-add" | "commute-mul" | "assoc-add" | "assoc-mul" => Phase::PreCompile,
+        "add-0" | "mul-0" | "mul-1" | "add-0-inv" | "mul-1-inv" | "div-1"
+        | "div-1-inv" | "expand-zero-get" | "neg-neg" | "neg-neg-rev" | "neg-sgn"
+        | "neg-sgn-rev" | "neg-zero-inv" | "neg-zero-inv-rev" | "neg-minus"
+        | "neg-minus-rev" | "neg-minus-zero" | "neg-minus-zero-rev" | "sqrt-1-inv"
+        | "sqrt-1-inv-rev" | "commute-add" | "commute-mul" | "assoc-add"
+        | "assoc-mul" => Phase::PreCompile,
 
         // compile rules
         "neg_unop"

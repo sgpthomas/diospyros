@@ -1,19 +1,19 @@
-use std::{collections::HashMap, fmt::Display, fs::File, io::BufWriter};
+use std::{collections::HashMap, fmt::Display};
 
-use egg::{rewrite as rw, BackoffScheduler, Extractor, RecExpr, Runner, SimpleScheduler};
+use egg::{RecExpr, Runner};
 
 use crate::{
-    cost::{cost_average, cost_differential, VecCostFn},
+    cost::{cost_average, cost_differential},
     eqsat::{self, do_eqsat},
-    external::{external_rules, retain_cost_effective_rules, smart_select_rules},
+    external::{external_rules, retain_cost_effective_rules},
     handwritten::{handwritten_rules, phases},
     opts::{self, SplitPhase},
-    patterns::gen_patterns,
-    scheduler::{LoggingData, LoggingScheduler},
+    scheduler::LoggingData,
     tracking::TrackRewrites,
-    veclang::{DiosRwrite, EGraph, VecLang},
+    veclang::{DiosRwrite, VecLang},
 };
 
+/// Different "phases" of e-graph rule application.
 #[derive(Hash, PartialEq, Eq)]
 pub enum Phase {
     PreCompile,
@@ -30,11 +30,6 @@ impl Display for Phase {
         };
         write!(f, "{}", s)
     }
-}
-
-#[allow(unused)]
-fn retain_rules_by_name(rules: &mut Vec<DiosRwrite>, names: &[&str]) {
-    rules.retain(|rewrite| names.contains(&rewrite.name.as_str()))
 }
 
 fn print_rules(rules: &[DiosRwrite]) {
@@ -59,11 +54,6 @@ pub type LoggingRunner = Runner<VecLang, TrackRewrites, LoggingData>;
 
 /// Run the rewrite rules over the input program and return the best (cost, program)
 pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>) {
-    // let use_only_ruler = true;
-
-    // let mut rules: Vec<DiosRwrite> = vec![];
-    // let mut snd_phase: Vec<DiosRwrite> = vec![];
-
     // ====================================================================
     // Gather initial rules and optionally filter them by cost differential
     // ====================================================================

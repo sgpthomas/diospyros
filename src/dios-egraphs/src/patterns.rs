@@ -179,7 +179,10 @@ fn enumerate_patterns_by_depth(expr: &RecExpr<VecLang>) -> Vec<Pattern<VecLang>>
         .into_iter()
         .sorted_by_key(|(_pat, count)| *count)
         .filter_map(|(pat, count)| {
-            if count >= count_limit && depth(&pat) > depth_limit.0 && depth(&pat) < depth_limit.1 {
+            if count >= count_limit
+                && depth(&pat) > depth_limit.0
+                && depth(&pat) < depth_limit.1
+            {
                 Some(pat.into())
             } else {
                 None
@@ -206,11 +209,10 @@ fn enumerate_patterns_by_children(expr: &RecExpr<VecLang>) -> Vec<Pattern<VecLan
         eprintln!("p: {}", p.pretty(80));
     }
 
-    // panic!("not done");
-
     patterns
 }
 
+#[allow(unused)]
 pub fn gen_patterns(expr: &RecExpr<VecLang>) -> Vec<Pattern<VecLang>> {
     enumerate_patterns_by_children(expr)
 }

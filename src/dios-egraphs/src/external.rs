@@ -1,6 +1,8 @@
 use std::path::PathBuf;
 
-use egg::{rewrite as rw, CostFunction, Extractor, Id, Language, Pattern, RecExpr, Searcher, Var};
+use egg::{
+    rewrite as rw, CostFunction, Extractor, Id, Language, Pattern, RecExpr, Searcher, Var,
+};
 use itertools::Itertools;
 
 use crate::{
@@ -23,7 +25,9 @@ pub fn external_rules(filename: &PathBuf) -> Vec<DiosRwrite> {
 
         if eq["bidirectional"].as_bool().unwrap() {
             // we have to clone bc it is a bidirectional rule
-            rules.extend(rw!(format!("ruler_{}_lr", idx); { lpat.clone() } <=> { rpat.clone() }))
+            rules.extend(
+                rw!(format!("ruler_{}_lr", idx); { lpat.clone() } <=> { rpat.clone() }),
+            )
         } else {
             rules.push(rw!(format!("ruler_{}_lr", idx); { lpat } => { rpat }))
         }
@@ -115,6 +119,7 @@ where
     result
 }
 
+#[allow(unused)]
 pub fn smart_select_rules(
     rules: &[DiosRwrite],
     pat: &Pattern<VecLang>,
