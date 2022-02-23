@@ -1768,8 +1768,74 @@ But the question is what if we force this distinction.
 	{
 	    "name": "split-phase",
 	    "flag": "--split-phase",
-	    "args": []
+	    "args": ["auto", "handwritten"]
 	}
     ]
 }
 #+end_src
+
+** Extract data
+
+#+begin_src shell
+cd experiments
+./extract.py time-conf.json ruler-time-ablation-res0 ruler-time-ablation0.csv
+#+end_src
+
+#+RESULTS:
+
+** Exploration
+:PROPERTIES:
+:header-args: :session graphics :colnames yes
+:END:
+
+#+begin_src R :results none
+library(tidyverse)
+
+data <- read.csv("ruler-time-ablation0.csv")
+#+end_src
+
+#+begin_src R :results value
+data %>%
+  ## filter(rules == "time-ablation/rules-t-60.json") %>%
+  ## filter(cost.filter >= 0) %>%
+  filter(split.phase == "False") %>%
+  filter(sub.prog == "False") %>%
+  ## filter(no.dup.vars == "True") %>%
+  filter(bench == "q-prod") %>%
+  filter(variable == "cost" | variable == "time") %>%
+  select(id, rules, split.phase, variable, value)
+#+end_src
+
+#+RESULTS:
+|  id | rules                            | split.phase | variable |               value |
+|-----+----------------------------------+-------------+----------+---------------------|
+|   9 | time-ablation/rules-t-60.json    | False       | time     |  0.0837123394012451 |
+|   9 | time-ablation/rules-t-60.json    | False       | cost     |              310.29 |
+|  21 | time-ablation/rules-t-60.json    | False       | time     |  0.0800457000732422 |
+|  21 | time-ablation/rules-t-60.json    | False       | cost     |             314.765 |
+|  33 | time-ablation/rules-t-60.json    | False       | time     |    443.540392160416 |
+|  33 | time-ablation/rules-t-60.json    | False       | cost     |                  -1 |
+|  45 | time-ablation/rules-t-600.json   | False       | time     |  0.0631108283996582 |
+|  45 | time-ablation/rules-t-600.json   | False       | cost     |                  -1 |
+|  57 | time-ablation/rules-t-600.json   | False       | time     |  0.0636372566223145 |
+|  57 | time-ablation/rules-t-600.json   | False       | cost     |                  -1 |
+|  69 | time-ablation/rules-t-600.json   | False       | time     |    86.0073487758636 |
+|  69 | time-ablation/rules-t-600.json   | False       | cost     |                  -1 |
+|  81 | time-ablation/rules-t-6000.json  | False       | time     |  0.0531032085418701 |
+|  81 | time-ablation/rules-t-6000.json  | False       | cost     |                  -1 |
+|  93 | time-ablation/rules-t-6000.json  | False       | time     |  0.0517656803131104 |
+|  93 | time-ablation/rules-t-6000.json  | False       | cost     |                  -1 |
+| 105 | time-ablation/rules-t-6000.json  | False       | time     |    61.7251107692719 |
+| 105 | time-ablation/rules-t-6000.json  | False       | cost     |                  -1 |
+| 117 | time-ablation/rules-t-60000.json | False       | time     |    2.16834592819214 |
+| 117 | time-ablation/rules-t-60000.json | False       | cost     |                  -1 |
+| 129 | time-ablation/rules-t-60000.json | False       | time     |    2.17500329017639 |
+| 129 | time-ablation/rules-t-60000.json | False       | cost     |                  -1 |
+| 141 | time-ablation/rules-t-60000.json | False       | time     |    3109.68236708641 |
+| 141 | time-ablation/rules-t-60000.json | False       | cost     |             464.367 |
+| 153 |                                  | False       | time     |  0.0028839111328125 |
+| 153 |                                  | False       | cost     |                     |
+| 165 |                                  | False       | time     | 0.00403261184692383 |
+| 165 |                                  | False       | cost     |                     |
+| 177 |                                  | False       | time     | 0.00407743453979492 |
+| 177 |                                  | False       | cost     |                     |
