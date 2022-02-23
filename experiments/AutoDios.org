@@ -1743,7 +1743,7 @@ But the question is what if we force this distinction.
     "benchmarks": ["q-prod", "2d-conv", "mat-mul"],
     "input_template": "{}-out/spec.rkt",
     "timeout": 4000,
-    "percent_cpus": 0.5,
+    "percent_cpus": 0.25,
     "parameters": [	
 	{
 	    "name": "rules",
@@ -1778,7 +1778,7 @@ But the question is what if we force this distinction.
 
 #+begin_src shell
 cd experiments
-./extract.py time-conf.json ruler-time-ablation-res0 ruler-time-ablation0.csv
+./extract.py time-conf.json ruler-time-ablation-res1 ruler-time-ablation1.csv
 #+end_src
 
 #+RESULTS:
