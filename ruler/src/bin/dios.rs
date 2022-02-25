@@ -1,4 +1,4 @@
-use egg::{define_language, Id};
+use egg::{define_language, rewrite, Id};
 use itertools::Itertools;
 use num::integer::Roots;
 use rand::Rng;
@@ -44,14 +44,24 @@ impl Display for Value {
             Value::Int(i) => write!(f, "{}", i),
             Value::Bool(b) => write!(f, "{}", b),
             Value::List(l) => write!(f, "{:?}", l),
-            Value::Vec(v) => write!(
-                f,
-                "(Vec {})",
-                v.into_iter()
-                    .map(|x| format!("{}", x))
-                    .collect_vec()
-                    .join(" ")
-            ),
+            Value::Vec(v) => {
+                // eprintln!(
+                //     "(Vec {})",
+                //     v.into_iter()
+                //         .map(|x| format!("{}", x))
+                //         .collect_vec()
+                //         .join(" ")
+                // );
+                // panic!("I don't know how to write vecs yet, sorry!: {:?}", v);
+                write!(
+                    f,
+                    "(Vec {})",
+                    v.into_iter()
+                        .map(|x| format!("{}", x))
+                        .collect_vec()
+                        .join(" ")
+                )
+            }
         }
     }
 }
@@ -815,7 +825,10 @@ fn main() {
     VecLang::main()
 }
 
-fn egg_to_z3<'a>(ctx: &'a z3::Context, expr: &[VecLang]) -> Option<(Datatype<'a>, Vec<Bool<'a>>)> {
+fn egg_to_z3<'a>(
+    _ctx: &'a z3::Context,
+    _expr: &[VecLang],
+) -> Option<(Datatype<'a>, Vec<Bool<'a>>)> {
     // let mut buf: Vec<Datatype> = vec![];
     // let mut assumes: Vec<Bool> = vec![];
 
