@@ -3,7 +3,9 @@ use itertools::Itertools;
 use num::integer::Roots;
 use rand::Rng;
 use rand_pcg::Pcg64;
-use ruler::{letter, map, self_product, CVec, Equality, SynthAnalysis, SynthLanguage, Synthesizer};
+use ruler::{
+    letter, map, self_product, CVec, Equality, SynthAnalysis, SynthLanguage, Synthesizer,
+};
 use rustc_hash::FxHasher;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
@@ -44,15 +46,8 @@ impl Display for Value {
             Value::Int(i) => write!(f, "{}", i),
             Value::Bool(b) => write!(f, "{}", b),
             Value::List(l) => write!(f, "{:?}", l),
+            // Value::Vec(v) => write!(f, "(Vec {})", Wrapper(v)),
             Value::Vec(v) => {
-                // eprintln!(
-                //     "(Vec {})",
-                //     v.into_iter()
-                //         .map(|x| format!("{}", x))
-                //         .collect_vec()
-                //         .join(" ")
-                // );
-                // panic!("I don't know how to write vecs yet, sorry!: {:?}", v);
                 write!(
                     f,
                     "(Vec {})",
@@ -288,8 +283,12 @@ impl SynthLanguage for VecLang {
     {
         match self {
             VecLang::Const(i) => vec![Some(i.clone()); cvec_len],
-            VecLang::Add([l, r]) => map!(get, l, r => Value::int2(l, r, |l, r| Value::Int(l + r))),
-            VecLang::Mul([l, r]) => map!(get, l, r => Value::int2(l, r, |l, r| Value::Int(l * r))),
+            VecLang::Add([l, r]) => {
+                map!(get, l, r => Value::int2(l, r, |l, r| Value::Int(l + r)))
+            }
+            VecLang::Mul([l, r]) => {
+                map!(get, l, r => Value::int2(l, r, |l, r| Value::Int(l * r)))
+            }
             VecLang::Minus([l, r]) => {
                 map!(get, l, r => Value::int2(l, r, |l, r| Value::Int(l - r)))
             }
@@ -320,7 +319,9 @@ impl SynthLanguage for VecLang {
                 map!(get, l, r => Value::bool2(l, r, |l, r| Value::Bool(l && r)))
             }
             VecLang::Ite([_b, _t, _f]) => todo!(),
-            VecLang::Lt([l, r]) => map!(get, l, r => Value::int2(l, r, |l, r| Value::Bool(l < r))),
+            VecLang::Lt([l, r]) => {
+                map!(get, l, r => Value::int2(l, r, |l, r| Value::Bool(l < r)))
+            }
             VecLang::Sgn([x]) => {
                 map!(get, x => Value::int1(x, |x| Value::Int(sgn(x))))
             }
@@ -526,9 +527,15 @@ impl SynthLanguage for VecLang {
             );
 
             cvec.extend(
-                Value::sample_vec(&mut synth.rng, -100, 100, synth.params.vector_size, n_vecs)
-                    .into_iter()
-                    .map(Some),
+                Value::sample_vec(
+                    &mut synth.rng,
+                    -100,
+                    100,
+                    synth.params.vector_size,
+                    n_vecs,
+                )
+                .into_iter()
+                .map(Some),
             );
 
             egraph[id].data.cvec = cvec;
@@ -734,9 +741,15 @@ impl SynthLanguage for VecLang {
             let mut length = 0;
             for cvec in env.values_mut() {
                 cvec.extend(
-                    Value::sample_vec(&mut synth.rng, -100, 100, synth.params.vector_size, n_vecs)
-                        .into_iter()
-                        .map(Some),
+                    Value::sample_vec(
+                        &mut synth.rng,
+                        -100,
+                        100,
+                        synth.params.vector_size,
+                        n_vecs,
+                    )
+                    .into_iter()
+                    .map(Some),
                 );
                 length = cvec.len();
             }

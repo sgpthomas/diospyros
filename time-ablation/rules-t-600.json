@@ -8622,7 +8622,7 @@
       "bidirectional": true
     },
     {
-      "lhs": "(VecMAC (Vec ?a ?b) (Vec ?b ?a) \"(Vec 0 0)\")",
+      "lhs": "(VecMAC (Vec ?a ?b) (Vec ?b ?a) (Vec 0 0))",
       "rhs": "(Vec ?a ?b)",
       "bidirectional": true
     },

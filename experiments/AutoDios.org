@@ -1740,7 +1740,8 @@ But the question is what if we force this distinction.
     "compile_command": "cargo build --release --manifest-path src/dios-egraphs/Cargo.toml",
     "base_command": "src/dios-egraphs/target/release/dios-egraphs",
     "extra": "--timeout 3900 --no-dup-vars",
-    "benchmarks": ["q-prod", "2d-conv", "mat-mul"],
+    "benchmarks": ["q-prod"],
+    "-comment": ["2d-conv", "mat-mul"],
     "input_template": "{}-out/spec.rkt",
     "timeout": 4000,
     "percent_cpus": 0.25,
@@ -1752,7 +1753,9 @@ But the question is what if we force this distinction.
 		"time-ablation/rules-t-60.json",
 		"time-ablation/rules-t-600.json",
 		"time-ablation/rules-t-6000.json",
-		"time-ablation/rules-t-60000.json"
+		"time-ablation/rules-t-60000.json",
+		"time-ablation/rules-t-100000.json",
+		"time-ablation/rules-t-200000.json"
 	    ]
 	},
 	{
@@ -1774,11 +1777,21 @@ But the question is what if we force this distinction.
 }
 #+end_src
 
+** Command to run
+
+#+begin_src shell :dir (magit-toplevel) :results output
+ssh ubuntu@3.15.0.175 \
+    "cd diospyros && \
+     bash -cl 'experiments/testbed.py \
+     	   experiments/time-conf.json experiments/ruler-time-ablation2 \
+     1>experiments/ruler-time-ablation2.out 2>&1 &' &"
+#+end_src
+
 ** Extract data
 
-#+begin_src shell
+#+begin_src shell :dir (magit-toplevel) :results output
 cd experiments
-./extract.py time-conf.json ruler-time-ablation-res1 ruler-time-ablation1.csv
+./extract.py time-conf.json ruler-time-ablation4 ruler-time-ablation4.csv
 #+end_src
 
 #+RESULTS:
@@ -1791,51 +1804,54 @@ cd experiments
 #+begin_src R :results none
 library(tidyverse)
 
-data <- read.csv("ruler-time-ablation0.csv")
+data <- read.csv("ruler-time-ablation3.csv")
 #+end_src
 
 #+begin_src R :results value
 data %>%
-  ## filter(rules == "time-ablation/rules-t-60.json") %>%
-  ## filter(cost.filter >= 0) %>%
-  filter(split.phase == "False") %>%
+  ## filter(rules == "time-ablation/rules-t-200000.json") %>%
+  ## filter(is.na(cost.filter)) %>%
+  filter(cost.filter == 5) %>%
+  filter(split.phase == "") %>%
   filter(sub.prog == "False") %>%
   ## filter(no.dup.vars == "True") %>%
   filter(bench == "q-prod") %>%
-  filter(variable == "cost" | variable == "time") %>%
-  select(id, rules, split.phase, variable, value)
+  filter(variable == "cost" | variable == "xtime" | variable == "xphase_2_n") %>%
+  select(id, rules, cost.filter, sub.prog, variable, value)
 #+end_src
 
 #+RESULTS:
-|  id | rules                            | split.phase | variable |               value |
-|-----+----------------------------------+-------------+----------+---------------------|
-|   9 | time-ablation/rules-t-60.json    | False       | time     |  0.0837123394012451 |
-|   9 | time-ablation/rules-t-60.json    | False       | cost     |              310.29 |
-|  21 | time-ablation/rules-t-60.json    | False       | time     |  0.0800457000732422 |
-|  21 | time-ablation/rules-t-60.json    | False       | cost     |             314.765 |
-|  33 | time-ablation/rules-t-60.json    | False       | time     |    443.540392160416 |
-|  33 | time-ablation/rules-t-60.json    | False       | cost     |                  -1 |
-|  45 | time-ablation/rules-t-600.json   | False       | time     |  0.0631108283996582 |
-|  45 | time-ablation/rules-t-600.json   | False       | cost     |                  -1 |
-|  57 | time-ablation/rules-t-600.json   | False       | time     |  0.0636372566223145 |
-|  57 | time-ablation/rules-t-600.json   | False       | cost     |                  -1 |
-|  69 | time-ablation/rules-t-600.json   | False       | time     |    86.0073487758636 |
-|  69 | time-ablation/rules-t-600.json   | False       | cost     |                  -1 |
-|  81 | time-ablation/rules-t-6000.json  | False       | time     |  0.0531032085418701 |
-|  81 | time-ablation/rules-t-6000.json  | False       | cost     |                  -1 |
-|  93 | time-ablation/rules-t-6000.json  | False       | time     |  0.0517656803131104 |
-|  93 | time-ablation/rules-t-6000.json  | False       | cost     |                  -1 |
-| 105 | time-ablation/rules-t-6000.json  | False       | time     |    61.7251107692719 |
-| 105 | time-ablation/rules-t-6000.json  | False       | cost     |                  -1 |
-| 117 | time-ablation/rules-t-60000.json | False       | time     |    2.16834592819214 |
-| 117 | time-ablation/rules-t-60000.json | False       | cost     |                  -1 |
-| 129 | time-ablation/rules-t-60000.json | False       | time     |    2.17500329017639 |
-| 129 | time-ablation/rules-t-60000.json | False       | cost     |                  -1 |
-| 141 | time-ablation/rules-t-60000.json | False       | time     |    3109.68236708641 |
-| 141 | time-ablation/rules-t-60000.json | False       | cost     |             464.367 |
-| 153 |                                  | False       | time     |  0.0028839111328125 |
-| 153 |                                  | False       | cost     |                     |
-| 165 |                                  | False       | time     | 0.00403261184692383 |
-| 165 |                                  | False       | cost     |                     |
-| 177 |                                  | False       | time     | 0.00407743453979492 |
-| 177 |                                  | False       | cost     |                     |
+|  id | rules                             | cost.filter | sub.prog | variable  | value |
+|-----+-----------------------------------+-------------+----------+-----------+-------|
+|  33 | time-ablation/rules-t-60.json     |           5 | False    | phase_2_n |    17 |
+|  87 | time-ablation/rules-t-600.json    |           5 | False    | phase_2_n |     5 |
+| 141 | time-ablation/rules-t-6000.json   |           5 | False    | phase_2_n |     5 |
+| 195 | time-ablation/rules-t-60000.json  |           5 | False    | phase_2_n |   255 |
+| 249 | time-ablation/rules-t-100000.json |           5 | False    | phase_2_n |     5 |
+| 303 | time-ablation/rules-t-200000.json |           5 | False    | phase_2_n |       |
+| 357 |                                   |           5 | False    | phase_2_n |       |
+
+* Number of rules per ruleset
+
+#+begin_src shell :dir (magit-toplevel) :results table :colnames '("timeout" "rules" "0-filt" "5-filt")
+function f() {
+    echo $(cat "time-ablation/rules-t-$1.json" | jq '.eqs | length')
+}
+
+echo "60\t" $(f 60) "\t" 23 "\t" 17
+echo "600\t" $(f 600) "\t" 11 "\t" 5
+echo "6000\t" $(f 6000) "\t" 17 "\t" 5
+echo "60000\t" $(f 60000) "\t" 390 "\t" 255
+echo "100000\t" $(f 100000) "\t" 41 "\t" 5
+echo "200000\t" $(f 200000) "\t" 48 "\t" 6
+#+end_src
+
+#+RESULTS:
+| timeout | rules | 0-filt | 5-filt |
+|---------+-------+--------+--------|
+|      60 |  2908 |     23 |     17 |
+|     600 |  1729 |     11 |      5 |
+|    6000 |  2334 |     17 |      5 |
+|   60000 | 97482 |    390 |    255 |
+|  100000 |  2511 |     41 |      5 |
+|  200000 |  2484 |     48 |      6 |

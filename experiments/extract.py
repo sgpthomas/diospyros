@@ -19,19 +19,19 @@ def get_cost(res_dir, exp):
             return -1.0
 
 
-def get_n_rules(res_dir, exp):
+def get_n_rules(res_dir, exp, n):
     """Extract number of rules from an experiment."""
     err_file = res_dir / Path(exp["stderr"])
-    phase_1_n = None
-    phase_2_n = None
+    phase_n_rules = []
     with err_file.open("r") as f:
         lines = f.readlines()
         for l in lines:
             if l.startswith("Starting run with"):
-                phase_1_n = int(l.split(" ")[3])
-            elif l.startswith("Using"):
-                phase_2_n = int(l.split(" ")[1])
-    return (phase_1_n, phase_2_n)
+                phase_n_rules.append(int(l.split(" ")[3]))
+    if n < len(phase_n_rules):
+        return phase_n_rules[n]
+    else:
+        return None
 
 
 def get_improved_cost(res_dir, exp):
@@ -56,9 +56,7 @@ def generate_metadata(parameters, exp):
             if p["flag"] not in exp["cmd"]:
                 res += [None]
             else:
-                # print("AYO", exp["cmd"], p["args"])
                 for val in p["args"]:
-                    # print(f"{p['flag']}", i, val, p["args"])
                     regex = re.compile(f"{p['flag']} {val}\\b")
                     if re.search(regex, exp["cmd"]) is not None:
                         res += [val]
@@ -82,8 +80,9 @@ def main():
     data_fields = [
         ("time", lambda e: e["time"]),
         ("cost", lambda e: get_cost(result_dir, e)),
-        ("phase_1_n", lambda e: get_n_rules(result_dir, e)[0]),
-        ("phase_2_n", lambda e: get_n_rules(result_dir, e)[1]),
+        ("phase_1_n", lambda e: get_n_rules(result_dir, e, 0)),
+        ("phase_2_n", lambda e: get_n_rules(result_dir, e, 1)),
+        ("phase_3_n", lambda e: get_n_rules(result_dir, e, 2)),
         ("impr_cost", lambda e: get_improved_cost(result_dir, e))
     ]
 

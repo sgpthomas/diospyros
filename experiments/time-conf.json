@@ -3,13 +3,15 @@
   "base_command": "src/dios-egraphs/target/release/dios-egraphs",
   "extra": "--timeout 3900 --no-dup-vars",
   "benchmarks": [
-    "q-prod",
+    "q-prod"
+  ],
+  "-comment": [
     "2d-conv",
     "mat-mul"
   ],
   "input_template": "{}-out/spec.rkt",
   "timeout": 4000,
-  "percent_cpus": 0.5,
+  "percent_cpus": 0.25,
   "parameters": [
     {
       "name": "rules",
@@ -18,7 +20,9 @@
         "time-ablation/rules-t-60.json",
         "time-ablation/rules-t-600.json",
         "time-ablation/rules-t-6000.json",
-        "time-ablation/rules-t-60000.json"
+        "time-ablation/rules-t-60000.json",
+        "time-ablation/rules-t-100000.json",
+        "time-ablation/rules-t-200000.json"
       ]
     },
     {
@@ -37,7 +41,10 @@
     {
       "name": "split-phase",
       "flag": "--split-phase",
-      "args": []
+      "args": [
+        "auto",
+        "handwritten"
+      ]
     }
   ]
 }
