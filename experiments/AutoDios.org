@@ -1893,14 +1893,24 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 	      "--eqsat-iter-limit" "2"
 	      "--eqsat-time-limit" "30"
 	      "--num-fuzz" "8"
-	      "--abs-timeout" "240"
-	      "--outfile" "vec/test.json")))
-  (async-shell-command (s-join " " cmd))
+	      "--abs-timeout" "3600"
+	      "--outfile" "vec/test.json"))
+       (addr "18.219.161.63")
+       )
+  ;; (async-shell-command (s-join " " cmd))
+  ;; (shell-command-to-string (format "./sync.sh %s" addr))
+  ;; (shell-command-to-string (format "ssh ubuntu@%s tmux new -d -s vec4"
+  ;; 				   addr))
+  ;; (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
+  ;; 				   addr
+  ;; 				   "cd diospyros"))
+  (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
+				   addr
+				   (s-join " " cmd)))
   )
 #+end_src
 
 #+RESULTS:
-: RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth --dios-config configs/vec4_baseline.json --variables 8 --iters 2 --vector-size 4 --eqsat-iter-limit 2 --eqsat-time-limit 30 --num-fuzz 8 --abs-timeout 240 --outfile vec/test.json
 
 #+begin_src emacs-lisp :dir (magit-toplevel) :results none
 (let* ((cmd '("RUST_LOG=info" "cargo" "run"
