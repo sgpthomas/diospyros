@@ -34,7 +34,7 @@ impl Display for Phase {
 
 fn print_rules(rules: &[DiosRwrite]) {
     for r in rules {
-        eprint!(
+        eprintln!(
             "[{} cd:{:.2} avg:{:.2}] ",
             r.name,
             cost_differential(r),
@@ -43,9 +43,9 @@ fn print_rules(rules: &[DiosRwrite]) {
         if let (Some(lhs), Some(rhs)) =
             (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
         {
-            eprintln!("{} => {}", lhs, rhs);
+            eprintln!("  {} => {}", lhs, rhs);
         } else {
-            eprintln!("<opaque>");
+            eprintln!("  <opaque>");
         }
     }
 }
@@ -168,40 +168,11 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     //     rules = fancy_rules;
     // }
 
-    // if opts.dump_rules {
-    //     if opts.split_phase {
-    //         eprintln!("==== First phase rules ====");
-    //     }
-    //     for r in &rules {
-    //         if let (Some(lhs), Some(rhs)) =
-    //             (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
-    //         {
-    //             eprintln!("[{}] {} => {}", r.name, lhs, rhs);
-    //         } else {
-    //             eprintln!("[{}] <opaque>", r.name);
-    //         }
-    //     }
-
-    //     if opts.split_phase {
-    //         eprintln!("==== Second phase rules ====");
-    //         for r in &snd_phase {
-    //             if let (Some(lhs), Some(rhs)) =
-    //                 (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
-    //             {
-    //                 eprintln!("[{}] {} => {}", r.name, lhs, rhs);
-    //             } else {
-    //                 eprintln!("[{}] <opaque>", r.name);
-    //             }
-    //         }
-    //     }
-    // }
+    let order = [Phase::PreCompile, Phase::Compile, Phase::Opt];
 
     if opts.dry_run {
         eprintln!("Doing dry run. Aborting early.");
-        return (f64::NAN, prog.clone());
     }
-
-    let order = [Phase::PreCompile, Phase::Compile, Phase::Opt];
 
     let mut eg = eqsat::init_egraph();
     let mut prog = prog.clone();
@@ -211,8 +182,13 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
         eprintln!("Starting Phase {}: {}", i + 1, &phase);
         eprintln!("=================================");
 
+        eprintln!("Using {} rules", rules[phase].len());
         if opts.dump_rules {
             print_rules(&rules[phase]);
+        }
+
+        if opts.dry_run {
+            continue;
         }
 
         let (new_cost, new_prog, new_eg) = do_eqsat(&rules[phase], eg, &prog, opts);
@@ -231,5 +207,9 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
         cost = Some(new_cost);
     }
 
-    (cost.unwrap(), prog)
+    if opts.dry_run {
+        (f64::NAN, prog)
+    } else {
+        (cost.unwrap(), prog)
+    }
 }

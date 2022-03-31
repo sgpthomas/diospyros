@@ -1744,18 +1744,18 @@ But the question is what if we force this distinction.
     "-comment": ["2d-conv", "mat-mul"],
     "input_template": "{}-out/spec.rkt",
     "timeout": 4000,
-    "percent_cpus": 0.25,
+    "percent_cpus": 0.15,
     "parameters": [	
 	{
 	    "name": "rules",
 	    "flag": "--rules",
 	    "args": [
-		"time-ablation/rules-t-60.json",
-		"time-ablation/rules-t-600.json",
-		"time-ablation/rules-t-6000.json",
-		"time-ablation/rules-t-60000.json",
-		"time-ablation/rules-t-100000.json",
-		"time-ablation/rules-t-200000.json"
+		"time-ablation-var4/rules-t-60.json",
+		"time-ablation-var4/rules-t-600.json",
+		"time-ablation-var4/rules-t-6000.json",
+		"time-ablation-var4/rules-t-60000.json",
+		"time-ablation-var4/rules-t-100000.json",
+		"time-ablation-var4/rules-t-200000.json"
 	    ]
 	},
 	{
@@ -1767,11 +1767,6 @@ But the question is what if we force this distinction.
 	    "name": "sub-prog",
 	    "flag": "--sub-prog",
 	    "args": []
-	},
-	{
-	    "name": "split-phase",
-	    "flag": "--split-phase",
-	    "args": ["auto", "handwritten"]
 	}
     ]
 }
@@ -1780,56 +1775,76 @@ But the question is what if we force this distinction.
 ** Command to run
 
 #+begin_src shell :dir (magit-toplevel) :results output
-ssh ubuntu@3.15.0.175 \
-    "cd diospyros && \
-     bash -cl 'experiments/testbed.py \
-     	   experiments/time-conf.json experiments/ruler-time-ablation2 \
-     1>experiments/ruler-time-ablation2.out 2>&1 &' &"
+tmux new-session -d -s exp
+tmux send-keys 'cd diospyros' ENTER
+tmux send-keys './experiments/testbed.py experiments/time-conf.json experiments/ruler-time-ablation-var4-v3' ENTER
 #+end_src
 
 ** Extract data
 
 #+begin_src shell :dir (magit-toplevel) :results output
 cd experiments
-./extract.py time-conf.json ruler-time-ablation4 ruler-time-ablation4.csv
+./extract.py time-conf.json ruler-time-ablation-var4-v2 ruler-time-ablation-var4-v2.csv
 #+end_src
 
 #+RESULTS:
 
 ** Exploration
 :PROPERTIES:
-:header-args: :session graphics :colnames yes
+:header-args: :session *graphics* :colnames yes
 :END:
 
 #+begin_src R :results none
 library(tidyverse)
-
-data <- read.csv("ruler-time-ablation3.csv")
 #+end_src
 
 #+begin_src R :results value
-data %>%
+read.csv("ruler-time-ablation-var4-v3.csv") %>%
   ## filter(rules == "time-ablation/rules-t-200000.json") %>%
   ## filter(is.na(cost.filter)) %>%
   filter(cost.filter == 5) %>%
-  filter(split.phase == "") %>%
+  ## filter(split.phase == "auto") %>%
   filter(sub.prog == "False") %>%
-  ## filter(no.dup.vars == "True") %>%
   filter(bench == "q-prod") %>%
-  filter(variable == "cost" | variable == "xtime" | variable == "xphase_2_n") %>%
-  select(id, rules, cost.filter, sub.prog, variable, value)
+  filter(variable == "cost" | variable == "xtime" | variable == "phase_2_n") %>%
+  select(id, rules, cost.filter, variable, value)
 #+end_src
 
 #+RESULTS:
-|  id | rules                             | cost.filter | sub.prog | variable  | value |
-|-----+-----------------------------------+-------------+----------+-----------+-------|
-|  33 | time-ablation/rules-t-60.json     |           5 | False    | phase_2_n |    17 |
-|  87 | time-ablation/rules-t-600.json    |           5 | False    | phase_2_n |     5 |
-| 141 | time-ablation/rules-t-6000.json   |           5 | False    | phase_2_n |     5 |
-| 195 | time-ablation/rules-t-60000.json  |           5 | False    | phase_2_n |   255 |
-| 249 | time-ablation/rules-t-100000.json |           5 | False    | phase_2_n |     5 |
-| 303 | time-ablation/rules-t-200000.json |           5 | False    | phase_2_n |       |
-| 357 |                                   |           5 | False    | phase_2_n |       |
+| id | rules                                  | cost.filter | variable  |   value |
+|----+----------------------------------------+-------------+-----------+---------|
+|  3 | time-ablation-var4/rules-t-60.json     |           5 | cost      | 406.359 |
+|  3 | time-ablation-var4/rules-t-60.json     |           5 | phase_2_n |       5 |
+|  9 | time-ablation-var4/rules-t-600.json    |           5 | cost      | 406.359 |
+|  9 | time-ablation-var4/rules-t-600.json    |           5 | phase_2_n |       5 |
+| 15 | time-ablation-var4/rules-t-6000.json   |           5 | cost      | 406.359 |
+| 15 | time-ablation-var4/rules-t-6000.json   |           5 | phase_2_n |     283 |
+| 21 | time-ablation-var4/rules-t-60000.json  |           5 | cost      | 406.359 |
+| 21 | time-ablation-var4/rules-t-60000.json  |           5 | phase_2_n |     391 |
+| 27 | time-ablation-var4/rules-t-100000.json |           5 | cost      | 406.359 |
+| 27 | time-ablation-var4/rules-t-100000.json |           5 | phase_2_n |       6 |
+| 33 | time-ablation-var4/rules-t-200000.json |           5 | cost      | 406.359 |
+| 33 | time-ablation-var4/rules-t-200000.json |           5 | phase_2_n |       6 |
+| 39 |                                        |           5 | cost      |         |
+| 39 |                                        |           5 | phase_2_n |         |
+
+#+name: ablation6
+| id | rules                             | cost.filter | variable  |   value |
+|----+-----------------------------------+-------------+-----------+---------|
+|  3 | time-ablation/rules-t-60.json     |           5 | cost      | 314.765 |
+|  3 | time-ablation/rules-t-60.json     |           5 | phase_2_n |      17 |
+|  9 | time-ablation/rules-t-600.json    |           5 | cost      | 316.359 |
+|  9 | time-ablation/rules-t-600.json    |           5 | phase_2_n |       5 |
+| 15 | time-ablation/rules-t-6000.json   |           5 | cost      | 316.359 |
+| 15 | time-ablation/rules-t-6000.json   |           5 | phase_2_n |       5 |
+| 21 | time-ablation/rules-t-60000.json  |           5 | cost      |  81.058 |
+| 21 | time-ablation/rules-t-60000.json  |           5 | phase_2_n |     254 |
+| 27 | time-ablation/rules-t-100000.json |           5 | cost      | 316.359 |
+| 27 | time-ablation/rules-t-100000.json |           5 | phase_2_n |       5 |
+| 33 | time-ablation/rules-t-200000.json |           5 | cost      | 316.359 |
+| 33 | time-ablation/rules-t-200000.json |           5 | phase_2_n |       6 |
+| 39 |                                   |           5 | cost      |         |
+| 39 |                                   |           5 | phase_2_n |         |
 
 * Number of rules per ruleset
 
@@ -1855,3 +1870,50 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 |   60000 | 97482 |    390 |    255 |
 |  100000 |  2511 |     41 |      5 |
 |  200000 |  2484 |     48 |      6 |
+
+| timeout | rules | 0-filt | 5-filt |
+|---------+-------+--------+--------|
+|      60 |   107 |     23 |     17 |
+|     600 |   270 |     11 |      5 |
+|    6000 | 60651 |     17 |      5 |
+|   60000 | 93399 |    390 |    255 |
+|  100000 |  1619 |     41 |      5 |
+|  200000 |  2187 |     48 |      6 |
+
+* Run ruler with increased vector size
+
+#+begin_src emacs-lisp :dir (magit-toplevel) :results value
+(let* ((cmd '("RUST_LOG=info" "cargo" "run" "--manifest-path ruler/Cargo.toml"
+	      "--release" "--bin"
+	      "dios" "--" "synth"
+	      "--dios-config" "configs/vec4_baseline.json"
+	      "--variables" "8"
+	      "--iters" "2"
+	      "--vector-size" "4" ;; VECTOR_SIZE
+	      "--eqsat-iter-limit" "2"
+	      "--eqsat-time-limit" "30"
+	      "--num-fuzz" "8"
+	      "--abs-timeout" "240"
+	      "--outfile" "vec/test.json")))
+  (async-shell-command (s-join " " cmd))
+  )
+#+end_src
+
+#+RESULTS:
+: RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth --dios-config configs/vec4_baseline.json --variables 8 --iters 2 --vector-size 4 --eqsat-iter-limit 2 --eqsat-time-limit 30 --num-fuzz 8 --abs-timeout 240 --outfile vec/test.json
+
+#+begin_src emacs-lisp :dir (magit-toplevel) :results none
+(let* ((cmd '("RUST_LOG=info" "cargo" "run"
+	      "--manifest-path src/dios-egraphs/Cargo.toml"
+	      "--release"
+	      "--"
+	      "q-prod-out/spec.rkt"
+	      "--rules" "vec/test.json"
+	      "--timeout 3900 --no-dup-vars"
+	      ;; "--dump-rules"
+	      "--dry-run" ">/dev/null"
+	      )))
+  (async-shell-command (s-join " " cmd)))
+#+end_src
+
+

@@ -598,14 +598,14 @@ impl<L: SynthLanguage> Synthesizer<L> {
                     let rule_minimize = rule_minimize_before.elapsed().as_secs_f64();
 
                     for bad in bads {
-                        let s = format!("{}", bad.0);
-                        if s.contains("!!!") || s.contains("\"") {
-                            log::info!("culprit: {}", bad.0);
-                            log::info!("culprit: {:?}", bad.0);
-                            log::info!("culprit: {:#?}", bad.1);
-                            log::info!("culprit: {:#?}", bad);
-                            panic!();
-                        }
+                        // let s = format!("{}", bad.0);
+                        // if s.contains("!!!") || s.contains("\"") {
+                        //     log::info!("culprit: {}", bad.0);
+                        //     log::info!("culprit: {:?}", bad.0);
+                        //     log::info!("culprit: {:#?}", bad.1);
+                        //     log::info!("culprit: {:#?}", bad);
+                        //     panic!();
+                        // }
                         log::info!("adding {} to poison set", bad.0);
                         poison_rules.insert(bad.1);
                     }

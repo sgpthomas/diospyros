@@ -3,9 +3,7 @@ use itertools::Itertools;
 use num::integer::Roots;
 use rand::Rng;
 use rand_pcg::Pcg64;
-use ruler::{
-    letter, map, self_product, CVec, Equality, SynthAnalysis, SynthLanguage, Synthesizer,
-};
+use ruler::{letter, map, self_product, CVec, Equality, SynthAnalysis, SynthLanguage, Synthesizer};
 use rustc_hash::FxHasher;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
@@ -13,7 +11,7 @@ use std::fs::File;
 use std::hash::BuildHasherDefault;
 use std::str::FromStr;
 use z3::ast::{Ast, Bool, Datatype, Int};
-use z3::{DatatypeAccessor, DatatypeBuilder, Sort};
+// use z3::{DatatypeAccessor, DatatypeBuilder, Sort};
 
 #[derive(Debug, PartialOrd, Ord, PartialEq, Eq, Hash, Clone)]
 pub enum Value {
@@ -527,15 +525,9 @@ impl SynthLanguage for VecLang {
             );
 
             cvec.extend(
-                Value::sample_vec(
-                    &mut synth.rng,
-                    -100,
-                    100,
-                    synth.params.vector_size,
-                    n_vecs,
-                )
-                .into_iter()
-                .map(Some),
+                Value::sample_vec(&mut synth.rng, -100, 100, synth.params.vector_size, n_vecs)
+                    .into_iter()
+                    .map(Some),
             );
 
             egraph[id].data.cvec = cvec;
@@ -557,6 +549,8 @@ impl SynthLanguage for VecLang {
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         // if iter % 2 == 0 {
         iter = iter - 1; // make iter start at 0
+
+        // only do binops for iters < 2
         let binops = if iter < 2 {
             Some(
                 (0..2)
@@ -629,15 +623,17 @@ impl SynthLanguage for VecLang {
                 .map(|x| vec![VecLang::Vec(x.into_boxed_slice())])
                 .flatten();
 
-            let vec_mac = (0..3)
-                .map(|_| ids.clone())
-                .multi_cartesian_product()
-                .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
-                .map(|ids| [ids[0], ids[1], ids[2]])
-                .map(move |x| VecLang::VecMAC(x));
+            // let vec_mac = (0..3)
+            //     .map(|_| ids.clone())
+            //     .multi_cartesian_product()
+            //     .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
+            //     .map(|ids| [ids[0], ids[1], ids[2]])
+            //     .map(move |x| VecLang::VecMAC(x));
 
             // TODO: read conf "vector_mac"
-            Some(vec_unops.chain(vec_binops).chain(vec).chain(vec_mac))
+            Some(
+                vec_unops.chain(vec_binops).chain(vec), // .chain(vec_mac)
+            )
         } else {
             None
         };
@@ -741,15 +737,9 @@ impl SynthLanguage for VecLang {
             let mut length = 0;
             for cvec in env.values_mut() {
                 cvec.extend(
-                    Value::sample_vec(
-                        &mut synth.rng,
-                        -100,
-                        100,
-                        synth.params.vector_size,
-                        n_vecs,
-                    )
-                    .into_iter()
-                    .map(Some),
+                    Value::sample_vec(&mut synth.rng, -100, 100, synth.params.vector_size, n_vecs)
+                        .into_iter()
+                        .map(Some),
                 );
                 length = cvec.len();
             }

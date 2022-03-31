@@ -25,4 +25,5 @@ rand = "0.8.4"
 [features]
 # For setting the vector width, default is 4
 vec_width_2 = []
+vec_width_4 = []
 vec_width_8 = []

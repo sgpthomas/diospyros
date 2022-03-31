@@ -11,40 +11,32 @@
   ],
   "input_template": "{}-out/spec.rkt",
   "timeout": 4000,
-  "percent_cpus": 0.25,
+  "percent_cpus": 0.15,
   "parameters": [
     {
       "name": "rules",
       "flag": "--rules",
       "args": [
-        "time-ablation/rules-t-60.json",
-        "time-ablation/rules-t-600.json",
-        "time-ablation/rules-t-6000.json",
-        "time-ablation/rules-t-60000.json",
-        "time-ablation/rules-t-100000.json",
-        "time-ablation/rules-t-200000.json"
+        "time-ablation-var4/rules-t-60.json",
+        "time-ablation-var4/rules-t-600.json",
+        "time-ablation-var4/rules-t-6000.json",
+        "time-ablation-var4/rules-t-60000.json",
+        "time-ablation-var4/rules-t-100000.json",
+        "time-ablation-var4/rules-t-200000.json"
       ]
     },
     {
       "name": "cost-filter",
       "flag": "--cost-filter",
       "args": [
-        0,
-        5
+        0.0,
+        5.0
       ]
     },
     {
       "name": "sub-prog",
       "flag": "--sub-prog",
       "args": []
-    },
-    {
-      "name": "split-phase",
-      "flag": "--split-phase",
-      "args": [
-        "auto",
-        "handwritten"
-      ]
     }
   ]
 }

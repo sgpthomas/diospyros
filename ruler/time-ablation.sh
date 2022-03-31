@@ -5,17 +5,20 @@ function run() {
 		  --release --bin \
 		  dios -- synth \
 		  --dios-config "configs/vec_assoc.json" \
+		  --variables 4 \
 		  --iters 3 \
 		  --vector-size 2 \
 		  --eqsat-iter-limit 3 \
-		  --eqsat-time-limit 60 \
+		  --eqsat-time-limit 120 \
 		  --num-fuzz 4 \
 		  --abs-timeout "$1" \
-		  --outfile "time-ablation/rules-t-$1.json"
+		  --outfile "time-ablation-var4/rules-t-$1.json"
 }
 
-mkdir -p "time-ablation"
+mkdir -p "time-ablation-var4"
 run 60 
 run 600
 run 6000
 run 60000
+run 100000
+run 200000
