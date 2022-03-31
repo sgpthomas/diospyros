@@ -116,6 +116,9 @@ pub enum SplitPhase {
 
     /// Split rules according to a hand specified split.
     Handwritten,
+
+    /// Split rules by looking at the syntax of the rules.
+    Syntax,
 }
 
 impl FromStr for SplitPhase {
@@ -125,6 +128,7 @@ impl FromStr for SplitPhase {
         match s {
             "auto" => Ok(SplitPhase::Auto),
             "hand" | "handwritten" => Ok(SplitPhase::Handwritten),
+            "syntax" => Ok(SplitPhase::Syntax),
             s => Err(format!(
                 "Unknown split phase method: {}. Valid options are {}",
                 s, "[`auto`, `handwritten`]"

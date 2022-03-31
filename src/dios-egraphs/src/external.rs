@@ -8,6 +8,7 @@ use itertools::Itertools;
 use crate::{
     cost::VecCostFn,
     handwritten::build_litvec_rule,
+    recexpr_helpers::fold_recexpr,
     rules::LoggingRunner,
     tracking::TrackRewrites,
     veclang::{DiosRwrite, EGraph, VecLang},
@@ -42,37 +43,6 @@ pub fn external_rules(filename: &PathBuf) -> Vec<DiosRwrite> {
     ]);
 
     rules
-}
-
-fn walk_recexpr_help<F>(expr: &RecExpr<VecLang>, id: Id, action: F) -> F
-where
-    F: FnMut(&VecLang),
-{
-    // let root: Id = (expr.as_ref().len() - 1).into();
-    let mut f = action;
-    f(&expr[id]);
-    for c in expr[id].children() {
-        let newf = walk_recexpr_help(expr, *c, f);
-        f = newf;
-    }
-    f
-}
-
-fn walk_recexpr<F>(expr: &RecExpr<VecLang>, action: F)
-where
-    F: FnMut(&VecLang),
-{
-    walk_recexpr_help(expr, (expr.as_ref().len() - 1).into(), action);
-}
-
-fn fold_recexpr<F, T>(expr: &RecExpr<VecLang>, init: T, mut action: F) -> T
-where
-    F: FnMut(T, &VecLang) -> T,
-    T: Clone,
-{
-    let mut acc = init;
-    walk_recexpr(expr, |l| acc = action(acc.clone(), l));
-    acc
 }
 
 fn filter_vars(expr: &RecExpr<VecLang>) -> Vec<Var> {

@@ -1887,16 +1887,17 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 	      "--release" "--bin"
 	      "dios" "--" "synth"
 	      "--dios-config" "configs/vec4_baseline.json"
-	      "--variables" "8"
+	      "--variables" "6"
 	      "--iters" "2"
-	      "--vector-size" "4" ;; VECTOR_SIZE
+	      "--vector-size" "3" ;; VECTOR_SIZE
 	      "--eqsat-iter-limit" "2"
 	      "--eqsat-time-limit" "30"
 	      "--num-fuzz" "8"
-	      "--abs-timeout" "3600"
+	      "--abs-timeout" "30"
 	      "--outfile" "vec/test.json"))
        (addr "18.219.161.63")
        )
+  (s-join " " cmd)
   ;; (async-shell-command (s-join " " cmd))
   ;; (shell-command-to-string (format "./sync.sh %s" addr))
   ;; (shell-command-to-string (format "ssh ubuntu@%s tmux new -d -s vec4"
@@ -1904,15 +1905,16 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
   ;; (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
   ;; 				   addr
   ;; 				   "cd diospyros"))
-  (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
-				   addr
-				   (s-join " " cmd)))
+  ;; (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
+  ;; 				   addr
+  ;; 				   (s-join " " cmd)))
   )
 #+end_src
 
 #+RESULTS:
+: RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth --dios-config configs/vec4_baseline.json --variables 6 --iters 2 --vector-size 3 --eqsat-iter-limit 2 --eqsat-time-limit 30 --num-fuzz 8 --abs-timeout 30 --outfile vec/test.json
 
-#+begin_src emacs-lisp :dir (magit-toplevel) :results none
+#+begin_src emacs-lisp :dir (magit-toplevel) :results value
 (let* ((cmd '("RUST_LOG=info" "cargo" "run"
 	      "--manifest-path src/dios-egraphs/Cargo.toml"
 	      "--release"
@@ -1923,7 +1925,12 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 	      ;; "--dump-rules"
 	      "--dry-run" ">/dev/null"
 	      )))
-  (async-shell-command (s-join " " cmd)))
+       (s-join " " cmd))
+  ;; (async-shell-command (s-join " " cmd)))
+  
 #+end_src
+
+#+RESULTS:
+: RUST_LOG=info cargo run --manifest-path src/dios-egraphs/Cargo.toml --release -- q-prod-out/spec.rkt --rules vec/test.json --timeout 3900 --no-dup-vars --dry-run >/dev/null
 
 

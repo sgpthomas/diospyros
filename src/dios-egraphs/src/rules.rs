@@ -6,9 +6,10 @@ use crate::{
     cost::{cost_average, cost_differential},
     eqsat::{self, do_eqsat},
     external::{external_rules, retain_cost_effective_rules},
-    handwritten::{handwritten_rules, phases},
+    handwritten::{self, handwritten_rules},
     opts::{self, SplitPhase},
     scheduler::LoggingData,
+    split_by_syntax,
     tracking::TrackRewrites,
     veclang::{DiosRwrite, VecLang},
 };
@@ -101,19 +102,19 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
                     &initial_rules,
                     false,
                     cost_average,
-                    |x| x < 10.,
+                    |x| x < 10.0,
                 );
                 let compile = retain_cost_effective_rules(
                     &initial_rules,
                     false,
                     cost_average,
-                    |x| 10.0 <= x && x < 70.,
+                    |x| 10.0 <= x && x < 70.0,
                 );
                 let opt = retain_cost_effective_rules(
                     &initial_rules,
                     false,
                     cost_average,
-                    |x| 70. <= x,
+                    |x| 70.0 <= x,
                 );
                 rules
                     .entry(Phase::PreCompile)
@@ -127,7 +128,16 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
             }
             SplitPhase::Handwritten => {
                 for r in initial_rules {
-                    rules.entry(phases(&r)).and_modify(|rules| rules.push(r));
+                    rules
+                        .entry(handwritten::phases(&r))
+                        .and_modify(|rules| rules.push(r));
+                }
+            }
+            SplitPhase::Syntax => {
+                for r in initial_rules {
+                    rules
+                        .entry(split_by_syntax::phases(&r))
+                        .and_modify(|rules| rules.push(r));
                 }
             }
         }
