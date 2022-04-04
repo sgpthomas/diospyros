@@ -131,7 +131,7 @@ impl FromStr for SplitPhase {
             "syntax" => Ok(SplitPhase::Syntax),
             s => Err(format!(
                 "Unknown split phase method: {}. Valid options are {}",
-                s, "[`auto`, `handwritten`]"
+                s, "[`auto`, `handwritten`, `syntax`]"
             )),
         }
     }

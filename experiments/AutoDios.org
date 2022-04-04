@@ -1747,27 +1747,27 @@ But the question is what if we force this distinction.
     "percent_cpus": 0.15,
     "parameters": [	
 	{
-	    "name": "rules",
-	    "flag": "--rules",
-	    "args": [
-		"time-ablation-var4/rules-t-60.json",
-		"time-ablation-var4/rules-t-600.json",
-		"time-ablation-var4/rules-t-6000.json",
-		"time-ablation-var4/rules-t-60000.json",
-		"time-ablation-var4/rules-t-100000.json",
-		"time-ablation-var4/rules-t-200000.json"
-	    ]
-	},
+	"name": "rules",
+	"flag": "--rules",
+	"args": [
+	    "time-ablation-var4/rules-t-60.json",
+	    "time-ablation-var4/rules-t-600.json",
+	    "time-ablation-var4/rules-t-6000.json",
+	    "time-ablation-var4/rules-t-60000.json",
+	    "time-ablation-var4/rules-t-100000.json",
+	    "time-ablation-var4/rules-t-200000.json"
+	]
+    },
 	{
-	    "name": "cost-filter",
-	    "flag": "--cost-filter",
-	    "args": [0.0, 5.0]
-	},
+	"name": "cost-filter",
+	"flag": "--cost-filter",
+	"args": [0.0, 5.0]
+    },
 	{
-	    "name": "sub-prog",
-	    "flag": "--sub-prog",
-	    "args": []
-	}
+	"name": "sub-prog",
+	"flag": "--sub-prog",
+	"args": []
+    }
     ]
 }
 #+end_src
@@ -1890,29 +1890,27 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 	      "--variables" "6"
 	      "--iters" "2"
 	      "--vector-size" "3" ;; VECTOR_SIZE
-	      "--eqsat-iter-limit" "2"
-	      "--eqsat-time-limit" "30"
-	      "--num-fuzz" "8"
-	      "--abs-timeout" "30"
+	      "--eqsat-iter-limit" "3"
+	      "--eqsat-time-limit" "60"
+	      "--num-fuzz" "6"
+	      "--abs-timeout" "300000"
 	      "--outfile" "vec/test.json"))
-       (addr "18.219.161.63")
+       (addr "18.189.44.151")
        )
-  (s-join " " cmd)
+  ;; (s-join " " cmd)
   ;; (async-shell-command (s-join " " cmd))
-  ;; (shell-command-to-string (format "./sync.sh %s" addr))
-  ;; (shell-command-to-string (format "ssh ubuntu@%s tmux new -d -s vec4"
-  ;; 				   addr))
-  ;; (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
-  ;; 				   addr
-  ;; 				   "cd diospyros"))
-  ;; (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
-  ;; 				   addr
-  ;; 				   (s-join " " cmd)))
-  )
+  (shell-command-to-string (format "./sync.sh %s" addr))
+  (shell-command-to-string (format "ssh ubuntu@%s tmux new -d -s vec4"
+				   addr))
+  (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
+				   addr
+				   "cd diospyros"))
+  (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
+				   addr
+				   (s-join " " cmd))))
 #+end_src
 
 #+RESULTS:
-: RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth --dios-config configs/vec4_baseline.json --variables 6 --iters 2 --vector-size 3 --eqsat-iter-limit 2 --eqsat-time-limit 30 --num-fuzz 8 --abs-timeout 30 --outfile vec/test.json
 
 #+begin_src emacs-lisp :dir (magit-toplevel) :results value
 (let* ((cmd '("RUST_LOG=info" "cargo" "run"
@@ -1920,17 +1918,123 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 	      "--release"
 	      "--"
 	      "q-prod-out/spec.rkt"
-	      "--rules" "vec/test.json"
+	      "--rules" "t2.json"
 	      "--timeout 3900 --no-dup-vars"
+	      "--split-phase syntax"
 	      ;; "--dump-rules"
 	      "--dry-run" ">/dev/null"
 	      )))
-       (s-join " " cmd))
-  ;; (async-shell-command (s-join " " cmd)))
-  
+       ;; (s-join " " cmd)
+  (async-shell-command (s-join " " cmd))
+  )
 #+end_src
 
 #+RESULTS:
-: RUST_LOG=info cargo run --manifest-path src/dios-egraphs/Cargo.toml --release -- q-prod-out/spec.rkt --rules vec/test.json --timeout 3900 --no-dup-vars --dry-run >/dev/null
+: #<window 183 on *Async Shell Command*>
 
+* Syntax phase splitting vs. Cost function phase splitting
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
 
+** Ablation configuration
+
+#+begin_src json :results file silent :file experiments/phase-split-conf.json
+{
+    "compile_command": "cargo build --release --manifest-path src/dios-egraphs/Cargo.toml",
+    "base_command": "src/dios-egraphs/target/release/dios-egraphs",
+    "extra": "--timeout 3900 --no-dup-vars --rules t2.json",
+    "benchmarks": ["q-prod"],
+    "-comment": ["2d-conv", "mat-mul"],
+    "input_template": "{}-out/spec.rkt",
+    "timeout": 4000,
+    "percent_cpus": 0.15,
+    "parameters": [	
+	{
+	"name": "cost-filter",
+	"flag": "--cost-filter",
+	"args": [0.0, 5.0]
+    },
+	{
+	"name": "split-phase",
+	"flag": "--split-phase",
+	"args": ["auto", "syntax"]
+    }
+    ]
+}
+#+end_src
+
+** Start experiment
+
+#+begin_src emacs-lisp
+(let* ((addr "3.15.142.125")
+       (cmd '("./experiments/testbed.py"
+	      "experiments/phase-split-conf.json"
+	      "experiments/phase-split-results")))
+  (shell-command-to-string (format "./sync.sh %s" addr))
+  (shell-command-to-string (format "ssh ubuntu@%s tmux new -d -s exp"
+				   addr))
+  ;; enter directory
+  (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
+				   addr
+				   "cd diospyros"))
+  ;; run command
+  (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
+				   addr
+				   (s-join " " cmd)))
+  )
+#+end_src
+
+#+RESULTS:
+
+** Extract data
+
+#+begin_src shell :dir (magit-toplevel) :results output
+cd experiments
+./extract.py phase-split-conf.json phase-split-results phase-split-results.csv
+#+end_src
+
+#+RESULTS:
+
+** Exploration
+:PROPERTIES:
+:header-args: :session *phase-split* :colnames yes
+:END:
+
+#+begin_src R :results none
+library(tidyverse)
+#+end_src
+
+#+begin_src R :results value
+read.csv("phase-split-results.csv") %>%
+  ## filter(rules == "time-ablation/rules-t-200000.json") %>%
+  ## filter(is.na(cost.filter)) %>%
+  ## filter(cost.filter == 5) %>%
+  ## filter(split.phase == "auto") %>%
+  ## filter(sub.prog == "False") %>%
+  filter(bench == "q-prod") %>%
+  filter(variable == "cost" | variable == "time" | variable == "xphase_2_n") %>%
+  select(id, cost.filter, phase.split, variable, value)
+#+end_src
+
+#+RESULTS:
+| id | cost.filter | phase.split | variable |               value |
+|----+-------------+-------------+----------+---------------------|
+|  0 |           0 | auto        | time     | 0.00193977355957031 |
+|  0 |           0 | auto        | cost     |                  -1 |
+|  1 |           0 | syntax      | time     | 0.00194573402404785 |
+|  1 |           0 | syntax      | cost     |                  -1 |
+|  2 |           0 |             | time     |    190.931951761246 |
+|  2 |           0 |             | cost     |              55.872 |
+|  3 |           5 | auto        | time     | 0.00190043449401855 |
+|  3 |           5 | auto        | cost     |                  -1 |
+|  4 |           5 | syntax      | time     | 0.00191903114318848 |
+|  4 |           5 | syntax      | cost     |                  -1 |
+|  5 |           5 |             | time     |    4.11134123802185 |
+|  5 |           5 |             | cost     |              74.586 |
+|  6 |             | auto        | time     | 0.00193619728088379 |
+|  6 |             | auto        | cost     |                  -1 |
+|  7 |             | syntax      | time     | 0.00166773796081543 |
+|  7 |             | syntax      | cost     |                  -1 |
+|  8 |             |             | time     |    3908.14916300774 |
+|  8 |             |             | cost     |             597.064 |
