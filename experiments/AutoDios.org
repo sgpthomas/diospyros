@@ -1966,7 +1966,7 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 
 ** Start experiment
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results none
 (let* ((addr "3.15.142.125")
        (cmd '("./experiments/testbed.py"
 	      "experiments/phase-split-conf.json"
@@ -1981,11 +1981,17 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
   ;; run command
   (shell-command-to-string (format "ssh ubuntu@%s \"tmux send '%s' ENTER\""
 				   addr
-				   (s-join " " cmd)))
-  )
+				   (s-join " " cmd))))
 #+end_src
 
-#+RESULTS:
+#+begin_src emacs-lisp :results none
+(let* ((addr "3.15.142.125"))
+  (async-shell-command
+   (format "rsync -rvP ubuntu@%s:~/diospyros/experiments/phase-split-results ./experiments"
+	   addr)))
+#+end_src
+
+
 
 ** Extract data
 
