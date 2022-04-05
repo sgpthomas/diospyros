@@ -154,9 +154,11 @@ impl<L: SynthLanguage> Equality<L> {
             let map = &mut HashMap::default();
             let lhs = L::generalize(&e1, map);
             let rhs = L::generalize(&e2, map);
-            let lhs_name = format!("{}", lhs).replace("\"", "");
-            let rhs_name = format!("{}", rhs).replace("\"", "");
-            let name = format!("{} => {}", lhs_name, rhs_name);
+            // HACK: we need to manually remove quotes from the produced
+            // string because the `symbolic_expression` library that `egg`
+            // uses to display s-expressions adds them in a way that's very
+            // hard to remove without doing this hack.
+            let name = format!("{} => {}", lhs, rhs).replace("\"", "");
             let defined_rhs = NotUndefined {
                 name: name.clone(),
                 rhs: rhs.clone(),
@@ -173,9 +175,8 @@ impl<L: SynthLanguage> Equality<L> {
             let map = &mut HashMap::default();
             let lhs = L::generalize(&e2, map);
             let rhs = L::generalize(&e1, map);
-            let lhs_name = format!("{}", lhs).replace("\"", "");
-            let rhs_name = format!("{}", rhs).replace("\"", "");
-            let name = format!("{} => {}", lhs_name, rhs_name);
+            // HACK: same hack as above
+            let name = format!("{} => {}", lhs, rhs).replace("\"", "");
             let defined_rhs = NotUndefined {
                 name: name.clone(),
                 rhs: rhs.clone(),
@@ -204,6 +205,7 @@ impl<L: SynthLanguage> Equality<L> {
                 rewrites: vec![rw],
             }),
             ((_, lhs, rhs, Some(rw1)), (_, _, _, Some(rw2))) => Some(Self {
+                // HACK: same as above
                 name: format!("{} <=> {}", lhs, rhs).replace("\"", "").into(),
                 lhs,
                 rhs,
