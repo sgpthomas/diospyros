@@ -1887,11 +1887,11 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 	      "--release" "--bin"
 	      "dios" "--" "synth"
 	      "--dios-config" "configs/vec4_baseline.json"
-	      "--variables" "6"
+	      "--variables" "4"
 	      "--iters" "2"
-	      "--vector-size" "3" ;; VECTOR_SIZE
-	      "--eqsat-iter-limit" "3"
-	      "--eqsat-time-limit" "60"
+	      "--vector-size" "2" ;; VECTOR_SIZE
+	      "--eqsat-iter-limit" "2"
+	      "--eqsat-time-limit" "30"
 	      "--num-fuzz" "6"
 	      "--abs-timeout" "60"
 	      "--outfile" "vec/test.json"))
@@ -1912,7 +1912,7 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 #+end_src
 
 #+RESULTS:
-: RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth --dios-config configs/vec4_baseline.json --variables 6 --iters 2 --vector-size 3 --eqsat-iter-limit 3 --eqsat-time-limit 60 --num-fuzz 6 --abs-timeout 60 --outfile vec/test.json
+: RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth --dios-config configs/vec4_baseline.json --variables 4 --iters 2 --vector-size 2 --eqsat-iter-limit 2 --eqsat-time-limit 30 --num-fuzz 6 --abs-timeout 60 --outfile vec/test.json
 
 #+begin_src emacs-lisp :dir (magit-toplevel) :results value
 (let* ((cmd '("RUST_LOG=info" "cargo" "run"
@@ -2013,25 +2013,346 @@ library(tidyverse)
 
 #+begin_src R :results value
 read.csv("phase-split-results.csv") %>%
-  ## filter(rules == "time-ablation/rules-t-200000.json") %>%
-  ## filter(is.na(cost.filter)) %>%
-  ## filter(cost.filter == 5) %>%
   ## filter(split.phase == "auto") %>%
-  ## filter(sub.prog == "False") %>%
-  filter(bench == "q-prod") %>%
-  filter(variable == "cost" | variable == "xtime" | variable == "xphase_2_n") %>%
+  filter(variable == "cost" | variable == "time" | variable == "xphase_2_n") %>%
   select(id, cost.filter, split.phase, variable, value)
 #+end_src
 
 #+RESULTS:
-| id | cost.filter | split.phase | variable |             value |
-|----+-------------+-------------+----------+-------------------|
-|  0 |           0 | auto        | cost     | 69.87199999999999 |
-|  1 |           0 | syntax      | cost     | 69.87199999999999 |
-|  2 |           0 |             | cost     | 55.87199999999999 |
-|  3 |           5 | auto        | cost     | 74.58600000000001 |
-|  4 |           5 | syntax      | cost     | 74.58600000000001 |
-|  5 |           5 |             | cost     | 74.58600000000001 |
-|  6 |             | auto        | cost     |              -1.0 |
-|  7 |             | syntax      | cost     |           600.556 |
-|  8 |             |             | cost     | 597.0640000000001 |
+| id | cost.filter | split.phase | variable |              value |
+|----+-------------+-------------+----------+--------------------|
+|  0 |           0 | auto        | time     | 4.1946446895599365 |
+|  0 |           0 | auto        | cost     |  69.87199999999999 |
+|  1 |           0 | syntax      | time     |  7.315228223800659 |
+|  1 |           0 | syntax      | cost     |  69.87199999999999 |
+|  2 |           0 |             | time     | 204.98621225357056 |
+|  2 |           0 |             | cost     |  55.87199999999999 |
+|  3 |           5 | auto        | time     | 4.1221020221710205 |
+|  3 |           5 | auto        | cost     |  74.58600000000001 |
+|  4 |           5 | syntax      | time     |  4.164104223251343 |
+|  4 |           5 | syntax      | cost     |  74.58600000000001 |
+|  5 |           5 |             | time     |  4.192599773406982 |
+|  5 |           5 |             | cost     |  74.58600000000001 |
+|  6 |             | auto        | time     |         Timed out. |
+|  6 |             | auto        | cost     |               -1.0 |
+|  7 |             | syntax      | time     | 122.82920742034912 |
+|  7 |             | syntax      | cost     |            600.556 |
+|  8 |             |             | time     | 3908.2780978679657 |
+|  8 |             |             | cost     |  597.0640000000001 |
+
+* Testing variable duplication option in ruler
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
+
+Config:
+#+begin_src json :results file silent :file configs/test.json
+{
+    "constants": [
+	{
+	"type": "int",
+	"value": 0
+    },
+	{
+	"type": "int",
+	"value": 1
+    }
+    ],
+    "seed_rules": [],
+    "binops": [
+	"+",
+	"*"
+    ],
+    "use_vector": true,
+    "vector_binops": [
+	"+", "*"
+    ],
+    "vector_mac": true,
+    "variable_duplication": false
+}
+#+end_src
+
+
+#+begin_src emacs-lisp
+(let ((cmd '("RUST_LOG=info" "cargo" "run" "--manifest-path ruler/Cargo.toml"
+	     "--release" "--bin"
+	     "dios" "--" "synth"
+	     "--dios-config" "configs/test.json"
+	     "--variables" "4"
+	     "--iters" "2"
+	     "--vector-size" "2" ;; VECTOR_SIZE
+	     "--eqsat-iter-limit" "2"
+	     "--eqsat-time-limit" "30"
+	     "--num-fuzz" "6"
+	     "--abs-timeout" "60"
+	     "--outfile" "vec/test.json")))
+  (async-shell-command (s-join " " cmd)))
+#+end_src
+
+#+RESULTS:
+: #<window 134 on *Async Shell Command*>
+
+variable_duplication: false
+#+begin_example
+(VecMul ?a (VecMul ?b ?c)) <=> (VecMul (VecMul ?a ?b) ?c)
+(VecAdd ?a (VecAdd ?b ?c)) <=> (VecAdd (VecAdd ?a ?b) ?c)
+(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
+(VecMul (VecNeg ?a) (VecMul ?b ?c)) <=> (VecMul (VecMul ?a ?b) (VecNeg ?c))
+(VecMul ?a (VecAdd ?b ?c)) <=> (VecAdd (VecMul ?a ?b) (VecMul ?c ?a))
+(VecMul ?a (VecAdd ?b ?c)) <=> (VecAdd (VecMul ?a ?b) (VecMul ?a ?c))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(+ (* ?a ?b) (* ?c ?a)) <=> (* ?a (+ ?b ?c))
+(VecMul ?a (VecMul ?b (VecMul ?c ?a))) <=> (VecMul ?a (VecMul ?b (VecMul ?a ?c)))
+(VecAdd ?a (VecAdd ?b (VecAdd ?c ?a))) <=> (VecAdd ?a (VecAdd (VecAdd ?b ?a) ?c))
+(VecAdd ?a (VecAdd ?b (VecAdd ?b ?c))) <=> (VecAdd ?a (VecAdd (VecAdd ?b ?c) ?b))
+(VecMul ?a (VecMul ?b (VecMul ?c ?b))) <=> (VecMul ?a (VecMul ?b (VecMul ?b ?c)))
+(* ?a (* ?b (* ?c ?a))) <=> (* ?a (* ?b (* ?a ?c)))
+(+ (+ ?a ?b) (+ ?c ?a)) <=> (+ (+ ?a ?b) (+ ?a ?c))
+(VecMul (VecAdd ?a ?b) (VecAdd ?c ?a)) <=> (VecMul (VecAdd ?a ?b) (VecAdd ?a ?c))
+(VecAdd ?a (VecAdd ?b (VecMul ?a ?c))) <=> (VecAdd (VecAdd ?a ?b) (VecMul ?c ?a))
+(VecMul (VecAdd ?a ?b) (VecMul ?c ?a)) <=> (VecMul (VecAdd ?a ?b) (VecMul ?a ?c))
+(VecMul (VecAdd ?a ?b) (VecMul ?c ?b)) <=> (VecMul (VecAdd ?a ?b) (VecMul ?b ?c))
+(VecMul ?a (VecMul ?b (VecAdd ?c ?a))) <=> (VecMul ?a (VecMul ?b (VecAdd ?a ?c)))
+(VecMul (VecAdd ?a ?b) (VecAdd ?c ?b)) <=> (VecMul (VecAdd ?a ?b) (VecAdd ?b ?c))
+(Vec (VecAdd ?a ?b) (VecAdd ?c ?a)) <=> (Vec (VecAdd ?a ?b) (VecAdd ?a ?c))
+(VecAdd (VecMul ?a ?b) (VecMul ?c ?b)) <=> (VecAdd (VecMul ?a ?b) (VecMul ?b ?c))
+(VecAdd (VecMul ?a ?b) (VecAdd ?c ?b)) <=> (VecAdd (VecMul ?a ?b) (VecAdd ?b ?c))
+(Vec (Vec ?a ?b) (VecAdd ?c ?a)) <=> (Vec (Vec ?a ?b) (VecAdd ?a ?c))
+(VecAdd ?a (VecAdd ?b (VecMul ?c ?b))) <=> (VecAdd ?a (VecAdd ?b (VecMul ?b ?c)))
+(VecAdd (VecMul ?a ?b) (VecAdd ?c ?a)) <=> (VecAdd (VecMul ?a ?b) (VecAdd ?a ?c))
+(VecMul ?a (VecMul ?b (VecAdd ?c ?b))) <=> (VecMul ?a (VecMul ?b (VecAdd ?b ?c)))
+(Vec (Vec ?a ?b) (VecMul ?c ?b)) <=> (Vec (Vec ?a ?b) (VecMul ?b ?c))
+(Vec (Vec ?a ?b) (VecAdd ?c ?b)) <=> (Vec (Vec ?a ?b) (VecAdd ?b ?c))
+(Vec (VecAdd ?a ?b) (VecAdd ?c ?b)) <=> (Vec (VecAdd ?a ?b) (VecAdd ?b ?c))
+(Vec (VecMul ?a ?b) (VecMul ?c ?b)) <=> (Vec (VecMul ?a ?b) (VecMul ?b ?c))
+(Vec (Vec ?a ?b) (VecMul ?c ?a)) <=> (Vec (Vec ?a ?b) (VecMul ?a ?c))
+(Vec (VecMul ?a ?b) (VecMul ?c ?a)) <=> (Vec (VecMul ?a ?b) (VecMul ?a ?c))
+(+ (* ?a ?b) (* ?c ?b)) <=> (+ (* ?a ?b) (* ?b ?c))
+(Vec (+ ?a ?b) (+ ?c ?b)) <=> (Vec (+ ?a ?b) (+ ?b ?c))
+(Vec (+ ?a ?b) (+ ?c ?a)) <=> (Vec (+ ?a ?b) (+ ?a ?c))
+(+ (+ ?a ?b) (* ?c ?a)) <=> (+ (+ ?a ?b) (* ?a ?c))
+(+ (* ?a ?b) (+ ?c ?b)) <=> (+ (* ?a ?b) (+ ?b ?c))
+(+ (* ?a ?b) (+ ?c ?a)) <=> (+ (* ?a ?b) (+ ?a ?c))
+(* (+ ?a ?b) (* ?c ?b)) <=> (* (* (+ ?a ?b) ?b) ?c)
+(* ?a (* ?b (+ ?c ?a))) <=> (* (* ?a ?b) (+ ?a ?c))
+(* (+ ?a ?b) (* ?c ?a)) <=> (* (+ ?a ?b) (* ?a ?c))
+(Vec (* ?a ?b) (* ?c ?b)) <=> (Vec (* ?a ?b) (* ?b ?c))
+(Vec (* ?a ?b) (* ?c ?a)) <=> (Vec (* ?a ?b) (* ?a ?c))
+(* (+ ?a ?b) (+ ?c ?a)) <=> (* (+ ?a ?b) (+ ?a ?c))
+(* (+ ?a ?b) (+ ?c ?b)) <=> (* (+ ?a ?b) (+ ?b ?c))
+(Vec (Vec ?a ?b) (* ?c ?b)) <=> (Vec (Vec ?a ?b) (* ?b ?c))
+(Vec (Vec ?a ?b) (* ?c ?a)) <=> (Vec (Vec ?a ?b) (* ?a ?c))
+(Vec (Vec ?a ?b) (+ ?c ?b)) <=> (Vec (Vec ?a ?b) (+ ?b ?c))
+(Vec (Vec ?a ?b) (+ ?c ?a)) <=> (Vec (Vec ?a ?b) (+ ?a ?c))
+(Vec (* ?a ?b) (+ ?c ?b)) <=> (Vec (* ?a ?b) (+ ?b ?c))
+(Vec (* ?a ?b) (+ ?c ?a)) <=> (Vec (* ?a ?b) (+ ?a ?c))
+(Vec (VecMul ?a ?b) (VecAdd ?c ?b)) <=> (Vec (VecMul ?a ?b) (VecAdd ?b ?c))
+(Vec (VecAdd ?a ?b) (VecMul ?c ?a)) <=> (Vec (VecAdd ?a ?b) (VecMul ?a ?c))
+(Vec (VecMul ?a ?b) (VecAdd ?c ?a)) <=> (Vec (VecMul ?a ?b) (VecAdd ?a ?c))
+(Vec (VecAdd ?a ?b) (VecMul ?c ?b)) <=> (Vec (VecAdd ?a ?b) (VecMul ?b ?c))
+(VecAdd (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ ?b ?c))
+(Vec (+ ?a ?b) (* ?c ?b)) <=> (Vec (+ ?a ?b) (* ?b ?c))
+(VecMul (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?b ?c))
+(Vec (+ ?a ?b) (* ?c ?a)) <=> (Vec (+ ?a ?b) (* ?a ?c))
+(VecMul (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec ?a (* ?b ?c))
+(VecAdd (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) ?c)
+(VecAdd (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec ?a (+ ?b ?c))
+(VecMul (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (* ?a ?b) ?c)
+(* 0 (* (* ?a ?b) ?c)) <=> (* (* 0 ?a) (+ ?b ?c))
+(VecAdd (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec (+ 1 ?a) (+ ?b ?c))
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* 0 ?a) (* ?b ?c))
+(VecAdd (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ 1 ?c))
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* 0 ?c))
+(VecMul ?a (VecNeg ?b)) <=> (VecMul (VecNeg ?a) ?b)
+(VecNeg (VecMul ?a ?b)) <=> (VecMul (VecNeg ?a) ?b)
+(VecMul ?a ?b) <=> (VecMul (VecNeg ?a) (VecNeg ?b))
+(VecNeg (VecAdd ?a ?b)) <=> (VecAdd (VecNeg ?a) (VecNeg ?b))
+(VecAdd ?a (VecAdd ?b ?a)) <=> (VecAdd (VecAdd ?a ?a) ?b)
+(VecMul ?a (VecMul ?b ?a)) <=> (VecMul ?a (VecMul ?a ?b))
+(VecMul ?a (VecAdd ?b ?a)) <=> (VecMul ?a (VecAdd ?a ?b))
+(VecAdd ?a (VecMul ?b ?a)) <=> (VecAdd ?a (VecMul ?a ?b))
+(Vec ?a (VecMul ?b ?a)) <=> (Vec ?a (VecMul ?a ?b))
+(VecAdd ?a (VecMul ?a ?b)) <=> (VecAdd (VecMul ?a ?b) ?a)
+(VecMul ?a (VecAdd ?b ?a)) <=> (VecMul (VecAdd ?a ?b) ?a)
+(Vec ?a (VecAdd ?b ?a)) <=> (Vec ?a (VecAdd ?a ?b))
+(VecAdd (VecNeg ?a) (VecAdd ?a ?b)) <=> (VecAdd (VecAdd ?a ?b) (VecNeg ?a))
+(VecAdd ?a (VecAdd ?b (VecNeg ?a))) <=> (VecAdd (VecNeg ?a) (VecAdd ?b ?a))
+(Vec (VecNeg ?a) (VecAdd ?b ?a)) <=> (Vec (VecNeg ?a) (VecAdd ?a ?b))
+(+ ?a (+ ?b (* ?a ?b))) <=> (+ (+ (* ?a ?b) ?b) ?a)
+(VecAdd ?a (VecAdd ?b (VecMul ?a ?b))) <=> (VecAdd (VecAdd (VecMul ?a ?b) ?b) ?a)
+(+ ?a ?b) <=> (+ ?a (+ ?b (* 0 ?a)))
+(VecMul (Vec ?a ?b) (Vec ?a 1)) <=> (Vec (* ?a ?a) ?b)
+(VecAdd (Vec ?a ?b) (Vec ?a 0)) <=> (Vec (+ ?a ?a) ?b)
+(Vec (Vec ?a ?b) 0) <=> (Vec (Vec ?a ?b) (* 0 ?b))
+(Vec (* ?a ?b) 0) <=> (Vec (* ?a ?b) (* 0 ?a))
+(Vec (* ?a ?b) 0) <=> (Vec (* ?a ?b) (* 0 ?b))
+(Vec 0 (* ?a ?b)) <=> (Vec (* 0 ?a) (* ?a ?b))
+(VecMul (Vec ?a ?b) (Vec 0 0)) <=> (VecMul (Vec 0 ?a) (Vec ?b 0))
+(Vec (Vec ?a ?b) 0) <=> (Vec (Vec ?a ?b) (* 0 ?a))
+(Vec 0 (Vec ?a ?b)) <=> (Vec (* 0 ?a) (Vec ?a ?b))
+(Vec (+ ?a ?b) 0) <=> (Vec (+ ?a ?b) (* 0 ?a))
+(* (+ ?a ?b) (+ 1 ?a)) <=> (* (+ 1 ?a) (+ ?a ?b))
+(VecMul (Vec 1 ?a) (Vec ?b 1)) <=> (VecAdd (Vec 0 ?a) (Vec ?b 0))
+(VecAdd (Vec ?a ?b) (Vec ?a 1)) <=> (Vec (+ ?a ?a) (+ 1 ?b))
+(VecAdd ?a (VecNeg ?a)) <=> (VecAdd (VecNeg ?a) ?a)
+?a <=> (* ?a 1)
+?a <=> (+ 0 ?a)
+?a <=> (* 1 ?a)
+?a <=> (+ ?a 0)
+(* ?a 0) <=> (* 0 ?a)
+(+ ?a 1) <=> (+ 1 ?a)
+(Vec 0 (Vec 0 ?a)) <=> (Vec (* 0 ?a) (Vec 0 ?a))
+(Vec 0 (Vec 1 ?a)) <=> (Vec (* 0 ?a) (Vec 1 ?a))
+Learned 110 rules in 18.197596591
+#+end_example
+
+variable duplication: true
+#+begin_example
+Learned 144 rules in 26.543639944
+(VecAdd ?a (VecAdd ?b ?c)) <=> (VecAdd (VecAdd ?a ?b) ?c)
+(VecMul ?a (VecMul ?b ?c)) <=> (VecMul (VecMul ?a ?b) ?c)
+(+ ?a (+ ?b ?c)) <=> (+ (+ ?a ?b) ?c)
+(* ?a (* ?b ?c)) <=> (* (* ?a ?b) ?c)
+(VecMul ?a (VecMul ?b (VecNeg ?c))) <=> (VecMul (VecNeg ?a) (VecMul ?b ?c))
+(+ (* ?a ?b) (* ?a ?c)) <=> (* ?a (+ ?b ?c))
+(+ (* ?a ?b) (* ?c ?a)) <=> (* ?a (+ ?b ?c))
+(VecMul ?a (VecAdd ?b ?c)) <=> (VecAdd (VecMul ?a ?b) (VecMul ?c ?a))
+(VecMul ?a (VecAdd ?b ?c)) <=> (VecAdd (VecMul ?a ?b) (VecMul ?a ?c))
+(VecAdd ?a (VecAdd ?b (VecAdd ?c ?a))) <=> (VecAdd ?a (VecAdd ?b (VecAdd ?a ?c)))
+(VecMul ?a (VecMul ?b (VecMul ?a ?c))) <=> (VecMul ?a (VecMul ?a (VecMul ?b ?c)))
+(VecAdd ?a (VecAdd ?b (VecAdd ?c ?b))) <=> (VecAdd (VecAdd ?a ?b) (VecAdd ?b ?c))
+(VecMul ?a (VecMul ?b (VecMul ?c ?a))) <=> (VecMul ?a (VecMul ?a (VecMul ?b ?c)))
+(VecMul ?a (VecMul ?b (VecMul ?c ?b))) <=> (VecMul ?a (VecMul (VecMul ?b ?b) ?c))
+(VecAdd ?a (VecAdd ?b (VecAdd ?c ?a))) <=> (VecAdd ?a (VecAdd ?a (VecAdd ?b ?c)))
+(+ ?a (+ ?b (+ ?c ?a))) <=> (+ ?a (+ (+ ?a ?b) ?c))
+(Vec (VecMul ?a ?b) (VecMul ?c ?b)) <=> (Vec (VecMul ?a ?b) (VecMul ?b ?c))
+(Vec (Vec ?a ?b) (VecAdd ?c ?a)) <=> (Vec (Vec ?a ?b) (VecAdd ?a ?c))
+(Vec (Vec ?a ?b) (VecAdd ?c ?b)) <=> (Vec (Vec ?a ?b) (VecAdd ?b ?c))
+(Vec (Vec ?a ?b) (VecMul ?c ?a)) <=> (Vec (Vec ?a ?b) (VecMul ?a ?c))
+(Vec (Vec ?a ?b) (VecMul ?c ?b)) <=> (Vec (Vec ?a ?b) (VecMul ?b ?c))
+(Vec (VecMul ?a ?b) (VecMul ?c ?a)) <=> (Vec (VecMul ?a ?b) (VecMul ?a ?c))
+(Vec (VecAdd ?a ?b) (VecAdd ?c ?a)) <=> (Vec (VecAdd ?a ?b) (VecAdd ?a ?c))
+(Vec (VecAdd ?a ?b) (VecAdd ?c ?b)) <=> (Vec (VecAdd ?a ?b) (VecAdd ?b ?c))
+(Vec (* ?a ?b) (* ?c ?a)) <=> (Vec (* ?a ?b) (* ?a ?c))
+(Vec (* ?a ?b) (* ?c ?b)) <=> (Vec (* ?a ?b) (* ?b ?c))
+(Vec (Vec ?a ?b) (* ?c ?a)) <=> (Vec (Vec ?a ?b) (* ?a ?c))
+(Vec (+ ?a ?b) (+ ?c ?a)) <=> (Vec (+ ?a ?b) (+ ?a ?c))
+(Vec (+ ?a ?b) (+ ?c ?b)) <=> (Vec (+ ?a ?b) (+ ?b ?c))
+(Vec (Vec ?a ?b) (+ ?c ?b)) <=> (Vec (Vec ?a ?b) (+ ?b ?c))
+(Vec (Vec ?a ?b) (* ?c ?b)) <=> (Vec (Vec ?a ?b) (* ?b ?c))
+(Vec (Vec ?a ?b) (+ ?c ?a)) <=> (Vec (Vec ?a ?b) (+ ?a ?c))
+(+ (* ?a ?b) (+ ?c ?a)) <=> (+ (* ?a ?b) (+ ?a ?c))
+(+ (* ?a ?b) (* ?c ?b)) <=> (+ (* ?a ?b) (* ?b ?c))
+(VecAdd (VecMul ?a ?b) (VecAdd ?c ?b)) <=> (VecAdd (VecMul ?a ?b) (VecAdd ?b ?c))
+(VecAdd ?a (VecAdd ?b (VecMul ?c ?a))) <=> (VecAdd ?a (VecAdd ?b (VecMul ?a ?c)))
+(VecMul ?a (VecMul ?b (VecAdd ?c ?a))) <=> (VecMul ?a (VecMul ?b (VecAdd ?a ?c)))
+(VecAdd (VecMul ?a ?b) (VecMul ?c ?b)) <=> (VecAdd (VecMul ?a ?b) (VecMul ?b ?c))
+(VecMul (VecAdd ?a ?b) (VecAdd ?c ?a)) <=> (VecMul (VecAdd ?a ?b) (VecAdd ?a ?c))
+(VecMul ?a (VecMul ?b (VecAdd ?c ?c))) <=> (VecMul (VecAdd ?a ?a) (VecMul ?b ?c))
+(VecMul ?a (VecMul ?b (VecAdd ?c ?b))) <=> (VecMul ?a (VecMul ?b (VecAdd ?b ?c)))
+(VecMul (VecAdd ?a ?b) (VecMul ?c ?a)) <=> (VecMul (VecAdd ?a ?b) (VecMul ?a ?c))
+(VecAdd (VecMul ?a ?b) (VecAdd ?c ?a)) <=> (VecAdd (VecMul ?a ?b) (VecAdd ?a ?c))
+(VecMul (VecAdd ?a ?b) (VecAdd ?c ?b)) <=> (VecMul (VecAdd ?a ?b) (VecAdd ?b ?c))
+(VecAdd ?a (VecAdd ?b (VecMul ?c ?b))) <=> (VecAdd ?a (VecAdd ?b (VecMul ?b ?c)))
+(VecMul (VecAdd ?a ?b) (VecMul ?c ?b)) <=> (VecMul (VecAdd ?a ?b) (VecMul ?b ?c))
+(* (+ ?a ?b) (+ ?c ?a)) <=> (* (+ ?a ?b) (+ ?a ?c))
+(* (+ ?a ?b) (+ ?c ?b)) <=> (* (+ ?a ?b) (+ ?b ?c))
+(* ?a (* ?b (+ ?c ?a))) <=> (* ?a (* ?b (+ ?a ?c)))
+(* (+ ?a ?b) (* ?c ?b)) <=> (* (+ ?a ?b) (* ?b ?c))
+(* (+ ?a ?b) (* ?c ?a)) <=> (* (+ ?a ?b) (* ?a ?c))
+(+ (* ?a ?b) (+ ?c ?b)) <=> (+ (* ?a ?b) (+ ?b ?c))
+(+ ?a (+ ?b (* ?a ?c))) <=> (+ (+ ?a ?b) (* ?c ?a))
+(* ?a (* ?b (+ ?c ?c))) <=> (* (+ ?a ?a) (* ?b ?c))
+(Vec (VecAdd ?a ?b) (VecMul ?c ?b)) <=> (Vec (VecAdd ?a ?b) (VecMul ?b ?c))
+(Vec (VecMul ?a ?b) (VecAdd ?c ?b)) <=> (Vec (VecMul ?a ?b) (VecAdd ?b ?c))
+(Vec (VecAdd ?a ?b) (VecMul ?c ?a)) <=> (Vec (VecAdd ?a ?b) (VecMul ?a ?c))
+(Vec (VecMul ?a ?b) (VecAdd ?c ?a)) <=> (Vec (VecMul ?a ?b) (VecAdd ?a ?c))
+(VecMul (Vec ?a ?a) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?c ?a))
+(VecMul (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* ?b ?c))
+(Vec (+ ?a ?b) (* ?c ?b)) <=> (Vec (+ ?a ?b) (* ?b ?c))
+(Vec (+ ?a ?b) (* ?c ?a)) <=> (Vec (+ ?a ?b) (* ?a ?c))
+(VecAdd (Vec ?a ?b) (Vec ?a ?c)) <=> (Vec (+ ?a ?a) (+ ?b ?c))
+(VecAdd (Vec ?a ?a) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ ?c ?a))
+(VecAdd (Vec ?a ?b) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ ?b ?c))
+(Vec (* ?a ?b) (+ ?c ?a)) <=> (Vec (* ?a ?b) (+ ?a ?c))
+(Vec (* ?a ?b) (+ ?c ?b)) <=> (Vec (* ?a ?b) (+ ?b ?c))
+(VecMul (Vec ?a ?b) (Vec ?a ?c)) <=> (Vec (* ?a ?a) (* ?b ?c))
+(VecMul (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (* ?a ?b) ?c)
+(VecAdd (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) ?c)
+(* 0 (+ (+ ?a ?b) ?c)) <=> (* 0 (* ?a (+ ?b ?c)))
+(* (* ?a ?b) (* 0 ?c)) <=> (* (* ?a 0) (+ ?b ?c))
+(VecMul (Vec ?a 0) (Vec ?b ?c)) <=> (Vec (* ?a ?b) (* 0 ?c))
+(VecAdd (Vec ?a ?b) (Vec 1 ?c)) <=> (Vec (+ 1 ?a) (+ ?b ?c))
+(VecAdd (Vec ?a 1) (Vec ?b ?c)) <=> (Vec (+ ?a ?b) (+ 1 ?c))
+(VecMul (Vec ?a ?b) (Vec 0 ?c)) <=> (Vec (* 0 ?a) (* ?b ?c))
+(VecNeg (VecMul ?a ?b)) <=> (VecMul ?a (VecNeg ?b))
+(VecMul ?a (VecNeg ?b)) <=> (VecMul (VecNeg ?a) ?b)
+(VecMul ?a ?b) <=> (VecMul ?a (VecNeg (VecNeg ?b)))
+(VecNeg (VecAdd ?a ?b)) <=> (VecAdd (VecNeg ?a) (VecNeg ?b))
+(VecMul ?a (VecMul ?b ?a)) <=> (VecMul ?a (VecMul ?a ?b))
+(VecAdd ?a (VecAdd ?b ?a)) <=> (VecAdd ?a (VecAdd ?a ?b))
+(Vec ?a (VecMul ?b ?a)) <=> (Vec ?a (VecMul ?a ?b))
+(Vec ?a (VecAdd ?b ?a)) <=> (Vec ?a (VecAdd ?a ?b))
+(VecMul ?a (VecAdd ?b ?a)) <=> (VecMul ?a (VecAdd ?a ?b))
+(VecMul ?a (VecAdd ?b ?b)) <=> (VecMul (VecAdd ?a ?a) ?b)
+(VecMul ?a (VecAdd ?b ?a)) <=> (VecMul (VecAdd ?a ?b) ?a)
+(VecAdd ?a (VecMul ?b ?a)) <=> (VecAdd ?a (VecMul ?a ?b))
+(VecAdd ?a (VecMul ?b ?a)) <=> (VecAdd (VecMul ?a ?b) ?a)
+(VecAdd (VecNeg ?a) (VecAdd ?a ?b)) <=> (VecAdd (VecAdd ?a ?b) (VecNeg ?a))
+(VecAdd ?a (VecAdd ?b (VecNeg ?a))) <=> (VecAdd (VecNeg ?a) (VecAdd ?b ?a))
+(Vec (VecNeg ?a) (VecMul ?b ?a)) <=> (Vec (VecNeg ?a) (VecMul ?a ?b))
+(Vec (VecNeg ?a) (VecAdd ?b ?a)) <=> (Vec (VecNeg ?a) (VecAdd ?a ?b))
+(VecAdd (VecNeg ?a) (VecMul ?b ?a)) <=> (VecAdd (VecNeg ?a) (VecMul ?a ?b))
+(VecAdd (VecNeg ?a) (VecMul ?b ?a)) <=> (VecAdd (VecMul ?a ?b) (VecNeg ?a))
+(VecMul (VecAdd ?a ?b) ?b) <=> (VecAdd (VecMul ?a ?b) (VecMul ?b ?b))
+(+ (* ?a ?b) (* ?b ?b)) <=> (* (+ ?a ?b) ?b)
+(+ ?a (+ ?b (* ?a ?a))) <=> (+ (* ?a ?a) (+ ?b ?a))
+(VecAdd ?a (VecAdd ?b (VecMul ?a ?a))) <=> (VecAdd (VecMul ?a ?a) (VecAdd ?b ?a))
+(VecMul (Vec ?a ?b) (Vec ?b ?a)) <=> (VecMul (Vec ?a ?a) (Vec ?b ?b))
+(VecAdd (Vec ?a ?b) (Vec ?b ?a)) <=> (VecAdd (Vec ?a ?a) (Vec ?b ?b))
+(VecAdd (Vec ?a ?b) (Vec ?a ?a)) <=> (VecAdd (Vec ?a ?a) (Vec ?a ?b))
+(VecMul (Vec ?a ?b) (Vec ?a ?a)) <=> (VecMul (Vec ?a ?a) (Vec ?a ?b))
+(VecAdd (Vec ?a 0) (Vec 0 ?b)) <=> (Vec ?a ?b)
+(VecMul (Vec ?a 1) (Vec 1 ?b)) <=> (Vec ?a ?b)
+(Vec (Vec ?a ?b) 0) <=> (Vec (Vec ?a ?b) (* 0 ?a))
+(Vec 0 (Vec ?a ?b)) <=> (Vec (* 0 ?a) (Vec ?a ?b))
+(Vec (Vec ?a ?b) 0) <=> (Vec (Vec ?a ?b) (* 0 ?b))
+(Vec (+ ?a ?b) 0) <=> (Vec (+ ?a ?b) (* 0 ?a))
+(VecMul (Vec ?a 0) (Vec ?b ?b)) <=> (VecMul (Vec ?a 0) (Vec ?b ?a))
+(VecMul (Vec ?a ?a) (Vec ?b 0)) <=> (VecMul (Vec ?a 0) (Vec ?b 0))
+(VecMul (Vec ?a ?b) (Vec ?b 0)) <=> (VecMul (Vec ?a 0) (Vec ?b ?a))
+(VecMul (Vec ?a 0) (Vec ?b ?a)) <=> (VecMul (Vec ?a 0) (Vec ?b 0))
+(VecAdd (Vec ?a ?a) (Vec ?b 0)) <=> (VecAdd (Vec ?a 0) (Vec ?b ?a))
+(VecAdd (Vec ?a ?b) (Vec 0 ?a)) <=> (VecAdd (Vec 0 ?a) (Vec ?a ?b))
+(VecAdd (Vec ?a ?a) (Vec 0 ?b)) <=> (VecAdd (Vec 0 ?a) (Vec ?a ?b))
+(VecMul (Vec ?a ?b) (Vec 0 ?a)) <=> (VecMul (Vec 0 ?a) (Vec 0 ?b))
+(VecMul (Vec ?a ?a) (Vec 0 ?b)) <=> (VecMul (Vec 0 ?a) (Vec 0 ?b))
+(VecMul (Vec 0 ?a) (Vec ?a ?b)) <=> (VecMul (Vec 0 ?a) (Vec 0 ?b))
+(VecMul (Vec 0 ?a) (Vec ?b ?b)) <=> (VecMul (Vec 0 ?a) (Vec 0 ?b))
+(VecAdd (Vec ?a ?a) (Vec 1 ?b)) <=> (VecAdd (Vec 1 ?a) (Vec ?a ?b))
+(VecAdd (Vec ?a ?b) (Vec 1 ?a)) <=> (VecAdd (Vec 1 ?a) (Vec ?a ?b))
+(VecMul (Vec ?a 0) (Vec 0 ?b)) <=> (VecMul (Vec 0 ?a) (Vec ?b 0))
+(VecMul (Vec ?a ?b) (Vec 1 ?a)) <=> (VecMul (Vec 1 ?a) (Vec ?a ?b))
+(VecAdd (Vec ?a ?b) (Vec ?b 1)) <=> (VecAdd (Vec ?a 1) (Vec ?b ?b))
+(VecMul (Vec ?a ?b) (Vec ?b 1)) <=> (VecMul (Vec ?a 1) (Vec ?b ?b))
+(VecAdd (Vec ?a ?a) (Vec ?b 1)) <=> (VecAdd (Vec ?a 1) (Vec ?b ?a))
+(VecMul (Vec ?a ?a) (Vec ?b 1)) <=> (VecMul (Vec ?a 1) (Vec ?b ?a))
+(VecMul (Vec 1 ?a) (Vec ?b 1)) <=> (VecAdd (Vec 0 ?a) (Vec ?b 0))
+(VecMul (Vec 1 ?a) (Vec 0 ?b)) <=> (VecMul (Vec 0 ?a) (Vec 0 ?b))
+(VecMul (Vec ?a 1) (Vec ?b 0)) <=> (VecMul (Vec ?a 0) (Vec ?b 0))
+(VecMul (Vec ?a 0) (Vec ?b 1)) <=> (VecMul (Vec ?a 0) (Vec ?b 0))
+(VecMul (Vec 0 ?a) (Vec 1 ?b)) <=> (VecMul (Vec 0 ?a) (Vec 0 ?b))
+(VecAdd (Vec ?a 1) (Vec ?b 0)) <=> (VecAdd (Vec ?a 0) (Vec ?b 1))
+(VecAdd ?a (VecNeg ?a)) <=> (VecAdd (VecNeg ?a) ?a)
+(VecNeg (VecNeg ?a)) <=> (VecAdd ?a (VecAdd ?a (VecNeg ?a)))
+?a <=> (* 1 ?a)
+?a <=> (+ ?a 0)
+?a <=> (* ?a 1)
+?a <=> (+ 0 ?a)
+(* ?a 0) <=> (* 0 ?a)
+(+ ?a 1) <=> (+ 1 ?a)
+(Vec 0 (Vec 0 ?a)) <=> (Vec (* 0 ?a) (Vec 0 ?a))
+(Vec 0 (Vec 1 ?a)) <=> (Vec (* 0 ?a) (Vec 1 ?a))
+Learned 144 rules in 26.543639944
+#+end_example

@@ -547,6 +547,9 @@ impl SynthLanguage for VecLang {
         synth: &'a Synthesizer<Self>,
         mut iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
+        // vd for variable duplication
+        let vd = read_conf(synth)["variable_duplication"].as_bool().unwrap();
+
         // if iter % 2 == 0 {
         iter = iter - 1; // make iter start at 0
 
@@ -556,6 +559,13 @@ impl SynthLanguage for VecLang {
                 (0..2)
                     .map(|_| ids.clone())
                     .multi_cartesian_product()
+                    .filter(move |ids| {
+                        vd || ids
+                            .iter()
+                            .map(|x| &synth.egraph[*x].data.vars)
+                            .flatten()
+                            .all_unique()
+                    })
                     .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
                     .map(|ids| [ids[0], ids[1]])
                     .map(move |x| {
@@ -598,6 +608,13 @@ impl SynthLanguage for VecLang {
             let vec_binops = (0..2)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
+                .filter(move |ids| {
+                    vd || ids
+                        .iter()
+                        .map(|x| &synth.egraph[*x].data.vars)
+                        .flatten()
+                        .all_unique()
+                })
                 .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
                 .map(|ids| [ids[0], ids[1]])
                 .map(move |x| {
@@ -619,6 +636,13 @@ impl SynthLanguage for VecLang {
             let vec = (0..synth.params.vector_size)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
+                .filter(move |ids| {
+                    vd || ids
+                        .iter()
+                        .map(|x| &synth.egraph[*x].data.vars)
+                        .flatten()
+                        .all_unique()
+                })
                 .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
                 .map(|x| vec![VecLang::Vec(x.into_boxed_slice())])
                 .flatten();
@@ -770,6 +794,49 @@ impl SynthLanguage for VecLang {
         };
         // only compare values where both sides are defined
         ret
+    }
+}
+
+fn no_dup_vars_make_layer<'a>(
+    ids: Vec<Id>,
+    synth: &'a Synthesizer<VecLang>,
+    mut _iter: usize,
+) -> Box<dyn Iterator<Item = VecLang> + 'a> {
+    let vec_stuff = if read_conf(synth)["use_vector"].as_bool().unwrap() {
+        let vec_binops = (0..2)
+            .map(|_| ids.clone())
+            .multi_cartesian_product()
+            .filter(move |ids| {
+                ids.iter()
+                    .map(|x| &synth.egraph[*x].data.vars)
+                    .flatten()
+                    .all_unique()
+            })
+            .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
+            .map(|ids| [ids[0], ids[1]])
+            .map(move |x| {
+                read_conf(synth)["vector_binops"]
+                    .as_array()
+                    .expect("vector binops")
+                    .iter()
+                    .map(|op| match op.as_str().unwrap() {
+                        "+" => VecLang::VecAdd(x),
+                        "-" => VecLang::VecMinus(x),
+                        "*" => VecLang::VecMul(x),
+                        "/" => VecLang::VecDiv(x),
+                        _ => panic!("Unknown vec binop"),
+                    })
+                    .collect::<Vec<_>>()
+            })
+            .flatten();
+        Some(vec_binops)
+    } else {
+        None
+    };
+
+    match vec_stuff {
+        Some(v) => Box::new(v.into_iter()),
+        None => todo!(),
     }
 }
 

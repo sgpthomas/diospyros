@@ -1,19 +1,20 @@
 {
-  "constants": [
-    {
-      "type": "int",
-      "value": 0
+    "constants": [
+	{
+	"type": "int",
+	"value": 0
     },
-    {
-      "type": "int",
-      "value": 1
+	{
+	"type": "int",
+	"value": 1
     }
-  ],
-  "seed_rules": [],
-  "binops": [
-    "+",
-    "*"
-  ],
-  "use_vector": false,
-  "vector_binops": []
+    ],
+    "seed_rules": [],
+    "binops": [
+	"+",
+	"*"
+    ],
+    "use_vector": false,
+    "vector_binops": [],
+    "variable_duplication": false
 }

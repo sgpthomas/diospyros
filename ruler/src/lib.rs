@@ -859,6 +859,7 @@ macro_rules! map {
 pub struct Signature<L: SynthLanguage> {
     pub cvec: CVec<L>,
     pub exact: bool,
+    pub vars: Vec<egg::Symbol>,
 }
 
 impl<L: SynthLanguage> Signature<L> {
@@ -906,6 +907,8 @@ impl<L: SynthLanguage> egg::Analysis<L> for SynthAnalysis {
             to.exact |= from.exact;
         }
 
+        to.vars.extend(from.vars.into_iter());
+
         ord
     }
 
@@ -914,6 +917,7 @@ impl<L: SynthLanguage> egg::Analysis<L> for SynthAnalysis {
         Signature {
             cvec: enode.eval(egraph.analysis.cvec_len, get_cvec),
             exact: !enode.is_var() && enode.all(|i| egraph[i].data.exact),
+            vars: enode.to_var().into_iter().collect_vec(),
         }
     }
 

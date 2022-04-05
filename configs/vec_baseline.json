@@ -18,5 +18,6 @@
     "vector_binops": [
 	"+", "*"
     ],
-    "vector_mac": true
+    "vector_mac": true,
+    "variable_duplication": false
 }
