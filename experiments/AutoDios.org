@@ -1991,8 +1991,6 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 	   addr)))
 #+end_src
 
-
-
 ** Extract data
 
 #+begin_src shell :dir (magit-toplevel) :results output
@@ -2019,28 +2017,19 @@ read.csv("phase-split-results.csv") %>%
   ## filter(split.phase == "auto") %>%
   ## filter(sub.prog == "False") %>%
   filter(bench == "q-prod") %>%
-  filter(variable == "cost" | variable == "time" | variable == "xphase_2_n") %>%
-  select(id, cost.filter, phase.split, variable, value)
+  filter(variable == "cost" | variable == "xtime" | variable == "xphase_2_n") %>%
+  select(id, cost.filter, split.phase, variable, value)
 #+end_src
 
 #+RESULTS:
-| id | cost.filter | phase.split | variable |               value |
-|----+-------------+-------------+----------+---------------------|
-|  0 |           0 | auto        | time     | 0.00193977355957031 |
-|  0 |           0 | auto        | cost     |                  -1 |
-|  1 |           0 | syntax      | time     | 0.00194573402404785 |
-|  1 |           0 | syntax      | cost     |                  -1 |
-|  2 |           0 |             | time     |    190.931951761246 |
-|  2 |           0 |             | cost     |              55.872 |
-|  3 |           5 | auto        | time     | 0.00190043449401855 |
-|  3 |           5 | auto        | cost     |                  -1 |
-|  4 |           5 | syntax      | time     | 0.00191903114318848 |
-|  4 |           5 | syntax      | cost     |                  -1 |
-|  5 |           5 |             | time     |    4.11134123802185 |
-|  5 |           5 |             | cost     |              74.586 |
-|  6 |             | auto        | time     | 0.00193619728088379 |
-|  6 |             | auto        | cost     |                  -1 |
-|  7 |             | syntax      | time     | 0.00166773796081543 |
-|  7 |             | syntax      | cost     |                  -1 |
-|  8 |             |             | time     |    3908.14916300774 |
-|  8 |             |             | cost     |             597.064 |
+| id | cost.filter | split.phase | variable |             value |
+|----+-------------+-------------+----------+-------------------|
+|  0 |           0 | auto        | cost     | 69.87199999999999 |
+|  1 |           0 | syntax      | cost     | 69.87199999999999 |
+|  2 |           0 |             | cost     | 55.87199999999999 |
+|  3 |           5 | auto        | cost     | 74.58600000000001 |
+|  4 |           5 | syntax      | cost     | 74.58600000000001 |
+|  5 |           5 |             | cost     | 74.58600000000001 |
+|  6 |             | auto        | cost     |              -1.0 |
+|  7 |             | syntax      | cost     |           600.556 |
+|  8 |             |             | cost     | 597.0640000000001 |
