@@ -35,8 +35,7 @@ pub type HashMap<K, V> = rustc_hash::FxHashMap<K, V>;
 pub type HashSet<K> = rustc_hash::FxHashSet<K>;
 
 /// IndexMap data implementation used in rustc
-pub type IndexMap<K, V> =
-    indexmap::IndexMap<K, V, BuildHasherDefault<rustc_hash::FxHasher>>;
+pub type IndexMap<K, V> = indexmap::IndexMap<K, V, BuildHasherDefault<rustc_hash::FxHasher>>;
 
 pub use bv::*;
 pub use equality::*;
@@ -215,11 +214,7 @@ pub trait SynthLanguage: egg::Language + Send + Sync + 'static {
     }
 
     /// Domain specific rule validation.
-    fn is_valid(
-        synth: &mut Synthesizer<Self>,
-        lhs: &Pattern<Self>,
-        rhs: &Pattern<Self>,
-    ) -> bool;
+    fn is_valid(synth: &mut Synthesizer<Self>, lhs: &Pattern<Self>, rhs: &Pattern<Self>) -> bool;
 
     /// helper functions to convert CVC4 rewrites to Ruler's rule syntax.
     fn convert_parse(s: &str) -> RecExpr<Self> {
@@ -251,8 +246,7 @@ pub trait SynthLanguage: egg::Language + Send + Sync + 'static {
                 let report = syn.run();
                 let file = std::fs::File::create(&outfile)
                     .unwrap_or_else(|_| panic!("Failed to open '{}'", outfile));
-                serde_json::to_writer_pretty(file, &report)
-                    .expect("failed to write json");
+                serde_json::to_writer_pretty(file, &report).expect("failed to write json");
             }
             Command::Derive(params) => derive::derive::<Self>(params),
             Command::ConvertSexp(params) => convert_sexp::convert::<Self>(params),
@@ -300,8 +294,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
         if self.start_time.elapsed() > limit {
             Duration::ZERO
         } else {
-            Duration::from_secs(self.params.abs_timeout as u64)
-                - self.start_time.elapsed()
+            Duration::from_secs(self.params.abs_timeout as u64) - self.start_time.elapsed()
         }
     }
 
@@ -311,10 +304,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
     }
 
     /// Create a [runner](https://docs.rs/egg/0.6.0/egg/struct.Runner.html).
-    fn mk_runner(
-        &self,
-        mut egraph: EGraph<L, SynthAnalysis>,
-    ) -> Runner<L, SynthAnalysis, ()> {
+    fn mk_runner(&self, mut egraph: EGraph<L, SynthAnalysis>) -> Runner<L, SynthAnalysis, ()> {
         let node_limit = self.params.eqsat_node_limit;
 
         let mut runner = Runner::default()
@@ -598,14 +588,14 @@ impl<L: SynthLanguage> Synthesizer<L> {
                     let rule_minimize = rule_minimize_before.elapsed().as_secs_f64();
 
                     for bad in bads {
-                        // let s = format!("{}", bad.0);
-                        // if s.contains("!!!") || s.contains("\"") {
-                        //     log::info!("culprit: {}", bad.0);
-                        //     log::info!("culprit: {:?}", bad.0);
-                        //     log::info!("culprit: {:#?}", bad.1);
-                        //     log::info!("culprit: {:#?}", bad);
-                        //     panic!();
-                        // }
+                        let s = format!("{}", bad.0);
+                        if s.contains("!!!") || s.contains("\"") {
+                            log::info!("culprit: {}", bad.0);
+                            log::info!("culprit: {:?}", bad.0);
+                            log::info!("culprit: {:#?}", bad.1);
+                            log::info!("culprit: {:#?}", bad);
+                            panic!();
+                        }
                         log::info!("adding {} to poison set", bad.0);
                         poison_rules.insert(bad.1);
                     }
@@ -1067,10 +1057,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
 
     /// Apply rewrites rules as they are being inferred, to minimize the candidate space.
     #[inline(never)]
-    fn choose_eqs(
-        &mut self,
-        mut new_eqs: EqualityMap<L>,
-    ) -> (EqualityMap<L>, EqualityMap<L>) {
+    fn choose_eqs(&mut self, mut new_eqs: EqualityMap<L>) -> (EqualityMap<L>, EqualityMap<L>) {
         let mut bads = EqualityMap::default();
         let mut should_validate = true;
         for step in vec![100, 10, 1] {
@@ -1116,8 +1103,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
 
         let n_new_eqs = new_eqs.len();
         log::info!("Minimizing {} rules...", n_new_eqs);
-        let mut flat: VecDeque<Equality<L>> =
-            new_eqs.into_iter().map(|(_, eq)| eq).collect();
+        let mut flat: VecDeque<Equality<L>> = new_eqs.into_iter().map(|(_, eq)| eq).collect();
         let mut test = vec![];
 
         for mut n_chunks in (2..).map(|i| 1 << i) {
