@@ -154,7 +154,9 @@ impl<L: SynthLanguage> Equality<L> {
             let map = &mut HashMap::default();
             let lhs = L::generalize(&e1, map);
             let rhs = L::generalize(&e2, map);
-            let name = format!("{} => {}", lhs, rhs);
+            let lhs_name = format!("{}", lhs).replace("\"", "");
+            let rhs_name = format!("{}", rhs).replace("\"", "");
+            let name = format!("{} => {}", lhs_name, rhs_name);
             let defined_rhs = NotUndefined {
                 name: name.clone(),
                 rhs: rhs.clone(),
@@ -171,7 +173,9 @@ impl<L: SynthLanguage> Equality<L> {
             let map = &mut HashMap::default();
             let lhs = L::generalize(&e2, map);
             let rhs = L::generalize(&e1, map);
-            let name = format!("{} => {}", lhs, rhs);
+            let lhs_name = format!("{}", lhs).replace("\"", "");
+            let rhs_name = format!("{}", rhs).replace("\"", "");
+            let name = format!("{} => {}", lhs_name, rhs_name);
             let defined_rhs = NotUndefined {
                 name: name.clone(),
                 rhs: rhs.clone(),
@@ -200,7 +204,7 @@ impl<L: SynthLanguage> Equality<L> {
                 rewrites: vec![rw],
             }),
             ((_, lhs, rhs, Some(rw1)), (_, _, _, Some(rw2))) => Some(Self {
-                name: format!("{} <=> {}", lhs, rhs).into(),
+                name: format!("{} <=> {}", lhs, rhs).replace("\"", "").into(),
                 lhs,
                 rhs,
                 ids: None,
