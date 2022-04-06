@@ -10,11 +10,11 @@ use itertools::Itertools;
 use rand::SeedableRng;
 use rand_pcg::Pcg64;
 use serde::{Deserialize, Serialize};
+use std::hash::Hash;
 use std::{
     borrow::{Borrow, Cow},
     collections::VecDeque,
 };
-use std::{cmp::Ordering, hash::Hash};
 use std::{
     fmt::{Debug, Display},
     time::Duration,
@@ -67,7 +67,7 @@ impl Default for SynthAnalysis {
 /// Every domain defines it own `Constant` type.
 /// `eval` implements an interpreter for the domain. It returns a `Cvec` of length `cvec_len`
 /// where each cvec element is computed using `eval`.
-pub trait SynthLanguage: egg::Language + Send + Sync + 'static {
+pub trait SynthLanguage: egg::Language + Send + Sync + Display + FromOp + 'static {
     type Constant: Clone + Hash + Eq + Debug + Display;
 
     fn eval<'a, F>(&'a self, cvec_len: usize, f: F) -> CVec<Self>
@@ -149,7 +149,8 @@ pub trait SynthLanguage: egg::Language + Send + Sync + 'static {
         let mut op_set: HashSet<String> = Default::default();
         for node in lhs.ast.as_ref().iter().chain(rhs.ast.as_ref()) {
             if !node.is_leaf() {
-                op_set.insert(node.display_op().to_string());
+                // op_set.insert(node.display_op().to_string());
+                op_set.insert(format!("{}", node));
             }
         }
         let n_ops = op_set.len() as i32;
@@ -397,7 +398,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
         log::info!("# unique cvecs: {}", by_cvec.len());
 
         let mut new_eqs = EqualityMap::default();
-        let mut extract = Extractor::new(&self.egraph, AstSize);
+        let extract = Extractor::new(&self.egraph, AstSize);
 
         let compare = |cvec1: &CVec<L>, cvec2: &CVec<L>| -> bool {
             let mut _count = 0;
@@ -451,7 +452,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
         log::info!("# unique cvecs: {}", by_cvec.len());
 
         let mut new_eqs = EqualityMap::default();
-        let mut extract = Extractor::new(&self.egraph, AstSize);
+        let extract = Extractor::new(&self.egraph, AstSize);
         for ids in by_cvec.values() {
             if self.params.linear_cvec_matching || ids.len() > 0 {
                 let mut terms_ids: Vec<_> =
@@ -869,47 +870,54 @@ impl<L: SynthLanguage> Signature<L> {
     }
 }
 
-fn ord_merge(to: &mut Option<Ordering>, from: Ordering) {
-    if let Some(ord) = to.as_mut() {
-        match (*ord, from) {
-            (Ordering::Equal, _) => *ord = from,
-            (_, Ordering::Equal) => (),
-            (_, _) if *ord == from => (),
-            _ => *to = None,
-        }
-    }
-}
-
 impl<L: SynthLanguage> egg::Analysis<L> for SynthAnalysis {
     type Data = Signature<L>;
 
-    fn merge(&self, to: &mut Self::Data, from: Self::Data) -> Option<Ordering> {
-        let mut ord = Some(Ordering::Equal);
+    fn merge(&mut self, to: &mut Self::Data, from: Self::Data) -> DidMerge {
+        let mut changed_a = false;
+        let mut changed_b = false;
 
         if !to.cvec.is_empty() && !from.cvec.is_empty() {
             for i in 0..to.cvec.len() {
                 match (to.cvec[i].clone(), from.cvec[i].clone()) {
                     (None, Some(_)) => {
+                        changed_a = true;
                         to.cvec[i] = from.cvec[i].clone();
-                        ord_merge(&mut ord, Ordering::Less);
                     }
                     (Some(x), Some(y)) => {
                         assert_eq!(x, y, "cvecs do not match at index {}", i)
                     }
                     (Some(_), None) => {
-                        ord_merge(&mut ord, Ordering::Greater);
+                        changed_b = true;
                     }
                     _ => (),
                 }
             }
 
-            ord_merge(&mut ord, to.exact.cmp(&from.exact));
+            // ord_merge(&mut ord, to.exact.cmp(&from.exact));
             to.exact |= from.exact;
         }
 
-        to.vars.extend(from.vars.into_iter());
+        // merge vars by appending arr
+        match (to.vars.is_empty(), from.vars.is_empty()) {
+            // both are empty and so don't make any changes
+            (true, true) => (),
+            // a is empty, b isn't. set a = b. change a (not b because b is not equal to a)
+            (true, false) => {
+                to.vars = from.vars;
+                changed_a = true;
+            }
+            // a isn't empty, b is empty. a is already a, so don't do anything
+            (false, true) => (),
+            // neither are empty. extend to.vars with from.vars. both change
+            (false, false) => {
+                to.vars.extend(from.vars.into_iter());
+                changed_a = true;
+                changed_b = true;
+            }
+        }
 
-        ord
+        DidMerge(changed_a, changed_b)
     }
 
     fn make(egraph: &EGraph<L, Self>, enode: &L) -> Self::Data {
@@ -1028,7 +1036,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
             );
 
             let old_len = new_eqs.len();
-            let mut extract = Extractor::new(&runner.egraph, AstSize);
+            let extract = Extractor::new(&runner.egraph, AstSize);
             new_eqs.clear();
             for ids in runner.roots.chunks(2) {
                 if runner.egraph.find(ids[0]) != runner.egraph.find(ids[1]) {
@@ -1143,8 +1151,8 @@ impl<L: SynthLanguage> Synthesizer<L> {
                     .chain(flat.iter().flat_map(|eq| &eq.rewrites))
                     .collect();
 
-                rewrites.sort_by_key(|rw| rw.name());
-                rewrites.dedup_by_key(|rw| rw.name());
+                rewrites.sort_by_key(|rw| rw.name);
+                rewrites.dedup_by_key(|rw| rw.name);
 
                 let mut runner = self.mk_runner(self.initial_egraph.clone());
 
@@ -1155,7 +1163,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
 
                 runner = runner.run(rewrites);
 
-                let mut extract = Extractor::new(&runner.egraph, AstSize);
+                let extract = Extractor::new(&runner.egraph, AstSize);
                 flat.extend(runner.roots.chunks(2).zip(&test).filter_map(|(ids, eq)| {
                     if runner.egraph.find(ids[0]) == runner.egraph.find(ids[1]) {
                         None

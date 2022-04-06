@@ -1,4 +1,4 @@
-use egg::{define_language, rewrite, Id};
+use egg::{define_language, EGraph, Id, Language};
 use itertools::Itertools;
 use num::integer::Roots;
 use rand::Rng;
@@ -10,7 +10,7 @@ use std::fmt::{Display, Formatter};
 use std::fs::File;
 use std::hash::BuildHasherDefault;
 use std::str::FromStr;
-use z3::ast::{Ast, Bool, Datatype, Int};
+use z3::ast::{Ast, Bool, Datatype};
 // use z3::{DatatypeAccessor, DatatypeBuilder, Sort};
 
 #[derive(Debug, PartialOrd, Ord, PartialEq, Eq, Hash, Clone)]
@@ -559,13 +559,6 @@ impl SynthLanguage for VecLang {
                 (0..2)
                     .map(|_| ids.clone())
                     .multi_cartesian_product()
-                    .filter(move |ids| {
-                        vd || ids
-                            .iter()
-                            .map(|x| &synth.egraph[*x].data.vars)
-                            .flatten()
-                            .all_unique()
-                    })
                     .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
                     .map(|ids| [ids[0], ids[1]])
                     .map(move |x| {
@@ -585,7 +578,8 @@ impl SynthLanguage for VecLang {
                             })
                             .collect::<Vec<_>>()
                     })
-                    .flatten(),
+                    .flatten()
+                    .filter(move |node| vd || unique_vars(node, &synth.egraph)),
             )
         } else {
             None
@@ -608,13 +602,13 @@ impl SynthLanguage for VecLang {
             let vec_binops = (0..2)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
-                .filter(move |ids| {
-                    vd || ids
-                        .iter()
-                        .map(|x| &synth.egraph[*x].data.vars)
-                        .flatten()
-                        .all_unique()
-                })
+                // .filter(move |ids| {
+                //     vd || ids
+                //         .iter()
+                //         .map(|x| &synth.egraph[*x].data.vars)
+                //         .flatten()
+                //         .all_unique()
+                // })
                 .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
                 .map(|ids| [ids[0], ids[1]])
                 .map(move |x| {
@@ -631,21 +625,23 @@ impl SynthLanguage for VecLang {
                         })
                         .collect::<Vec<_>>()
                 })
-                .flatten();
+                .flatten()
+                .filter(move |node| vd || unique_vars(node, &synth.egraph));
 
             let vec = (0..synth.params.vector_size)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
-                .filter(move |ids| {
-                    vd || ids
-                        .iter()
-                        .map(|x| &synth.egraph[*x].data.vars)
-                        .flatten()
-                        .all_unique()
-                })
+                // .filter(move |ids| {
+                //     vd || ids
+                //         .iter()
+                //         .map(|x| &synth.egraph[*x].data.vars)
+                //         .flatten()
+                //         .all_unique()
+                // })
                 .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
                 .map(|x| vec![VecLang::Vec(x.into_boxed_slice())])
-                .flatten();
+                .flatten()
+                .filter(move |node| vd || unique_vars(node, &synth.egraph));
 
             // let vec_mac = (0..3)
             //     .map(|_| ids.clone())
@@ -797,47 +793,17 @@ impl SynthLanguage for VecLang {
     }
 }
 
-fn no_dup_vars_make_layer<'a>(
-    ids: Vec<Id>,
-    synth: &'a Synthesizer<VecLang>,
-    mut _iter: usize,
-) -> Box<dyn Iterator<Item = VecLang> + 'a> {
-    let vec_stuff = if read_conf(synth)["use_vector"].as_bool().unwrap() {
-        let vec_binops = (0..2)
-            .map(|_| ids.clone())
-            .multi_cartesian_product()
-            .filter(move |ids| {
-                ids.iter()
-                    .map(|x| &synth.egraph[*x].data.vars)
-                    .flatten()
-                    .all_unique()
-            })
-            .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
-            .map(|ids| [ids[0], ids[1]])
-            .map(move |x| {
-                read_conf(synth)["vector_binops"]
-                    .as_array()
-                    .expect("vector binops")
-                    .iter()
-                    .map(|op| match op.as_str().unwrap() {
-                        "+" => VecLang::VecAdd(x),
-                        "-" => VecLang::VecMinus(x),
-                        "*" => VecLang::VecMul(x),
-                        "/" => VecLang::VecDiv(x),
-                        _ => panic!("Unknown vec binop"),
-                    })
-                    .collect::<Vec<_>>()
-            })
-            .flatten();
-        Some(vec_binops)
-    } else {
-        None
-    };
-
-    match vec_stuff {
-        Some(v) => Box::new(v.into_iter()),
-        None => todo!(),
-    }
+fn unique_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> bool {
+    let vars: Vec<egg::Symbol> = node.fold(vec![], |mut acc, id| {
+        acc.extend(egraph[id].data.vars.iter());
+        acc
+    });
+    eprintln!(
+        "node: {:?}, vars: {:?}",
+        node.build_recexpr(|id| egraph[id].nodes[0].clone()),
+        vars
+    );
+    vars.into_iter().all_unique()
 }
 
 fn read_conf(synth: &Synthesizer<VecLang>) -> serde_json::Value {

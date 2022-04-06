@@ -2049,24 +2049,19 @@ Config:
 #+begin_src json :results file silent :file configs/test.json
 {
     "constants": [
-	{
-	"type": "int",
-	"value": 0
+        {
+        "type": "int",
+        "value": 0
     },
-	{
-	"type": "int",
-	"value": 1
+        {
+        "type": "int",
+        "value": 1
     }
     ],
     "seed_rules": [],
-    "binops": [
-	"+",
-	"*"
-    ],
+    "binops": ["+"],
     "use_vector": true,
-    "vector_binops": [
-	"+", "*"
-    ],
+    "vector_binops": ["+"],
     "vector_mac": true,
     "variable_duplication": false
 }
