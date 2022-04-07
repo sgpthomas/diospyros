@@ -1,1 +1,1 @@
-((nil . ((compile-command . "RUST_LOG=info cargo run --release --bin dios -- synth --dios-config ../configs/test.json --variables 4 --iters 2 --vector-size 2 --eqsat-iter-limit 3 --eqsat-time-limit 30 --num-fuzz 6 --abs-timeout 60 --outfile ../vec/test.json"))))
+((nil . ((compile-command . "RUST_LOG=info cargo run --release --bin dios -- synth --dios-config ../configs/test.json --variables 6 --iters 2 --vector-size 3 --eqsat-iter-limit 3 --eqsat-time-limit 30 --num-fuzz 6 --abs-timeout 60 --outfile ../vec/test.json"))))

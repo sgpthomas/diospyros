@@ -2048,16 +2048,7 @@ read.csv("phase-split-results.csv") %>%
 Config:
 #+begin_src json :results file silent :file configs/test.json
 {
-    "constants": [
-        {
-        "type": "int",
-        "value": 0
-    },
-        {
-        "type": "int",
-        "value": 1
-    }
-    ],
+    "constants": [],
     "seed_rules": [],
     "binops": ["+"],
     "use_vector": true,

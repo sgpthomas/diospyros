@@ -44,7 +44,6 @@ impl Display for Value {
             Value::Int(i) => write!(f, "{}", i),
             Value::Bool(b) => write!(f, "{}", b),
             Value::List(l) => write!(f, "{:?}", l),
-            // Value::Vec(v) => write!(f, "(Vec {})", Wrapper(v)),
             Value::Vec(v) => {
                 write!(
                     f,
@@ -533,6 +532,8 @@ impl SynthLanguage for VecLang {
             egraph[id].data.cvec = cvec;
         }
 
+        eprintln!("EGraph {egraph:#?}");
+
         // set egraph to the one we just constructed
         synth.egraph = egraph;
     }
@@ -793,17 +794,26 @@ impl SynthLanguage for VecLang {
     }
 }
 
-fn unique_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> bool {
-    let vars: Vec<egg::Symbol> = node.fold(vec![], |mut acc, id| {
-        acc.extend(egraph[id].data.vars.iter());
+fn get_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> Vec<egg::Symbol> {
+    node.fold(vec![], |mut acc, id| {
+        let node = &egraph[id].nodes[0];
+        if node.is_leaf() {
+            acc.extend(egraph[id].data.vars.iter());
+        } else {
+            acc.extend(get_vars(node, egraph));
+        }
         acc
-    });
+    })
+}
+
+fn unique_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> bool {
+    let vars: Vec<egg::Symbol> = get_vars(node, egraph);
     eprintln!(
-        "node: {:?}, vars: {:?}",
+        "node: {}, vars: {:?}",
         node.build_recexpr(|id| egraph[id].nodes[0].clone()),
         vars
     );
-    vars.into_iter().all_unique()
+    vars.iter().all_unique()
 }
 
 fn read_conf(synth: &Synthesizer<VecLang>) -> serde_json::Value {
