@@ -1,5 +1,4 @@
 pub mod binopsearcher;
-pub mod config;
 pub mod cost;
 mod eqsat;
 mod external;

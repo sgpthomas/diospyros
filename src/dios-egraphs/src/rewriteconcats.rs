@@ -1,12 +1,9 @@
 use itertools::Itertools;
 use std::io::{self};
 
-use crate::config::*;
-
 // Rewrite a list of expressions to a nested concatenation of fixed-width
 // vectors, based on the configuration's vector width
-pub fn list_to_concats(input: &String) -> io::Result<String> {
-    let width = vector_width();
+pub fn list_to_concats(vec_width: usize, input: &String) -> io::Result<String> {
     let v = lexpr::from_str(&input)?;
     if let lexpr::Value::Cons(c) = v {
         let (mut list, _) = c.into_vec();
@@ -14,11 +11,11 @@ pub fn list_to_concats(input: &String) -> io::Result<String> {
         list.remove(0);
         let mut concats = list
             .into_iter()
-            .chunks(width)
+            .chunks(vec_width)
             .into_iter()
             .map(|c| {
                 let mut chunk = c.into_iter().collect_vec();
-                let buffer = width - chunk.len();
+                let buffer = vec_width - chunk.len();
                 for _ in 0..buffer {
                     chunk.push(lexpr::Value::Number(lexpr::Number::from(0)))
                 }

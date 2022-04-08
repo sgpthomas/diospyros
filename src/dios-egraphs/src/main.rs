@@ -1,5 +1,4 @@
-use dioslib::{config, opts::Opts, rewriteconcats, rules, stringconversion, veclang};
-// use dioslib::{self::*, rules::handwritten_rules};
+use dioslib::{opts::Opts, rewriteconcats, rules, stringconversion, veclang};
 use std::fs;
 
 fn main() {
@@ -21,7 +20,7 @@ fn main() {
         .expect("Failed to convert the input file to egg AST.");
 
     // Rewrite a list of expressions to a concatenation of vectors
-    let concats = rewriteconcats::list_to_concats(&converted);
+    let concats = rewriteconcats::list_to_concats(cli_opts.vector_width, &converted);
     let prog: egg::RecExpr<veclang::VecLang> = concats.unwrap().parse().unwrap();
 
     // Rules to disable flags
@@ -35,8 +34,7 @@ fn main() {
     // Run rewriter
     eprintln!(
         "Running egg with timeout {:?}s, width: {:?}",
-        cli_opts.timeout,
-        config::vector_width()
+        cli_opts.timeout, cli_opts.vector_width
     );
     eprintln!("Input prog:\n{}", &prog.pretty(80));
     let (cost, best) = rules::run(&prog, &cli_opts);

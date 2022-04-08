@@ -71,6 +71,10 @@ pub struct Opts {
     /// instrument the eq sat process
     #[argh(option, from_str_fn(read_path))]
     pub instrument: Option<PathBuf>,
+
+    /// vector width
+    #[argh(option, default = "2")]
+    pub vector_width: usize,
 }
 
 fn read_path(path: &str) -> Result<PathBuf, String> {

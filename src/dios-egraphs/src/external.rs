@@ -1,8 +1,6 @@
 use std::path::PathBuf;
 
-use egg::{
-    rewrite as rw, CostFunction, Extractor, Id, Language, Pattern, RecExpr, Searcher, Var,
-};
+use egg::{rewrite as rw, CostFunction, Extractor, Id, Pattern, RecExpr, Searcher, Var};
 use itertools::Itertools;
 
 use crate::{
@@ -15,7 +13,7 @@ use crate::{
 };
 
 /// Return rules read in from a json file.
-pub fn external_rules(filename: &PathBuf) -> Vec<DiosRwrite> {
+pub fn external_rules(vec_width: usize, filename: &PathBuf) -> Vec<DiosRwrite> {
     let contents = std::fs::read_to_string(filename).unwrap();
     let data = json::parse(&contents).unwrap();
 
@@ -39,7 +37,7 @@ pub fn external_rules(filename: &PathBuf) -> Vec<DiosRwrite> {
         rw!("vec-neg"; "(Vec (neg ?a) (neg ?b))" => "(VecNeg (Vec ?a ?b))"),
         rw!("vec-neg0-l"; "(Vec 0 (neg ?b))" => "(VecNeg (Vec 0 ?b))"),
         rw!("vec-neg0-r"; "(Vec (neg ?a) 0)" => "(VecNeg (Vec ?a 0))"),
-        build_litvec_rule(),
+        build_litvec_rule(vec_width),
     ]);
 
     rules

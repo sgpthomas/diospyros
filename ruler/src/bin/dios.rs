@@ -11,7 +11,6 @@ use std::fs::File;
 use std::hash::BuildHasherDefault;
 use std::str::FromStr;
 use z3::ast::{Ast, Bool, Datatype};
-// use z3::{DatatypeAccessor, DatatypeBuilder, Sort};
 
 #[derive(Debug, PartialOrd, Ord, PartialEq, Eq, Hash, Clone)]
 pub enum Value {
@@ -487,12 +486,17 @@ impl SynthLanguage for VecLang {
             })
             .collect();
 
-        let consts_cross = self_product(
-            &consts.iter().map(|x| Some(x.clone())).collect::<Vec<_>>(),
-            synth.params.variables,
-        );
-
-        let size = consts_cross[0].len();
+        // when we don't have any constants, just use the number of variables
+        // as the cvec size.
+        let cvec_size = if consts.is_empty() {
+            synth.params.variables
+        } else {
+            self_product(
+                &consts.iter().map(|x| Some(x.clone())).collect::<Vec<_>>(),
+                synth.params.variables,
+            )
+            .len()
+        };
 
         // read and add seed rules from config
         for eq in config["seed_rules"].as_array().unwrap() {
@@ -500,7 +504,9 @@ impl SynthLanguage for VecLang {
             add_eq(synth, eq);
         }
 
-        let mut egraph = egg::EGraph::new(SynthAnalysis { cvec_len: size });
+        let mut egraph = egg::EGraph::new(SynthAnalysis {
+            cvec_len: cvec_size,
+        });
 
         // add constants
         for v in consts.iter() {
@@ -515,7 +521,8 @@ impl SynthLanguage for VecLang {
             // make the cvec use real data
             let mut cvec = vec![];
 
-            let (n_ints, n_vecs) = split_into_halves(size);
+            let (n_ints, n_vecs) = split_into_halves(cvec_size);
+            eprintln!("size({cvec_size}): #ints: {n_ints}, #vecs: {n_vecs}");
 
             cvec.extend(
                 Value::sample_int(&mut synth.rng, -100, 100, n_ints)
@@ -532,7 +539,7 @@ impl SynthLanguage for VecLang {
             egraph[id].data.cvec = cvec;
         }
 
-        eprintln!("EGraph {egraph:#?}");
+        eprintln!("egraph: {egraph:#?}");
 
         // set egraph to the one we just constructed
         synth.egraph = egraph;
@@ -732,6 +739,7 @@ impl SynthLanguage for VecLang {
             let mut env = HashMap::default();
 
             if lhs.vars() != rhs.vars() {
+                eprintln!("lhs vars != rhs vars: {:?} != {:?}", lhs.vars(), rhs.vars());
                 return false;
             }
 
@@ -742,6 +750,8 @@ impl SynthLanguage for VecLang {
             for var in rhs.vars() {
                 env.insert(var, vec![]);
             }
+
+            eprintln!("env: {env:?}");
 
             let (_n_ints, n_vecs) = split_into_halves(10);
             // let (n_neg_ints, n_pos_ints) = split_into_halves(n_ints);
@@ -763,6 +773,8 @@ impl SynthLanguage for VecLang {
                         .map(Some),
                 );
                 length = cvec.len();
+
+                eprintln!("{cvec:?}");
             }
 
             // debug(
@@ -808,11 +820,11 @@ fn get_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> Vec<egg:
 
 fn unique_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> bool {
     let vars: Vec<egg::Symbol> = get_vars(node, egraph);
-    eprintln!(
-        "node: {}, vars: {:?}",
-        node.build_recexpr(|id| egraph[id].nodes[0].clone()),
-        vars
-    );
+    // eprintln!(
+    //     "node: {}, vars: {:?}",
+    //     node.build_recexpr(|id| egraph[id].nodes[0].clone()),
+    //     vars
+    // );
     vars.iter().all_unique()
 }
 

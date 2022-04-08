@@ -1934,6 +1934,56 @@ echo "200000\t" $(f 200000) "\t" 48 "\t" 6
 #+RESULTS:
 : #<window 183 on *Async Shell Command*>
 
+** Looking at the rules generated from a 300,000 sec ruler run with Vec size 3
+
+Here's the config that I used.
+
+#+begin_src json
+{
+    "constants": [
+        {
+        "type": "int",
+        "value": 0
+    },
+        {
+        "type": "int",
+        "value": 1
+    }
+    ],
+    "seed_rules": [],
+    "binops": [
+        "+"
+    ],
+    "use_vector": true,
+    "vector_binops": [
+        "+"
+    ],
+    "vector_mac": false
+}
+#+end_src
+
+And the command that I ran was:
+
+#+begin_src shell
+RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml --release --bin dios -- synth --dios-config configs/vec4_baseline.json --variables 6 --iters 2 --vector-size 3 --eqsat-iter-limit 3 --eqsat-time-limit 60 --num-fuzz 6 --abs-timeout 300000 --outfile vec/test.json
+#+end_src
+
+Let's see how our phase splitter splits the rules. How many compile rules did we manage to generate?
+
+#+begin_src async-shell :dir (magit-toplevel) :results none
+RUST_LOG=info cargo run --manifest-path src/dios-egraphs/Cargo.toml --release -- \
+      q-prod-out/spec.rkt \
+      --rules experiments/vec3_long.json \
+      --timeout 10 --no-dup-vars \
+      --split-phase syntax \
+      --dump-rules \
+      --dry-run >/dev/null
+#+end_src
+
+#+RESULTS:
+: #<window 39 on *Async Shell Command*>
+
+
 * Syntax phase splitting vs. Cost function phase splitting
 :PROPERTIES:
 :header-args: :dir (magit-toplevel)

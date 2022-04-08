@@ -2,7 +2,6 @@ use egg::{rewrite as rw, Id, Pattern, RecExpr, Subst, Var};
 
 use crate::{
     binopsearcher::build_binop_or_zero_rule,
-    config::vector_width,
     macsearcher::build_mac_rule,
     rules::Phase,
     searchutils::{ids_with_prefix, vec_fold_op, vec_map_op, vec_with_var},
@@ -25,17 +24,21 @@ fn is_all_same_memory_or_zero(
     }
 }
 
-fn build_binop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
-    let searcher: Pattern<VecLang> =
-        vec_fold_op(&op_str.to_string(), &"a".to_string(), &"b".to_string())
-            .parse()
-            .unwrap();
+fn build_binop_rule(vec_width: usize, op_str: &str, vec_str: &str) -> DiosRwrite {
+    let searcher: Pattern<VecLang> = vec_fold_op(
+        vec_width,
+        &op_str.to_string(),
+        &"a".to_string(),
+        &"b".to_string(),
+    )
+    .parse()
+    .unwrap();
 
     let applier: Pattern<VecLang> = format!(
         "({} {} {})",
         vec_str,
-        vec_with_var(&"a".to_string()),
-        vec_with_var(&"b".to_string())
+        vec_with_var(vec_width, &"a".to_string()),
+        vec_with_var(vec_width, &"b".to_string())
     )
     .parse()
     .unwrap();
@@ -43,22 +46,26 @@ fn build_binop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
     rw!(format!("{}_binop_vec", op_str); { searcher } => { applier })
 }
 
-fn build_unop_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
-    let searcher: Pattern<VecLang> = vec_map_op(&op_str.to_string(), &"a".to_string())
-        .parse()
-        .unwrap();
-    let applier: Pattern<VecLang> =
-        format!("({} {})", vec_str, vec_with_var(&"a".to_string()))
+fn build_unop_rule(vec_width: usize, op_str: &str, vec_str: &str) -> DiosRwrite {
+    let searcher: Pattern<VecLang> =
+        vec_map_op(vec_width, &op_str.to_string(), &"a".to_string())
             .parse()
             .unwrap();
+    let applier: Pattern<VecLang> = format!(
+        "({} {})",
+        vec_str,
+        vec_with_var(vec_width, &"a".to_string())
+    )
+    .parse()
+    .unwrap();
 
     rw!(format!("{}_unop", op_str); { searcher } => { applier })
 }
 
-pub fn build_litvec_rule() -> DiosRwrite {
-    let mem_vars = ids_with_prefix(&"a".to_string(), vector_width());
-    let mut gets: Vec<String> = Vec::with_capacity(vector_width());
-    for i in 0..vector_width() {
+pub fn build_litvec_rule(vec_width: usize) -> DiosRwrite {
+    let mem_vars = ids_with_prefix(&"a".to_string(), vec_width);
+    let mut gets: Vec<String> = Vec::with_capacity(vec_width);
+    for i in 0..vec_width {
         gets.push(format!("(Get {} ?{}{})", mem_vars[i], "i", i))
     }
     let all_gets = gets.join(" ");
@@ -104,6 +111,7 @@ fn filter_applicable_rules(rules: &mut Vec<DiosRwrite>, prog: &RecExpr<VecLang>)
 /// Return a Vec of hand constructed rules.
 pub fn handwritten_rules(
     prog: &RecExpr<VecLang>,
+    vec_width: usize,
     no_ac: bool,
     no_vec: bool,
 ) -> Vec<DiosRwrite> {
@@ -120,7 +128,7 @@ pub fn handwritten_rules(
         rw!("expand-zero-get"; "0" => "(Get 0 0)"),
         // Literal vectors, that use the same memory or no memory in every lane,
         // are cheaper
-        build_litvec_rule(),
+        build_litvec_rule(vec_width),
     ]);
 
     // Bidirectional rules
@@ -145,14 +153,14 @@ pub fn handwritten_rules(
                 "(VecAdd ?v0 (VecMul ?v1 ?v2))"
                 => "(VecMAC ?v0 ?v1 ?v2)"),
             // Custom searchers
-            build_unop_rule("neg", "VecNeg"),
-            build_unop_rule("sqrt", "VecSqrt"),
-            build_unop_rule("sgn", "VecSgn"),
-            build_binop_rule("/", "VecDiv"),
-            build_binop_or_zero_rule("+", "VecAdd"),
-            build_binop_or_zero_rule("*", "VecMul"),
-            build_binop_or_zero_rule("-", "VecMinus"),
-            build_mac_rule(),
+            build_unop_rule(vec_width, "neg", "VecNeg"),
+            build_unop_rule(vec_width, "sqrt", "VecSqrt"),
+            build_unop_rule(vec_width, "sgn", "VecSgn"),
+            build_binop_rule(vec_width, "/", "VecDiv"),
+            build_binop_or_zero_rule(vec_width, "+", "VecAdd"),
+            build_binop_or_zero_rule(vec_width, "*", "VecMul"),
+            build_binop_or_zero_rule(vec_width, "-", "VecMinus"),
+            build_mac_rule(vec_width),
         ]);
     } else {
         eprintln!("Skipping vector rules")

@@ -559,7 +559,10 @@ impl<L: SynthLanguage> Synthesizer<L> {
                     let run_rewrites = run_rewrites_before.elapsed().as_secs_f64();
 
                     let rule_discovery_before = Instant::now();
-                    log::info!("cvec matching...");
+                    log::info!(
+                        "cvec matching... (no_conditionals: {})",
+                        self.params.no_conditionals
+                    );
                     let (new_eqs, _) = if self.params.no_conditionals {
                         self.cvec_match()
                     } else {
@@ -583,7 +586,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
                     let (eqs, bads) = if self.params.minimize {
                         self.minimize(new_eqs)
                     } else {
-                        log::info!("choose_eqs");
+                        log::info!("choose_eqs: {}", new_eqs.len());
                         self.choose_eqs(new_eqs)
                     };
 
@@ -1074,15 +1077,18 @@ impl<L: SynthLanguage> Synthesizer<L> {
         let mut bads = EqualityMap::default();
         let mut should_validate = true;
         for step in vec![100, 10, 1] {
+            eprintln!("step: {step:?}");
             if self.check_time() {
                 break;
             }
 
             if self.params.rules_to_take < step {
+                eprintln!("self.params.rules_to_take < step => continue");
                 continue;
             }
             let n_rules = usize::min(self.params.rules_to_take, new_eqs.len());
             if step < 10 && n_rules > 200 {
+                eprintln!("self.params.rules_to_take < step => break");
                 break;
             }
             let (n, b) = self.shrink(new_eqs, step, should_validate);

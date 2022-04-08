@@ -18,14 +18,18 @@ pub struct BinOpSearcher {
     pub op_str: String,
 }
 
-pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
+pub fn build_binop_or_zero_rule(
+    vec_width: usize,
+    op_str: &str,
+    vec_str: &str,
+) -> DiosRwrite {
     let left_var = "a".to_string();
     let right_var = "b".to_string();
-    let full_pattern = vec_fold_op(&op_str.to_string(), &left_var, &right_var)
+    let full_pattern = vec_fold_op(vec_width, &op_str.to_string(), &left_var, &right_var)
         .parse::<Pattern<VecLang>>()
         .unwrap();
 
-    let vec_pattern = vec_with_var(&"x".to_string())
+    let vec_pattern = vec_with_var(vec_width, &"x".to_string())
         .parse::<Pattern<VecLang>>()
         .unwrap();
 
@@ -38,8 +42,8 @@ pub fn build_binop_or_zero_rule(op_str: &str, vec_str: &str) -> DiosRwrite {
     let applier: Pattern<VecLang> = format!(
         "({} {} {})",
         vec_str,
-        vec_with_var(&left_var),
-        vec_with_var(&right_var)
+        vec_with_var(vec_width, &left_var),
+        vec_with_var(vec_width, &right_var)
     )
     .parse()
     .unwrap();
@@ -92,13 +96,15 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for BinOpSearcher {
 
                         // Check if that variable matches the binop
                         let child_eclass = substs.get(*vec_var).unwrap();
-                        if let Some(op_match) = self.op_pattern.search_eclass(egraph, *child_eclass)
+                        if let Some(op_match) =
+                            self.op_pattern.search_eclass(egraph, *child_eclass)
                         {
                             for s in op_match.substs.iter() {
                                 let mut subs: Vec<(Var, Id)> = Vec::new();
                                 for op_var in self.op_pattern.vars().iter() {
                                     let new_v =
-                                        Var::from_str(&format!("{}{}", *op_var, i)).unwrap();
+                                        Var::from_str(&format!("{}{}", *op_var, i))
+                                            .unwrap();
                                     subs.push((new_v, *s.get(*op_var).unwrap()));
                                 }
                                 new_var_substs.push(subs);
@@ -120,11 +126,13 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for BinOpSearcher {
                             // ?a and ?b  map to zero
                             let subs: Vec<(Var, Id)> = vec![
                                 (
-                                    Var::from_str(&format!("?{}{}", self.left_var, i)).unwrap(),
+                                    Var::from_str(&format!("?{}{}", self.left_var, i))
+                                        .unwrap(),
                                     zero_id,
                                 ),
                                 (
-                                    Var::from_str(&format!("?{}{}", self.right_var, i)).unwrap(),
+                                    Var::from_str(&format!("?{}{}", self.right_var, i))
+                                        .unwrap(),
                                     zero_id,
                                 ),
                             ];

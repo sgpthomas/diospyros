@@ -3,7 +3,6 @@ use egg::{rewrite as rw, *};
 use std::{borrow::Cow, str::FromStr};
 
 use crate::{
-    config::*,
     searchutils::*,
     veclang::{DiosRwrite, VecLang},
 };
@@ -21,13 +20,13 @@ pub struct MacSearcher {
     pub zero_pattern: Pattern<VecLang>,
 }
 
-pub fn build_mac_rule() -> DiosRwrite {
+pub fn build_mac_rule(vec_width: usize) -> DiosRwrite {
     let acc_var = "a".to_string();
     let left_var = "b".to_string();
     let right_var = "c".to_string();
 
-    let mut lanes: Vec<String> = Vec::with_capacity(vector_width());
-    for i in 0..vector_width() {
+    let mut lanes: Vec<String> = Vec::with_capacity(vec_width);
+    for i in 0..vec_width {
         lanes.push(format!(
             "(+ ?{}{} (* ?{}{} ?{}{}))",
             acc_var, i, left_var, i, right_var, i
@@ -37,7 +36,7 @@ pub fn build_mac_rule() -> DiosRwrite {
         .parse::<Pattern<VecLang>>()
         .unwrap();
 
-    let vec_pattern = vec_with_var(&"x".to_string())
+    let vec_pattern = vec_with_var(vec_width, &"x".to_string())
         .parse::<Pattern<VecLang>>()
         .unwrap();
 
@@ -57,9 +56,9 @@ pub fn build_mac_rule() -> DiosRwrite {
 
     let applier: Pattern<VecLang> = format!(
         "(VecMAC {} {} {})",
-        vec_with_var(&acc_var),
-        vec_with_var(&left_var),
-        vec_with_var(&right_var)
+        vec_with_var(vec_width, &acc_var),
+        vec_with_var(vec_width, &left_var),
+        vec_with_var(vec_width, &right_var)
     )
     .parse()
     .unwrap();
@@ -123,7 +122,8 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                                 let mut subs: Vec<(Var, Id)> = Vec::new();
                                 for add_mul_var in self.add_mul_pattern1.vars().iter() {
                                     let new_v =
-                                        Var::from_str(&format!("{}{}", *add_mul_var, i)).unwrap();
+                                        Var::from_str(&format!("{}{}", *add_mul_var, i))
+                                            .unwrap();
                                     subs.push((new_v, *s.get(*add_mul_var).unwrap()));
                                 }
                                 new_var_substs.push(subs);
@@ -136,7 +136,8 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                                 let mut subs: Vec<(Var, Id)> = Vec::new();
                                 for add_mul_var in self.add_mul_pattern2.vars().iter() {
                                     let new_v =
-                                        Var::from_str(&format!("{}{}", *add_mul_var, i)).unwrap();
+                                        Var::from_str(&format!("{}{}", *add_mul_var, i))
+                                            .unwrap();
                                     subs.push((new_v, *s.get(*add_mul_var).unwrap()));
                                 }
                                 new_var_substs.push(subs);
@@ -151,12 +152,14 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                                 // for ?b and ?c
                                 for mul_var in self.mul_pattern.vars().iter() {
                                     let new_v =
-                                        Var::from_str(&format!("{}{}", *mul_var, i)).unwrap();
+                                        Var::from_str(&format!("{}{}", *mul_var, i))
+                                            .unwrap();
                                     subs.push((new_v, *s.get(*mul_var).unwrap()));
                                 }
                                 // ?a needs to map to a zero!
                                 let var_a =
-                                    Var::from_str(&format!("?{}{}", self.acc_var, i)).unwrap();
+                                    Var::from_str(&format!("?{}{}", self.acc_var, i))
+                                        .unwrap();
                                 subs.push((var_a, zero_id));
                                 new_var_substs.push(subs);
                                 lane_asts.push(format!("(* ?b{0} ?c{0})", i));
@@ -168,15 +171,18 @@ impl<A: Analysis<VecLang>> Searcher<VecLang, A> for MacSearcher {
                             // ?a, ?b, and ?c all map to zero
                             let subs: Vec<(Var, Id)> = vec![
                                 (
-                                    Var::from_str(&format!("?{}{}", self.acc_var, i)).unwrap(),
+                                    Var::from_str(&format!("?{}{}", self.acc_var, i))
+                                        .unwrap(),
                                     zero_id,
                                 ),
                                 (
-                                    Var::from_str(&format!("?{}{}", self.left_var, i)).unwrap(),
+                                    Var::from_str(&format!("?{}{}", self.left_var, i))
+                                        .unwrap(),
                                     zero_id,
                                 ),
                                 (
-                                    Var::from_str(&format!("?{}{}", self.right_var, i)).unwrap(),
+                                    Var::from_str(&format!("?{}{}", self.right_var, i))
+                                        .unwrap(),
                                     zero_id,
                                 ),
                             ];

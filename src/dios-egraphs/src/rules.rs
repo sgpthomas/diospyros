@@ -63,12 +63,17 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
 
     // add handwritten rules
     if opts.handwritten {
-        initial_rules.extend(handwritten_rules(prog, opts.no_ac, opts.no_vec));
+        initial_rules.extend(handwritten_rules(
+            prog,
+            opts.vector_width,
+            opts.no_ac,
+            opts.no_vec,
+        ));
     }
 
     // add external rules
     if let Some(filename) = &opts.rules {
-        initial_rules.extend(external_rules(filename));
+        initial_rules.extend(external_rules(opts.vector_width, filename));
     }
 
     if initial_rules.is_empty() {
