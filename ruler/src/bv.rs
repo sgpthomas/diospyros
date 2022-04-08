@@ -4,7 +4,9 @@ use std::fmt;
 use std::ops::*;
 
 /// General bitvector implementation.
-#[derive(Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(
+    Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq, Serialize, Deserialize,
+)]
 #[serde(transparent)]
 pub struct BV<const N: u32>(pub Inner);
 

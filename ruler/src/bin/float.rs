@@ -68,13 +68,23 @@ impl SynthLanguage for Math {
     {
         match self {
             Math::Neg(a) => map!(v, a => mk_constant(-a.into_inner())),
-            Math::Add([a, b]) => map!(v, a, b => mk_constant((*a + *b).into_inner())),
-            Math::Sub([a, b]) => map!(v, a, b => mk_constant((*a - *b).into_inner())),
-            Math::Mul([a, b]) => map!(v, a, b => mk_constant((*a * *b).into_inner())),
+            Math::Add([a, b]) => {
+                map!(v, a, b => mk_constant((*a + *b).into_inner()))
+            }
+            Math::Sub([a, b]) => {
+                map!(v, a, b => mk_constant((*a - *b).into_inner()))
+            }
+            Math::Mul([a, b]) => {
+                map!(v, a, b => mk_constant((*a * *b).into_inner()))
+            }
             Math::Num(n) => vec![mk_constant(n.clone().into_inner()); cvec_len],
             Math::Var(_) => vec![],
-            Math::Div([a, b]) => map!(v, a, b => mk_constant((*a / *b).into_inner())),
-            Math::Pow([a, b]) => map!(v, a, b => mk_constant(a.into_inner().powf(b.into_inner()))),
+            Math::Div([a, b]) => {
+                map!(v, a, b => mk_constant((*a / *b).into_inner()))
+            }
+            Math::Pow([a, b]) => {
+                map!(v, a, b => mk_constant(a.into_inner().powf(b.into_inner())))
+            }
             Math::Fabs(a) => map!(v, a => mk_constant(a.into_inner().abs())),
             Math::Exp(a) => map!(v, a => mk_constant(a.into_inner().exp())),
             Math::Sin(a) => map!(v, a => mk_constant(a.into_inner().sin())),
@@ -123,7 +133,8 @@ impl SynthLanguage for Math {
 
         let mut egraph = EGraph::new(SynthAnalysis {
             cvec_len: params.n_samples
-                + (constants.len() + TRICKY_FLOATS.len()).pow(params.variables as u32),
+                + (constants.len() + TRICKY_FLOATS.len())
+                    .pow(params.variables as u32),
         });
 
         let rng = &mut synth.rng;
@@ -182,7 +193,11 @@ impl SynthLanguage for Math {
     //     to_add
     // }
 
-    fn is_valid(synth: &mut Synthesizer<Self>, lhs: &Pattern<Self>, rhs: &Pattern<Self>) -> bool {
+    fn is_valid(
+        synth: &mut Synthesizer<Self>,
+        lhs: &Pattern<Self>,
+        rhs: &Pattern<Self>,
+    ) -> bool {
         let n = synth.params.num_fuzz;
         let mut env = HashMap::default();
 
@@ -210,7 +225,11 @@ impl SynthLanguage for Math {
 }
 
 /// Helper for chaining a cross product of `TRICKY_FLOATS` to cvecs.
-fn chain_consts(constants: Vec<Constant>, nvars: u32, i: u32) -> Vec<Option<Constant>> {
+fn chain_consts(
+    constants: Vec<Constant>,
+    nvars: u32,
+    i: u32,
+) -> Vec<Option<Constant>> {
     let mut res = vec![];
     let mut consts = vec![];
     for c in constants {
@@ -250,7 +269,11 @@ fn rand_float_repr(rng: &mut Pcg64) -> f64 {
 /// A float specific sampler that accounts for the distribution of floats,
 /// and additionally generates
 /// both independent and dependent samples.
-fn gen_samples(rng: &mut Pcg64, n_samples: usize, n_vars: usize) -> Vec<Vec<f64>> {
+fn gen_samples(
+    rng: &mut Pcg64,
+    n_samples: usize,
+    n_vars: usize,
+) -> Vec<Vec<f64>> {
     let ulp_rad_sm: u64 = 1000;
     let ulp_rad_lg: u64 = 50000000000000;
     let mut all_vecs = vec![];
@@ -276,20 +299,30 @@ fn gen_samples(rng: &mut Pcg64, n_samples: usize, n_vars: usize) -> Vec<Vec<f64>
             match j % 10 {
                 0 => {
                     if i % 2 == 0 {
-                        dep_samples.push(sample_float_range(rng, first[j], ulp_rad_lg));
+                        dep_samples.push(sample_float_range(
+                            rng, first[j], ulp_rad_lg,
+                        ));
                     } else {
-                        dep_samples.push(sample_float_range(rng, first[j], ulp_rad_sm));
+                        dep_samples.push(sample_float_range(
+                            rng, first[j], ulp_rad_sm,
+                        ));
                     }
                 }
                 1 => {
                     if i % 2 == 0 {
-                        dep_samples.push(sample_float_range(rng, first[j], ulp_rad_sm));
+                        dep_samples.push(sample_float_range(
+                            rng, first[j], ulp_rad_sm,
+                        ));
                     } else {
-                        dep_samples.push(sample_float_range(rng, first[j], ulp_rad_lg));
+                        dep_samples.push(sample_float_range(
+                            rng, first[j], ulp_rad_lg,
+                        ));
                     }
                 }
-                2 => dep_samples.push(sample_float_range(rng, first[j], ulp_rad_sm)),
-                3 => dep_samples.push(sample_float_range(rng, first[j], ulp_rad_lg)),
+                2 => dep_samples
+                    .push(sample_float_range(rng, first[j], ulp_rad_sm)),
+                3 => dep_samples
+                    .push(sample_float_range(rng, first[j], ulp_rad_lg)),
                 6 => {
                     if i % 2 == 0 {
                         match j % 5 {
@@ -300,12 +333,16 @@ fn gen_samples(rng: &mut Pcg64, n_samples: usize, n_vars: usize) -> Vec<Vec<f64>
                             _ => dep_samples.push(f64::MIN),
                         }
                     } else {
-                        dep_samples.push(sample_float_range(rng, first[j], ulp_rad_lg));
+                        dep_samples.push(sample_float_range(
+                            rng, first[j], ulp_rad_lg,
+                        ));
                     }
                 }
                 7 => {
                     if i % 2 == 0 {
-                        dep_samples.push(sample_float_range(rng, first[j], ulp_rad_sm));
+                        dep_samples.push(sample_float_range(
+                            rng, first[j], ulp_rad_sm,
+                        ));
                     } else {
                         match j % 5 {
                             0 => dep_samples.push(f64::INFINITY),

@@ -228,7 +228,8 @@ impl SynthLanguage for Lang {
             Some(Constant::Num(1)),
             Some(Constant::Num(1000)),
         ];
-        let int_consts = self_product(&int_consts, synth.params.str_int_variables);
+        let int_consts =
+            self_product(&int_consts, synth.params.str_int_variables);
 
         let str_consts = self_product(&str_consts, synth.params.variables);
 

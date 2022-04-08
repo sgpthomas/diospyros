@@ -6,7 +6,8 @@ use std::sync::Mutex;
 type Pair<L> = (RecExpr<L>, RecExpr<L>);
 
 pub fn parse<L: SynthLanguage>(filename: &String) -> Vec<Pair<L>> {
-    let file = File::open(filename).unwrap_or_else(|_| panic!("Failed to open {}", filename));
+    let file = File::open(filename)
+        .unwrap_or_else(|_| panic!("Failed to open {}", filename));
     let report: SlimReport<L> = serde_json::from_reader(file).unwrap();
 
     let pairs: Vec<Pair<L>> = report
@@ -45,8 +46,8 @@ pub fn derive<L: SynthLanguage>(params: DeriveParams) {
         },
     });
 
-    let file =
-        File::create(&params.out).unwrap_or_else(|_| panic!("Failed to create '{}'", &params.out));
+    let file = File::create(&params.out)
+        .unwrap_or_else(|_| panic!("Failed to create '{}'", &params.out));
     serde_json::to_writer_pretty(file, &json).unwrap();
 }
 
@@ -56,7 +57,8 @@ fn one_way<L: SynthLanguage>(
     src: &[Pair<L>],
     test: &[Pair<L>],
 ) -> (Vec<Pair<L>>, Vec<Pair<L>>) {
-    let eqs: Vec<Equality<L>> = src.iter().flat_map(|(l, r)| Equality::new(l, r)).collect();
+    let eqs: Vec<Equality<L>> =
+        src.iter().flat_map(|(l, r)| Equality::new(l, r)).collect();
 
     let results = Mutex::new((vec![], vec![]));
     let test = test.to_vec();

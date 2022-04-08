@@ -84,9 +84,13 @@ impl<L: SynthLanguage> Applier<L, SynthAnalysis> for NotUndefined<L> {
         if !egraph[matched_id].data.is_defined() {
             return vec![];
         }
-        let ids = self
-            .rhs
-            .apply_one(egraph, matched_id, subst, searcher_ast, rule_name);
+        let ids = self.rhs.apply_one(
+            egraph,
+            matched_id,
+            subst,
+            searcher_ast,
+            rule_name,
+        );
 
         if ids.is_empty() {
             return vec![];
@@ -107,8 +111,12 @@ impl<L: SynthLanguage> Applier<L, SynthAnalysis> for NotUndefined<L> {
             match (a, b) {
                 (Some(a), Some(b)) if a != b => {
                     for class in egraph.classes() {
-                        if let Some(var) = class.nodes.iter().find_map(|n| n.to_var()) {
-                            if let Some(Some(val)) = class.data.cvec.get(i).as_ref() {
+                        if let Some(var) =
+                            class.nodes.iter().find_map(|n| n.to_var())
+                        {
+                            if let Some(Some(val)) =
+                                class.data.cvec.get(i).as_ref()
+                            {
                                 eprintln!("  {} = {}", var, val);
                             } else {
                                 eprintln!("  {} = none", var);
@@ -159,11 +167,19 @@ impl<L: SynthLanguage> CostFunction<L> for RandomCost {
 
 impl<L: SynthLanguage> Equality<L> {
     /// Create a new [Equality] from two [RecExprs](https://docs.rs/egg/0.6.0/egg/struct.RecExpr.html).
-    pub fn new<'a>(mut e1: &'a RecExpr<L>, mut e2: &'a RecExpr<L>) -> Option<Self> {
+    pub fn new<'a>(
+        mut e1: &'a RecExpr<L>,
+        mut e2: &'a RecExpr<L>,
+    ) -> Option<Self> {
         if e1 < e2 {
             std::mem::swap(&mut e1, &mut e2);
         }
-        let mut forward: (String, Pattern<L>, Pattern<L>, Option<Rewrite<L, _>>) = {
+        let mut forward: (
+            String,
+            Pattern<L>,
+            Pattern<L>,
+            Option<Rewrite<L, _>>,
+        ) = {
             let map = &mut HashMap::default();
             let lhs = L::generalize(&e1, map);
             let rhs = L::generalize(&e2, map);

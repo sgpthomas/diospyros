@@ -172,8 +172,10 @@ impl SynthLanguage for Math {
             cfg.set_timeout_msec(1000);
             let ctx = z3::Context::new(&cfg);
             let solver = z3::Solver::new(&ctx);
-            let (lexpr, mut lasses) = egg_to_z3(&ctx, Self::instantiate(lhs).as_ref());
-            let (rexpr, mut rasses) = egg_to_z3(&ctx, Self::instantiate(rhs).as_ref());
+            let (lexpr, mut lasses) =
+                egg_to_z3(&ctx, Self::instantiate(lhs).as_ref());
+            let (rexpr, mut rasses) =
+                egg_to_z3(&ctx, Self::instantiate(rhs).as_ref());
             lasses.append(&mut rasses);
             let all = &lasses[..];
             solver.assert(&lexpr._eq(&rexpr).not());
@@ -236,8 +238,12 @@ fn egg_to_z3<'a>(
     let zero = z3::ast::Int::from_i64(&ctx, 0);
     for node in expr.as_ref().iter() {
         match node {
-            Math::Var(v) => buf.push(z3::ast::Int::new_const(&ctx, v.to_string())),
-            Math::Num(c) => buf.push(z3::ast::Int::from_str(&ctx, &c.to_string()).unwrap()),
+            Math::Var(v) => {
+                buf.push(z3::ast::Int::new_const(&ctx, v.to_string()))
+            }
+            Math::Num(c) => {
+                buf.push(z3::ast::Int::from_str(&ctx, &c.to_string()).unwrap())
+            }
             Math::Add([a, b]) => buf.push(z3::ast::Int::add(
                 &ctx,
                 &[&buf[usize::from(*a)], &buf[usize::from(*b)]],
@@ -254,14 +260,19 @@ fn egg_to_z3<'a>(
                 let denom = &buf[usize::from(*b)];
                 let lez = z3::ast::Int::le(denom, &zero);
                 let gez = z3::ast::Int::ge(denom, &zero);
-                let assume = z3::ast::Bool::not(&z3::ast::Bool::and(&ctx, &[&lez, &gez]));
+                let assume = z3::ast::Bool::not(&z3::ast::Bool::and(
+                    &ctx,
+                    &[&lez, &gez],
+                ));
                 assumes.push(assume);
                 buf.push(z3::ast::Int::div(
                     &buf[usize::from(*a)],
                     &buf[usize::from(*b)],
                 ))
             }
-            Math::Neg(a) => buf.push(z3::ast::Int::unary_minus(&buf[usize::from(*a)])),
+            Math::Neg(a) => {
+                buf.push(z3::ast::Int::unary_minus(&buf[usize::from(*a)]))
+            }
             // _ => unimplemented!(),
         }
     }

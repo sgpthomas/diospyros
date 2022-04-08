@@ -3,7 +3,10 @@ use itertools::Itertools;
 use num::integer::Roots;
 use rand::Rng;
 use rand_pcg::Pcg64;
-use ruler::{letter, map, self_product, CVec, Equality, SynthAnalysis, SynthLanguage, Synthesizer};
+use ruler::{
+    letter, map, self_product, CVec, Equality, SynthAnalysis, SynthLanguage,
+    Synthesizer,
+};
 use rustc_hash::FxHasher;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
@@ -29,7 +32,8 @@ impl FromStr for Value {
 
     fn from_str(s: &str) -> Result<Self, <Self as FromStr>::Err> {
         if s.starts_with("i") {
-            let v: i32 = s[1..].parse().map_err(|_| "Bad integer.".to_string())?;
+            let v: i32 =
+                s[1..].parse().map_err(|_| "Bad integer.".to_string())?;
             Ok(Value::Int(v))
         } else {
             Err(format!("{} didn't match anything.", s))
@@ -161,7 +165,12 @@ impl Value {
             .collect::<Vec<_>>()
     }
 
-    fn sample_int(rng: &mut Pcg64, min: i32, max: i32, num_samples: usize) -> Vec<Value> {
+    fn sample_int(
+        rng: &mut Pcg64,
+        min: i32,
+        max: i32,
+        num_samples: usize,
+    ) -> Vec<Value> {
         (0..num_samples)
             .map(|_| Value::Int(rng.gen_range(min, max)))
             .collect::<Vec<_>>()
@@ -334,7 +343,9 @@ impl SynthLanguage for VecLang {
                     _ => None,
                 })
                 .collect::<Vec<_>>(),
-            VecLang::Neg([x]) => map!(get, x => Value::int1(x, |x| Value::Int(-x))),
+            VecLang::Neg([x]) => {
+                map!(get, x => Value::int1(x, |x| Value::Int(-x)))
+            }
             VecLang::List(l) => l
                 .iter()
                 .fold(vec![Some(vec![]); cvec_len], |mut acc, item| {
@@ -531,9 +542,15 @@ impl SynthLanguage for VecLang {
             );
 
             cvec.extend(
-                Value::sample_vec(&mut synth.rng, -100, 100, synth.params.vector_size, n_vecs)
-                    .into_iter()
-                    .map(Some),
+                Value::sample_vec(
+                    &mut synth.rng,
+                    -100,
+                    100,
+                    synth.params.vector_size,
+                    n_vecs,
+                )
+                .into_iter()
+                .map(Some),
             );
 
             egraph[id].data.cvec = cvec;
@@ -567,7 +584,9 @@ impl SynthLanguage for VecLang {
                 (0..2)
                     .map(|_| ids.clone())
                     .multi_cartesian_product()
-                    .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
+                    .filter(move |ids| {
+                        !ids.iter().all(|x| synth.egraph[*x].data.exact)
+                    })
                     .map(|ids| [ids[0], ids[1]])
                     .map(move |x| {
                         read_conf(synth)["binops"]
@@ -617,7 +636,9 @@ impl SynthLanguage for VecLang {
                 //         .flatten()
                 //         .all_unique()
                 // })
-                .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
+                .filter(move |ids| {
+                    !ids.iter().all(|x| synth.egraph[*x].data.exact)
+                })
                 .map(|ids| [ids[0], ids[1]])
                 .map(move |x| {
                     read_conf(synth)["vector_binops"]
@@ -646,7 +667,9 @@ impl SynthLanguage for VecLang {
                 //         .flatten()
                 //         .all_unique()
                 // })
-                .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
+                .filter(move |ids| {
+                    !ids.iter().all(|x| synth.egraph[*x].data.exact)
+                })
                 .map(|x| vec![VecLang::Vec(x.into_boxed_slice())])
                 .flatten()
                 .filter(move |node| vd || unique_vars(node, &synth.egraph));
@@ -687,9 +710,12 @@ impl SynthLanguage for VecLang {
         let left = egg_to_z3(&ctx, Self::instantiate(lhs).as_ref());
         let right = egg_to_z3(&ctx, Self::instantiate(rhs).as_ref());
 
-        let ret = if let (Some((lexpr, lasses)), Some((rexpr, rasses))) = (left, right) {
+        let ret = if let (Some((lexpr, lasses)), Some((rexpr, rasses))) =
+            (left, right)
+        {
             solver.reset();
-            let all: Vec<_> = lasses.into_iter().chain(rasses.into_iter()).collect();
+            let all: Vec<_> =
+                lasses.into_iter().chain(rasses.into_iter()).collect();
             let qe_eq = &lexpr._eq(&rexpr).not();
             // log::info!("z3 eq: {} = {}", lhs, rhs);
             // log::info!("z3 asses: {:?}", all);
@@ -720,13 +746,21 @@ impl SynthLanguage for VecLang {
                     false
                 }
                 z3::SatResult::Unsat => {
-                    log::debug!("z3 validation: success for {} => {}", lhs, rhs);
+                    log::debug!(
+                        "z3 validation: success for {} => {}",
+                        lhs,
+                        rhs
+                    );
                     log::debug!("core: {:?}", solver.get_unsat_core());
                     true
                 }
                 z3::SatResult::Unknown => {
                     synth.smt_unknown += 1;
-                    log::debug!("z3 validation: unknown for {} => {}", lhs, rhs);
+                    log::debug!(
+                        "z3 validation: unknown for {} => {}",
+                        lhs,
+                        rhs
+                    );
                     false
                     // vecs_eq(&lvec, &rvec)
                 }
@@ -738,8 +772,12 @@ impl SynthLanguage for VecLang {
             // let n = 10;
             let mut env = HashMap::default();
 
-            if lhs.vars() != rhs.vars() {
-                eprintln!("lhs vars != rhs vars: {:?} != {:?}", lhs.vars(), rhs.vars());
+            if lhs.vars().sort() != rhs.vars().sort() {
+                eprintln!(
+                    "lhs vars != rhs vars: {:?} != {:?}",
+                    lhs.vars().sort(),
+                    rhs.vars().sort()
+                );
                 return false;
             }
 
@@ -768,9 +806,15 @@ impl SynthLanguage for VecLang {
             let mut length = 0;
             for cvec in env.values_mut() {
                 cvec.extend(
-                    Value::sample_vec(&mut synth.rng, -100, 100, synth.params.vector_size, n_vecs)
-                        .into_iter()
-                        .map(Some),
+                    Value::sample_vec(
+                        &mut synth.rng,
+                        -100,
+                        100,
+                        synth.params.vector_size,
+                        n_vecs,
+                    )
+                    .into_iter()
+                    .map(Some),
                 );
                 length = cvec.len();
 
@@ -806,7 +850,10 @@ impl SynthLanguage for VecLang {
     }
 }
 
-fn get_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> Vec<egg::Symbol> {
+fn get_vars(
+    node: &VecLang,
+    egraph: &EGraph<VecLang, SynthAnalysis>,
+) -> Vec<egg::Symbol> {
     node.fold(vec![], |mut acc, id| {
         let node = &egraph[id].nodes[0];
         if node.is_leaf() {
@@ -818,7 +865,10 @@ fn get_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> Vec<egg:
     })
 }
 
-fn unique_vars(node: &VecLang, egraph: &EGraph<VecLang, SynthAnalysis>) -> bool {
+fn unique_vars(
+    node: &VecLang,
+    egraph: &EGraph<VecLang, SynthAnalysis>,
+) -> bool {
     let vars: Vec<egg::Symbol> = get_vars(node, egraph);
     // eprintln!(
     //     "node: {}, vars: {:?}",
@@ -857,8 +907,11 @@ fn add_eq(synth: &mut Synthesizer<VecLang>, value: &serde_json::Value) {
 
 #[allow(unused)]
 fn debug(left: &str, right: &str, n: usize, env_pairs: &[(&str, Value)]) {
-    let mut env: HashMap<egg::Var, Vec<Option<Value>>, BuildHasherDefault<FxHasher>> =
-        HashMap::default();
+    let mut env: HashMap<
+        egg::Var,
+        Vec<Option<Value>>,
+        BuildHasherDefault<FxHasher>,
+    > = HashMap::default();
 
     env_pairs.iter().for_each(|(var, value)| {
         env.insert(egg::Var::from_str(var).unwrap(), vec![Some(value.clone())]);
