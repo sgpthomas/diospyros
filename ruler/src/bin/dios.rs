@@ -789,7 +789,7 @@ impl SynthLanguage for VecLang {
                 env.insert(var, vec![]);
             }
 
-            eprintln!("env: {env:?}");
+            // eprintln!("env: {env:?}");
 
             let (_n_ints, n_vecs) = split_into_halves(10);
             // let (n_neg_ints, n_pos_ints) = split_into_halves(n_ints);
@@ -817,8 +817,6 @@ impl SynthLanguage for VecLang {
                     .map(Some),
                 );
                 length = cvec.len();
-
-                eprintln!("{cvec:?}");
             }
 
             // debug(

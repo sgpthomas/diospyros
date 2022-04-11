@@ -26,7 +26,6 @@ mod bv;
 mod convert_sexp;
 mod derive;
 mod equality;
-mod recexpr_helpers;
 mod util;
 
 /// Faster hashMap implementation used in rustc
@@ -1110,18 +1109,15 @@ impl<L: SynthLanguage> Synthesizer<L> {
         let mut bads = EqualityMap::default();
         let mut should_validate = true;
         for step in vec![100, 10, 1] {
-            eprintln!("step: {step:?}");
             if self.check_time() {
                 break;
             }
 
             if self.params.rules_to_take < step {
-                eprintln!("self.params.rules_to_take < step => continue");
                 continue;
             }
             let n_rules = usize::min(self.params.rules_to_take, new_eqs.len());
             if step < 10 && n_rules > 200 {
-                eprintln!("self.params.rules_to_take < step => break");
                 break;
             }
             let (n, b) = self.shrink(new_eqs, step, should_validate);
