@@ -1983,7 +1983,6 @@ RUST_LOG=info cargo run --manifest-path src/dios-egraphs/Cargo.toml --release --
 #+RESULTS:
 : #<window 39 on *Async Shell Command*>
 
-
 * Syntax phase splitting vs. Cost function phase splitting
 :PROPERTIES:
 :header-args: :dir (magit-toplevel)
