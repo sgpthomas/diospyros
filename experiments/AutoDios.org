@@ -2420,19 +2420,19 @@ from pathlib import Path
 ops = ["+", "-", "*", "/"]
 
 for vd in [True, False]:
-    for n in range(len(ops) + 1):
+    for n in range(len(ops)):
         config = {
             "constants": [],
             "seed_rules": [],
-            "binops": ops[:n],
+            "binops": ops[:n+1],
             "use_vector": True,
-            "vector_binops": ops[:n],
+            "vector_binops": ops[:n+1],
             "vector_mac": True,
             "variable_duplication": vd
         }
         p = Path("variable_dup_abl_n_ops")
         p.mkdir(exist_ok=True)
-        with (p / f"{n}-vd-{vd}.json").open("w") as f:
+        with (p / f"{n+1}-vd-{vd}.json").open("w") as f:
             json.dump(config, f, indent=4)
 #+end_src
 
@@ -2452,20 +2452,19 @@ function run() {
 	    --eqsat-iter-limit 3 \
 	    --eqsat-time-limit 120 \
 	    --num-fuzz 6 \
-	    --abs-timeout 600 \
-	    --outfile "variable_dup_abl_n_ops/rules-$1.json"
-	    # >"variable_dup_abl_n_ops/$1.out" \
-	    # 2>"variable_dup_abl_n_ops/$1.err"
+	    --abs-timeout 6000 \
+	    --outfile "variable_dup_abl_n_ops/rules-$1.json" \
+	    >"variable_dup_abl_n_ops/$1.out" \
+	    2>"variable_dup_abl_n_ops/$1.err" || true
+    echo "Finished $1"
 }
 
-run "0-vd-False"
-run "0-vd-True"
-run "1-vd-False"
-run "1-vd-True"
-run "2-vd-False"
-run "2-vd-True"
-run "3-vd-False"
-run "3-vd-True"
+# run "1-vd-False"
+# run "1-vd-True"
+# run "2-vd-False"
+# run "2-vd-True"
+# run "3-vd-False"
+# run "3-vd-True"
 run "4-vd-False"
 run "4-vd-True"
 #+end_src
@@ -2473,7 +2472,7 @@ run "4-vd-True"
 *** Run the experiment
 
 #+begin_src emacs-lisp :dir (magit-toplevel)
-(let* ((addr "18.117.104.78"))
+(let* ((addr "3.16.147.252"))
   ;; sync files
   (shell-command-to-string
    (format "./sync.sh %s" addr))
@@ -2491,7 +2490,56 @@ run "4-vd-True"
 #+RESULTS:
 
 #+begin_src async-shell :dir (magit-toplevel)
-rsync -rvp ubuntu@18.117.104.78:~/diospyros/variable_dup_abl_n_ops/ .
+rsync -rvp ubuntu@3.16.147.252:~/diospyros/variable_dup_abl_n_ops .
 #+end_src
+
+#+RESULTS:
+: #<window 355 on *Async Shell Command*>
+
+3-true ran out of memory on machine with 512 gb ram (only 500 show up on htop)
+
+*** Make a pretty plot
+
+First we gotta make a table of the data. Let's do that in python.
+
+#+begin_src python :dir (magit-toplevel) :results value :colnames '("n-ops" "var-dup" "time")
+import json
+from pathlib import Path
+
+exp = Path("variable_dup_abl_n_ops/")
+# print(exp.glob("rules-*"))
+table = []
+for p in exp.glob("rules-*"):
+    data = json.load(p.open("r"))
+    name = data["params"]["dios_config"].split("/")[1].split(".")[0]
+    n_ops = int(name.split("-")[0])
+    vd = name.split("-")[2]
+    table.append([n_ops, vd, data["time"]])
+return table
+#+end_src
+
+#+name: n_ops_var_dup
+#+RESULTS:
+| n-ops | var-dup |               time |
+|-------+---------+--------------------|
+|     2 | True    |       10.008175758 |
+|     1 | False   |        0.655823982 |
+|     2 | False   |        3.449267693 |
+|     3 | False   | 5.3039296799999995 |
+|     1 | True    |        2.112773784 |
+
+#+header: :var data=n_ops_var_dup
+#+header: :file variable_dup_abl_n_ops/n_ops.png
+#+begin_src R :session *graphics* :colnames yes :results graphics file 
+library(tidyverse)
+
+data %>%
+  ggplot(aes(x = n.ops, y = time, group = var.dup, color = var.dup)) +
+  geom_line() +
+  geom_point()
+#+end_src
+
+#+RESULTS:
+[[file:../variable_dup_abl_n_ops/n_ops.png]]
 
 

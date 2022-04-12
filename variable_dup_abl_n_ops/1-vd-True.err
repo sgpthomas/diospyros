@@ -1,0 +1,743 @@
+    Finished release [optimized] target(s) in 0.05s
+     Running `ruler/target/release/dios synth --dios-config variable_dup_abl_n_ops/1-vd-True.json --variables 4 --iters 2 --vector-size 2 --eqsat-iter-limit 3 --eqsat-time-limit 120 --num-fuzz 6 --abs-timeout 6000 --outfile variable_dup_abl_n_ops/rules-1-vd-True.json`
+[INFO  dios] config: variable_dup_abl_n_ops/1-vd-True.json
+size(4): #ints: 2, #vecs: 2
+size(4): #ints: 2, #vecs: 2
+size(4): #ints: 2, #vecs: 2
+size(4): #ints: 2, #vecs: 2
+egraph: EGraph {
+    memo: {
+        Symbol(
+            "b",
+        ): 1,
+        Symbol(
+            "d",
+        ): 3,
+        Symbol(
+            "a",
+        ): 0,
+        Symbol(
+            "c",
+        ): 2,
+    },
+    classes: {
+        0: EClass {
+            id: 0,
+            nodes: [
+                Symbol(
+                    "a",
+                ),
+            ],
+            data: Signature {
+                cvec: [
+                    Some(
+                        Int(
+                            66,
+                        ),
+                    ),
+                    Some(
+                        Int(
+                            -66,
+                        ),
+                    ),
+                    Some(
+                        Vec(
+                            [
+                                Int(
+                                    -90,
+                                ),
+                                Int(
+                                    37,
+                                ),
+                            ],
+                        ),
+                    ),
+                    Some(
+                        Vec(
+                            [
+                                Int(
+                                    56,
+                                ),
+                                Int(
+                                    -77,
+                                ),
+                            ],
+                        ),
+                    ),
+                ],
+                exact: false,
+                vars: [
+                    "a",
+                ],
+            },
+            parents: [],
+        },
+        2: EClass {
+            id: 2,
+            nodes: [
+                Symbol(
+                    "c",
+                ),
+            ],
+            data: Signature {
+                cvec: [
+                    Some(
+                        Int(
+                            -73,
+                        ),
+                    ),
+                    Some(
+                        Int(
+                            -100,
+                        ),
+                    ),
+                    Some(
+                        Vec(
+                            [
+                                Int(
+                                    50,
+                                ),
+                                Int(
+                                    -26,
+                                ),
+                            ],
+                        ),
+                    ),
+                    Some(
+                        Vec(
+                            [
+                                Int(
+                                    -94,
+                                ),
+                                Int(
+                                    -38,
+                                ),
+                            ],
+                        ),
+                    ),
+                ],
+                exact: false,
+                vars: [
+                    "c",
+                ],
+            },
+            parents: [],
+        },
+        1: EClass {
+            id: 1,
+            nodes: [
+                Symbol(
+                    "b",
+                ),
+            ],
+            data: Signature {
+                cvec: [
+                    Some(
+                        Int(
+                            -33,
+                        ),
+                    ),
+                    Some(
+                        Int(
+                            43,
+                        ),
+                    ),
+                    Some(
+                        Vec(
+                            [
+                                Int(
+                                    -77,
+                                ),
+                                Int(
+                                    -82,
+                                ),
+                            ],
+                        ),
+                    ),
+                    Some(
+                        Vec(
+                            [
+                                Int(
+                                    -77,
+                                ),
+                                Int(
+                                    29,
+                                ),
+                            ],
+                        ),
+                    ),
+                ],
+                exact: false,
+                vars: [
+                    "b",
+                ],
+            },
+            parents: [],
+        },
+        3: EClass {
+            id: 3,
+            nodes: [
+                Symbol(
+                    "d",
+                ),
+            ],
+            data: Signature {
+                cvec: [
+                    Some(
+                        Int(
+                            32,
+                        ),
+                    ),
+                    Some(
+                        Int(
+                            0,
+                        ),
+                    ),
+                    Some(
+                        Vec(
+                            [
+                                Int(
+                                    -90,
+                                ),
+                                Int(
+                                    31,
+                                ),
+                            ],
+                        ),
+                    ),
+                    Some(
+                        Vec(
+                            [
+                                Int(
+                                    13,
+                                ),
+                                Int(
+                                    34,
+                                ),
+                            ],
+                        ),
+                    ),
+                ],
+                exact: false,
+                vars: [
+                    "d",
+                ],
+            },
+            parents: [],
+        },
+    },
+}
+[INFO  ruler] [[[ Iteration 1 ]]]
+[INFO  ruler] Made layer! Using chunk size: 100000
+[INFO  ruler] egraph n=4, e=4
+[INFO  ruler] running eqsat with 0 rules
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 56, eclasses: 56
+      New: hc size 56, eclasses: 56
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000066
+[INFO  egg::run] Apply time: 0.000000347
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 56, eclasses: 56
+      New: hc size 56, eclasses: 56
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000005178
+[INFO  egg::run] Size: n=56, e=56
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Saturated collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 56, eclasses: 56
+      New: hc size 56, eclasses: 56
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 0 rules in 85.59µs
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 31
+[INFO  ruler] 2 candidate eqs
+[INFO  ruler] egraph n=56, e=56
+[INFO  ruler] choose_eqs: 2
+[INFO  ruler] Shrinking with 1 keepers
+[INFO  ruler] # rewrites: 1
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 6, eclasses: 6
+      New: hc size 6, eclasses: 6
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.0000005
+[INFO  egg::run] Apply time: 0.000000793
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 6, eclasses: 6
+      New: hc size 6, eclasses: 6
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000003466
+[INFO  egg::run] Size: n=6, e=6
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 1
+[INFO  ruler] Minimizing... threw away 0 rules, 1 / 2 remain
+[INFO  ruler] Chose 2 good rules
+[INFO  ruler]   (+ ?b ?a) <=> (+ ?a ?b)
+[INFO  ruler]   (VecAdd ?b ?a) <=> (VecAdd ?a ?b)
+[INFO  ruler] Time taken in... run_rewrites: 0.000102757, rule discovery: 0.000189729, rule minimization: 0.018903822
+[INFO  ruler] Stopping early, took all eqs
+[INFO  ruler] [[[ Iteration 2 ]]]
+[INFO  ruler] Made layer! Using chunk size: 100000
+[INFO  ruler] egraph n=56, e=56
+[INFO  ruler] running eqsat with 2 rules
+[INFO  egg::egraph] REBUILT! in 0.002s
+      Old: hc size 9468, eclasses: 9468
+      New: hc size 9468, eclasses: 9133
+      unions: 334, trimmed nodes: 334
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.001533377
+[INFO  egg::run] Apply time: 0.001051725
+[INFO  egg::egraph] REBUILT! in 0.003s
+      Old: hc size 9468, eclasses: 9133
+      New: hc size 9468, eclasses: 5492
+      unions: 3075, trimmed nodes: 3278
+[INFO  egg::run] Rebuild time: 0.003405468
+[INFO  egg::run] Size: n=9468, e=5492
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.001131835
+[INFO  egg::run] Apply time: 0.000456668
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 9468, eclasses: 5492
+      New: hc size 9468, eclasses: 5492
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000427682
+[INFO  egg::run] Size: n=9468, e=5492
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Saturated collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 9468, eclasses: 5492
+      New: hc size 9468, eclasses: 5492
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 2 rules in 17.654667ms
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 978
+[INFO  ruler] 356 candidate eqs
+[INFO  ruler] egraph n=9468, e=9468
+[INFO  ruler] choose_eqs: 356
+[INFO  ruler] Shrinking with 100 keepers
+[INFO  ruler] # rewrites: 147
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 291, eclasses: 291
+      New: hc size 291, eclasses: 291
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.002104912
+[INFO  egg::run] Apply time: 0.001828762
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 835, eclasses: 835
+      New: hc size 835, eclasses: 156
+      unions: 29, trimmed nodes: 397
+[INFO  egg::run] Rebuild time: 0.000494501
+[INFO  egg::run] Size: n=835, e=156
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.002078566
+[INFO  egg::run] Apply time: 0.001861968
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 835, eclasses: 156
+      New: hc size 835, eclasses: 118
+      unions: 0, trimmed nodes: 120
+[INFO  egg::run] Rebuild time: 0.000079132
+[INFO  egg::run] Size: n=835, e=118
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.001710265
+[INFO  egg::run] Apply time: 0.001677839
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 835, eclasses: 118
+      New: hc size 835, eclasses: 118
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000018071
+[INFO  egg::run] Size: n=835, e=118
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 3
+[INFO  ruler] Minimizing... threw away 249 rules, 7 / 356 remain
+[INFO  ruler] Shrinking with 10 keepers
+[INFO  ruler] # rewrites: 18
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 153, eclasses: 153
+      New: hc size 153, eclasses: 153
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000153549
+[INFO  egg::run] Apply time: 0.000107386
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 196, eclasses: 196
+      New: hc size 198, eclasses: 69
+      unions: 43, trimmed nodes: 85
+[INFO  egg::run] Rebuild time: 0.000097436
+[INFO  egg::run] Size: n=198, e=69
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000105652
+[INFO  egg::run] Apply time: 0.000095941
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 198, eclasses: 69
+      New: hc size 198, eclasses: 69
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000008275
+[INFO  egg::run] Size: n=198, e=69
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 2
+[INFO  ruler] Minimizing... threw away 79 rules, 18 / 107 remain
+[INFO  ruler] Shrinking with 20 keepers
+[INFO  ruler] # rewrites: 32
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 27, eclasses: 27
+      New: hc size 27, eclasses: 27
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000031552
+[INFO  egg::run] Apply time: 0.000045893
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 71, eclasses: 71
+      New: hc size 71, eclasses: 35
+      unions: 0, trimmed nodes: 8
+[INFO  egg::run] Rebuild time: 0.00002496
+[INFO  egg::run] Size: n=71, e=35
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000066278
+[INFO  egg::run] Apply time: 0.000061131
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 100, eclasses: 64
+      New: hc size 100, eclasses: 36
+      unions: 0, trimmed nodes: 12
+[INFO  egg::run] Rebuild time: 0.000019786
+[INFO  egg::run] Size: n=100, e=36
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000076552
+[INFO  egg::run] Apply time: 0.000057993
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 106, eclasses: 42
+      New: hc size 106, eclasses: 31
+      unions: 0, trimmed nodes: 10
+[INFO  egg::run] Rebuild time: 0.000010761
+[INFO  egg::run] Size: n=106, e=31
+[INFO  egg::run] Stopping: IterationLimit(3)
+[INFO  ruler] Stopping IterationLimit(3), 3
+[INFO  ruler] Minimizing... threw away 1 rules, 7 / 107 remain
+[INFO  ruler] Shrinking with 1 keepers
+[INFO  ruler] # rewrites: 3
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 68, eclasses: 68
+      New: hc size 68, eclasses: 68
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.00001417
+[INFO  egg::run] Apply time: 0.000032832
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 101, eclasses: 101
+      New: hc size 103, eclasses: 49
+      unions: 9, trimmed nodes: 17
+[INFO  egg::run] Rebuild time: 0.000034387
+[INFO  egg::run] Size: n=103, e=49
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000012357
+[INFO  egg::run] Apply time: 0.000015646
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 104, eclasses: 50
+      New: hc size 104, eclasses: 49
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000006702
+[INFO  egg::run] Size: n=104, e=49
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000010294
+[INFO  egg::run] Apply time: 0.00001462
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 104, eclasses: 49
+      New: hc size 104, eclasses: 49
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000006134
+[INFO  egg::run] Size: n=104, e=49
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 3
+[INFO  ruler] Minimizing... threw away 11 rules, 15 / 27 remain
+[INFO  ruler] Shrinking with 2 keepers
+[INFO  ruler] # rewrites: 4
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 46, eclasses: 46
+      New: hc size 46, eclasses: 46
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000010381
+[INFO  egg::run] Apply time: 0.000030043
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 74, eclasses: 74
+      New: hc size 78, eclasses: 44
+      unions: 1, trimmed nodes: 1
+[INFO  egg::run] Rebuild time: 0.000022583
+[INFO  egg::run] Size: n=78, e=44
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000013969
+[INFO  egg::run] Apply time: 0.000016507
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 82, eclasses: 48
+      New: hc size 82, eclasses: 44
+      unions: 0, trimmed nodes: 2
+[INFO  egg::run] Rebuild time: 0.000008453
+[INFO  egg::run] Size: n=82, e=44
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.00002265
+[INFO  egg::run] Apply time: 0.000013711
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 82, eclasses: 44
+      New: hc size 82, eclasses: 44
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000005937
+[INFO  egg::run] Size: n=82, e=44
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 3
+[INFO  ruler] Minimizing... threw away 1 rules, 13 / 27 remain
+[INFO  ruler] Shrinking with 3 keepers
+[INFO  ruler] # rewrites: 5
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 38, eclasses: 38
+      New: hc size 38, eclasses: 38
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000008716
+[INFO  egg::run] Apply time: 0.000025542
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 62, eclasses: 62
+      New: hc size 63, eclasses: 39
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000018091
+[INFO  egg::run] Size: n=63, e=39
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000012332
+[INFO  egg::run] Apply time: 0.000009528
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 64, eclasses: 40
+      New: hc size 64, eclasses: 39
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000006202
+[INFO  egg::run] Size: n=64, e=39
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000010477
+[INFO  egg::run] Apply time: 0.000007775
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 64, eclasses: 39
+      New: hc size 64, eclasses: 39
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000005117
+[INFO  egg::run] Size: n=64, e=39
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 3
+[INFO  ruler] Minimizing... threw away 0 rules, 12 / 27 remain
+[INFO  ruler] Shrinking with 4 keepers
+[INFO  ruler] # rewrites: 7
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 32, eclasses: 32
+      New: hc size 32, eclasses: 32
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.00000814
+[INFO  egg::run] Apply time: 0.00001825
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 52, eclasses: 52
+      New: hc size 52, eclasses: 32
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000015016
+[INFO  egg::run] Size: n=52, e=32
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000011656
+[INFO  egg::run] Apply time: 0.000006154
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 52, eclasses: 32
+      New: hc size 52, eclasses: 32
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000004732
+[INFO  egg::run] Size: n=52, e=32
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 2
+[INFO  ruler] Minimizing... threw away 0 rules, 11 / 27 remain
+[INFO  ruler] Shrinking with 5 keepers
+[INFO  ruler] # rewrites: 9
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 30, eclasses: 30
+      New: hc size 30, eclasses: 30
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000009821
+[INFO  egg::run] Apply time: 0.000019696
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 54, eclasses: 54
+      New: hc size 54, eclasses: 31
+      unions: 1, trimmed nodes: 2
+[INFO  egg::run] Rebuild time: 0.000016862
+[INFO  egg::run] Size: n=54, e=31
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000014276
+[INFO  egg::run] Apply time: 0.000009794
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 56, eclasses: 33
+      New: hc size 56, eclasses: 30
+      unions: 0, trimmed nodes: 2
+[INFO  egg::run] Rebuild time: 0.000006461
+[INFO  egg::run] Size: n=56, e=30
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000012389
+[INFO  egg::run] Apply time: 0.000008017
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 56, eclasses: 30
+      New: hc size 56, eclasses: 30
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.0000048
+[INFO  egg::run] Size: n=56, e=30
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 3
+[INFO  ruler] Minimizing... threw away 1 rules, 9 / 27 remain
+[INFO  ruler] Shrinking with 6 keepers
+[INFO  ruler] # rewrites: 11
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 24, eclasses: 24
+      New: hc size 24, eclasses: 24
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000010515
+[INFO  egg::run] Apply time: 0.000027151
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 52, eclasses: 52
+      New: hc size 55, eclasses: 27
+      unions: 1, trimmed nodes: 4
+[INFO  egg::run] Rebuild time: 0.000021175
+[INFO  egg::run] Size: n=55, e=27
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000017981
+[INFO  egg::run] Apply time: 0.000023433
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 65, eclasses: 37
+      New: hc size 65, eclasses: 26
+      unions: 0, trimmed nodes: 3
+[INFO  egg::run] Rebuild time: 0.000011667
+[INFO  egg::run] Size: n=65, e=26
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000017557
+[INFO  egg::run] Apply time: 0.000014263
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 65, eclasses: 26
+      New: hc size 65, eclasses: 26
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.00000489
+[INFO  egg::run] Size: n=65, e=26
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 3
+[INFO  ruler] Minimizing... threw away 1 rules, 7 / 27 remain
+[INFO  ruler] Shrinking with 7 keepers
+[INFO  ruler] # rewrites: 13
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 18, eclasses: 18
+      New: hc size 18, eclasses: 18
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000008486
+[INFO  egg::run] Apply time: 0.000018698
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 36, eclasses: 36
+      New: hc size 36, eclasses: 19
+      unions: 1, trimmed nodes: 4
+[INFO  egg::run] Rebuild time: 0.000013975
+[INFO  egg::run] Size: n=36, e=19
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000014341
+[INFO  egg::run] Apply time: 0.00001154
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 40, eclasses: 23
+      New: hc size 40, eclasses: 18
+      unions: 0, trimmed nodes: 2
+[INFO  egg::run] Rebuild time: 0.000007044
+[INFO  egg::run] Size: n=40, e=18
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000013048
+[INFO  egg::run] Apply time: 0.000008522
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 40, eclasses: 18
+      New: hc size 40, eclasses: 18
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000004304
+[INFO  egg::run] Size: n=40, e=18
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 3
+[INFO  ruler] Minimizing... threw away 3 rules, 3 / 27 remain
+[INFO  ruler] Shrinking with 8 keepers
+[INFO  ruler] # rewrites: 14
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 13, eclasses: 13
+      New: hc size 13, eclasses: 13
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000007888
+[INFO  egg::run] Apply time: 0.000017147
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 29, eclasses: 29
+      New: hc size 30, eclasses: 14
+      unions: 0, trimmed nodes: 2
+[INFO  egg::run] Rebuild time: 0.000013545
+[INFO  egg::run] Size: n=30, e=14
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000013395
+[INFO  egg::run] Apply time: 0.000012873
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 36, eclasses: 20
+      New: hc size 36, eclasses: 14
+      unions: 0, trimmed nodes: 1
+[INFO  egg::run] Rebuild time: 0.000007122
+[INFO  egg::run] Size: n=36, e=14
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000014597
+[INFO  egg::run] Apply time: 0.000008994
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 36, eclasses: 14
+      New: hc size 36, eclasses: 14
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000004193
+[INFO  egg::run] Size: n=36, e=14
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 3
+[INFO  ruler] Minimizing... threw away 2 rules, 0 / 27 remain
+[INFO  ruler] Chose 8 good rules
+[INFO  ruler]   (+ (+ ?d ?c) (+ ?b ?a)) <=> (+ (+ ?d ?b) (+ ?c ?a))
+[INFO  ruler]   (VecAdd (VecAdd ?d ?c) (VecAdd ?b ?a)) <=> (VecAdd (VecAdd ?d ?b) (VecAdd ?c ?a))
+[INFO  ruler]   (VecAdd (Vec ?d ?c) (Vec ?b ?a)) <=> (VecAdd (Vec ?b ?c) (Vec ?d ?a))
+[INFO  ruler]   (VecAdd (Vec ?d ?c) (Vec ?b ?a)) <=> (Vec (+ ?d ?b) (+ ?c ?a))
+[INFO  ruler]   (+ ?c (+ ?b ?a)) <=> (+ ?b (+ ?a ?c))
+[INFO  ruler]   (VecAdd ?c (VecAdd ?b ?a)) <=> (VecAdd ?b (VecAdd ?a ?c))
+[INFO  ruler]   (VecNeg (VecAdd ?b ?a)) <=> (VecAdd (VecNeg ?b) (VecNeg ?a))
+[INFO  ruler]   (VecAdd ?a (VecAdd ?b (VecNeg ?a))) => (VecNeg (VecNeg ?b))
+[INFO  ruler] Time taken in... run_rewrites: 0.019652941, rule discovery: 0.20720674, rule minimization: 1.037524178
+[INFO  ruler] Stopping early, took all eqs
