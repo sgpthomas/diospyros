@@ -1,4 +1,4 @@
-Learned 58 rules in 5.3039296799999995
+Learned 58 rules in 5.052720378
 (VecMul (VecMul ?d ?c) (VecMul ?b ?a)) <=> (VecMul (VecMul ?c ?a) (VecMul ?d ?b))
 (VecAdd (VecAdd ?d ?c) (VecAdd ?b ?a)) <=> (VecAdd (VecAdd ?d ?b) (VecAdd ?c ?a))
 (VecMinus (VecMinus ?d ?c) (VecMinus ?b ?a)) <=> (VecMinus (VecMinus ?a ?c) (VecMinus ?b ?d))
@@ -57,4 +57,4 @@ Learned 58 rules in 5.3039296799999995
 (VecNeg (VecMul ?b ?a)) <=> (VecMul ?b (VecNeg ?a))
 (VecMul ?b (VecNeg ?a)) <=> (VecMul ?a (VecNeg ?b))
 (VecMul ?b ?a) <=> (VecMul ?a (VecNeg (VecNeg ?b)))
-Learned 58 rules in 5.3039296799999995
+Learned 58 rules in 5.052720378

@@ -1,0 +1,5 @@
+    Finished release [optimized] target(s) in 0.05s
+     Running `ruler/target/release/dios synth --dios-config experiments/vd_abl_n_op2_vec_size_short/vd-False.json --variables 16 --iters 2 --vector-size 8 --eqsat-iter-limit 3 --eqsat-time-limit 120 --num-fuzz 10 --abs-timeout 60000 --outfile experiments/vd_abl_n_op2_vec_size_short/rules-vec-8-False.json`
+[INFO  dios] config: experiments/vd_abl_n_op2_vec_size_short/vd-False.json
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/bin/dios.rs:873:71
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

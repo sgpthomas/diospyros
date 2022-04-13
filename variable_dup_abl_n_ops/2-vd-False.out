@@ -1,4 +1,4 @@
-Learned 40 rules in 3.449267693
+Learned 40 rules in 3.0734577180000002
 (VecAdd (VecAdd ?d ?c) (VecAdd ?b ?a)) <=> (VecAdd (VecAdd ?d ?b) (VecAdd ?c ?a))
 (VecMinus (VecMinus ?d ?c) (VecMinus ?b ?a)) <=> (VecMinus (VecMinus ?a ?c) (VecMinus ?b ?d))
 (VecMinus (VecMinus ?d ?c) (VecMinus ?b ?a)) <=> (VecMinus (VecMinus ?d ?b) (VecMinus ?c ?a))
@@ -39,4 +39,4 @@ Learned 40 rules in 3.449267693
 (VecNeg (VecMinus ?b ?a)) <=> (VecMinus ?a ?b)
 (VecMinus ?b ?a) <=> (VecAdd ?b (VecNeg ?a))
 (VecMinus ?b (VecNeg ?a)) <=> (VecAdd ?a ?b)
-Learned 40 rules in 3.449267693
+Learned 40 rules in 3.0734577180000002

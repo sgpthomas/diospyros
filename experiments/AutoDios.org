@@ -2391,26 +2391,15 @@ Learned 144 rules in 26.543639944
 
 I want to run a pretty simple ablation that varies =variable_duplication= + one other factor.
 
-Here's the base config that I'll use.
-
-#+begin_src json :results file silent :file configs/test.json
-{
-    "constants": [],
-    "seed_rules": [],
-    "binops": ["+"],
-    "use_vector": true,
-    "vector_binops": ["+"],
-    "vector_mac": true,
-    "variable_duplication": true
-}
-#+end_src
-
 ** Ablate by number of binops
 :PROPERTIES:
 :header-args: :dir (magit-toplevel)
 :END:
 
 *** Generate Configs
+
+Generate configs with different =variable_duplication= and =ops= and =vec_ops= increasing from =["\+"]= to
+=["+", "-", "*", "/"]=.
 
 #+begin_src python :results silent
 import json
@@ -2442,6 +2431,7 @@ for vd in [True, False]:
 #!/usr/bin/env bash
 
 function run() {
+    echo "Starting $1"
     RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml \
 	    --release --bin \
 	    dios -- synth \
@@ -2457,22 +2447,25 @@ function run() {
 	    >"variable_dup_abl_n_ops/$1.out" \
 	    2>"variable_dup_abl_n_ops/$1.err" || true
     echo "Finished $1"
+    sleep 5
 }
 
-# run "1-vd-False"
-# run "1-vd-True"
-# run "2-vd-False"
-# run "2-vd-True"
-# run "3-vd-False"
-# run "3-vd-True"
-run "4-vd-False"
-run "4-vd-True"
+rm variable_dup_abl_n_ops/rules-*.json
+
+run "1-vd-False" || true
+run "1-vd-True" || true
+run "2-vd-False" || true
+run "2-vd-True" || true
+run "3-vd-False" || true
+run "3-vd-True" || true
+run "4-vd-False" || true
+run "4-vd-True" || true
 #+end_src
 
 *** Run the experiment
 
 #+begin_src emacs-lisp :dir (magit-toplevel)
-(let* ((addr "3.16.147.252"))
+(let* ((addr "3.21.40.48"))
   ;; sync files
   (shell-command-to-string
    (format "./sync.sh %s" addr))
@@ -2490,13 +2483,37 @@ run "4-vd-True"
 #+RESULTS:
 
 #+begin_src async-shell :dir (magit-toplevel)
-rsync -rvp ubuntu@3.16.147.252:~/diospyros/variable_dup_abl_n_ops .
+rm variable_dup_abl_n_ops/rules-*.json
+rsync -rvp ubuntu@3.21.40.48:~/diospyros/variable_dup_abl_n_ops .
 #+end_src
 
 #+RESULTS:
-: #<window 355 on *Async Shell Command*>
+: #<window 548 on *Async Shell Command*>
 
 3-true ran out of memory on machine with 512 gb ram (only 500 show up on htop)
+
+*** Debugging n_ops=4
+
+#+begin_src async-shell :dir (magit-toplevel)
+RUST_LOG=info RUST_BACKTRACE=1 \
+	cargo run --manifest-path ruler/Cargo.toml \
+	--release --bin \
+	dios -- synth \
+	--dios-config "variable_dup_abl_n_ops/4-vd-True.json" \
+	--variables 4 \
+	--iters 2 \
+	--vector-size 2 \
+	--eqsat-iter-limit 3 \
+	--eqsat-time-limit 30 \
+	--num-fuzz 10 \
+	--abs-timeout 60 \
+	--outfile "variable_dup_abl_n_ops/4-vd-True.json"
+#+end_src
+
+#+RESULTS:
+: #<window 473 on *Async Shell Command*>
+
+I think the problem was in =vecs_eq= where I was being too permissive with letting things through.
 
 *** Make a pretty plot
 
@@ -2515,6 +2532,10 @@ for p in exp.glob("rules-*"):
     n_ops = int(name.split("-")[0])
     vd = name.split("-")[2]
     table.append([n_ops, vd, data["time"]])
+
+# manual values
+table.append([3, "True", 0.0]) # ran out of memory
+
 return table
 #+end_src
 
@@ -2522,15 +2543,16 @@ return table
 #+RESULTS:
 | n-ops | var-dup |               time |
 |-------+---------+--------------------|
-|     2 | True    |       10.008175758 |
-|     1 | False   |        0.655823982 |
-|     2 | False   |        3.449267693 |
-|     3 | False   | 5.3039296799999995 |
-|     1 | True    |        2.112773784 |
+|     2 | True    |        9.644385274 |
+|     4 | False   |      299.545796437 |
+|     1 | False   |        0.712207227 |
+|     2 | False   | 3.0734577180000002 |
+|     3 | False   |        5.052720378 |
+|     1 | True    |        1.924957563 |
 
 #+header: :var data=n_ops_var_dup
 #+header: :file variable_dup_abl_n_ops/n_ops.png
-#+begin_src R :session *graphics* :colnames yes :results graphics file 
+#+begin_src R :session *n_ops* :colnames yes :results graphics file 
 library(tidyverse)
 
 data %>%
@@ -2542,4 +2564,436 @@ data %>%
 #+RESULTS:
 [[file:../variable_dup_abl_n_ops/n_ops.png]]
 
+** Ablate by number of binops (shorter eqsat phase)
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
+
+*** Generate Configs
+
+Generate configs with different =variable_duplication= and =ops= and =vec_ops= increasing from =["\+"]= to
+=["+", "-", "*", "/"]=.
+
+#+begin_src python :results silent
+import json
+import os 
+from pathlib import Path
+
+ops = ["+", "-", "*", "/"]
+
+for vd in [True, False]:
+    for n in range(len(ops)):
+        config = {
+            "constants": [],
+            "seed_rules": [],
+            "binops": ops[:n+1],
+            "use_vector": True,
+            "vector_binops": ops[:n+1],
+            "vector_mac": True,
+            "variable_duplication": vd
+        }
+        p = Path("experiments/vd_dup_abl_n_ops_short_eqsat")
+        p.mkdir(exist_ok=True)
+        with (p / f"{n+1}-vd-{vd}.json").open("w") as f:
+            json.dump(config, f, indent=4)
+#+end_src
+
+*** Ruler ablation script
+
+#+header: :shebang #!/usr/bin/env bash
+#+begin_src shell :tangle "vd_dup_abl_n_ops_short_eqsat/ablation.sh" :mkdirp yes
+function run() {
+    echo "Starting $1"
+    RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml \
+	    --release --bin \
+	    dios -- synth \
+	    --dios-config "experiments/vd_dup_abl_n_ops_short_eqsat/$1.json" \
+	    --variables 4 \
+	    --iters 2 \
+	    --vector-size 2 \
+	    --eqsat-iter-limit 2 \
+	    --eqsat-time-limit 30 \
+	    --num-fuzz 6 \
+	    --abs-timeout 60000 \
+	    --outfile "experiments/vd_dup_abl_n_ops_short_eqsat/rules-$1.json" \
+	    >"experiments/vd_dup_abl_n_ops_short_eqsat/$1.out" \
+	    2>"experiments/vd_dup_abl_n_ops_short_eqsat/$1.err" || true
+    echo "Finished $1"
+    sleep 5
+}
+
+rm -f experiments/vd_dup_abl_n_ops_short_eqsat/rules-*.json
+
+run "1-vd-False" || true
+run "2-vd-False" || true
+run "3-vd-False" || true
+run "4-vd-False" || true
+run "1-vd-True" || true
+run "2-vd-True" || true
+run "3-vd-True" || true
+run "4-vd-True" || true
+#+end_src
+
+*** Run the experiment
+
+#+begin_src emacs-lisp :dir (magit-toplevel)
+(let* ((addr "3.12.85.30"))
+  ;; sync files
+  (shell-command-to-string
+   (format "./sync.sh %s" addr))
+  ;; start remote tmux session
+  (shell-command-to-string
+   (format "ssh ubuntu@%s \"tmux new -d -s abl\""
+	   addr))
+  ;; start the script
+  (shell-command-to-string
+   (format "ssh ubuntu@%s \"tmux send -t abl '%s' ENTER\""
+	   addr
+	   "cd ~/diospyros && ./experiments/vd_dup_abl_n_ops_short_eqsat/ablation.sh")))
+#+end_src
+
+#+RESULTS:
+
+#+begin_src async-shell :dir (magit-toplevel)
+rm experiments/vd_dup_abl_n_ops_short_eqsat/rules-*.json
+rsync -rvp ubuntu@3.12.85.30:~/diospyros/experiments/vd_dup_abl_n_ops_short_eqsat \
+      ./experiments
+#+end_src
+
+#+RESULTS:
+: #<window 758 on *Async Shell Command*>
+
+*** Make a pretty plot
+
+First we gotta make a table of the data. Let's do that in python.
+
+#+begin_src python :dir (magit-toplevel) :results value :colnames '("n-ops" "var-dup" "time")
+import json
+from pathlib import Path
+
+exp = Path("experiments/vd_dup_abl_n_ops_short_eqsat")
+# print(exp.glob("rules-*"))
+table = []
+for p in exp.glob("rules-*"):
+    data = json.load(p.open("r"))
+    name = data["params"]["dios_config"].split("/")[2].split(".")[0]
+    n_ops = int(name.split("-")[0])
+    vd = name.split("-")[2]
+    table.append([n_ops, vd, data["time"]])
+
+return table
+#+end_src
+
+#+name: n_ops_var_dup_short
+#+RESULTS:
+| n-ops | var-dup |         time |
+|-------+---------+--------------|
+|     3 | True    | 49.021542695 |
+|     2 | True    | 11.463658914 |
+|     1 | False   |  0.723772171 |
+|     2 | False   |  3.315880664 |
+|     3 | False   |  5.306232725 |
+|     1 | True    |  2.067974486 |
+
+#+header: :var data=n_ops_var_dup_short
+#+header: :file experiments/vd_dup_abl_n_ops_short_eqsat/n_ops.png
+#+begin_src R :session *n_ops_short* :colnames yes :results graphics file 
+library(tidyverse)
+
+data %>%
+  ggplot(aes(x = n.ops, y = time, group = var.dup, color = var.dup)) +
+  geom_line() +
+  geom_point()
+#+end_src
+
+#+RESULTS:
+[[file:vd_dup_abl_n_ops_short_eqsat/n_ops.png]]
+
+** Ablate by vector size (n_ops=2, short)
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
+
+I'll use just two ops first to make things faster.
+
+*** Generate Configs
+
+Generate configs that vary =variable_duplication= and vector size. The operations use the ops =["+", "*"]=.
+
+#+begin_src python :dir (magit-toplevel) :results silent
+import json
+import os 
+from pathlib import Path
+
+ops = ["+", "*"]
+
+for vd in [True, False]:
+    config = {
+        "constants": [],
+        "seed_rules": [],
+        "binops": ops,
+        "use_vector": True,
+        "vector_binops": ops,
+        "vector_mac": True,
+        "variable_duplication": vd
+    }
+    p = Path("experiments/vd_abl_n_op2_vec_size_short")
+    p.mkdir(exist_ok=True)
+    with (p / f"vd-{vd}.json").open("w") as f:
+        json.dump(config, f, indent=4)
+#+end_src
+
+*** Ablation script
+
+#+header: :shebang #!/usr/bin/env bash
+#+begin_src shell :tangle "../experiments/vd_abl_n_op2_vec_size_short/ablation.sh" :mkdirp yes
+function run() {
+    echo "Starting vec-$2-vd-$1"
+    RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml \
+	    --release --bin \
+	    dios -- synth \
+	    --dios-config "experiments/vd_abl_n_op2_vec_size_short/vd-$1.json" \
+	    --variables $((2*$2)) \
+	    --iters 2 \
+	    --vector-size $2 \
+	    --eqsat-iter-limit 2 \
+	    --eqsat-time-limit 30 \
+	    --num-fuzz 10 \
+	    --abs-timeout 60000 \
+	    --outfile "experiments/vd_abl_n_op2_vec_size_short/rules-vec-$2-$1.json" \
+	    >"experiments/vd_abl_n_op2_vec_size_short/vec-$2-vd-$1.out" \
+	    2>"experiments/vd_abl_n_op2_vec_size_short/vec-$2-vd-$1.err" || true
+    echo "Finished vec-$2-vd-$1"
+    sleep 1
+}
+
+rm experiments/vd_abl_n_op2_vec_size_short/rules-*.json
+
+run False 2 || true
+run False 3 || true
+run False 4 || true
+run False 8 || true
+run True 2 || true
+run True 3 || true
+run True 4 || true
+run True 8 || true
+#+end_src
+
+*** Run experiment
+
+#+begin_src emacs-lisp :dir (magit-toplevel)
+(let* ((addr "3.12.85.30"))
+  ;; sync files
+  (shell-command-to-string
+   (format "./sync.sh %s" addr))
+  ;; start remote tmux session
+  (shell-command-to-string
+   (format "ssh ubuntu@%s \"tmux new -d -s vec-abl\""
+	   addr))
+  ;; start the script
+  (shell-command-to-string
+   (format "ssh ubuntu@%s \"tmux send -t vec-abl '%s' ENTER\""
+	   addr
+	   "cd ~/diospyros && ./experiments/vd_abl_n_op2_vec_size_short/ablation.sh")))
+#+end_src
+
+#+RESULTS:
+
+#+begin_src async-shell :dir (magit-toplevel)
+rm -f experiments/vd_abl_n_op2_vec_size_short/rules-*.json
+rsync -rvp ubuntu@3.12.85.30:~/diospyros/experiments/vd_abl_n_op2_vec_size_short \
+      experiments/
+#+end_src
+
+#+RESULTS:
+: #<window 831 on *Async Shell Command*>
+
+*** Make a pretty plot
+
+First we gotta make a table of the data. Let's do that in python.
+
+#+begin_src python :dir (magit-toplevel) :results value :colnames '("vec-size" "var-dup" "time")
+import json
+from pathlib import Path
+
+exp = Path("experiments/vd_abl_n_op2_vec_size_short")
+table = []
+for p in exp.glob("rules-*"):
+    data = json.load(p.open("r"))
+    name = data["params"]["dios_config"].split("/")[2].split(".")[0]
+    n_vec = data["params"]["vector_size"]
+    vd = name.split("-")[1]
+    table.append([n_vec, vd, data["time"]])
+
+return table
+#+end_src
+
+#+name: n_vec_var_dup_short
+#+RESULTS:
+| vec-size | var-dup |          time |
+|----------+---------+---------------|
+|        2 | False   |   2.672174319 |
+|        3 | False   | 591.774395683 |
+
+#+header: :var data=n_vec_var_dup_short
+#+header: :file experiments/vd_abl_n_op2_vec_size_short/n_vec.png
+#+begin_src R :session *n_vec* :colnames yes :results graphics file 
+library(tidyverse)
+
+data %>%
+  ggplot(aes(x = vec.size, y = time, group = var.dup, color = var.dup)) +
+  geom_line() +
+  geom_point()
+#+end_src
+
+#+RESULTS:
+[[file:vd_abl_n_op2_vec_size_short/n_vec.png]]
+
+** Ablate by vector size (n_ops=2)
+:PROPERTIES:
+:header-args: :dir (magit-toplevel)
+:END:
+
+I'll use just two ops first to make things faster.
+
+*** Generate Configs
+
+Generate configs that vary =variable_duplication= and vector size. The operations use the ops =["+", "*"]=.
+
+#+begin_src python :dir (magit-toplevel) :results silent
+import json
+import os 
+from pathlib import Path
+
+ops = ["+", "*"]
+
+for vd in [True, False]:
+    config = {
+        "constants": [],
+        "seed_rules": [],
+        "binops": ops,
+        "use_vector": True,
+        "vector_binops": ops,
+        "vector_mac": True,
+        "variable_duplication": vd
+    }
+    p = Path("vd_abl_n_op2_vec_size")
+    p.mkdir(exist_ok=True)
+    with (p / f"vd-{vd}.json").open("w") as f:
+        json.dump(config, f, indent=4)
+#+end_src
+
+*** Ablation script
+
+#+begin_src shell :tangle "../vd_abl_n_op2_vec_size/ablation.sh" :mkdirp t
+#!/usr/bin/env bash
+
+function run() {
+    echo "Starting vec-$2-vd-$1"
+    RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml \
+	    --release --bin \
+	    dios -- synth \
+	    --dios-config "vd_abl_n_op2_vec_size/vd-$1.json" \
+	    --variables $((2*$2)) \
+	    --iters 2 \
+	    --vector-size $2 \
+	    --eqsat-iter-limit 3 \
+	    --eqsat-time-limit 120 \
+	    --num-fuzz 10 \
+	    --abs-timeout 60000 \
+	    --outfile "vd_abl_n_op2_vec_size/rules-vec-$2-$1.json" \
+	    >"vd_abl_n_op2_vec_size/vec-$2-vd-$1.out" \
+	    2>"vd_abl_n_op2_vec_size/vec-$2-vd-$1.err" || true
+    echo "Finished vec-$2-vd-$1"
+    sleep 5
+}
+
+rm vd_abl_n_op2_vec_size/rules-*.json
+
+# run False 2 || true
+# run True 2 || true
+# run False 3 || true
+run True 3 || true
+run False 4 || true
+run True 4 || true
+run False 8 || true
+run True 8 || true
+#+end_src
+
+*** Run experiment
+
+#+begin_src emacs-lisp :dir (magit-toplevel)
+(let* ((addr "3.21.40.48"))
+  ;; sync files
+  (shell-command-to-string
+   (format "./sync.sh %s" addr))
+  ;; start remote tmux session
+  (shell-command-to-string
+   (format "ssh ubuntu@%s \"tmux new -d -s vec-abl\""
+	   addr))
+  ;; start the script
+  (shell-command-to-string
+   (format "ssh ubuntu@%s \"tmux send -t vec-abl '%s' ENTER\""
+	   addr
+	   "cd ~/diospyros && ./vd_abl_n_op2_vec_size/ablation.sh")))
+#+end_src
+
+#+RESULTS:
+
+#+begin_src async-shell :dir (magit-toplevel)
+rm -f vd_abl_n_op2_vec_size/rules-*.json
+rsync -rvp ubuntu@3.21.40.48:~/diospyros/vd_abl_n_op2_vec_size .
+#+end_src
+
+#+RESULTS:
+: #<window 642 on *Async Shell Command*>
+
+*** Make a pretty plot
+
+First we gotta make a table of the data. Let's do that in python.
+
+#+begin_src python :dir (magit-toplevel) :results value :colnames '("vec-size" "var-dup" "time")
+import json
+from pathlib import Path
+
+exp = Path("vd_abl_n_op2_vec_size")
+table = []
+for p in exp.glob("rules-*"):
+    data = json.load(p.open("r"))
+    name = data["params"]["dios_config"].split("/")[1].split(".")[0]
+    n_vec = data["params"]["vector_size"]
+    vd = name.split("-")[1]
+    table.append([n_vec, vd, data["time"]])
+
+return table
+#+end_src
+
+#+name: n_vec_var_dup
+#+RESULTS:
+| vec-size | var-dup |            time |
+|----------+---------+-----------------|
+|        2 | True    |      4.60434182 |
+|        2 | False   |     2.565394821 |
+|        3 | True    | 11528.533479939 |
+|        3 | False   |   375.842439456 |
+|        4 | True    |  6047.932144041 |
+|        4 | False   |  6001.104431702 |
+|        8 | True    |  6064.498825336 |
+|        8 | False   |  6030.023217395 |
+
+#+header: :var data=n_vec_var_dup
+#+header: :file vd_abl_n_op2_vec_size/n_vec.png
+#+begin_src R :session *n_vec* :colnames yes :results graphics file 
+library(tidyverse)
+
+data %>%
+  ggplot(aes(x = vec.size, y = time, group = var.dup, color = var.dup)) +
+  geom_line() +
+  geom_point()
+#+end_src
+
+#+RESULTS:
+[[file:../vd_abl_n_op2_vec_size/n_vec.png]]
+
+** Ablate by vector size (n_ops=4)
 

@@ -533,7 +533,6 @@ impl SynthLanguage for VecLang {
             let mut cvec = vec![];
 
             let (n_ints, n_vecs) = split_into_halves(cvec_size);
-            eprintln!("size({cvec_size}): #ints: {n_ints}, #vecs: {n_vecs}");
 
             cvec.extend(
                 Value::sample_int(&mut synth.rng, -100, 100, n_ints)
@@ -555,8 +554,6 @@ impl SynthLanguage for VecLang {
 
             egraph[id].data.cvec = cvec;
         }
-
-        eprintln!("egraph: {egraph:#?}");
 
         // set egraph to the one we just constructed
         synth.egraph = egraph;
@@ -820,15 +817,10 @@ impl SynthLanguage for VecLang {
             }
 
             // debug(
-            //     "(< (+ ?a ?b) (+ ?c ?a))",
-            //     "(< ?b (+ i1 ?c))",
+            //     "(/ ?b ?a)",
+            //     "(VecMul ?b ?b)",
             //     length,
-            //     &[
-            //         ("?a", Value::Int(66)),
-            //         ("?b", Value::Int(89)),
-            //         ("?c", Value::Int(-6)),
-            //         ("?d", Value::Int(83)),
-            //     ],
+            //     &[("?a", Value::Int(10)), ("?b", Value::Int(20))],
             // );
             // panic!();
 
@@ -839,6 +831,7 @@ impl SynthLanguage for VecLang {
                 log::debug!("  env: {:?}", env);
                 log::debug!("  lhs: {}, rhs: {}", lhs, rhs);
                 log::debug!("  lvec: {:?}, rvec: {:?}", lvec, rvec);
+                log::debug!("  eq: {}", vecs_eq(&lvec, &rvec));
             }
 
             vecs_eq(&lvec, &rvec)
@@ -887,7 +880,8 @@ fn vecs_eq(lvec: &CVec<VecLang>, rvec: &CVec<VecLang>) -> bool {
     } else {
         lvec.iter().zip(rvec.iter()).all(|tup| match tup {
             (Some(l), Some(r)) => l == r,
-            _ => true,
+            (None, None) => true,
+            _ => false,
         })
     }
 }
@@ -922,10 +916,8 @@ fn debug(left: &str, right: &str, n: usize, env_pairs: &[(&str, Value)]) {
     log::info!("right");
     let rres = VecLang::eval_pattern(&pright, &env, n);
     log::info!(
-        "TEST:\n  {:?}\n    ?= ({})\n  {:?}",
-        lres,
+        "TEST:\n  {lres:?}\n    ?= ({})\n  {rres:?}",
         vecs_eq(&lres, &rres),
-        rres
     );
     log::info!("{} => {}", left, right);
 }

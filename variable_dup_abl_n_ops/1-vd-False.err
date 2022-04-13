@@ -1,345 +1,7 @@
-    Updating crates.io index
- Downloading crates ...
-  Downloaded cexpr v0.4.0
-  Downloaded humantime v2.1.0
-  Downloaded env_logger v0.8.4
-  Downloaded itertools v0.10.3
-  Downloaded egg v0.7.1
-  Downloaded clang-sys v1.2.2
-  Downloaded thiserror v1.0.30
-  Downloaded libloading v0.7.1
-  Downloaded z3 v0.11.2
-  Downloaded which v3.1.1
-  Downloaded peeking_take_while v0.1.2
-  Downloaded thiserror-impl v1.0.30
-  Downloaded shlex v1.1.0
-  Downloaded aho-corasick v0.7.18
-  Downloaded nom v5.1.2
-  Downloaded bindgen v0.58.1
-  Downloaded z3-sys v0.7.1
-   Compiling autocfg v1.0.1
-   Compiling libc v0.2.101
-   Compiling proc-macro2 v1.0.29
-   Compiling cfg-if v1.0.0
-   Compiling unicode-xid v0.2.2
-   Compiling version_check v0.9.3
-   Compiling log v0.4.14
-   Compiling memchr v2.4.1
-   Compiling syn v1.0.76
-   Compiling glob v0.3.0
-   Compiling getrandom v0.1.16
-   Compiling lazy_static v1.4.0
-   Compiling regex-syntax v0.6.25
-   Compiling crossbeam-utils v0.8.5
-   Compiling unicode-width v0.1.8
-   Compiling termcolor v1.1.2
-   Compiling vec_map v0.8.2
-   Compiling ansi_term v0.11.0
-   Compiling humantime v2.1.0
-   Compiling strsim v0.8.0
-   Compiling bitflags v1.3.2
-   Compiling bindgen v0.58.1
-   Compiling crossbeam-epoch v0.9.5
-   Compiling lazycell v1.3.0
-   Compiling rustc-hash v1.1.0
-   Compiling ppv-lite86 v0.2.10
-   Compiling shlex v1.1.0
-   Compiling peeking_take_while v0.1.2
-   Compiling cc v1.0.70
-   Compiling serde_derive v1.0.130
-   Compiling scopeguard v1.1.0
-   Compiling rayon-core v1.9.1
-   Compiling ryu v1.0.5
-   Compiling serde v1.0.130
-   Compiling unicode-segmentation v1.8.0
-   Compiling hashbrown v0.11.2
-   Compiling serde_json v1.0.67
-   Compiling libm v0.2.1
-   Compiling byteorder v1.4.3
-   Compiling either v1.6.1
-   Compiling symbolic_expressions v5.0.3
-   Compiling strsim v0.10.0
-   Compiling smallvec v1.6.1
-   Compiling os_str_bytes v3.1.0
-   Compiling once_cell v1.8.0
-   Compiling itoa v0.4.8
-   Compiling instant v0.1.10
-   Compiling libloading v0.7.1
-   Compiling textwrap v0.14.2
-   Compiling textwrap v0.11.0
-   Compiling itertools v0.10.3
-   Compiling heck v0.3.3
-   Compiling nom v5.1.2
-   Compiling proc-macro-error-attr v1.0.4
-   Compiling proc-macro-error v1.0.4
-   Compiling num-traits v0.2.14
-   Compiling num-integer v0.1.44
-   Compiling memoffset v0.6.4
-   Compiling indexmap v1.7.0
-   Compiling num-bigint v0.3.3
-   Compiling num-rational v0.3.2
-   Compiling num-iter v0.1.42
-   Compiling rayon v1.5.1
-   Compiling cmake v0.1.45
-   Compiling fxhash v0.2.1
-   Compiling clang-sys v1.2.2
-   Compiling env_logger v0.7.1
-   Compiling crossbeam-channel v0.5.1
-   Compiling crossbeam-deque v0.8.1
-   Compiling aho-corasick v0.7.18
-   Compiling atty v0.2.14
-   Compiling which v3.1.1
-   Compiling num_cpus v1.13.0
-   Compiling num-complex v0.3.1
-   Compiling float-cmp v0.8.0
-   Compiling ordered-float v2.8.0
-   Compiling clap v2.33.3
-   Compiling quote v1.0.9
-   Compiling rand_core v0.5.1
-   Compiling rand_chacha v0.2.2
-   Compiling rand_pcg v0.2.1
-   Compiling rand v0.7.3
-   Compiling regex v1.5.4
-   Compiling cexpr v0.4.0
-   Compiling env_logger v0.8.4
-   Compiling num v0.3.1
-   Compiling thiserror-impl v1.0.30
-   Compiling clap_derive v3.0.0-beta.4
-   Compiling thiserror v1.0.30
-   Compiling egg v0.7.1
-   Compiling clap v3.0.0-beta.4
-   Compiling z3-sys v0.7.1
-   Compiling z3 v0.11.2
    Compiling ruler v0.1.0 (/home/ubuntu/diospyros/ruler)
-    Finished release [optimized] target(s) in 4m 29s
+    Finished release [optimized] target(s) in 8.55s
      Running `ruler/target/release/dios synth --dios-config variable_dup_abl_n_ops/1-vd-False.json --variables 4 --iters 2 --vector-size 2 --eqsat-iter-limit 3 --eqsat-time-limit 120 --num-fuzz 6 --abs-timeout 6000 --outfile variable_dup_abl_n_ops/rules-1-vd-False.json`
 [INFO  dios] config: variable_dup_abl_n_ops/1-vd-False.json
-size(4): #ints: 2, #vecs: 2
-size(4): #ints: 2, #vecs: 2
-size(4): #ints: 2, #vecs: 2
-size(4): #ints: 2, #vecs: 2
-egraph: EGraph {
-    memo: {
-        Symbol(
-            "b",
-        ): 1,
-        Symbol(
-            "d",
-        ): 3,
-        Symbol(
-            "a",
-        ): 0,
-        Symbol(
-            "c",
-        ): 2,
-    },
-    classes: {
-        0: EClass {
-            id: 0,
-            nodes: [
-                Symbol(
-                    "a",
-                ),
-            ],
-            data: Signature {
-                cvec: [
-                    Some(
-                        Int(
-                            66,
-                        ),
-                    ),
-                    Some(
-                        Int(
-                            -66,
-                        ),
-                    ),
-                    Some(
-                        Vec(
-                            [
-                                Int(
-                                    -90,
-                                ),
-                                Int(
-                                    37,
-                                ),
-                            ],
-                        ),
-                    ),
-                    Some(
-                        Vec(
-                            [
-                                Int(
-                                    56,
-                                ),
-                                Int(
-                                    -77,
-                                ),
-                            ],
-                        ),
-                    ),
-                ],
-                exact: false,
-                vars: [
-                    "a",
-                ],
-            },
-            parents: [],
-        },
-        2: EClass {
-            id: 2,
-            nodes: [
-                Symbol(
-                    "c",
-                ),
-            ],
-            data: Signature {
-                cvec: [
-                    Some(
-                        Int(
-                            -73,
-                        ),
-                    ),
-                    Some(
-                        Int(
-                            -100,
-                        ),
-                    ),
-                    Some(
-                        Vec(
-                            [
-                                Int(
-                                    50,
-                                ),
-                                Int(
-                                    -26,
-                                ),
-                            ],
-                        ),
-                    ),
-                    Some(
-                        Vec(
-                            [
-                                Int(
-                                    -94,
-                                ),
-                                Int(
-                                    -38,
-                                ),
-                            ],
-                        ),
-                    ),
-                ],
-                exact: false,
-                vars: [
-                    "c",
-                ],
-            },
-            parents: [],
-        },
-        1: EClass {
-            id: 1,
-            nodes: [
-                Symbol(
-                    "b",
-                ),
-            ],
-            data: Signature {
-                cvec: [
-                    Some(
-                        Int(
-                            -33,
-                        ),
-                    ),
-                    Some(
-                        Int(
-                            43,
-                        ),
-                    ),
-                    Some(
-                        Vec(
-                            [
-                                Int(
-                                    -77,
-                                ),
-                                Int(
-                                    -82,
-                                ),
-                            ],
-                        ),
-                    ),
-                    Some(
-                        Vec(
-                            [
-                                Int(
-                                    -77,
-                                ),
-                                Int(
-                                    29,
-                                ),
-                            ],
-                        ),
-                    ),
-                ],
-                exact: false,
-                vars: [
-                    "b",
-                ],
-            },
-            parents: [],
-        },
-        3: EClass {
-            id: 3,
-            nodes: [
-                Symbol(
-                    "d",
-                ),
-            ],
-            data: Signature {
-                cvec: [
-                    Some(
-                        Int(
-                            32,
-                        ),
-                    ),
-                    Some(
-                        Int(
-                            0,
-                        ),
-                    ),
-                    Some(
-                        Vec(
-                            [
-                                Int(
-                                    -90,
-                                ),
-                                Int(
-                                    31,
-                                ),
-                            ],
-                        ),
-                    ),
-                    Some(
-                        Vec(
-                            [
-                                Int(
-                                    13,
-                                ),
-                                Int(
-                                    34,
-                                ),
-                            ],
-                        ),
-                    ),
-                ],
-                exact: false,
-                vars: [
-                    "d",
-                ],
-            },
-            parents: [],
-        },
-    },
-}
 [INFO  ruler] [[[ Iteration 1 ]]]
 [INFO  ruler] Made layer! Using chunk size: 100000
 [INFO  ruler] egraph n=4, e=4
@@ -350,13 +12,13 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000000062
-[INFO  egg::run] Apply time: 0.000000351
+[INFO  egg::run] Search time: 0.000000137
+[INFO  egg::run] Apply time: 0.00000027
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 44, eclasses: 44
       New: hc size 44, eclasses: 44
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000004593
+[INFO  egg::run] Rebuild time: 0.000004973
 [INFO  egg::run] Size: n=44, e=44
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Saturated collecting unions...
@@ -364,7 +26,7 @@ egraph: EGraph {
       Old: hc size 44, eclasses: 44
       New: hc size 44, eclasses: 44
       unions: 0, trimmed nodes: 0
-[INFO  ruler] Ran 0 rules in 80.448µs
+[INFO  ruler] Ran 0 rules in 82.583µs
 [INFO  ruler] cvec matching... (no_conditionals: false)
 [INFO  ruler] # unique cvecs: 23
 [INFO  ruler] 2 candidate eqs
@@ -378,21 +40,19 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000000433
-[INFO  egg::run] Apply time: 0.000000561
+[INFO  egg::run] Search time: 0.000000434
+[INFO  egg::run] Apply time: 0.000000512
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 6, eclasses: 6
       New: hc size 6, eclasses: 6
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.00000312
+[INFO  egg::run] Rebuild time: 0.000003508
 [INFO  egg::run] Size: n=6, e=6
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 1
 [INFO  ruler] Minimizing... threw away 0 rules, 1 / 2 remain
 [INFO  ruler] Chose 2 good rules
-[INFO  ruler]   (+ ?b ?a) <=> (+ ?a ?b)
-[INFO  ruler]   (VecAdd ?b ?a) <=> (VecAdd ?a ?b)
-[INFO  ruler] Time taken in... run_rewrites: 0.000096447, rule discovery: 0.000178972, rule minimization: 0.017259951
+[INFO  ruler] Time taken in... run_rewrites: 0.000099099, rule discovery: 0.000189881, rule minimization: 0.017515538
 [INFO  ruler] Stopping early, took all eqs
 [INFO  ruler] [[[ Iteration 2 ]]]
 [INFO  ruler] Made layer! Using chunk size: 100000
@@ -404,23 +64,23 @@ egraph: EGraph {
       unions: 61, trimmed nodes: 61
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000123932
-[INFO  egg::run] Apply time: 0.000105829
+[INFO  egg::run] Search time: 0.000133428
+[INFO  egg::run] Apply time: 0.00011071
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 1704, eclasses: 1642
       New: hc size 1704, eclasses: 960
       unions: 549, trimmed nodes: 599
-[INFO  egg::run] Rebuild time: 0.000405103
+[INFO  egg::run] Rebuild time: 0.000418671
 [INFO  egg::run] Size: n=1704, e=960
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.000132762
-[INFO  egg::run] Apply time: 0.000050933
+[INFO  egg::run] Search time: 0.000119103
+[INFO  egg::run] Apply time: 0.000050306
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 1704, eclasses: 960
       New: hc size 1704, eclasses: 960
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000044748
+[INFO  egg::run] Rebuild time: 0.00004634
 [INFO  egg::run] Size: n=1704, e=960
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Saturated collecting unions...
@@ -428,7 +88,7 @@ egraph: EGraph {
       Old: hc size 1704, eclasses: 960
       New: hc size 1704, eclasses: 960
       unions: 0, trimmed nodes: 0
-[INFO  ruler] Ran 2 rules in 1.797003ms
+[INFO  ruler] Ran 2 rules in 1.963507ms
 [INFO  ruler] cvec matching... (no_conditionals: false)
 [INFO  ruler] # unique cvecs: 166
 [INFO  ruler] 92 candidate eqs
@@ -442,23 +102,23 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000086685
-[INFO  egg::run] Apply time: 0.000074058
+[INFO  egg::run] Search time: 0.000090317
+[INFO  egg::run] Apply time: 0.000076541
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 157, eclasses: 157
       New: hc size 157, eclasses: 53
       unions: 37, trimmed nodes: 72
-[INFO  egg::run] Rebuild time: 0.000077615
+[INFO  egg::run] Rebuild time: 0.000079769
 [INFO  egg::run] Size: n=157, e=53
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.000075662
-[INFO  egg::run] Apply time: 0.000085592
+[INFO  egg::run] Search time: 0.000078001
+[INFO  egg::run] Apply time: 0.000089892
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 157, eclasses: 53
       New: hc size 157, eclasses: 53
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000006756
+[INFO  egg::run] Rebuild time: 0.000007388
 [INFO  egg::run] Size: n=157, e=53
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 2
@@ -471,23 +131,23 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000005869
-[INFO  egg::run] Apply time: 0.000004411
+[INFO  egg::run] Search time: 0.000006163
+[INFO  egg::run] Apply time: 0.000004234
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 11, eclasses: 11
       New: hc size 11, eclasses: 9
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000005534
+[INFO  egg::run] Rebuild time: 0.000005791
 [INFO  egg::run] Size: n=11, e=9
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.000006117
-[INFO  egg::run] Apply time: 0.000002491
+[INFO  egg::run] Search time: 0.000006506
+[INFO  egg::run] Apply time: 0.000002552
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 11, eclasses: 9
       New: hc size 11, eclasses: 9
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000003082
+[INFO  egg::run] Rebuild time: 0.000003501
 [INFO  egg::run] Size: n=11, e=9
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 2
@@ -500,33 +160,33 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000009291
-[INFO  egg::run] Apply time: 0.000027634
+[INFO  egg::run] Search time: 0.00000946
+[INFO  egg::run] Apply time: 0.000027958
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 84, eclasses: 84
       New: hc size 86, eclasses: 37
       unions: 10, trimmed nodes: 19
-[INFO  egg::run] Rebuild time: 0.000031141
+[INFO  egg::run] Rebuild time: 0.000032282
 [INFO  egg::run] Size: n=86, e=37
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.00000969
-[INFO  egg::run] Apply time: 0.000013306
+[INFO  egg::run] Search time: 0.000010234
+[INFO  egg::run] Apply time: 0.000013803
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 87, eclasses: 38
       New: hc size 87, eclasses: 37
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000005669
+[INFO  egg::run] Rebuild time: 0.000006093
 [INFO  egg::run] Size: n=87, e=37
 [INFO  egg::run] 
     Iteration 2
-[INFO  egg::run] Search time: 0.000008244
-[INFO  egg::run] Apply time: 0.000012044
+[INFO  egg::run] Search time: 0.000008932
+[INFO  egg::run] Apply time: 0.000012544
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 87, eclasses: 37
       New: hc size 87, eclasses: 37
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000005085
+[INFO  egg::run] Rebuild time: 0.000005359
 [INFO  egg::run] Size: n=87, e=37
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 3
@@ -539,33 +199,33 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000006892
-[INFO  egg::run] Apply time: 0.000019276
+[INFO  egg::run] Search time: 0.000007015
+[INFO  egg::run] Apply time: 0.000019352
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 55, eclasses: 55
       New: hc size 59, eclasses: 32
       unions: 1, trimmed nodes: 1
-[INFO  egg::run] Rebuild time: 0.000019852
+[INFO  egg::run] Rebuild time: 0.000020918
 [INFO  egg::run] Size: n=59, e=32
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.000009155
-[INFO  egg::run] Apply time: 0.000014697
+[INFO  egg::run] Search time: 0.000009584
+[INFO  egg::run] Apply time: 0.000015299
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 63, eclasses: 36
       New: hc size 63, eclasses: 32
       unions: 0, trimmed nodes: 2
-[INFO  egg::run] Rebuild time: 0.000008201
+[INFO  egg::run] Rebuild time: 0.000008755
 [INFO  egg::run] Size: n=63, e=32
 [INFO  egg::run] 
     Iteration 2
-[INFO  egg::run] Search time: 0.000009277
-[INFO  egg::run] Apply time: 0.00001095
+[INFO  egg::run] Search time: 0.000009873
+[INFO  egg::run] Apply time: 0.000011646
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 63, eclasses: 32
       New: hc size 63, eclasses: 32
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000004857
+[INFO  egg::run] Rebuild time: 0.000005232
 [INFO  egg::run] Size: n=63, e=32
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 3
@@ -578,33 +238,33 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000005988
-[INFO  egg::run] Apply time: 0.000017135
+[INFO  egg::run] Search time: 0.000005976
+[INFO  egg::run] Apply time: 0.00001696
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 43, eclasses: 43
       New: hc size 44, eclasses: 27
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000013051
+[INFO  egg::run] Rebuild time: 0.000013703
 [INFO  egg::run] Size: n=44, e=27
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.00000675
-[INFO  egg::run] Apply time: 0.000022879
+[INFO  egg::run] Search time: 0.000007049
+[INFO  egg::run] Apply time: 0.000007888
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 45, eclasses: 28
       New: hc size 45, eclasses: 27
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000005414
+[INFO  egg::run] Rebuild time: 0.00000566
 [INFO  egg::run] Size: n=45, e=27
 [INFO  egg::run] 
     Iteration 2
-[INFO  egg::run] Search time: 0.000006372
-[INFO  egg::run] Apply time: 0.000005848
+[INFO  egg::run] Search time: 0.000006628
+[INFO  egg::run] Apply time: 0.000005771
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 45, eclasses: 27
       New: hc size 45, eclasses: 27
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000004348
+[INFO  egg::run] Rebuild time: 0.000004554
 [INFO  egg::run] Size: n=45, e=27
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 3
@@ -617,23 +277,23 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000004799
-[INFO  egg::run] Apply time: 0.000012146
+[INFO  egg::run] Search time: 0.000005027
+[INFO  egg::run] Apply time: 0.000012253
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 33, eclasses: 33
       New: hc size 33, eclasses: 20
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.00001044
+[INFO  egg::run] Rebuild time: 0.000011211
 [INFO  egg::run] Size: n=33, e=20
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.000006158
-[INFO  egg::run] Apply time: 0.0000041
+[INFO  egg::run] Search time: 0.000006662
+[INFO  egg::run] Apply time: 0.000004156
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 33, eclasses: 20
       New: hc size 33, eclasses: 20
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000003886
+[INFO  egg::run] Rebuild time: 0.000004293
 [INFO  egg::run] Size: n=33, e=20
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 2
@@ -646,33 +306,33 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000006155
-[INFO  egg::run] Apply time: 0.000015742
+[INFO  egg::run] Search time: 0.000006169
+[INFO  egg::run] Apply time: 0.000015609
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 35, eclasses: 35
       New: hc size 35, eclasses: 19
       unions: 1, trimmed nodes: 2
-[INFO  egg::run] Rebuild time: 0.000012509
+[INFO  egg::run] Rebuild time: 0.000012936
 [INFO  egg::run] Size: n=35, e=19
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.000008154
-[INFO  egg::run] Apply time: 0.000008121
+[INFO  egg::run] Search time: 0.000009237
+[INFO  egg::run] Apply time: 0.000008339
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 37, eclasses: 21
       New: hc size 37, eclasses: 18
       unions: 0, trimmed nodes: 2
-[INFO  egg::run] Rebuild time: 0.000005777
+[INFO  egg::run] Rebuild time: 0.000006281
 [INFO  egg::run] Size: n=37, e=18
 [INFO  egg::run] 
     Iteration 2
-[INFO  egg::run] Search time: 0.000007725
-[INFO  egg::run] Apply time: 0.000005854
+[INFO  egg::run] Search time: 0.000008225
+[INFO  egg::run] Apply time: 0.000005977
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 37, eclasses: 18
       New: hc size 37, eclasses: 18
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.00000375
+[INFO  egg::run] Rebuild time: 0.00000416
 [INFO  egg::run] Size: n=37, e=18
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 3
@@ -685,44 +345,37 @@ egraph: EGraph {
       unions: 0, trimmed nodes: 0
 [INFO  egg::run] 
     Iteration 0
-[INFO  egg::run] Search time: 0.000004807
-[INFO  egg::run] Apply time: 0.000009572
+[INFO  egg::run] Search time: 0.000005151
+[INFO  egg::run] Apply time: 0.000009617
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 25, eclasses: 25
       New: hc size 25, eclasses: 14
       unions: 1, trimmed nodes: 2
-[INFO  egg::run] Rebuild time: 0.00000826
+[INFO  egg::run] Rebuild time: 0.000008953
 [INFO  egg::run] Size: n=25, e=14
 [INFO  egg::run] 
     Iteration 1
-[INFO  egg::run] Search time: 0.000006435
-[INFO  egg::run] Apply time: 0.000006213
+[INFO  egg::run] Search time: 0.000006992
+[INFO  egg::run] Apply time: 0.000006237
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 27, eclasses: 16
       New: hc size 27, eclasses: 13
       unions: 0, trimmed nodes: 2
-[INFO  egg::run] Rebuild time: 0.000004822
+[INFO  egg::run] Rebuild time: 0.000004995
 [INFO  egg::run] Size: n=27, e=13
 [INFO  egg::run] 
     Iteration 2
-[INFO  egg::run] Search time: 0.000005696
-[INFO  egg::run] Apply time: 0.00000468
+[INFO  egg::run] Search time: 0.00000591
+[INFO  egg::run] Apply time: 0.000004849
 [INFO  egg::egraph] REBUILT! in 0.000s
       Old: hc size 27, eclasses: 13
       New: hc size 27, eclasses: 13
       unions: 0, trimmed nodes: 0
-[INFO  egg::run] Rebuild time: 0.000003461
+[INFO  egg::run] Rebuild time: 0.000003823
 [INFO  egg::run] Size: n=27, e=13
 [INFO  egg::run] Stopping: Saturated
 [INFO  ruler] Stopping Saturated, 3
 [INFO  ruler] Minimizing... threw away 1 rules, 1 / 21 remain
 [INFO  ruler] Chose 7 good rules
-[INFO  ruler]   (+ (+ ?d ?c) (+ ?b ?a)) <=> (+ (+ ?d ?b) (+ ?c ?a))
-[INFO  ruler]   (VecAdd (VecAdd ?d ?c) (VecAdd ?b ?a)) <=> (VecAdd (VecAdd ?d ?b) (VecAdd ?c ?a))
-[INFO  ruler]   (VecAdd (Vec ?d ?c) (Vec ?b ?a)) <=> (VecAdd (Vec ?d ?a) (Vec ?b ?c))
-[INFO  ruler]   (VecAdd (Vec ?d ?c) (Vec ?b ?a)) <=> (Vec (+ ?d ?b) (+ ?c ?a))
-[INFO  ruler]   (VecAdd ?c (VecAdd ?b ?a)) <=> (VecAdd ?b (VecAdd ?a ?c))
-[INFO  ruler]   (+ ?c (+ ?b ?a)) <=> (+ ?b (+ ?a ?c))
-[INFO  ruler]   (VecNeg (VecAdd ?b ?a)) <=> (VecAdd (VecNeg ?b) (VecNeg ?a))
-[INFO  ruler] Time taken in... run_rewrites: 0.002069881, rule discovery: 0.036463278, rule minimization: 0.099665912
+[INFO  ruler] Time taken in... run_rewrites: 0.002250694, rule discovery: 0.037417998, rule minimization: 0.100548791
 [INFO  ruler] Stopping early, took all eqs

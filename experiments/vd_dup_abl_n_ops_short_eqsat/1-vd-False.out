@@ -1,0 +1,11 @@
+Learned 9 rules in 0.723772171
+(VecAdd (VecAdd ?d ?c) (VecAdd ?b ?a)) <=> (VecAdd (VecAdd ?d ?b) (VecAdd ?c ?a))
+(+ (+ ?d ?c) (+ ?b ?a)) <=> (+ (+ ?d ?b) (+ ?c ?a))
+(VecAdd (Vec ?d ?c) (Vec ?b ?a)) <=> (VecAdd (Vec ?d ?a) (Vec ?b ?c))
+(VecAdd (Vec ?d ?c) (Vec ?b ?a)) <=> (Vec (+ ?d ?b) (+ ?c ?a))
+(+ ?c (+ ?b ?a)) <=> (+ ?b (+ ?a ?c))
+(VecAdd ?c (VecAdd ?b ?a)) <=> (VecAdd ?b (VecAdd ?a ?c))
+(VecAdd ?b ?a) <=> (VecAdd ?a ?b)
+(+ ?b ?a) <=> (+ ?a ?b)
+(VecNeg (VecAdd ?b ?a)) <=> (VecAdd (VecNeg ?b) (VecNeg ?a))
+Learned 9 rules in 0.723772171

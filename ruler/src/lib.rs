@@ -637,7 +637,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
 
                     log::info!("Chose {} good rules", eqs.len());
                     for eq in eqs.values() {
-                        log::info!("  {}", eq);
+                        log::debug!("  {}", eq);
                         if !self.params.no_run_rewrites {
                             assert!(!self.equalities.contains_key(&eq.name));
                             if let Some((i, j)) = eq.ids {
@@ -927,7 +927,6 @@ impl<L: SynthLanguage> egg::Analysis<L> for SynthAnalysis {
                 }
             }
 
-            // ord_merge(&mut ord, to.exact.cmp(&from.exact));
             to.exact |= from.exact;
         }
 

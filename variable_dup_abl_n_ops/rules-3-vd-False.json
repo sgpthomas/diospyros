@@ -27,7 +27,7 @@
     "use_smt": false,
     "do_final_run": false
   },
-  "time": 5.3039296799999995,
+  "time": 5.052720378,
   "num_rules": 58,
   "smt_unknown": 0,
   "eqs": [

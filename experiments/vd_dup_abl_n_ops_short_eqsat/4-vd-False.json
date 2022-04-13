@@ -1,0 +1,19 @@
+{
+    "constants": [],
+    "seed_rules": [],
+    "binops": [
+        "+",
+        "-",
+        "*",
+        "/"
+    ],
+    "use_vector": true,
+    "vector_binops": [
+        "+",
+        "-",
+        "*",
+        "/"
+    ],
+    "vector_mac": true,
+    "variable_duplication": false
+}

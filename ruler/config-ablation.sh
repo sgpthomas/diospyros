@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 function run() {
+    echo "Starting $1"
     RUST_LOG=info cargo run --manifest-path ruler/Cargo.toml \
 	    --release --bin \
 	    dios -- synth \
@@ -16,13 +17,16 @@ function run() {
 	    >"variable_dup_abl_n_ops/$1.out" \
 	    2>"variable_dup_abl_n_ops/$1.err" || true
     echo "Finished $1"
+    sleep 5
 }
 
-# run "1-vd-False"
-# run "1-vd-True"
-# run "2-vd-False"
-# run "2-vd-True"
-# run "3-vd-False"
-# run "3-vd-True"
-run "4-vd-False"
-run "4-vd-True"
+rm variable_dup_abl_n_ops/rules-*.json
+
+run "1-vd-False" || true
+run "1-vd-True" || true
+run "2-vd-False" || true
+run "2-vd-True" || true
+run "3-vd-False" || true
+run "3-vd-True" || true
+run "4-vd-False" || true
+run "4-vd-True" || true
