@@ -1,0 +1,58 @@
+Running egg with timeout 360s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (* (Get I 0) (Get F 0))
+    (+ (* (Get I 0) (Get F 1)) (* (Get I 1) (Get F 0))))
+  (Concat
+    (Vec
+      (+ (* (Get I 1) (Get F 1)) (* (Get I 2) (Get F 0)))
+      (* (Get I 2) (Get F 1)))
+    (Concat
+      (Vec
+        (+ (* (Get I 0) (Get F 2)) (* (Get I 3) (Get F 0)))
+        (+
+          (* (Get I 0) (Get F 3))
+          (+ (* (Get I 1) (Get F 2)) (+ (* (Get I 3) (Get F 1)) (* (Get I 4) (Get F 0))))))
+      (Concat
+        (Vec
+          (+
+            (* (Get I 1) (Get F 3))
+            (+ (* (Get I 2) (Get F 2)) (+ (* (Get I 4) (Get F 1)) (* (Get I 5) (Get F 0)))))
+          (+ (* (Get I 2) (Get F 3)) (* (Get I 5) (Get F 1))))
+        (Concat
+          (Vec
+            (+ (* (Get I 3) (Get F 2)) (* (Get I 6) (Get F 0)))
+            (+
+              (* (Get I 3) (Get F 3))
+              (+ (* (Get I 4) (Get F 2)) (+ (* (Get I 6) (Get F 1)) (* (Get I 7) (Get F 0))))))
+          (Concat
+            (Vec
+              (+
+                (* (Get I 4) (Get F 3))
+                (+ (* (Get I 5) (Get F 2)) (+ (* (Get I 7) (Get F 1)) (* (Get I 8) (Get F 0)))))
+              (+ (* (Get I 5) (Get F 3)) (* (Get I 8) (Get F 1))))
+            (Concat
+              (Vec
+                (* (Get I 6) (Get F 2))
+                (+ (* (Get I 6) (Get F 3)) (* (Get I 7) (Get F 2))))
+              (Vec
+                (+ (* (Get I 7) (Get F 3)) (* (Get I 8) (Get F 2)))
+                (* (Get I 8) (Get F 3))))))))))
+Retained 257554 rules
+Retained 4612 rules
+Starting run with 4612 rules
+Egraph size: 604880
+Runner report
+=============
+  Stop reason: TimeLimit(360.06661366)
+  Iterations: 7
+  Egraph size: 585435 nodes, 272455 classes, 604880 memo
+  Rebuilds: 7436, 1062.29 per iter
+  Total time: 360.149901381
+    Search:  (0.99) 358.124999815
+    Apply:   (0.00) 1.639710499
+    Rebuild: (0.00) 0.385187375
+Stopped after 7 iterations, reason: Some(TimeLimit(360.06661366))
+==== Starting Second Phase Optimization ====
+Using 257554 rules

@@ -1,0 +1,3364 @@
+{
+  "experiments": [
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "0-q-prod.out",
+      "stderr": "0-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "1-2d-conv.out",
+      "stderr": "1-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": 581.1809723377228,
+      "stdout": "2-mat-mul.out",
+      "stderr": "2-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": "Timed out.",
+      "stdout": "3-q-prod.out",
+      "stderr": "3-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": "Timed out.",
+      "stdout": "4-2d-conv.out",
+      "stderr": "4-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": 613.8936641216278,
+      "stdout": "5-mat-mul.out",
+      "stderr": "5-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 527.7628302574158,
+      "stdout": "6-q-prod.out",
+      "stderr": "6-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 687.6447143554688,
+      "stdout": "7-2d-conv.out",
+      "stderr": "7-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 216.75820469856262,
+      "stdout": "8-mat-mul.out",
+      "stderr": "8-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars",
+      "time": 1007.5146660804749,
+      "stdout": "9-q-prod.out",
+      "stderr": "9-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars",
+      "time": 1956.043895483017,
+      "stdout": "10-2d-conv.out",
+      "stderr": "10-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --no-dup-vars",
+      "time": 197.21060585975647,
+      "stdout": "11-mat-mul.out",
+      "stderr": "11-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "12-q-prod.out",
+      "stderr": "12-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "13-2d-conv.out",
+      "stderr": "13-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "14-mat-mul.out",
+      "stderr": "14-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --sub-prog",
+      "time": 3973.969354867935,
+      "stdout": "15-q-prod.out",
+      "stderr": "15-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --sub-prog",
+      "time": 1105.5529901981354,
+      "stdout": "16-2d-conv.out",
+      "stderr": "16-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --sub-prog",
+      "time": 124.38442778587341,
+      "stdout": "17-mat-mul.out",
+      "stderr": "17-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --split-phase",
+      "time": 1814.5770239830017,
+      "stdout": "18-q-prod.out",
+      "stderr": "18-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --split-phase",
+      "time": "Timed out.",
+      "stdout": "19-2d-conv.out",
+      "stderr": "19-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10 --split-phase",
+      "time": 3905.20290851593,
+      "stdout": "20-mat-mul.out",
+      "stderr": "20-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10",
+      "time": 2799.192069530487,
+      "stdout": "21-q-prod.out",
+      "stderr": "21-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10",
+      "time": 3910.519306898117,
+      "stdout": "22-2d-conv.out",
+      "stderr": "22-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter -10",
+      "time": 3904.5865585803986,
+      "stdout": "23-mat-mul.out",
+      "stderr": "23-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "24-q-prod.out",
+      "stderr": "24-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 3985.4501938819885,
+      "stdout": "25-2d-conv.out",
+      "stderr": "25-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 3915.7381858825684,
+      "stdout": "26-mat-mul.out",
+      "stderr": "26-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 160.37778902053833,
+      "stdout": "27-q-prod.out",
+      "stderr": "27-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 63.32899880409241,
+      "stdout": "28-2d-conv.out",
+      "stderr": "28-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 4.148389101028442,
+      "stdout": "29-mat-mul.out",
+      "stderr": "29-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --split-phase",
+      "time": "Timed out.",
+      "stdout": "30-q-prod.out",
+      "stderr": "30-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --split-phase",
+      "time": "Timed out.",
+      "stdout": "31-2d-conv.out",
+      "stderr": "31-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars --split-phase",
+      "time": 4.547433853149414,
+      "stdout": "32-mat-mul.out",
+      "stderr": "32-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars",
+      "time": 707.6245079040527,
+      "stdout": "33-q-prod.out",
+      "stderr": "33-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars",
+      "time": 275.31285881996155,
+      "stdout": "34-2d-conv.out",
+      "stderr": "34-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --no-dup-vars",
+      "time": 3.619033098220825,
+      "stdout": "35-mat-mul.out",
+      "stderr": "35-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "36-q-prod.out",
+      "stderr": "36-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "37-2d-conv.out",
+      "stderr": "37-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "38-mat-mul.out",
+      "stderr": "38-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --sub-prog",
+      "time": 243.31227040290833,
+      "stdout": "39-q-prod.out",
+      "stderr": "39-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --sub-prog",
+      "time": 483.828777551651,
+      "stdout": "40-2d-conv.out",
+      "stderr": "40-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --sub-prog",
+      "time": 123.23424339294434,
+      "stdout": "41-mat-mul.out",
+      "stderr": "41-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --split-phase",
+      "time": "Timed out.",
+      "stdout": "42-q-prod.out",
+      "stderr": "42-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --split-phase",
+      "time": "Timed out.",
+      "stdout": "43-2d-conv.out",
+      "stderr": "43-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0 --split-phase",
+      "time": 79.28337717056274,
+      "stdout": "44-mat-mul.out",
+      "stderr": "44-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0",
+      "time": 157.65671634674072,
+      "stdout": "45-q-prod.out",
+      "stderr": "45-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0",
+      "time": 754.7927112579346,
+      "stdout": "46-2d-conv.out",
+      "stderr": "46-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 0",
+      "time": 74.43593525886536,
+      "stdout": "47-mat-mul.out",
+      "stderr": "47-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 3911.9436872005463,
+      "stdout": "48-q-prod.out",
+      "stderr": "48-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 3906.207858324051,
+      "stdout": "49-2d-conv.out",
+      "stderr": "49-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 3912.9752538204193,
+      "stdout": "50-mat-mul.out",
+      "stderr": "50-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 5.273413181304932,
+      "stdout": "51-q-prod.out",
+      "stderr": "51-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 3.6239147186279297,
+      "stdout": "52-2d-conv.out",
+      "stderr": "52-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 3.2069458961486816,
+      "stdout": "53-mat-mul.out",
+      "stderr": "53-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --split-phase",
+      "time": "Timed out.",
+      "stdout": "54-q-prod.out",
+      "stderr": "54-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --split-phase",
+      "time": "Timed out.",
+      "stdout": "55-2d-conv.out",
+      "stderr": "55-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars --split-phase",
+      "time": 4.0433127880096436,
+      "stdout": "56-mat-mul.out",
+      "stderr": "56-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars",
+      "time": 7.647653102874756,
+      "stdout": "57-q-prod.out",
+      "stderr": "57-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars",
+      "time": 4.954359292984009,
+      "stdout": "58-2d-conv.out",
+      "stderr": "58-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --no-dup-vars",
+      "time": 3.1709704399108887,
+      "stdout": "59-mat-mul.out",
+      "stderr": "59-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --sub-prog --split-phase",
+      "time": 3979.2546668052673,
+      "stdout": "60-q-prod.out",
+      "stderr": "60-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --sub-prog --split-phase",
+      "time": 3919.492840528488,
+      "stdout": "61-2d-conv.out",
+      "stderr": "61-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --sub-prog --split-phase",
+      "time": 3909.8356940746307,
+      "stdout": "62-mat-mul.out",
+      "stderr": "62-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --sub-prog",
+      "time": 78.2824490070343,
+      "stdout": "63-q-prod.out",
+      "stderr": "63-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --sub-prog",
+      "time": 18.71095871925354,
+      "stdout": "64-2d-conv.out",
+      "stderr": "64-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --sub-prog",
+      "time": 5.464956521987915,
+      "stdout": "65-mat-mul.out",
+      "stderr": "65-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --split-phase",
+      "time": "Timed out.",
+      "stdout": "66-q-prod.out",
+      "stderr": "66-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --split-phase",
+      "time": 3940.970847606659,
+      "stdout": "67-2d-conv.out",
+      "stderr": "67-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1 --split-phase",
+      "time": 8.87216854095459,
+      "stdout": "68-mat-mul.out",
+      "stderr": "68-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1",
+      "time": 124.49004316329956,
+      "stdout": "69-q-prod.out",
+      "stderr": "69-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1",
+      "time": 41.807021379470825,
+      "stdout": "70-2d-conv.out",
+      "stderr": "70-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 1",
+      "time": 4.322239398956299,
+      "stdout": "71-mat-mul.out",
+      "stderr": "71-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "72-q-prod.out",
+      "stderr": "72-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 3908.016327857971,
+      "stdout": "73-2d-conv.out",
+      "stderr": "73-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 3921.0644063949585,
+      "stdout": "74-mat-mul.out",
+      "stderr": "74-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 4.9612720012664795,
+      "stdout": "75-q-prod.out",
+      "stderr": "75-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 3.632399559020996,
+      "stdout": "76-2d-conv.out",
+      "stderr": "76-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 3.244997501373291,
+      "stdout": "77-mat-mul.out",
+      "stderr": "77-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --split-phase",
+      "time": 3926.339429616928,
+      "stdout": "78-q-prod.out",
+      "stderr": "78-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --split-phase",
+      "time": "Timed out.",
+      "stdout": "79-2d-conv.out",
+      "stderr": "79-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars --split-phase",
+      "time": 177.5573136806488,
+      "stdout": "80-mat-mul.out",
+      "stderr": "80-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars",
+      "time": 6.767218112945557,
+      "stdout": "81-q-prod.out",
+      "stderr": "81-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars",
+      "time": 4.633371829986572,
+      "stdout": "82-2d-conv.out",
+      "stderr": "82-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --no-dup-vars",
+      "time": 3.1682474613189697,
+      "stdout": "83-mat-mul.out",
+      "stderr": "83-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --sub-prog --split-phase",
+      "time": 3907.693587779999,
+      "stdout": "84-q-prod.out",
+      "stderr": "84-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --sub-prog --split-phase",
+      "time": 3905.152930021286,
+      "stdout": "85-2d-conv.out",
+      "stderr": "85-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --sub-prog --split-phase",
+      "time": 3906.3592331409454,
+      "stdout": "86-mat-mul.out",
+      "stderr": "86-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --sub-prog",
+      "time": 7.107390642166138,
+      "stdout": "87-q-prod.out",
+      "stderr": "87-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --sub-prog",
+      "time": 4.065743446350098,
+      "stdout": "88-2d-conv.out",
+      "stderr": "88-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --sub-prog",
+      "time": 3.3294036388397217,
+      "stdout": "89-mat-mul.out",
+      "stderr": "89-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --split-phase",
+      "time": 3910.259265422821,
+      "stdout": "90-q-prod.out",
+      "stderr": "90-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --split-phase",
+      "time": 3907.160825252533,
+      "stdout": "91-2d-conv.out",
+      "stderr": "91-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10 --split-phase",
+      "time": 23.768951892852783,
+      "stdout": "92-mat-mul.out",
+      "stderr": "92-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10",
+      "time": 11.172933340072632,
+      "stdout": "93-q-prod.out",
+      "stderr": "93-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10",
+      "time": 6.253172397613525,
+      "stdout": "94-2d-conv.out",
+      "stderr": "94-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --cost-filter 10",
+      "time": 3.1996822357177734,
+      "stdout": "95-mat-mul.out",
+      "stderr": "95-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "96-q-prod.out",
+      "stderr": "96-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --sub-prog --split-phase",
+      "time": 1105.8454666137695,
+      "stdout": "97-2d-conv.out",
+      "stderr": "97-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --sub-prog --split-phase",
+      "time": 123.49599862098694,
+      "stdout": "98-mat-mul.out",
+      "stderr": "98-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --sub-prog",
+      "time": "Timed out.",
+      "stdout": "99-q-prod.out",
+      "stderr": "99-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --sub-prog",
+      "time": 1106.7885003089905,
+      "stdout": "100-2d-conv.out",
+      "stderr": "100-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --sub-prog",
+      "time": 123.52620387077332,
+      "stdout": "101-mat-mul.out",
+      "stderr": "101-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --split-phase",
+      "time": 2023.5595338344574,
+      "stdout": "102-q-prod.out",
+      "stderr": "102-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --split-phase",
+      "time": 3909.12810587883,
+      "stdout": "103-2d-conv.out",
+      "stderr": "103-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars --split-phase",
+      "time": 3903.5217769145966,
+      "stdout": "104-mat-mul.out",
+      "stderr": "104-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars",
+      "time": 3916.6948597431183,
+      "stdout": "105-q-prod.out",
+      "stderr": "105-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars",
+      "time": 3909.6557428836823,
+      "stdout": "106-2d-conv.out",
+      "stderr": "106-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --no-dup-vars",
+      "time": 3904.971284866333,
+      "stdout": "107-mat-mul.out",
+      "stderr": "107-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "108-q-prod.out",
+      "stderr": "108-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --sub-prog --split-phase",
+      "time": 1108.0693209171295,
+      "stdout": "109-2d-conv.out",
+      "stderr": "109-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --sub-prog --split-phase",
+      "time": 123.53639554977417,
+      "stdout": "110-mat-mul.out",
+      "stderr": "110-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --sub-prog",
+      "time": "Timed out.",
+      "stdout": "111-q-prod.out",
+      "stderr": "111-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --sub-prog",
+      "time": 1108.7002964019775,
+      "stdout": "112-2d-conv.out",
+      "stderr": "112-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --sub-prog",
+      "time": 123.50006866455078,
+      "stdout": "113-mat-mul.out",
+      "stderr": "113-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json --split-phase",
+      "time": 1334.7528290748596,
+      "stdout": "114-q-prod.out",
+      "stderr": "114-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json --split-phase",
+      "time": 3909.2803525924683,
+      "stdout": "115-2d-conv.out",
+      "stderr": "115-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json --split-phase",
+      "time": 3903.5682244300842,
+      "stdout": "116-mat-mul.out",
+      "stderr": "116-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --rules t2.json",
+      "time": 3917.346653699875,
+      "stdout": "117-q-prod.out",
+      "stderr": "117-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --rules t2.json",
+      "time": 3910.357771396637,
+      "stdout": "118-2d-conv.out",
+      "stderr": "118-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --rules t2.json",
+      "time": 3903.695910692215,
+      "stdout": "119-mat-mul.out",
+      "stderr": "119-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": 54.43780303001404,
+      "stdout": "120-q-prod.out",
+      "stderr": "120-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": 1.1456918716430664,
+      "stdout": "121-2d-conv.out",
+      "stderr": "121-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.09216833114624023,
+      "stdout": "122-mat-mul.out",
+      "stderr": "122-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": 54.06381320953369,
+      "stdout": "123-q-prod.out",
+      "stderr": "123-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": 1.1670470237731934,
+      "stdout": "124-2d-conv.out",
+      "stderr": "124-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": 0.09624767303466797,
+      "stdout": "125-mat-mul.out",
+      "stderr": "125-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 85.72073674201965,
+      "stdout": "126-q-prod.out",
+      "stderr": "126-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 1.9832417964935303,
+      "stdout": "127-2d-conv.out",
+      "stderr": "127-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 0.09745121002197266,
+      "stdout": "128-mat-mul.out",
+      "stderr": "128-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars",
+      "time": 85.33369493484497,
+      "stdout": "129-q-prod.out",
+      "stderr": "129-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars",
+      "time": 2.007080316543579,
+      "stdout": "130-2d-conv.out",
+      "stderr": "130-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter -10 --no-dup-vars",
+      "time": 0.09889626502990723,
+      "stdout": "131-mat-mul.out",
+      "stderr": "131-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter -10 --sub-prog --split-phase",
+      "time": 55.25265717506409,
+      "stdout": "132-q-prod.out",
+      "stderr": "132-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter -10 --sub-prog --split-phase",
+      "time": 1.167696475982666,
+      "stdout": "133-2d-conv.out",
+      "stderr": "133-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter -10 --sub-prog --split-phase",
+      "time": 0.0914311408996582,
+      "stdout": "134-mat-mul.out",
+      "stderr": "134-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter -10 --sub-prog",
+      "time": 54.56689453125,
+      "stdout": "135-q-prod.out",
+      "stderr": "135-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter -10 --sub-prog",
+      "time": 1.174165964126587,
+      "stdout": "136-2d-conv.out",
+      "stderr": "136-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter -10 --sub-prog",
+      "time": 0.09151005744934082,
+      "stdout": "137-mat-mul.out",
+      "stderr": "137-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter -10 --split-phase",
+      "time": 85.56243920326233,
+      "stdout": "138-q-prod.out",
+      "stderr": "138-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter -10 --split-phase",
+      "time": 1.9592797756195068,
+      "stdout": "139-2d-conv.out",
+      "stderr": "139-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter -10 --split-phase",
+      "time": 0.09699535369873047,
+      "stdout": "140-mat-mul.out",
+      "stderr": "140-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter -10",
+      "time": 85.2362539768219,
+      "stdout": "141-q-prod.out",
+      "stderr": "141-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter -10",
+      "time": 2.0105764865875244,
+      "stdout": "142-2d-conv.out",
+      "stderr": "142-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter -10",
+      "time": 0.09815835952758789,
+      "stdout": "143-mat-mul.out",
+      "stderr": "143-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.2890892028808594,
+      "stdout": "144-q-prod.out",
+      "stderr": "144-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.037102699279785156,
+      "stdout": "145-2d-conv.out",
+      "stderr": "145-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.014982223510742188,
+      "stdout": "146-mat-mul.out",
+      "stderr": "146-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 0.013946533203125,
+      "stdout": "147-q-prod.out",
+      "stderr": "147-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 0.010943412780761719,
+      "stdout": "148-2d-conv.out",
+      "stderr": "148-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 0.003834962844848633,
+      "stdout": "149-mat-mul.out",
+      "stderr": "149-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --split-phase",
+      "time": 0.2393510341644287,
+      "stdout": "150-q-prod.out",
+      "stderr": "150-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --split-phase",
+      "time": 0.06555986404418945,
+      "stdout": "151-2d-conv.out",
+      "stderr": "151-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars --split-phase",
+      "time": 0.003625631332397461,
+      "stdout": "152-mat-mul.out",
+      "stderr": "152-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars",
+      "time": 0.011642217636108398,
+      "stdout": "153-q-prod.out",
+      "stderr": "153-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars",
+      "time": 0.0074520111083984375,
+      "stdout": "154-2d-conv.out",
+      "stderr": "154-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 0 --no-dup-vars",
+      "time": 0.0028040409088134766,
+      "stdout": "155-mat-mul.out",
+      "stderr": "155-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 0 --sub-prog --split-phase",
+      "time": 0.2892427444458008,
+      "stdout": "156-q-prod.out",
+      "stderr": "156-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 0 --sub-prog --split-phase",
+      "time": 0.03702974319458008,
+      "stdout": "157-2d-conv.out",
+      "stderr": "157-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 0 --sub-prog --split-phase",
+      "time": 0.014819622039794922,
+      "stdout": "158-mat-mul.out",
+      "stderr": "158-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 0 --sub-prog",
+      "time": 0.01382899284362793,
+      "stdout": "159-q-prod.out",
+      "stderr": "159-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 0 --sub-prog",
+      "time": 0.010976076126098633,
+      "stdout": "160-2d-conv.out",
+      "stderr": "160-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 0 --sub-prog",
+      "time": 0.0037908554077148438,
+      "stdout": "161-mat-mul.out",
+      "stderr": "161-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 0 --split-phase",
+      "time": 0.23753094673156738,
+      "stdout": "162-q-prod.out",
+      "stderr": "162-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 0 --split-phase",
+      "time": 0.06539297103881836,
+      "stdout": "163-2d-conv.out",
+      "stderr": "163-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 0 --split-phase",
+      "time": 0.0035202503204345703,
+      "stdout": "164-mat-mul.out",
+      "stderr": "164-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 0",
+      "time": 0.011564970016479492,
+      "stdout": "165-q-prod.out",
+      "stderr": "165-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 0",
+      "time": 0.0074269771575927734,
+      "stdout": "166-2d-conv.out",
+      "stderr": "166-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 0",
+      "time": 0.002824068069458008,
+      "stdout": "167-mat-mul.out",
+      "stderr": "167-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.23943328857421875,
+      "stdout": "168-q-prod.out",
+      "stderr": "168-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.03332376480102539,
+      "stdout": "169-2d-conv.out",
+      "stderr": "169-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.013143539428710938,
+      "stdout": "170-mat-mul.out",
+      "stderr": "170-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 0.013598203659057617,
+      "stdout": "171-q-prod.out",
+      "stderr": "171-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 0.010900020599365234,
+      "stdout": "172-2d-conv.out",
+      "stderr": "172-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 0.003795623779296875,
+      "stdout": "173-mat-mul.out",
+      "stderr": "173-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --split-phase",
+      "time": 0.2443225383758545,
+      "stdout": "174-q-prod.out",
+      "stderr": "174-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --split-phase",
+      "time": 0.05144619941711426,
+      "stdout": "175-2d-conv.out",
+      "stderr": "175-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars --split-phase",
+      "time": 0.003556966781616211,
+      "stdout": "176-mat-mul.out",
+      "stderr": "176-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars",
+      "time": 0.011452198028564453,
+      "stdout": "177-q-prod.out",
+      "stderr": "177-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars",
+      "time": 0.007444143295288086,
+      "stdout": "178-2d-conv.out",
+      "stderr": "178-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 1 --no-dup-vars",
+      "time": 0.002777576446533203,
+      "stdout": "179-mat-mul.out",
+      "stderr": "179-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 1 --sub-prog --split-phase",
+      "time": 0.23938226699829102,
+      "stdout": "180-q-prod.out",
+      "stderr": "180-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 1 --sub-prog --split-phase",
+      "time": 0.033037424087524414,
+      "stdout": "181-2d-conv.out",
+      "stderr": "181-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 1 --sub-prog --split-phase",
+      "time": 0.013201236724853516,
+      "stdout": "182-mat-mul.out",
+      "stderr": "182-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 1 --sub-prog",
+      "time": 0.013677597045898438,
+      "stdout": "183-q-prod.out",
+      "stderr": "183-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 1 --sub-prog",
+      "time": 0.010939359664916992,
+      "stdout": "184-2d-conv.out",
+      "stderr": "184-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 1 --sub-prog",
+      "time": 0.0038652420043945312,
+      "stdout": "185-mat-mul.out",
+      "stderr": "185-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 1 --split-phase",
+      "time": 0.24418187141418457,
+      "stdout": "186-q-prod.out",
+      "stderr": "186-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 1 --split-phase",
+      "time": 0.05133366584777832,
+      "stdout": "187-2d-conv.out",
+      "stderr": "187-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 1 --split-phase",
+      "time": 0.003547191619873047,
+      "stdout": "188-mat-mul.out",
+      "stderr": "188-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 1",
+      "time": 0.011434078216552734,
+      "stdout": "189-q-prod.out",
+      "stderr": "189-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 1",
+      "time": 0.007379055023193359,
+      "stdout": "190-2d-conv.out",
+      "stderr": "190-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 1",
+      "time": 0.0027980804443359375,
+      "stdout": "191-mat-mul.out",
+      "stderr": "191-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.2641184329986572,
+      "stdout": "192-q-prod.out",
+      "stderr": "192-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.03376579284667969,
+      "stdout": "193-2d-conv.out",
+      "stderr": "193-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.013342142105102539,
+      "stdout": "194-mat-mul.out",
+      "stderr": "194-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 0.013395547866821289,
+      "stdout": "195-q-prod.out",
+      "stderr": "195-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 0.010722875595092773,
+      "stdout": "196-2d-conv.out",
+      "stderr": "196-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 0.0037679672241210938,
+      "stdout": "197-mat-mul.out",
+      "stderr": "197-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --split-phase",
+      "time": 0.27686405181884766,
+      "stdout": "198-q-prod.out",
+      "stderr": "198-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --split-phase",
+      "time": 0.05296611785888672,
+      "stdout": "199-2d-conv.out",
+      "stderr": "199-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars --split-phase",
+      "time": 0.003641843795776367,
+      "stdout": "200-mat-mul.out",
+      "stderr": "200-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars",
+      "time": 0.011348247528076172,
+      "stdout": "201-q-prod.out",
+      "stderr": "201-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars",
+      "time": 0.007356166839599609,
+      "stdout": "202-2d-conv.out",
+      "stderr": "202-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 10 --no-dup-vars",
+      "time": 0.0027887821197509766,
+      "stdout": "203-mat-mul.out",
+      "stderr": "203-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 10 --sub-prog --split-phase",
+      "time": 0.26456761360168457,
+      "stdout": "204-q-prod.out",
+      "stderr": "204-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 10 --sub-prog --split-phase",
+      "time": 0.03393125534057617,
+      "stdout": "205-2d-conv.out",
+      "stderr": "205-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 10 --sub-prog --split-phase",
+      "time": 0.013355255126953125,
+      "stdout": "206-mat-mul.out",
+      "stderr": "206-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 10 --sub-prog",
+      "time": 0.013352394104003906,
+      "stdout": "207-q-prod.out",
+      "stderr": "207-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 10 --sub-prog",
+      "time": 0.010745763778686523,
+      "stdout": "208-2d-conv.out",
+      "stderr": "208-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 10 --sub-prog",
+      "time": 0.0037491321563720703,
+      "stdout": "209-mat-mul.out",
+      "stderr": "209-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 10 --split-phase",
+      "time": 0.2769045829772949,
+      "stdout": "210-q-prod.out",
+      "stderr": "210-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 10 --split-phase",
+      "time": 0.05345296859741211,
+      "stdout": "211-2d-conv.out",
+      "stderr": "211-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 10 --split-phase",
+      "time": 0.0035965442657470703,
+      "stdout": "212-mat-mul.out",
+      "stderr": "212-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --cost-filter 10",
+      "time": 0.01136016845703125,
+      "stdout": "213-q-prod.out",
+      "stderr": "213-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --cost-filter 10",
+      "time": 0.007334232330322266,
+      "stdout": "214-2d-conv.out",
+      "stderr": "214-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --cost-filter 10",
+      "time": 0.002800464630126953,
+      "stdout": "215-mat-mul.out",
+      "stderr": "215-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --no-dup-vars --sub-prog --split-phase",
+      "time": 55.19552254676819,
+      "stdout": "216-q-prod.out",
+      "stderr": "216-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --no-dup-vars --sub-prog --split-phase",
+      "time": 1.144129753112793,
+      "stdout": "217-2d-conv.out",
+      "stderr": "217-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --no-dup-vars --sub-prog --split-phase",
+      "time": 0.09051251411437988,
+      "stdout": "218-mat-mul.out",
+      "stderr": "218-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --no-dup-vars --sub-prog",
+      "time": 54.95139813423157,
+      "stdout": "219-q-prod.out",
+      "stderr": "219-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --no-dup-vars --sub-prog",
+      "time": 1.1699934005737305,
+      "stdout": "220-2d-conv.out",
+      "stderr": "220-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --no-dup-vars --sub-prog",
+      "time": 0.0921180248260498,
+      "stdout": "221-mat-mul.out",
+      "stderr": "221-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --no-dup-vars --split-phase",
+      "time": 85.55733561515808,
+      "stdout": "222-q-prod.out",
+      "stderr": "222-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --no-dup-vars --split-phase",
+      "time": 1.951608657836914,
+      "stdout": "223-2d-conv.out",
+      "stderr": "223-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --no-dup-vars --split-phase",
+      "time": 0.09667801856994629,
+      "stdout": "224-mat-mul.out",
+      "stderr": "224-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --no-dup-vars",
+      "time": 85.50382995605469,
+      "stdout": "225-q-prod.out",
+      "stderr": "225-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --no-dup-vars",
+      "time": 1.966034173965454,
+      "stdout": "226-2d-conv.out",
+      "stderr": "226-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --no-dup-vars",
+      "time": 0.09731125831604004,
+      "stdout": "227-mat-mul.out",
+      "stderr": "227-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --sub-prog --split-phase",
+      "time": 55.294655561447144,
+      "stdout": "228-q-prod.out",
+      "stderr": "228-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --sub-prog --split-phase",
+      "time": 1.1529240608215332,
+      "stdout": "229-2d-conv.out",
+      "stderr": "229-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --sub-prog --split-phase",
+      "time": 0.09102392196655273,
+      "stdout": "230-mat-mul.out",
+      "stderr": "230-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --sub-prog",
+      "time": 55.12350535392761,
+      "stdout": "231-q-prod.out",
+      "stderr": "231-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --sub-prog",
+      "time": 1.1727852821350098,
+      "stdout": "232-2d-conv.out",
+      "stderr": "232-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --sub-prog",
+      "time": 0.09098386764526367,
+      "stdout": "233-mat-mul.out",
+      "stderr": "233-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten --split-phase",
+      "time": 85.38703632354736,
+      "stdout": "234-q-prod.out",
+      "stderr": "234-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten --split-phase",
+      "time": 1.9579768180847168,
+      "stdout": "235-2d-conv.out",
+      "stderr": "235-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten --split-phase",
+      "time": 0.0985107421875,
+      "stdout": "236-mat-mul.out",
+      "stderr": "236-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--handwritten",
+      "time": 85.02903485298157,
+      "stdout": "237-q-prod.out",
+      "stderr": "237-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--handwritten",
+      "time": 1.9606273174285889,
+      "stdout": "238-2d-conv.out",
+      "stderr": "238-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--handwritten",
+      "time": 0.09694409370422363,
+      "stdout": "239-mat-mul.out",
+      "stderr": "239-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "240-q-prod.out",
+      "stderr": "240-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "241-2d-conv.out",
+      "stderr": "241-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": 178.77238488197327,
+      "stdout": "242-mat-mul.out",
+      "stderr": "242-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": "Timed out.",
+      "stdout": "243-q-prod.out",
+      "stderr": "243-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": "Timed out.",
+      "stdout": "244-2d-conv.out",
+      "stderr": "244-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --sub-prog",
+      "time": 179.0861792564392,
+      "stdout": "245-mat-mul.out",
+      "stderr": "245-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 143.12344884872437,
+      "stdout": "246-q-prod.out",
+      "stderr": "246-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 157.18952870368958,
+      "stdout": "247-2d-conv.out",
+      "stderr": "247-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars --split-phase",
+      "time": 98.08132982254028,
+      "stdout": "248-mat-mul.out",
+      "stderr": "248-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars",
+      "time": 89.6554343700409,
+      "stdout": "249-q-prod.out",
+      "stderr": "249-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars",
+      "time": 151.80180668830872,
+      "stdout": "250-2d-conv.out",
+      "stderr": "250-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter -10 --no-dup-vars",
+      "time": 103.89969491958618,
+      "stdout": "251-mat-mul.out",
+      "stderr": "251-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter -10 --sub-prog --split-phase",
+      "time": 247.1159701347351,
+      "stdout": "252-q-prod.out",
+      "stderr": "252-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter -10 --sub-prog --split-phase",
+      "time": 487.5633375644684,
+      "stdout": "253-2d-conv.out",
+      "stderr": "253-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter -10 --sub-prog --split-phase",
+      "time": 124.3028473854065,
+      "stdout": "254-mat-mul.out",
+      "stderr": "254-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter -10 --sub-prog",
+      "time": 245.14417099952698,
+      "stdout": "255-q-prod.out",
+      "stderr": "255-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter -10 --sub-prog",
+      "time": 486.8542959690094,
+      "stdout": "256-2d-conv.out",
+      "stderr": "256-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter -10 --sub-prog",
+      "time": 123.56123876571655,
+      "stdout": "257-mat-mul.out",
+      "stderr": "257-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter -10 --split-phase",
+      "time": 3911.414268016815,
+      "stdout": "258-q-prod.out",
+      "stderr": "258-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter -10 --split-phase",
+      "time": 3907.4207661151886,
+      "stdout": "259-2d-conv.out",
+      "stderr": "259-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter -10 --split-phase",
+      "time": 3905.012176990509,
+      "stdout": "260-mat-mul.out",
+      "stderr": "260-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter -10",
+      "time": 3909.4253754615784,
+      "stdout": "261-q-prod.out",
+      "stderr": "261-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter -10",
+      "time": 3906.55983543396,
+      "stdout": "262-2d-conv.out",
+      "stderr": "262-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter -10",
+      "time": 3904.34463262558,
+      "stdout": "263-mat-mul.out",
+      "stderr": "263-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "264-q-prod.out",
+      "stderr": "264-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 3965.2633018493652,
+      "stdout": "265-2d-conv.out",
+      "stderr": "265-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 3913.5219266414642,
+      "stdout": "266-mat-mul.out",
+      "stderr": "266-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 142.28788876533508,
+      "stdout": "267-q-prod.out",
+      "stderr": "267-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 61.821860551834106,
+      "stdout": "268-2d-conv.out",
+      "stderr": "268-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 3.9786534309387207,
+      "stdout": "269-mat-mul.out",
+      "stderr": "269-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --split-phase",
+      "time": "Timed out.",
+      "stdout": "270-q-prod.out",
+      "stderr": "270-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --split-phase",
+      "time": 3951.642320394516,
+      "stdout": "271-2d-conv.out",
+      "stderr": "271-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars --split-phase",
+      "time": 4.270995140075684,
+      "stdout": "272-mat-mul.out",
+      "stderr": "272-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars",
+      "time": 229.06536030769348,
+      "stdout": "273-q-prod.out",
+      "stderr": "273-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars",
+      "time": 48.76782488822937,
+      "stdout": "274-2d-conv.out",
+      "stderr": "274-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 0 --no-dup-vars",
+      "time": 3.4775233268737793,
+      "stdout": "275-mat-mul.out",
+      "stderr": "275-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 0 --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "276-q-prod.out",
+      "stderr": "276-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 0 --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "277-2d-conv.out",
+      "stderr": "277-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 0 --sub-prog --split-phase",
+      "time": 3920.152503013611,
+      "stdout": "278-mat-mul.out",
+      "stderr": "278-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 0 --sub-prog",
+      "time": 208.34706091880798,
+      "stdout": "279-q-prod.out",
+      "stderr": "279-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 0 --sub-prog",
+      "time": 249.92052268981934,
+      "stdout": "280-2d-conv.out",
+      "stderr": "280-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 0 --sub-prog",
+      "time": 18.590474843978882,
+      "stdout": "281-mat-mul.out",
+      "stderr": "281-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 0 --split-phase",
+      "time": "Timed out.",
+      "stdout": "282-q-prod.out",
+      "stderr": "282-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 0 --split-phase",
+      "time": "Timed out.",
+      "stdout": "283-2d-conv.out",
+      "stderr": "283-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 0 --split-phase",
+      "time": 12.169414043426514,
+      "stdout": "284-mat-mul.out",
+      "stderr": "284-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 0",
+      "time": 3905.7871372699738,
+      "stdout": "285-q-prod.out",
+      "stderr": "285-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 0",
+      "time": 1408.5563616752625,
+      "stdout": "286-2d-conv.out",
+      "stderr": "286-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 0",
+      "time": 7.69650411605835,
+      "stdout": "287-mat-mul.out",
+      "stderr": "287-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 3907.579300403595,
+      "stdout": "288-q-prod.out",
+      "stderr": "288-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 3992.3456242084503,
+      "stdout": "289-2d-conv.out",
+      "stderr": "289-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 3919.2129135131836,
+      "stdout": "290-mat-mul.out",
+      "stderr": "290-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 5.217509508132935,
+      "stdout": "291-q-prod.out",
+      "stderr": "291-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 3.6518232822418213,
+      "stdout": "292-2d-conv.out",
+      "stderr": "292-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 3.2189266681671143,
+      "stdout": "293-mat-mul.out",
+      "stderr": "293-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --split-phase",
+      "time": "Timed out.",
+      "stdout": "294-q-prod.out",
+      "stderr": "294-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --split-phase",
+      "time": "Timed out.",
+      "stdout": "295-2d-conv.out",
+      "stderr": "295-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars --split-phase",
+      "time": 3.9978888034820557,
+      "stdout": "296-mat-mul.out",
+      "stderr": "296-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars",
+      "time": 4.685910224914551,
+      "stdout": "297-q-prod.out",
+      "stderr": "297-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars",
+      "time": 3.500957489013672,
+      "stdout": "298-2d-conv.out",
+      "stderr": "298-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 1 --no-dup-vars",
+      "time": 3.1713571548461914,
+      "stdout": "299-mat-mul.out",
+      "stderr": "299-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 1 --sub-prog --split-phase",
+      "time": 3978.5280747413635,
+      "stdout": "300-q-prod.out",
+      "stderr": "300-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 1 --sub-prog --split-phase",
+      "time": 3919.430142879486,
+      "stdout": "301-2d-conv.out",
+      "stderr": "301-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 1 --sub-prog --split-phase",
+      "time": 3909.399181127548,
+      "stdout": "302-mat-mul.out",
+      "stderr": "302-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 1 --sub-prog",
+      "time": 77.71104955673218,
+      "stdout": "303-q-prod.out",
+      "stderr": "303-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 1 --sub-prog",
+      "time": 18.131086349487305,
+      "stdout": "304-2d-conv.out",
+      "stderr": "304-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 1 --sub-prog",
+      "time": 5.430388450622559,
+      "stdout": "305-mat-mul.out",
+      "stderr": "305-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 1 --split-phase",
+      "time": 3938.4892134666443,
+      "stdout": "306-q-prod.out",
+      "stderr": "306-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 1 --split-phase",
+      "time": 3912.0547411441803,
+      "stdout": "307-2d-conv.out",
+      "stderr": "307-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 1 --split-phase",
+      "time": 8.640183687210083,
+      "stdout": "308-mat-mul.out",
+      "stderr": "308-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 1",
+      "time": 39.11520338058472,
+      "stdout": "309-q-prod.out",
+      "stderr": "309-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 1",
+      "time": 11.1956946849823,
+      "stdout": "310-2d-conv.out",
+      "stderr": "310-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 1",
+      "time": 4.276480436325073,
+      "stdout": "311-mat-mul.out",
+      "stderr": "311-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 3912.639219760895,
+      "stdout": "312-q-prod.out",
+      "stderr": "312-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "313-2d-conv.out",
+      "stderr": "313-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": "Timed out.",
+      "stdout": "314-mat-mul.out",
+      "stderr": "314-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 4.712600946426392,
+      "stdout": "315-q-prod.out",
+      "stderr": "315-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 3.5326669216156006,
+      "stdout": "316-2d-conv.out",
+      "stderr": "316-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 3.1934268474578857,
+      "stdout": "317-mat-mul.out",
+      "stderr": "317-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --split-phase",
+      "time": 3947.964828014374,
+      "stdout": "318-q-prod.out",
+      "stderr": "318-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --split-phase",
+      "time": 3911.2936737537384,
+      "stdout": "319-2d-conv.out",
+      "stderr": "319-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars --split-phase",
+      "time": 744.9310688972473,
+      "stdout": "320-mat-mul.out",
+      "stderr": "320-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars",
+      "time": 4.427570819854736,
+      "stdout": "321-q-prod.out",
+      "stderr": "321-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars",
+      "time": 3.446220874786377,
+      "stdout": "322-2d-conv.out",
+      "stderr": "322-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 10 --no-dup-vars",
+      "time": 3.2095437049865723,
+      "stdout": "323-mat-mul.out",
+      "stderr": "323-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 10 --sub-prog --split-phase",
+      "time": 3907.8842482566833,
+      "stdout": "324-q-prod.out",
+      "stderr": "324-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 10 --sub-prog --split-phase",
+      "time": 3905.3979547023773,
+      "stdout": "325-2d-conv.out",
+      "stderr": "325-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 10 --sub-prog --split-phase",
+      "time": 3917.4779431819916,
+      "stdout": "326-mat-mul.out",
+      "stderr": "326-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 10 --sub-prog",
+      "time": 6.92848014831543,
+      "stdout": "327-q-prod.out",
+      "stderr": "327-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 10 --sub-prog",
+      "time": 4.15578031539917,
+      "stdout": "328-2d-conv.out",
+      "stderr": "328-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 10 --sub-prog",
+      "time": 3.324831247329712,
+      "stdout": "329-mat-mul.out",
+      "stderr": "329-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 10 --split-phase",
+      "time": 3906.1372122764587,
+      "stdout": "330-q-prod.out",
+      "stderr": "330-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 10 --split-phase",
+      "time": 3904.854854106903,
+      "stdout": "331-2d-conv.out",
+      "stderr": "331-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 10 --split-phase",
+      "time": 25.15812087059021,
+      "stdout": "332-mat-mul.out",
+      "stderr": "332-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --cost-filter 10",
+      "time": 5.991736888885498,
+      "stdout": "333-q-prod.out",
+      "stderr": "333-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --cost-filter 10",
+      "time": 3.8202130794525146,
+      "stdout": "334-2d-conv.out",
+      "stderr": "334-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --cost-filter 10",
+      "time": 3.2451937198638916,
+      "stdout": "335-mat-mul.out",
+      "stderr": "335-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --no-dup-vars --sub-prog --split-phase",
+      "time": 244.3377125263214,
+      "stdout": "336-q-prod.out",
+      "stderr": "336-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --no-dup-vars --sub-prog --split-phase",
+      "time": 486.12412786483765,
+      "stdout": "337-2d-conv.out",
+      "stderr": "337-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --no-dup-vars --sub-prog --split-phase",
+      "time": 122.80136394500732,
+      "stdout": "338-mat-mul.out",
+      "stderr": "338-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --no-dup-vars --sub-prog",
+      "time": 244.34087228775024,
+      "stdout": "339-q-prod.out",
+      "stderr": "339-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --no-dup-vars --sub-prog",
+      "time": 486.0445077419281,
+      "stdout": "340-2d-conv.out",
+      "stderr": "340-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --no-dup-vars --sub-prog",
+      "time": 122.78532290458679,
+      "stdout": "341-mat-mul.out",
+      "stderr": "341-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --no-dup-vars --split-phase",
+      "time": 3908.998380422592,
+      "stdout": "342-q-prod.out",
+      "stderr": "342-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --no-dup-vars --split-phase",
+      "time": 3906.0785250663757,
+      "stdout": "343-2d-conv.out",
+      "stderr": "343-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --no-dup-vars --split-phase",
+      "time": 3903.5316984653473,
+      "stdout": "344-mat-mul.out",
+      "stderr": "344-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --no-dup-vars",
+      "time": 3908.504432439804,
+      "stdout": "345-q-prod.out",
+      "stderr": "345-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --no-dup-vars",
+      "time": 3905.832226037979,
+      "stdout": "346-2d-conv.out",
+      "stderr": "346-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --no-dup-vars",
+      "time": 3903.51845908165,
+      "stdout": "347-mat-mul.out",
+      "stderr": "347-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --sub-prog --split-phase",
+      "time": 244.28918313980103,
+      "stdout": "348-q-prod.out",
+      "stderr": "348-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --sub-prog --split-phase",
+      "time": 486.0006079673767,
+      "stdout": "349-2d-conv.out",
+      "stderr": "349-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --sub-prog --split-phase",
+      "time": 122.72465324401855,
+      "stdout": "350-mat-mul.out",
+      "stderr": "350-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --sub-prog",
+      "time": 244.26606559753418,
+      "stdout": "351-q-prod.out",
+      "stderr": "351-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --sub-prog",
+      "time": 485.9815502166748,
+      "stdout": "352-2d-conv.out",
+      "stderr": "352-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --sub-prog",
+      "time": 122.74103832244873,
+      "stdout": "353-mat-mul.out",
+      "stderr": "353-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json --split-phase",
+      "time": 3909.2751166820526,
+      "stdout": "354-q-prod.out",
+      "stderr": "354-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json --split-phase",
+      "time": 3905.96790099144,
+      "stdout": "355-2d-conv.out",
+      "stderr": "355-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json --split-phase",
+      "time": 3903.6541953086853,
+      "stdout": "356-mat-mul.out",
+      "stderr": "356-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules t2.json",
+      "time": 3908.636693239212,
+      "stdout": "357-q-prod.out",
+      "stderr": "357-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules t2.json",
+      "time": 3905.852089881897,
+      "stdout": "358-2d-conv.out",
+      "stderr": "358-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules t2.json",
+      "time": 3903.6616480350494,
+      "stdout": "359-mat-mul.out",
+      "stderr": "359-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.006621837615966797,
+      "stdout": "360-q-prod.out",
+      "stderr": "360-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.00518345832824707,
+      "stdout": "361-2d-conv.out",
+      "stderr": "361-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter -10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.0026154518127441406,
+      "stdout": "362-mat-mul.out",
+      "stderr": "362-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter -10 --no-dup-vars --sub-prog",
+      "time": 0.0058934688568115234,
+      "stdout": "363-q-prod.out",
+      "stderr": "363-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter -10 --no-dup-vars --sub-prog",
+      "time": 0.004756450653076172,
+      "stdout": "364-2d-conv.out",
+      "stderr": "364-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter -10 --no-dup-vars --sub-prog",
+      "time": 0.0024242401123046875,
+      "stdout": "365-mat-mul.out",
+      "stderr": "365-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter -10 --no-dup-vars --split-phase",
+      "time": 0.0033712387084960938,
+      "stdout": "366-q-prod.out",
+      "stderr": "366-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter -10 --no-dup-vars --split-phase",
+      "time": 0.002958536148071289,
+      "stdout": "367-2d-conv.out",
+      "stderr": "367-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter -10 --no-dup-vars --split-phase",
+      "time": 0.0020122528076171875,
+      "stdout": "368-mat-mul.out",
+      "stderr": "368-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter -10 --no-dup-vars",
+      "time": 0.0031261444091796875,
+      "stdout": "369-q-prod.out",
+      "stderr": "369-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter -10 --no-dup-vars",
+      "time": 0.0027284622192382812,
+      "stdout": "370-2d-conv.out",
+      "stderr": "370-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter -10 --no-dup-vars",
+      "time": 0.0019102096557617188,
+      "stdout": "371-mat-mul.out",
+      "stderr": "371-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter -10 --sub-prog --split-phase",
+      "time": 0.0060160160064697266,
+      "stdout": "372-q-prod.out",
+      "stderr": "372-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter -10 --sub-prog --split-phase",
+      "time": 0.004940509796142578,
+      "stdout": "373-2d-conv.out",
+      "stderr": "373-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter -10 --sub-prog --split-phase",
+      "time": 0.0024607181549072266,
+      "stdout": "374-mat-mul.out",
+      "stderr": "374-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter -10 --sub-prog",
+      "time": 0.0058290958404541016,
+      "stdout": "375-q-prod.out",
+      "stderr": "375-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter -10 --sub-prog",
+      "time": 0.0047283172607421875,
+      "stdout": "376-2d-conv.out",
+      "stderr": "376-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter -10 --sub-prog",
+      "time": 0.0023674964904785156,
+      "stdout": "377-mat-mul.out",
+      "stderr": "377-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter -10 --split-phase",
+      "time": 0.0033288002014160156,
+      "stdout": "378-q-prod.out",
+      "stderr": "378-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter -10 --split-phase",
+      "time": 0.0029129981994628906,
+      "stdout": "379-2d-conv.out",
+      "stderr": "379-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter -10 --split-phase",
+      "time": 0.001983642578125,
+      "stdout": "380-mat-mul.out",
+      "stderr": "380-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter -10",
+      "time": 0.0031354427337646484,
+      "stdout": "381-q-prod.out",
+      "stderr": "381-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter -10",
+      "time": 0.0026967525482177734,
+      "stdout": "382-2d-conv.out",
+      "stderr": "382-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter -10",
+      "time": 0.0019414424896240234,
+      "stdout": "383-mat-mul.out",
+      "stderr": "383-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.006000041961669922,
+      "stdout": "384-q-prod.out",
+      "stderr": "384-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.004907131195068359,
+      "stdout": "385-2d-conv.out",
+      "stderr": "385-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.0024673938751220703,
+      "stdout": "386-mat-mul.out",
+      "stderr": "386-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 0.005774736404418945,
+      "stdout": "387-q-prod.out",
+      "stderr": "387-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 0.004684925079345703,
+      "stdout": "388-2d-conv.out",
+      "stderr": "388-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --no-dup-vars --sub-prog",
+      "time": 0.0023910999298095703,
+      "stdout": "389-mat-mul.out",
+      "stderr": "389-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --no-dup-vars --split-phase",
+      "time": 0.0033309459686279297,
+      "stdout": "390-q-prod.out",
+      "stderr": "390-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --no-dup-vars --split-phase",
+      "time": 0.002931356430053711,
+      "stdout": "391-2d-conv.out",
+      "stderr": "391-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --no-dup-vars --split-phase",
+      "time": 0.0019681453704833984,
+      "stdout": "392-mat-mul.out",
+      "stderr": "392-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --no-dup-vars",
+      "time": 0.0031218528747558594,
+      "stdout": "393-q-prod.out",
+      "stderr": "393-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --no-dup-vars",
+      "time": 0.002766847610473633,
+      "stdout": "394-2d-conv.out",
+      "stderr": "394-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --no-dup-vars",
+      "time": 0.0018694400787353516,
+      "stdout": "395-mat-mul.out",
+      "stderr": "395-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase",
+      "time": 0.006006956100463867,
+      "stdout": "396-q-prod.out",
+      "stderr": "396-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase",
+      "time": 0.004901409149169922,
+      "stdout": "397-2d-conv.out",
+      "stderr": "397-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase",
+      "time": 0.002465486526489258,
+      "stdout": "398-mat-mul.out",
+      "stderr": "398-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --sub-prog",
+      "time": 0.0057599544525146484,
+      "stdout": "399-q-prod.out",
+      "stderr": "399-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --sub-prog",
+      "time": 0.004700899124145508,
+      "stdout": "400-2d-conv.out",
+      "stderr": "400-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --sub-prog",
+      "time": 0.002341032028198242,
+      "stdout": "401-mat-mul.out",
+      "stderr": "401-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --split-phase",
+      "time": 0.003327608108520508,
+      "stdout": "402-q-prod.out",
+      "stderr": "402-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --split-phase",
+      "time": 0.00296783447265625,
+      "stdout": "403-2d-conv.out",
+      "stderr": "403-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --split-phase",
+      "time": 0.0019495487213134766,
+      "stdout": "404-mat-mul.out",
+      "stderr": "404-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0",
+      "time": 0.0031023025512695312,
+      "stdout": "405-q-prod.out",
+      "stderr": "405-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0",
+      "time": 0.0027244091033935547,
+      "stdout": "406-2d-conv.out",
+      "stderr": "406-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0",
+      "time": 0.0018682479858398438,
+      "stdout": "407-mat-mul.out",
+      "stderr": "407-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.006026744842529297,
+      "stdout": "408-q-prod.out",
+      "stderr": "408-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.004895448684692383,
+      "stdout": "409-2d-conv.out",
+      "stderr": "409-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 1 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.002523660659790039,
+      "stdout": "410-mat-mul.out",
+      "stderr": "410-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 0.005810976028442383,
+      "stdout": "411-q-prod.out",
+      "stderr": "411-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 0.004693031311035156,
+      "stdout": "412-2d-conv.out",
+      "stderr": "412-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 1 --no-dup-vars --sub-prog",
+      "time": 0.0023651123046875,
+      "stdout": "413-mat-mul.out",
+      "stderr": "413-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 1 --no-dup-vars --split-phase",
+      "time": 0.0033347606658935547,
+      "stdout": "414-q-prod.out",
+      "stderr": "414-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 1 --no-dup-vars --split-phase",
+      "time": 0.0029344558715820312,
+      "stdout": "415-2d-conv.out",
+      "stderr": "415-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 1 --no-dup-vars --split-phase",
+      "time": 0.002001047134399414,
+      "stdout": "416-mat-mul.out",
+      "stderr": "416-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 1 --no-dup-vars",
+      "time": 0.003130197525024414,
+      "stdout": "417-q-prod.out",
+      "stderr": "417-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 1 --no-dup-vars",
+      "time": 0.0027844905853271484,
+      "stdout": "418-2d-conv.out",
+      "stderr": "418-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 1 --no-dup-vars",
+      "time": 0.0018892288208007812,
+      "stdout": "419-mat-mul.out",
+      "stderr": "419-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 1 --sub-prog --split-phase",
+      "time": 0.006050825119018555,
+      "stdout": "420-q-prod.out",
+      "stderr": "420-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 1 --sub-prog --split-phase",
+      "time": 0.0049228668212890625,
+      "stdout": "421-2d-conv.out",
+      "stderr": "421-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 1 --sub-prog --split-phase",
+      "time": 0.002463102340698242,
+      "stdout": "422-mat-mul.out",
+      "stderr": "422-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 1 --sub-prog",
+      "time": 0.005827903747558594,
+      "stdout": "423-q-prod.out",
+      "stderr": "423-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 1 --sub-prog",
+      "time": 0.004723072052001953,
+      "stdout": "424-2d-conv.out",
+      "stderr": "424-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 1 --sub-prog",
+      "time": 0.002389669418334961,
+      "stdout": "425-mat-mul.out",
+      "stderr": "425-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 1 --split-phase",
+      "time": 0.00339508056640625,
+      "stdout": "426-q-prod.out",
+      "stderr": "426-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 1 --split-phase",
+      "time": 0.0029382705688476562,
+      "stdout": "427-2d-conv.out",
+      "stderr": "427-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 1 --split-phase",
+      "time": 0.0019779205322265625,
+      "stdout": "428-mat-mul.out",
+      "stderr": "428-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 1",
+      "time": 0.0031404495239257812,
+      "stdout": "429-q-prod.out",
+      "stderr": "429-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 1",
+      "time": 0.0027074813842773438,
+      "stdout": "430-2d-conv.out",
+      "stderr": "430-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 1",
+      "time": 0.0018754005432128906,
+      "stdout": "431-mat-mul.out",
+      "stderr": "431-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.006014347076416016,
+      "stdout": "432-q-prod.out",
+      "stderr": "432-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.0049016475677490234,
+      "stdout": "433-2d-conv.out",
+      "stderr": "433-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 10 --no-dup-vars --sub-prog --split-phase",
+      "time": 0.0025093555450439453,
+      "stdout": "434-mat-mul.out",
+      "stderr": "434-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 0.005784034729003906,
+      "stdout": "435-q-prod.out",
+      "stderr": "435-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 0.004682064056396484,
+      "stdout": "436-2d-conv.out",
+      "stderr": "436-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 10 --no-dup-vars --sub-prog",
+      "time": 0.0028696060180664062,
+      "stdout": "437-mat-mul.out",
+      "stderr": "437-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 10 --no-dup-vars --split-phase",
+      "time": 0.0034034252166748047,
+      "stdout": "438-q-prod.out",
+      "stderr": "438-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 10 --no-dup-vars --split-phase",
+      "time": 0.002959728240966797,
+      "stdout": "439-2d-conv.out",
+      "stderr": "439-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 10 --no-dup-vars --split-phase",
+      "time": 0.001995086669921875,
+      "stdout": "440-mat-mul.out",
+      "stderr": "440-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 10 --no-dup-vars",
+      "time": 0.003146648406982422,
+      "stdout": "441-q-prod.out",
+      "stderr": "441-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 10 --no-dup-vars",
+      "time": 0.002756834030151367,
+      "stdout": "442-2d-conv.out",
+      "stderr": "442-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 10 --no-dup-vars",
+      "time": 0.0019114017486572266,
+      "stdout": "443-mat-mul.out",
+      "stderr": "443-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 10 --sub-prog --split-phase",
+      "time": 0.006001949310302734,
+      "stdout": "444-q-prod.out",
+      "stderr": "444-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 10 --sub-prog --split-phase",
+      "time": 0.004920482635498047,
+      "stdout": "445-2d-conv.out",
+      "stderr": "445-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 10 --sub-prog --split-phase",
+      "time": 0.0024924278259277344,
+      "stdout": "446-mat-mul.out",
+      "stderr": "446-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 10 --sub-prog",
+      "time": 0.005814075469970703,
+      "stdout": "447-q-prod.out",
+      "stderr": "447-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 10 --sub-prog",
+      "time": 0.004734039306640625,
+      "stdout": "448-2d-conv.out",
+      "stderr": "448-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 10 --sub-prog",
+      "time": 0.0023355484008789062,
+      "stdout": "449-mat-mul.out",
+      "stderr": "449-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 10 --split-phase",
+      "time": 0.003349781036376953,
+      "stdout": "450-q-prod.out",
+      "stderr": "450-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 10 --split-phase",
+      "time": 0.002936840057373047,
+      "stdout": "451-2d-conv.out",
+      "stderr": "451-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 10 --split-phase",
+      "time": 0.0019936561584472656,
+      "stdout": "452-mat-mul.out",
+      "stderr": "452-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 10",
+      "time": 0.0031347274780273438,
+      "stdout": "453-q-prod.out",
+      "stderr": "453-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 10",
+      "time": 0.0027098655700683594,
+      "stdout": "454-2d-conv.out",
+      "stderr": "454-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 10",
+      "time": 0.0019037723541259766,
+      "stdout": "455-mat-mul.out",
+      "stderr": "455-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--no-dup-vars --sub-prog --split-phase",
+      "time": 0.005989551544189453,
+      "stdout": "456-q-prod.out",
+      "stderr": "456-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--no-dup-vars --sub-prog --split-phase",
+      "time": 0.004967451095581055,
+      "stdout": "457-2d-conv.out",
+      "stderr": "457-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--no-dup-vars --sub-prog --split-phase",
+      "time": 0.002462148666381836,
+      "stdout": "458-mat-mul.out",
+      "stderr": "458-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--no-dup-vars --sub-prog",
+      "time": 0.00583648681640625,
+      "stdout": "459-q-prod.out",
+      "stderr": "459-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--no-dup-vars --sub-prog",
+      "time": 0.004721641540527344,
+      "stdout": "460-2d-conv.out",
+      "stderr": "460-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--no-dup-vars --sub-prog",
+      "time": 0.0023598670959472656,
+      "stdout": "461-mat-mul.out",
+      "stderr": "461-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--no-dup-vars --split-phase",
+      "time": 0.003337860107421875,
+      "stdout": "462-q-prod.out",
+      "stderr": "462-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--no-dup-vars --split-phase",
+      "time": 0.002908468246459961,
+      "stdout": "463-2d-conv.out",
+      "stderr": "463-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--no-dup-vars --split-phase",
+      "time": 0.001961231231689453,
+      "stdout": "464-mat-mul.out",
+      "stderr": "464-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--no-dup-vars",
+      "time": 0.003139972686767578,
+      "stdout": "465-q-prod.out",
+      "stderr": "465-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--no-dup-vars",
+      "time": 0.002710103988647461,
+      "stdout": "466-2d-conv.out",
+      "stderr": "466-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--no-dup-vars",
+      "time": 0.0019125938415527344,
+      "stdout": "467-mat-mul.out",
+      "stderr": "467-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--sub-prog --split-phase",
+      "time": 0.0060176849365234375,
+      "stdout": "468-q-prod.out",
+      "stderr": "468-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--sub-prog --split-phase",
+      "time": 0.004902839660644531,
+      "stdout": "469-2d-conv.out",
+      "stderr": "469-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--sub-prog --split-phase",
+      "time": 0.002446889877319336,
+      "stdout": "470-mat-mul.out",
+      "stderr": "470-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--sub-prog",
+      "time": 0.0057909488677978516,
+      "stdout": "471-q-prod.out",
+      "stderr": "471-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--sub-prog",
+      "time": 0.0046732425689697266,
+      "stdout": "472-2d-conv.out",
+      "stderr": "472-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--sub-prog",
+      "time": 0.0023779869079589844,
+      "stdout": "473-mat-mul.out",
+      "stderr": "473-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--split-phase",
+      "time": 0.003339052200317383,
+      "stdout": "474-q-prod.out",
+      "stderr": "474-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--split-phase",
+      "time": 0.003092527389526367,
+      "stdout": "475-2d-conv.out",
+      "stderr": "475-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--split-phase",
+      "time": 0.0019714832305908203,
+      "stdout": "476-mat-mul.out",
+      "stderr": "476-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "",
+      "time": 0.003144979476928711,
+      "stdout": "477-q-prod.out",
+      "stderr": "477-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "",
+      "time": 0.0027208328247070312,
+      "stdout": "478-2d-conv.out",
+      "stderr": "478-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "",
+      "time": 0.0018627643585205078,
+      "stdout": "479-mat-mul.out",
+      "stderr": "479-mat-mul.err"
+    }
+  ]
+}

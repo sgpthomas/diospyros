@@ -1,0 +1,84 @@
+(Concat
+  (VecAdd
+    (VecMAC
+      (VecMAC
+        (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
+        (LitVec (Get aq 1) (Get aq 2))
+        (LitVec (Get bq 2) (Get bq 0)))
+      (LitVec (Get aq 3) (Get aq 3))
+      (LitVec (Get bq 0) (Get bq 1)))
+    (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))
+  (Concat
+    (VecAdd
+      (VecMAC
+        (VecMAC
+          (VecMul (LitVec (Get aq 2) 0) (LitVec (Get bq 3) 0))
+          (LitVec (Get aq 0) 0)
+          (LitVec (Get bq 1) 0))
+        (LitVec (Get aq 3) (Get aq 3))
+        (LitVec (Get bq 2) (Get bq 3)))
+      (VecAdd
+        (VecAdd
+          (VecMinus (LitVec 0 0) (VecMul (LitVec 0 (Get bq 2)) (Vec 1 (Get aq 2))))
+          (VecMinus (LitVec 0 0) (VecMul (LitVec 0 (Get bq 1)) (Vec 1 (Get aq 1)))))
+        (VecMinus
+          (LitVec 0 0)
+          (VecMul (LitVec (Get aq 1) (Get aq 0)) (LitVec (Get bq 0) (Get bq 0))))))
+    (Concat
+      (VecAdd
+        (LitVec (Get at 0) (Get at 1))
+        (VecAdd
+          (LitVec (Get bt 0) (Get bt 1))
+          (VecMAC
+            (VecMAC
+              (VecNeg
+                (VecMul
+                  (LitVec (Get aq 2) (Get aq 0))
+                  (VecMul
+                    (Vec 2 2)
+                    (VecMAC
+                      (VecNeg (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bt 2) (Get bt 0))))
+                      (LitVec (Get aq 2) (Get aq 0))
+                      (LitVec (Get bt 0) (Get bt 1))))))
+              (LitVec (Get aq 1) (Get aq 2))
+              (VecMul
+                (Vec 2 2)
+                (VecMAC
+                  (VecNeg (VecMul (LitVec (Get aq 1) (Get aq 2)) (LitVec (Get bt 0) (Get bt 1))))
+                  (LitVec (Get aq 0) (Get aq 1))
+                  (LitVec (Get bt 1) (Get bt 2)))))
+            (LitVec (Get aq 3) (Get aq 3))
+            (VecMul
+              (Vec 2 2)
+              (VecMAC
+                (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bt 1) (Get bt 2))))
+                (LitVec (Get aq 1) (Get aq 2))
+                (LitVec (Get bt 2) (Get bt 0)))))))
+      (VecAdd
+        (LitVec (Get at 2) 0)
+        (VecAdd
+          (LitVec (Get bt 2) 0)
+          (VecMAC
+            (VecAdd
+              (VecMinus
+                (LitVec 0 0)
+                (VecMul
+                  (Vec 2 1)
+                  (VecMul
+                    (Vec (Get aq 1) 1)
+                    (VecAdd
+                      (VecMinus (LitVec 0 0) (VecMul (LitVec (Get aq 2) 0) (Vec (Get bt 1) 1)))
+                      (VecMul (LitVec (Get bt 2) 0) (Vec (Get aq 1) 1))))))
+              (VecMul
+                (LitVec (Get aq 0) 0)
+                (VecMul
+                  (Vec 2 1)
+                  (VecAdd
+                    (VecMinus (LitVec 0 0) (VecMul (LitVec (Get bt 2) 0) (Vec (Get aq 0) 1)))
+                    (VecMul (Vec (Get aq 2) 1) (Vec (Get bt 0) 1))))))
+            (LitVec (Get aq 3) 0)
+            (VecMul
+              (Vec 2 1)
+              (VecAdd
+                (VecMinus (LitVec 0 0) (VecMul (LitVec (Get aq 1) 0) (Vec (Get bt 0) 1)))
+                (VecMul (LitVec (Get aq 0) 0) (Vec (Get bt 1) 1))))))))))

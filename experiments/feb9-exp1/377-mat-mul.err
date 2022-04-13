@@ -1,0 +1,49 @@
+Running egg with timeout 3900s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+ (* (Get A 0) (Get B 0)) (* (Get A 1) (Get B 2)))
+    (+ (* (Get A 0) (Get B 1)) (* (Get A 1) (Get B 3))))
+  (Vec
+    (+ (* (Get A 2) (Get B 0)) (* (Get A 3) (Get B 2)))
+    (+ (* (Get A 2) (Get B 1)) (* (Get A 3) (Get B 3)))))
+Retained 0 rules
+Vec([45, 60])
+Vec([45, 60])
+Vec([14, 29])
+Vec([14, 29])
+p: (Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+start:
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [112.00800000000001]
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+start:
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [112.00800000000001]
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+start:
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [112.00800000000001]
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+start:
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [112.00800000000001]
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+Starting run with 0 rules
+Egraph size: 29
+Runner report
+=============
+  Stop reason: Saturated
+  Iterations: 1
+  Egraph size: 29 nodes, 29 classes, 29 memo
+  Rebuilds: 0, 0.00 per iter
+  Total time: 0.000001507
+    Search:  (0.02) 0.000000037
+    Apply:   (0.04) 0.000000062
+    Rebuild: (0.81) 0.00000122
+Stopped after 1 iterations, reason: Some(Saturated)
+
+Cost: 224.148

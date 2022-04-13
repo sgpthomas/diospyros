@@ -1,0 +1,54 @@
+Running egg with timeout 3900s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+ (* (Get A 0) (Get B 0)) (* (Get A 1) (Get B 2)))
+    (+ (* (Get A 0) (Get B 1)) (* (Get A 1) (Get B 3))))
+  (Vec
+    (+ (* (Get A 2) (Get B 0)) (* (Get A 3) (Get B 2)))
+    (+ (* (Get A 2) (Get B 1)) (* (Get A 3) (Get B 3)))))
+Dropping inapplicable rules: neg-neg neg-neg-rev neg-sgn neg-sgn-rev neg-zero-inv neg-zero-inv-rev neg-minus neg-minus-rev neg-minus-zero neg-minus-zero-rev sqrt-1-inv sqrt-1-inv-rev neg_unop sqrt_unop /_binop_vec
+Retained 14 rules
+Retained 10 rules
+Vec([45, 60])
+Vec([45, 60])
+Vec([14, 29])
+Vec([14, 29])
+p: (Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+start:
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?w ?w) (Vec ?v1 ?z)) (Vec ?y ?y) (Vec ?v0 ?x))
+start:
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?w ?w) (Vec ?v1 ?z)) (Vec ?y ?y) (Vec ?v0 ?x))
+start:
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?w ?w) (Vec ?v1 ?z)) (Vec ?y ?y) (Vec ?v0 ?x))
+start:
+(Vec (+ (* ?w ?v1) (* ?y ?v0)) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?w ?w) (Vec ?v1 ?z)) (Vec ?y ?y) (Vec ?v0 ?x))
+Starting run with 4 rules
+Egraph size: 39
+Runner report
+=============
+  Stop reason: Saturated
+  Iterations: 2
+  Egraph size: 39 nodes, 37 classes, 39 memo
+  Rebuilds: 0, 0.00 per iter
+  Total time: 0.000056118
+    Search:  (0.19) 0.000010923999999999999
+    Apply:   (0.70) 0.00003935
+    Rebuild: (0.10) 0.000005553
+Stopped after 2 iterations, reason: Some(Saturated)
+==== Starting Second Phase Optimization ====
+Using 14 rules
+Improved cost by 0.7919999999999998 (4.948 - 4.156000000000001)
+
+Cost: 4.156000000000001

@@ -1,0 +1,34 @@
+Running egg with timeout 360s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+ (* (Get A 0) (Get B 0)) (* (Get A 1) (Get B 2)))
+    (+ (* (Get A 0) (Get B 1)) (* (Get A 1) (Get B 3))))
+  (Vec
+    (+ (* (Get A 2) (Get B 0)) (* (Get A 3) (Get B 2)))
+    (+ (* (Get A 2) (Get B 1)) (* (Get A 3) (Get B 3)))))
+Dropping inapplicable rules: neg-neg neg-neg-rev neg-sgn neg-sgn-rev neg-zero-inv neg-zero-inv-rev neg-minus neg-minus-rev neg-minus-zero neg-minus-zero-rev sqrt-1-inv sqrt-1-inv-rev neg_unop sqrt_unop /_binop_vec
+Retained 1247 rules
+Retained 260943 rules
+Starting run with 260943 rules
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+Egraph size: 9198
+Runner report
+=============
+  Stop reason: TimeLimit(360.004878332)
+  Iterations: 3
+  Egraph size: 8023 nodes, 615 classes, 9198 memo
+  Rebuilds: 50, 16.67 per iter
+  Total time: 360.749292954
+    Search:  (1.00) 359.823476966
+    Apply:   (0.00) 0.921040053
+    Rebuild: (0.00) 0.004774081
+Stopped after 3 iterations, reason: Some(TimeLimit(360.004878332))
+==== Starting Second Phase Optimization ====
+Using 1247 rules
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+Improved cost by 0.395999999999999 (4.552 - 4.156000000000001)
+
+Cost: 4.156000000000001

@@ -1,0 +1,57 @@
+Running egg with timeout 3900s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (* (Get I 0) (Get F 0))
+    (+ (* (Get I 0) (Get F 1)) (* (Get I 1) (Get F 0))))
+  (Concat
+    (Vec
+      (+ (* (Get I 1) (Get F 1)) (* (Get I 2) (Get F 0)))
+      (* (Get I 2) (Get F 1)))
+    (Concat
+      (Vec
+        (+ (* (Get I 0) (Get F 2)) (* (Get I 3) (Get F 0)))
+        (+
+          (* (Get I 0) (Get F 3))
+          (+ (* (Get I 1) (Get F 2)) (+ (* (Get I 3) (Get F 1)) (* (Get I 4) (Get F 0))))))
+      (Concat
+        (Vec
+          (+
+            (* (Get I 1) (Get F 3))
+            (+ (* (Get I 2) (Get F 2)) (+ (* (Get I 4) (Get F 1)) (* (Get I 5) (Get F 0)))))
+          (+ (* (Get I 2) (Get F 3)) (* (Get I 5) (Get F 1))))
+        (Concat
+          (Vec
+            (+ (* (Get I 3) (Get F 2)) (* (Get I 6) (Get F 0)))
+            (+
+              (* (Get I 3) (Get F 3))
+              (+ (* (Get I 4) (Get F 2)) (+ (* (Get I 6) (Get F 1)) (* (Get I 7) (Get F 0))))))
+          (Concat
+            (Vec
+              (+
+                (* (Get I 4) (Get F 3))
+                (+ (* (Get I 5) (Get F 2)) (+ (* (Get I 7) (Get F 1)) (* (Get I 8) (Get F 0)))))
+              (+ (* (Get I 5) (Get F 3)) (* (Get I 8) (Get F 1))))
+            (Concat
+              (Vec
+                (* (Get I 6) (Get F 2))
+                (+ (* (Get I 6) (Get F 3)) (* (Get I 7) (Get F 2))))
+              (Vec
+                (+ (* (Get I 7) (Get F 3)) (* (Get I 8) (Get F 2)))
+                (* (Get I 8) (Get F 3))))))))))
+Retained 1179 rules
+Starting run with 1179 rules
+Egraph size: 13927
+Runner report
+=============
+  Stop reason: Saturated
+  Iterations: 7
+  Egraph size: 13927 nodes, 783 classes, 13927 memo
+  Rebuilds: 0, 0.00 per iter
+  Total time: 0.674421558
+    Search:  (0.82) 0.5532004549999999
+    Apply:   (0.17) 0.11171241100000001
+    Rebuild: (0.01) 0.00950548
+Stopped after 7 iterations, reason: Some(Saturated)
+
+Cost: 42.199999999999996

@@ -1,0 +1,65 @@
+Running egg with timeout 3900s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+ (* (Get A 0) (Get B 0)) (* (Get A 1) (Get B 2)))
+    (+ (* (Get A 0) (Get B 1)) (* (Get A 1) (Get B 3))))
+  (Vec
+    (+ (* (Get A 2) (Get B 0)) (* (Get A 3) (Get B 2)))
+    (+ (* (Get A 2) (Get B 1)) (* (Get A 3) (Get B 3)))))
+Retained 4552 rules
+Retained 7 rules
+Retained 111 rules
+=================================
+Starting Phase 1: Pre-compilation
+=================================
+Starting run with 4552 rules
+Egraph size: 74310902
+  Runner report
+  =============
+    Stop reason: NodeLimit(74295977)
+    Iterations: 5
+    Egraph size: 27024792 nodes, 13459430 classes, 74310902 memo
+    Rebuilds: 23563677, 4712735.40 per iter
+    Total time: 216.901797608
+      Search:  (0.08) 18.134106555
+      Apply:   (0.47) 102.44260777900001
+      Rebuild: (0.44) 96.325081534
+Stopped after 5 iterations, reason: Some(NodeLimit(74295977))
+Cost: 224.148
+=================================
+Starting Phase 2: Compilation
+=================================
+Starting run with 7 rules
+Egraph size: 74310902
+  Runner report
+  =============
+    Stop reason: NodeLimit(74310902)
+    Iterations: 1
+    Egraph size: 27024792 nodes, 13459430 classes, 74310902 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 4.583798578
+      Search:  (0.00) 0.000000128
+      Apply:   (0.00) 0.00000055
+      Rebuild: (1.00) 4.583797366
+Stopped after 1 iterations, reason: Some(NodeLimit(74310902))
+Cost: 224.148 (improved 0)
+=================================
+Starting Phase 3: Optimization
+=================================
+Starting run with 111 rules
+Egraph size: 74310902
+  Runner report
+  =============
+    Stop reason: NodeLimit(74310902)
+    Iterations: 1
+    Egraph size: 27024792 nodes, 13459430 classes, 74310902 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 4.5229458959999995
+      Search:  (0.00) 0.000000085
+      Apply:   (0.00) 0.000000542
+      Rebuild: (1.00) 4.522944666
+Stopped after 1 iterations, reason: Some(NodeLimit(74310902))
+Cost: 224.148 (improved 0)
+
+Cost: 224.148

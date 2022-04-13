@@ -1,0 +1,237 @@
+Running egg with timeout 360s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (* (Get I 0) (Get F 0))
+    (+ (* (Get I 0) (Get F 1)) (* (Get I 1) (Get F 0))))
+  (Concat
+    (Vec
+      (+ (* (Get I 1) (Get F 1)) (* (Get I 2) (Get F 0)))
+      (* (Get I 2) (Get F 1)))
+    (Concat
+      (Vec
+        (+ (* (Get I 0) (Get F 2)) (* (Get I 3) (Get F 0)))
+        (+
+          (* (Get I 0) (Get F 3))
+          (+ (* (Get I 1) (Get F 2)) (+ (* (Get I 3) (Get F 1)) (* (Get I 4) (Get F 0))))))
+      (Concat
+        (Vec
+          (+
+            (* (Get I 1) (Get F 3))
+            (+ (* (Get I 2) (Get F 2)) (+ (* (Get I 4) (Get F 1)) (* (Get I 5) (Get F 0)))))
+          (+ (* (Get I 2) (Get F 3)) (* (Get I 5) (Get F 1))))
+        (Concat
+          (Vec
+            (+ (* (Get I 3) (Get F 2)) (* (Get I 6) (Get F 0)))
+            (+
+              (* (Get I 3) (Get F 3))
+              (+ (* (Get I 4) (Get F 2)) (+ (* (Get I 6) (Get F 1)) (* (Get I 7) (Get F 0))))))
+          (Concat
+            (Vec
+              (+
+                (* (Get I 4) (Get F 3))
+                (+ (* (Get I 5) (Get F 2)) (+ (* (Get I 7) (Get F 1)) (* (Get I 8) (Get F 0)))))
+              (+ (* (Get I 5) (Get F 3)) (* (Get I 8) (Get F 1))))
+            (Concat
+              (Vec
+                (* (Get I 6) (Get F 2))
+                (+ (* (Get I 6) (Get F 3)) (* (Get I 7) (Get F 2))))
+              (Vec
+                (+ (* (Get I 7) (Get F 3)) (* (Get I 8) (Get F 2)))
+                (* (Get I 8) (Get F 3))))))))))
+Retained 2699 rules
+Retained 645 rules
+Vec([271, 278])
+Vec([271, 278])
+Vec([240, 255])
+Vec([240, 255])
+Vec([217, 232])
+Vec([217, 232])
+Vec([154, 185])
+Vec([154, 185])
+Vec([123, 138])
+Vec([123, 138])
+Vec([60, 91])
+Vec([60, 91])
+Vec([37, 44])
+Vec([37, 44])
+Vec([6, 21])
+Vec([6, 21])
+p: (Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+p: (Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+p: (Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+p: (Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+p: (Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+p: (Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+p: (Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+p: (Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+p: (Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+start:
+(Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?z 1) (Vec ?y 0)) (Vec ?w ?y) (Vec ?x ?x))
+start:
+(Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?z 1) (Vec ?y 0)) (Vec ?w ?y) (Vec ?x ?x))
+start:
+(Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?w ?w) (Vec ?x ?z)) (Vec 0 ?x) (Vec 1 ?y))
+start:
+(Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?w ?w) (Vec ?x ?z)) (Vec 0 ?x) (Vec 1 ?y))
+start:
+(Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?x 0) (Vec ?v1 1)) (Vec ?y ?y) (Vec ?v0 ?x))
+    (Vec ?w 1)
+    (Vec ?v2 0))
+  (Vec ?v3 ?w)
+  (Vec ?z ?z))
+start:
+(Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?x 0) (Vec ?v1 1)) (Vec ?y ?y) (Vec ?v0 ?x))
+    (Vec ?w 1)
+    (Vec ?v2 0))
+  (Vec ?v3 ?w)
+  (Vec ?z ?z))
+start:
+(Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?w ?y) (Vec ?x ?x)) (Vec 1 ?w) (Vec 0 ?z))
+    (Vec 1 ?v0)
+    (Vec 0 ?v1))
+  (Vec ?v3 ?v3)
+  (Vec ?v0 ?v2))
+start:
+(Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?w ?y) (Vec ?x ?x)) (Vec 1 ?w) (Vec 0 ?z))
+    (Vec 1 ?v0)
+    (Vec 0 ?v1))
+  (Vec ?v3 ?v3)
+  (Vec ?v0 ?v2))
+start:
+(Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?x 0) (Vec ?v1 1)) (Vec ?y ?y) (Vec ?v0 ?x))
+    (Vec ?w 1)
+    (Vec ?v2 0))
+  (Vec ?v3 ?w)
+  (Vec ?z ?z))
+start:
+(Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?x 0) (Vec ?v1 1)) (Vec ?y ?y) (Vec ?v0 ?x))
+    (Vec ?w 1)
+    (Vec ?v2 0))
+  (Vec ?v3 ?w)
+  (Vec ?z ?z))
+start:
+(Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?w ?y) (Vec ?x ?x)) (Vec 1 ?w) (Vec 0 ?z))
+    (Vec 1 ?v0)
+    (Vec 0 ?v1))
+  (Vec ?v3 ?v3)
+  (Vec ?v0 ?v2))
+start:
+(Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?w ?y) (Vec ?x ?x)) (Vec 1 ?w) (Vec 0 ?z))
+    (Vec 1 ?v0)
+    (Vec 0 ?v1))
+  (Vec ?v3 ?v3)
+  (Vec ?v0 ?v2))
+start:
+(Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?z 1) (Vec ?y 0)) (Vec ?w ?y) (Vec ?x ?x))
+start:
+(Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?z 1) (Vec ?y 0)) (Vec ?w ?y) (Vec ?x ?x))
+start:
+(Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?w ?w) (Vec ?x ?z)) (Vec 0 ?x) (Vec 1 ?y))
+start:
+(Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?w ?w) (Vec ?x ?z)) (Vec 0 ?x) (Vec 1 ?y))
+Starting run with 16 rules
+Egraph size: 154
+Runner report
+=============
+  Stop reason: Saturated
+  Iterations: 2
+  Egraph size: 154 nodes, 146 classes, 154 memo
+  Rebuilds: 0, 0.00 per iter
+  Total time: 0.000395596
+    Search:  (0.33) 0.000130329
+    Apply:   (0.61) 0.000241236
+    Rebuild: (0.06) 0.000023688
+Stopped after 2 iterations, reason: Some(Saturated)
+==== Starting Second Phase Optimization ====
+Using 2699 rules
+Improved cost by 3.1519999999999975 (29.739999999999995 - 26.587999999999997)
+
+Cost: 26.587999999999997

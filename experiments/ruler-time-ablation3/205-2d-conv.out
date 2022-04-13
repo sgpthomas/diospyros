@@ -1,0 +1,55 @@
+(Concat
+  (VecMAC
+    (VecMul (Vec 0 (Get F 1)) (LitVec (Get I 0) (Get I 0)))
+    (LitVec (Get F 0) (Get F 0))
+    (Vec (Get I 0) (Get I 1)))
+  (Concat
+    (VecMAC
+      (VecMul (LitVec (Get I 2) (Get I 2)) (Vec (Get F 0) 0))
+      (LitVec (Get F 1) (Get F 1))
+      (Vec (Get I 1) (Get I 2)))
+    (Concat
+      (VecMAC
+        (VecAdd
+          (VecAdd
+            (VecMul (Vec 0 (Get F 1)) (Vec 1 (Get I 3)))
+            (VecMul (LitVec (Get F 0) (Get F 0)) (Vec (Get I 3) (Get I 4))))
+          (VecMul (Vec 1 (Get F 2)) (Vec 0 (Get I 1))))
+        (LitVec (Get I 0) (Get I 0))
+        (Vec (Get F 2) (Get F 3)))
+      (Concat
+        (VecMAC
+          (VecAdd
+            (VecMul (LitVec (Get F 1) (Get F 1)) (Vec (Get I 4) (Get I 5)))
+            (VecAdd
+              (VecMul (Vec (Get F 2) 0) (Vec (Get I 2) 1))
+              (VecMul (Vec (Get F 0) 0) (Vec (Get I 5) 1))))
+          (LitVec (Get F 3) (Get F 3))
+          (Vec (Get I 1) (Get I 2)))
+        (Concat
+          (VecMAC
+            (VecAdd
+              (VecMul (LitVec (Get F 2) (Get F 2)) (Vec (Get I 3) (Get I 4)))
+              (VecAdd
+                (VecMul (Vec 0 (Get F 1)) (LitVec (Get I 6) (Get I 6)))
+                (VecMul (LitVec (Get F 0) (Get F 0)) (Vec (Get I 6) (Get I 7)))))
+            (Vec 0 (Get F 3))
+            (Vec 1 (Get I 3)))
+          (Concat
+            (VecMAC
+              (VecAdd
+                (VecAdd
+                  (VecMul (Vec (Get F 2) 0) (Vec (Get I 5) 1))
+                  (VecMul (LitVec (Get F 1) (Get F 1)) (Vec (Get I 7) (Get I 8))))
+                (VecMul (LitVec (Get I 8) (Get I 8)) (Vec (Get F 0) 0)))
+              (LitVec (Get F 3) (Get F 3))
+              (Vec (Get I 4) (Get I 5)))
+            (Concat
+              (VecMAC
+                (VecMul (Vec 0 (Get F 3)) (LitVec (Get I 6) (Get I 6)))
+                (LitVec (Get F 2) (Get F 2))
+                (Vec (Get I 6) (Get I 7)))
+              (VecMAC
+                (VecMul (LitVec (Get I 8) (Get I 8)) (Vec (Get F 2) 0))
+                (LitVec (Get F 3) (Get F 3))
+                (Vec (Get I 7) (Get I 8))))))))))

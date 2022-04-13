@@ -1,0 +1,97 @@
+Running egg with timeout 360s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+
+      (+
+        (* (Get aq 3) (Get bq 0))
+        (+ (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 2))))
+      (neg (* (Get aq 2) (Get bq 1))))
+    (+
+      (+
+        (* (Get aq 3) (Get bq 1))
+        (+ (* (Get aq 1) (Get bq 3)) (* (Get aq 2) (Get bq 0))))
+      (neg (* (Get aq 0) (Get bq 2)))))
+  (Concat
+    (Vec
+      (+
+        (+
+          (* (Get aq 3) (Get bq 2))
+          (+ (* (Get aq 2) (Get bq 3)) (* (Get aq 0) (Get bq 1))))
+        (neg (* (Get aq 1) (Get bq 0))))
+      (+
+        (* (Get aq 3) (Get bq 3))
+        (+
+          (neg (* (Get aq 0) (Get bq 0)))
+          (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
+    (Concat
+      (Vec
+        (+
+          (Get at 0)
+          (+
+            (Get bt 0)
+            (+
+              (+
+                (*
+                  (Get aq 1)
+                  (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))
+                (neg
+                  (*
+                    (Get aq 2)
+                    (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1)))))))))
+        (+
+          (Get at 1)
+          (+
+            (Get bt 1)
+            (+
+              (+
+                (*
+                  (Get aq 2)
+                  (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))
+                (neg
+                  (*
+                    (Get aq 0)
+                    (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))))
+      (Vec
+        (+
+          (Get at 2)
+          (+
+            (Get bt 2)
+            (+
+              (+
+                (*
+                  (Get aq 0)
+                  (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+                (neg
+                  (*
+                    (Get aq 1)
+                    (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))))
+        0))))
+Dropping inapplicable rules: sqrt-1-inv sqrt-1-inv-rev sqrt_unop /_binop_vec
+Retained 4628 rules
+Starting run with 4628 rules
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+Egraph size: 10835458
+Runner report
+=============
+  Stop reason: NodeLimit(10827271)
+  Iterations: 7
+  Egraph size: 815551 nodes, 366846 classes, 10835458 memo
+  Rebuilds: 4230807, 604401.00 per iter
+  Total time: 153.115016854
+    Search:  (0.65) 98.986705905
+    Apply:   (0.24) 36.469196913000005
+    Rebuild: (0.12) 17.659110153
+Stopped after 7 iterations, reason: Some(NodeLimit(10827271))
+
+Cost: 65.13900000000001

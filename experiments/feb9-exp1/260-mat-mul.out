@@ -1,0 +1,7 @@
+(Concat
+  (VecAdd
+    (VecMul (LitVec (Get B 0) (Get B 1)) (LitVec (Get A 0) (Get A 0)))
+    (VecMul (LitVec (Get B 2) (Get B 3)) (LitVec (Get A 1) (Get A 1))))
+  (VecAdd
+    (VecMul (LitVec (Get B 0) (Get B 1)) (LitVec (Get A 2) (Get A 2)))
+    (VecMul (LitVec (Get B 2) (Get B 3)) (LitVec (Get A 3) (Get A 3)))))

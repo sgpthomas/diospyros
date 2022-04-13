@@ -1,0 +1,29 @@
+Running egg with timeout 360s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+ (* (Get A 0) (Get B 0)) (* (Get A 1) (Get B 2)))
+    (+ (* (Get A 0) (Get B 1)) (* (Get A 1) (Get B 3))))
+  (Vec
+    (+ (* (Get A 2) (Get B 0)) (* (Get A 3) (Get B 2)))
+    (+ (* (Get A 2) (Get B 1)) (* (Get A 3) (Get B 3)))))
+Retained 257554 rules
+Retained 4612 rules
+Starting run with 4612 rules
+Egraph size: 4965
+Runner report
+=============
+  Stop reason: Saturated
+  Iterations: 7
+  Egraph size: 4365 nodes, 213 classes, 4965 memo
+  Rebuilds: 0, 0.00 per iter
+  Total time: 4.484640413
+    Search:  (0.97) 4.353647501999999
+    Apply:   (0.03) 0.128439759
+    Rebuild: (0.00) 0.002550452
+Stopped after 7 iterations, reason: Some(Saturated)
+==== Starting Second Phase Optimization ====
+Using 257554 rules
+Improved cost by 0 (4.156000000000001 - 4.156000000000001)
+
+Cost: 4.156000000000001

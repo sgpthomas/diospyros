@@ -1,0 +1,28 @@
+Running egg with timeout 3900s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+ (* (Get A 0) (Get B 0)) (* (Get A 1) (Get B 2)))
+    (+ (* (Get A 0) (Get B 1)) (* (Get A 1) (Get B 3))))
+  (Vec
+    (+ (* (Get A 2) (Get B 0)) (* (Get A 3) (Get B 2)))
+    (+ (* (Get A 2) (Get B 1)) (* (Get A 3) (Get B 3)))))
+Dropping inapplicable rules: neg-neg neg-neg-rev neg-sgn neg-sgn-rev neg-zero-inv neg-zero-inv-rev neg-minus neg-minus-rev neg-minus-zero neg-minus-zero-rev sqrt-1-inv sqrt-1-inv-rev neg_unop sqrt_unop /_binop_vec
+Retained 1185 rules
+Starting run with 1185 rules
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+Egraph size: 2797
+Runner report
+=============
+  Stop reason: Saturated
+  Iterations: 5
+  Egraph size: 2797 nodes, 209 classes, 2797 memo
+  Rebuilds: 0, 0.00 per iter
+  Total time: 0.105829716
+    Search:  (0.81) 0.08536571800000001
+    Apply:   (0.18) 0.019271012999999997
+    Rebuild: (0.01) 0.001191482
+Stopped after 5 iterations, reason: Some(Saturated)
+
+Cost: 4.156000000000001

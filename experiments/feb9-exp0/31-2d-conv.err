@@ -1,0 +1,63 @@
+Running egg with timeout 360s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (* (Get I 0) (Get F 0))
+    (+ (* (Get I 0) (Get F 1)) (* (Get I 1) (Get F 0))))
+  (Concat
+    (Vec
+      (+ (* (Get I 1) (Get F 1)) (* (Get I 2) (Get F 0)))
+      (* (Get I 2) (Get F 1)))
+    (Concat
+      (Vec
+        (+ (* (Get I 0) (Get F 2)) (* (Get I 3) (Get F 0)))
+        (+
+          (* (Get I 0) (Get F 3))
+          (+ (* (Get I 1) (Get F 2)) (+ (* (Get I 3) (Get F 1)) (* (Get I 4) (Get F 0))))))
+      (Concat
+        (Vec
+          (+
+            (* (Get I 1) (Get F 3))
+            (+ (* (Get I 2) (Get F 2)) (+ (* (Get I 4) (Get F 1)) (* (Get I 5) (Get F 0)))))
+          (+ (* (Get I 2) (Get F 3)) (* (Get I 5) (Get F 1))))
+        (Concat
+          (Vec
+            (+ (* (Get I 3) (Get F 2)) (* (Get I 6) (Get F 0)))
+            (+
+              (* (Get I 3) (Get F 3))
+              (+ (* (Get I 4) (Get F 2)) (+ (* (Get I 6) (Get F 1)) (* (Get I 7) (Get F 0))))))
+          (Concat
+            (Vec
+              (+
+                (* (Get I 4) (Get F 3))
+                (+ (* (Get I 5) (Get F 2)) (+ (* (Get I 7) (Get F 1)) (* (Get I 8) (Get F 0)))))
+              (+ (* (Get I 5) (Get F 3)) (* (Get I 8) (Get F 1))))
+            (Concat
+              (Vec
+                (* (Get I 6) (Get F 2))
+                (+ (* (Get I 6) (Get F 3)) (* (Get I 7) (Get F 2))))
+              (Vec
+                (+ (* (Get I 7) (Get F 3)) (* (Get I 8) (Get F 2)))
+                (* (Get I 8) (Get F 3))))))))))
+Dropping inapplicable rules: neg-neg neg-neg-rev neg-sgn neg-sgn-rev neg-zero-inv neg-zero-inv-rev neg-minus neg-minus-rev neg-minus-zero neg-minus-zero-rev sqrt-1-inv sqrt-1-inv-rev neg_unop sqrt_unop /_binop_vec
+Retained 2712 rules
+Retained 656 rules
+Starting run with 656 rules
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+Egraph size: 1389699
+Runner report
+=============
+  Stop reason: Saturated
+  Iterations: 13
+  Egraph size: 1334139 nodes, 619442 classes, 1389699 memo
+  Rebuilds: 22756, 1750.46 per iter
+  Total time: 279.390868835
+    Search:  (0.96) 267.07206480900004
+    Apply:   (0.04) 10.596399239999998
+    Rebuild: (0.01) 1.7223975549999997
+Stopped after 13 iterations, reason: Some(Saturated)
+==== Starting Second Phase Optimization ====
+Using 2712 rules
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times

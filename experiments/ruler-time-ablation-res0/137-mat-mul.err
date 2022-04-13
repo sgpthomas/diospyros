@@ -1,0 +1,62 @@
+Running egg with timeout 3900s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+ (* (Get A 0) (Get B 0)) (* (Get A 1) (Get B 2)))
+    (+ (* (Get A 0) (Get B 1)) (* (Get A 1) (Get B 3))))
+  (Vec
+    (+ (* (Get A 2) (Get B 0)) (* (Get A 3) (Get B 2)))
+    (+ (* (Get A 2) (Get B 1)) (* (Get A 3) (Get B 3)))))
+=================================
+Starting Phase 1: Pre-compilation
+=================================
+Starting run with 0 rules
+Egraph size: 29
+  Runner report
+  =============
+    Stop reason: Saturated
+    Iterations: 1
+    Egraph size: 29 nodes, 29 classes, 29 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 0.000002497
+      Search:  (0.05) 0.000000113
+      Apply:   (0.06) 0.000000156
+      Rebuild: (0.74) 0.000001853
+Stopped after 1 iterations, reason: Some(Saturated)
+Cost: 224.148
+=================================
+Starting Phase 2: Compilation
+=================================
+Starting run with 188427 rules
+Egraph size: 10901771
+  Runner report
+  =============
+    Stop reason: NodeLimit(10700791)
+    Iterations: 3
+    Egraph size: 301284 nodes, 83022 classes, 10901771 memo
+    Rebuilds: 5029443, 1676481.00 per iter
+    Total time: 759.9853489789999
+      Search:  (0.97) 735.520866061
+      Apply:   (0.02) 13.499931687
+      Rebuild: (0.01) 10.96454969
+Stopped after 3 iterations, reason: Some(NodeLimit(10700791))
+Cost: 4.948 (improved 219.2)
+=================================
+Starting Phase 3: Optimization
+=================================
+Starting run with 0 rules
+Egraph size: 10901771
+  Runner report
+  =============
+    Stop reason: NodeLimit(10901771)
+    Iterations: 1
+    Egraph size: 301284 nodes, 83022 classes, 10901771 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 0.031102942
+      Search:  (0.00) 0.000000049
+      Apply:   (0.00) 0.000000427
+      Rebuild: (1.00) 0.031102033
+Stopped after 1 iterations, reason: Some(NodeLimit(10901771))
+Cost: 4.948 (improved 0)
+
+Cost: 4.948

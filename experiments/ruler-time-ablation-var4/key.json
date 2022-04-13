@@ -1,0 +1,298 @@
+{
+  "experiments": [
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60.json --cost-filter 0.0 --sub-prog",
+      "time": 0.0052869319915771484,
+      "stdout": "0-q-prod.out",
+      "stderr": "0-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60.json --cost-filter 0.0",
+      "time": 0.005316734313964844,
+      "stdout": "1-q-prod.out",
+      "stderr": "1-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60.json --cost-filter 5.0 --sub-prog",
+      "time": 0.004868984222412109,
+      "stdout": "2-q-prod.out",
+      "stderr": "2-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60.json --cost-filter 5.0",
+      "time": 0.004922628402709961,
+      "stdout": "3-q-prod.out",
+      "stderr": "3-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60.json --sub-prog",
+      "time": 831.0965764522552,
+      "stdout": "4-q-prod.out",
+      "stderr": "4-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60.json",
+      "time": 823.7734014987946,
+      "stdout": "5-q-prod.out",
+      "stderr": "5-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-600.json --cost-filter 0.0 --sub-prog",
+      "time": 0.008131265640258789,
+      "stdout": "6-q-prod.out",
+      "stderr": "6-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-600.json --cost-filter 0.0",
+      "time": 0.008110284805297852,
+      "stdout": "7-q-prod.out",
+      "stderr": "7-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-600.json --cost-filter 5.0 --sub-prog",
+      "time": 0.007842779159545898,
+      "stdout": "8-q-prod.out",
+      "stderr": "8-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-600.json --cost-filter 5.0",
+      "time": 0.007788658142089844,
+      "stdout": "9-q-prod.out",
+      "stderr": "9-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-600.json --sub-prog",
+      "time": 168.66292262077332,
+      "stdout": "10-q-prod.out",
+      "stderr": "10-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-600.json",
+      "time": 169.70002722740173,
+      "stdout": "11-q-prod.out",
+      "stderr": "11-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-6000.json --cost-filter 0.0 --sub-prog",
+      "time": 1.4331433773040771,
+      "stdout": "12-q-prod.out",
+      "stderr": "12-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-6000.json --cost-filter 0.0",
+      "time": 1.4397978782653809,
+      "stdout": "13-q-prod.out",
+      "stderr": "13-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-6000.json --cost-filter 5.0 --sub-prog",
+      "time": 1.4373998641967773,
+      "stdout": "14-q-prod.out",
+      "stderr": "14-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-6000.json --cost-filter 5.0",
+      "time": 1.4526276588439941,
+      "stdout": "15-q-prod.out",
+      "stderr": "15-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-6000.json --sub-prog",
+      "time": 273.97816014289856,
+      "stdout": "16-q-prod.out",
+      "stderr": "16-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-6000.json",
+      "time": 424.90311884880066,
+      "stdout": "17-q-prod.out",
+      "stderr": "17-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60000.json --cost-filter 0.0 --sub-prog",
+      "time": 2.324571371078491,
+      "stdout": "18-q-prod.out",
+      "stderr": "18-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60000.json --cost-filter 0.0",
+      "time": 2.235783815383911,
+      "stdout": "19-q-prod.out",
+      "stderr": "19-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60000.json --cost-filter 5.0 --sub-prog",
+      "time": 2.288501024246216,
+      "stdout": "20-q-prod.out",
+      "stderr": "20-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60000.json --cost-filter 5.0",
+      "time": 2.2606494426727295,
+      "stdout": "21-q-prod.out",
+      "stderr": "21-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60000.json --sub-prog",
+      "time": 379.5503900051117,
+      "stdout": "22-q-prod.out",
+      "stderr": "22-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-60000.json",
+      "time": 544.7142353057861,
+      "stdout": "23-q-prod.out",
+      "stderr": "23-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-100000.json --cost-filter 0.0 --sub-prog",
+      "time": 0.07428979873657227,
+      "stdout": "24-q-prod.out",
+      "stderr": "24-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-100000.json --cost-filter 0.0",
+      "time": 0.040802955627441406,
+      "stdout": "25-q-prod.out",
+      "stderr": "25-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-100000.json --cost-filter 5.0 --sub-prog",
+      "time": 0.040723562240600586,
+      "stdout": "26-q-prod.out",
+      "stderr": "26-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-100000.json --cost-filter 5.0",
+      "time": 0.040361881256103516,
+      "stdout": "27-q-prod.out",
+      "stderr": "27-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-100000.json --sub-prog",
+      "time": 170.99033665657043,
+      "stdout": "28-q-prod.out",
+      "stderr": "28-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-100000.json",
+      "time": 172.14348816871643,
+      "stdout": "29-q-prod.out",
+      "stderr": "29-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-200000.json --cost-filter 0.0 --sub-prog",
+      "time": 0.08550715446472168,
+      "stdout": "30-q-prod.out",
+      "stderr": "30-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-200000.json --cost-filter 0.0",
+      "time": 0.05478310585021973,
+      "stdout": "31-q-prod.out",
+      "stderr": "31-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-200000.json --cost-filter 5.0 --sub-prog",
+      "time": 0.05480766296386719,
+      "stdout": "32-q-prod.out",
+      "stderr": "32-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-200000.json --cost-filter 5.0",
+      "time": 0.054453134536743164,
+      "stdout": "33-q-prod.out",
+      "stderr": "33-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-200000.json --sub-prog",
+      "time": 167.94573044776917,
+      "stdout": "34-q-prod.out",
+      "stderr": "34-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation-var4/rules-t-200000.json",
+      "time": 169.51308941841125,
+      "stdout": "35-q-prod.out",
+      "stderr": "35-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0.0 --sub-prog",
+      "time": 0.003078460693359375,
+      "stdout": "36-q-prod.out",
+      "stderr": "36-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0.0",
+      "time": 0.002838611602783203,
+      "stdout": "37-q-prod.out",
+      "stderr": "37-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5.0 --sub-prog",
+      "time": 0.0027747154235839844,
+      "stdout": "38-q-prod.out",
+      "stderr": "38-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5.0",
+      "time": 0.002788543701171875,
+      "stdout": "39-q-prod.out",
+      "stderr": "39-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--sub-prog",
+      "time": 0.002722024917602539,
+      "stdout": "40-q-prod.out",
+      "stderr": "40-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "",
+      "time": 0.0027229785919189453,
+      "stdout": "41-q-prod.out",
+      "stderr": "41-q-prod.err"
+    }
+  ]
+}

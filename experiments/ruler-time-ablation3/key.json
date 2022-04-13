@@ -1,0 +1,2650 @@
+{
+  "experiments": [
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.08025240898132324,
+      "stdout": "0-q-prod.out",
+      "stderr": "0-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.07109904289245605,
+      "stdout": "1-2d-conv.out",
+      "stderr": "1-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.06795644760131836,
+      "stdout": "2-mat-mul.out",
+      "stderr": "2-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.06802153587341309,
+      "stdout": "3-q-prod.out",
+      "stderr": "3-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.06751704216003418,
+      "stdout": "4-2d-conv.out",
+      "stderr": "4-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.06601405143737793,
+      "stdout": "5-mat-mul.out",
+      "stderr": "5-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog",
+      "time": 0.08143329620361328,
+      "stdout": "6-q-prod.out",
+      "stderr": "6-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog",
+      "time": 0.07396864891052246,
+      "stdout": "7-2d-conv.out",
+      "stderr": "7-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --sub-prog",
+      "time": 0.06958675384521484,
+      "stdout": "8-mat-mul.out",
+      "stderr": "8-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --split-phase auto",
+      "time": 0.08087420463562012,
+      "stdout": "9-q-prod.out",
+      "stderr": "9-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --split-phase auto",
+      "time": 0.0712127685546875,
+      "stdout": "10-2d-conv.out",
+      "stderr": "10-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --split-phase auto",
+      "time": 0.06776142120361328,
+      "stdout": "11-mat-mul.out",
+      "stderr": "11-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.06699728965759277,
+      "stdout": "12-q-prod.out",
+      "stderr": "12-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.06595182418823242,
+      "stdout": "13-2d-conv.out",
+      "stderr": "13-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.06785774230957031,
+      "stdout": "14-mat-mul.out",
+      "stderr": "14-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0",
+      "time": 0.08241081237792969,
+      "stdout": "15-q-prod.out",
+      "stderr": "15-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0",
+      "time": 0.07185673713684082,
+      "stdout": "16-2d-conv.out",
+      "stderr": "16-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 0",
+      "time": 0.0676889419555664,
+      "stdout": "17-mat-mul.out",
+      "stderr": "17-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.08049154281616211,
+      "stdout": "18-q-prod.out",
+      "stderr": "18-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.07126331329345703,
+      "stdout": "19-2d-conv.out",
+      "stderr": "19-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.06687545776367188,
+      "stdout": "20-mat-mul.out",
+      "stderr": "20-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.06705904006958008,
+      "stdout": "21-q-prod.out",
+      "stderr": "21-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.06608104705810547,
+      "stdout": "22-2d-conv.out",
+      "stderr": "22-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.06541824340820312,
+      "stdout": "23-mat-mul.out",
+      "stderr": "23-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog",
+      "time": 0.07882404327392578,
+      "stdout": "24-q-prod.out",
+      "stderr": "24-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog",
+      "time": 0.07225227355957031,
+      "stdout": "25-2d-conv.out",
+      "stderr": "25-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --sub-prog",
+      "time": 0.06708502769470215,
+      "stdout": "26-mat-mul.out",
+      "stderr": "26-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --split-phase auto",
+      "time": 0.08005976676940918,
+      "stdout": "27-q-prod.out",
+      "stderr": "27-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --split-phase auto",
+      "time": 0.07066917419433594,
+      "stdout": "28-2d-conv.out",
+      "stderr": "28-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --split-phase auto",
+      "time": 0.06786346435546875,
+      "stdout": "29-mat-mul.out",
+      "stderr": "29-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.06602120399475098,
+      "stdout": "30-q-prod.out",
+      "stderr": "30-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.06720495223999023,
+      "stdout": "31-2d-conv.out",
+      "stderr": "31-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.06569790840148926,
+      "stdout": "32-mat-mul.out",
+      "stderr": "32-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5",
+      "time": 0.07994461059570312,
+      "stdout": "33-q-prod.out",
+      "stderr": "33-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5",
+      "time": 0.07164287567138672,
+      "stdout": "34-2d-conv.out",
+      "stderr": "34-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --cost-filter 5",
+      "time": 0.06809639930725098,
+      "stdout": "35-mat-mul.out",
+      "stderr": "35-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog --split-phase auto",
+      "time": 147.5620355606079,
+      "stdout": "36-q-prod.out",
+      "stderr": "36-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog --split-phase auto",
+      "time": 210.79294323921204,
+      "stdout": "37-2d-conv.out",
+      "stderr": "37-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog --split-phase auto",
+      "time": 272.9407572746277,
+      "stdout": "38-mat-mul.out",
+      "stderr": "38-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog --split-phase handwritten",
+      "time": 0.050096988677978516,
+      "stdout": "39-q-prod.out",
+      "stderr": "39-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog --split-phase handwritten",
+      "time": 0.05058932304382324,
+      "stdout": "40-2d-conv.out",
+      "stderr": "40-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog --split-phase handwritten",
+      "time": 0.04973912239074707,
+      "stdout": "41-mat-mul.out",
+      "stderr": "41-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog",
+      "time": 445.56204199790955,
+      "stdout": "42-q-prod.out",
+      "stderr": "42-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog",
+      "time": 629.079448223114,
+      "stdout": "43-2d-conv.out",
+      "stderr": "43-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --sub-prog",
+      "time": 602.0895175933838,
+      "stdout": "44-mat-mul.out",
+      "stderr": "44-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --split-phase auto",
+      "time": 128.38064002990723,
+      "stdout": "45-q-prod.out",
+      "stderr": "45-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --split-phase auto",
+      "time": 255.76226377487183,
+      "stdout": "46-2d-conv.out",
+      "stderr": "46-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --split-phase auto",
+      "time": 383.9435143470764,
+      "stdout": "47-mat-mul.out",
+      "stderr": "47-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json --split-phase handwritten",
+      "time": 0.10368967056274414,
+      "stdout": "48-q-prod.out",
+      "stderr": "48-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json --split-phase handwritten",
+      "time": 0.051453590393066406,
+      "stdout": "49-2d-conv.out",
+      "stderr": "49-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json --split-phase handwritten",
+      "time": 0.050446510314941406,
+      "stdout": "50-mat-mul.out",
+      "stderr": "50-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60.json",
+      "time": 431.40213799476624,
+      "stdout": "51-q-prod.out",
+      "stderr": "51-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60.json",
+      "time": 625.3037343025208,
+      "stdout": "52-2d-conv.out",
+      "stderr": "52-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60.json",
+      "time": 330.51697540283203,
+      "stdout": "53-mat-mul.out",
+      "stderr": "53-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.060431718826293945,
+      "stdout": "54-q-prod.out",
+      "stderr": "54-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.0407867431640625,
+      "stdout": "55-2d-conv.out",
+      "stderr": "55-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.03959321975708008,
+      "stdout": "56-mat-mul.out",
+      "stderr": "56-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.040045976638793945,
+      "stdout": "57-q-prod.out",
+      "stderr": "57-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.038666486740112305,
+      "stdout": "58-2d-conv.out",
+      "stderr": "58-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.03852987289428711,
+      "stdout": "59-mat-mul.out",
+      "stderr": "59-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog",
+      "time": 0.041135549545288086,
+      "stdout": "60-q-prod.out",
+      "stderr": "60-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog",
+      "time": 0.039986610412597656,
+      "stdout": "61-2d-conv.out",
+      "stderr": "61-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --sub-prog",
+      "time": 0.04067802429199219,
+      "stdout": "62-mat-mul.out",
+      "stderr": "62-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --split-phase auto",
+      "time": 0.04093456268310547,
+      "stdout": "63-q-prod.out",
+      "stderr": "63-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --split-phase auto",
+      "time": 0.041326284408569336,
+      "stdout": "64-2d-conv.out",
+      "stderr": "64-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --split-phase auto",
+      "time": 0.039092302322387695,
+      "stdout": "65-mat-mul.out",
+      "stderr": "65-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.03889942169189453,
+      "stdout": "66-q-prod.out",
+      "stderr": "66-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.038735151290893555,
+      "stdout": "67-2d-conv.out",
+      "stderr": "67-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.038318634033203125,
+      "stdout": "68-mat-mul.out",
+      "stderr": "68-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0",
+      "time": 0.04086160659790039,
+      "stdout": "69-q-prod.out",
+      "stderr": "69-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0",
+      "time": 0.040961503982543945,
+      "stdout": "70-2d-conv.out",
+      "stderr": "70-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 0",
+      "time": 0.039113521575927734,
+      "stdout": "71-mat-mul.out",
+      "stderr": "71-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.0408170223236084,
+      "stdout": "72-q-prod.out",
+      "stderr": "72-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.04004812240600586,
+      "stdout": "73-2d-conv.out",
+      "stderr": "73-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.0395815372467041,
+      "stdout": "74-mat-mul.out",
+      "stderr": "74-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.03920292854309082,
+      "stdout": "75-q-prod.out",
+      "stderr": "75-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.03898763656616211,
+      "stdout": "76-2d-conv.out",
+      "stderr": "76-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.03839254379272461,
+      "stdout": "77-mat-mul.out",
+      "stderr": "77-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog",
+      "time": 0.04080343246459961,
+      "stdout": "78-q-prod.out",
+      "stderr": "78-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog",
+      "time": 0.040582895278930664,
+      "stdout": "79-2d-conv.out",
+      "stderr": "79-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --sub-prog",
+      "time": 0.03885197639465332,
+      "stdout": "80-mat-mul.out",
+      "stderr": "80-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --split-phase auto",
+      "time": 0.0409550666809082,
+      "stdout": "81-q-prod.out",
+      "stderr": "81-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --split-phase auto",
+      "time": 0.039824485778808594,
+      "stdout": "82-2d-conv.out",
+      "stderr": "82-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --split-phase auto",
+      "time": 0.03874564170837402,
+      "stdout": "83-mat-mul.out",
+      "stderr": "83-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.0388636589050293,
+      "stdout": "84-q-prod.out",
+      "stderr": "84-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.03932380676269531,
+      "stdout": "85-2d-conv.out",
+      "stderr": "85-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.03878927230834961,
+      "stdout": "86-mat-mul.out",
+      "stderr": "86-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5",
+      "time": 0.04079937934875488,
+      "stdout": "87-q-prod.out",
+      "stderr": "87-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5",
+      "time": 0.039977073669433594,
+      "stdout": "88-2d-conv.out",
+      "stderr": "88-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --cost-filter 5",
+      "time": 0.03912520408630371,
+      "stdout": "89-mat-mul.out",
+      "stderr": "89-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog --split-phase auto",
+      "time": 121.66441416740417,
+      "stdout": "90-q-prod.out",
+      "stderr": "90-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog --split-phase auto",
+      "time": 85.46019268035889,
+      "stdout": "91-2d-conv.out",
+      "stderr": "91-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog --split-phase auto",
+      "time": 259.61931252479553,
+      "stdout": "92-mat-mul.out",
+      "stderr": "92-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog --split-phase handwritten",
+      "time": 0.041520118713378906,
+      "stdout": "93-q-prod.out",
+      "stderr": "93-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog --split-phase handwritten",
+      "time": 0.030516862869262695,
+      "stdout": "94-2d-conv.out",
+      "stderr": "94-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog --split-phase handwritten",
+      "time": 0.029906272888183594,
+      "stdout": "95-mat-mul.out",
+      "stderr": "95-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog",
+      "time": 56.607187271118164,
+      "stdout": "96-q-prod.out",
+      "stderr": "96-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog",
+      "time": 60.17231273651123,
+      "stdout": "97-2d-conv.out",
+      "stderr": "97-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --sub-prog",
+      "time": 3407.609074831009,
+      "stdout": "98-mat-mul.out",
+      "stderr": "98-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --split-phase auto",
+      "time": 90.39406633377075,
+      "stdout": "99-q-prod.out",
+      "stderr": "99-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --split-phase auto",
+      "time": 95.88630247116089,
+      "stdout": "100-2d-conv.out",
+      "stderr": "100-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --split-phase auto",
+      "time": 230.90197563171387,
+      "stdout": "101-mat-mul.out",
+      "stderr": "101-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json --split-phase handwritten",
+      "time": 0.05145549774169922,
+      "stdout": "102-q-prod.out",
+      "stderr": "102-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json --split-phase handwritten",
+      "time": 0.030434608459472656,
+      "stdout": "103-2d-conv.out",
+      "stderr": "103-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json --split-phase handwritten",
+      "time": 0.029604434967041016,
+      "stdout": "104-mat-mul.out",
+      "stderr": "104-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-600.json",
+      "time": 55.57813024520874,
+      "stdout": "105-q-prod.out",
+      "stderr": "105-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-600.json",
+      "time": 55.980419397354126,
+      "stdout": "106-2d-conv.out",
+      "stderr": "106-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-600.json",
+      "time": 3413.7620017528534,
+      "stdout": "107-mat-mul.out",
+      "stderr": "107-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.06627297401428223,
+      "stdout": "108-q-prod.out",
+      "stderr": "108-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.05445671081542969,
+      "stdout": "109-2d-conv.out",
+      "stderr": "109-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.05413365364074707,
+      "stdout": "110-mat-mul.out",
+      "stderr": "110-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.05341815948486328,
+      "stdout": "111-q-prod.out",
+      "stderr": "111-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.05238008499145508,
+      "stdout": "112-2d-conv.out",
+      "stderr": "112-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.05256390571594238,
+      "stdout": "113-mat-mul.out",
+      "stderr": "113-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog",
+      "time": 0.05452680587768555,
+      "stdout": "114-q-prod.out",
+      "stderr": "114-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog",
+      "time": 0.053557395935058594,
+      "stdout": "115-2d-conv.out",
+      "stderr": "115-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --sub-prog",
+      "time": 0.05304360389709473,
+      "stdout": "116-mat-mul.out",
+      "stderr": "116-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --split-phase auto",
+      "time": 0.054764747619628906,
+      "stdout": "117-q-prod.out",
+      "stderr": "117-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --split-phase auto",
+      "time": 0.05363035202026367,
+      "stdout": "118-2d-conv.out",
+      "stderr": "118-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --split-phase auto",
+      "time": 0.05265617370605469,
+      "stdout": "119-mat-mul.out",
+      "stderr": "119-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.05306649208068848,
+      "stdout": "120-q-prod.out",
+      "stderr": "120-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.052326202392578125,
+      "stdout": "121-2d-conv.out",
+      "stderr": "121-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.05219292640686035,
+      "stdout": "122-mat-mul.out",
+      "stderr": "122-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0",
+      "time": 0.055634498596191406,
+      "stdout": "123-q-prod.out",
+      "stderr": "123-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0",
+      "time": 0.05397510528564453,
+      "stdout": "124-2d-conv.out",
+      "stderr": "124-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 0",
+      "time": 0.05357551574707031,
+      "stdout": "125-mat-mul.out",
+      "stderr": "125-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.05450725555419922,
+      "stdout": "126-q-prod.out",
+      "stderr": "126-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.05344724655151367,
+      "stdout": "127-2d-conv.out",
+      "stderr": "127-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.05239248275756836,
+      "stdout": "128-mat-mul.out",
+      "stderr": "128-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.05260586738586426,
+      "stdout": "129-q-prod.out",
+      "stderr": "129-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.05231523513793945,
+      "stdout": "130-2d-conv.out",
+      "stderr": "130-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.05215620994567871,
+      "stdout": "131-mat-mul.out",
+      "stderr": "131-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog",
+      "time": 0.0546870231628418,
+      "stdout": "132-q-prod.out",
+      "stderr": "132-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog",
+      "time": 0.05381655693054199,
+      "stdout": "133-2d-conv.out",
+      "stderr": "133-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --sub-prog",
+      "time": 0.052225351333618164,
+      "stdout": "134-mat-mul.out",
+      "stderr": "134-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --split-phase auto",
+      "time": 0.05435657501220703,
+      "stdout": "135-q-prod.out",
+      "stderr": "135-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --split-phase auto",
+      "time": 0.05483531951904297,
+      "stdout": "136-2d-conv.out",
+      "stderr": "136-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --split-phase auto",
+      "time": 0.05245661735534668,
+      "stdout": "137-mat-mul.out",
+      "stderr": "137-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.05276799201965332,
+      "stdout": "138-q-prod.out",
+      "stderr": "138-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.051871538162231445,
+      "stdout": "139-2d-conv.out",
+      "stderr": "139-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.05184626579284668,
+      "stdout": "140-mat-mul.out",
+      "stderr": "140-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5",
+      "time": 0.05436348915100098,
+      "stdout": "141-q-prod.out",
+      "stderr": "141-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5",
+      "time": 0.05423903465270996,
+      "stdout": "142-2d-conv.out",
+      "stderr": "142-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --cost-filter 5",
+      "time": 0.0523834228515625,
+      "stdout": "143-mat-mul.out",
+      "stderr": "143-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog --split-phase auto",
+      "time": 88.37354278564453,
+      "stdout": "144-q-prod.out",
+      "stderr": "144-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog --split-phase auto",
+      "time": 91.63195061683655,
+      "stdout": "145-2d-conv.out",
+      "stderr": "145-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog --split-phase auto",
+      "time": 155.18528413772583,
+      "stdout": "146-mat-mul.out",
+      "stderr": "146-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog --split-phase handwritten",
+      "time": 0.0520021915435791,
+      "stdout": "147-q-prod.out",
+      "stderr": "147-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog --split-phase handwritten",
+      "time": 0.040358543395996094,
+      "stdout": "148-2d-conv.out",
+      "stderr": "148-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog --split-phase handwritten",
+      "time": 0.0394597053527832,
+      "stdout": "149-mat-mul.out",
+      "stderr": "149-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog",
+      "time": 61.32555270195007,
+      "stdout": "150-q-prod.out",
+      "stderr": "150-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog",
+      "time": 61.20300912857056,
+      "stdout": "151-2d-conv.out",
+      "stderr": "151-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --sub-prog",
+      "time": 3361.3260776996613,
+      "stdout": "152-mat-mul.out",
+      "stderr": "152-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --split-phase auto",
+      "time": 91.65279126167297,
+      "stdout": "153-q-prod.out",
+      "stderr": "153-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --split-phase auto",
+      "time": 99.23612952232361,
+      "stdout": "154-2d-conv.out",
+      "stderr": "154-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --split-phase auto",
+      "time": 518.8230633735657,
+      "stdout": "155-mat-mul.out",
+      "stderr": "155-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json --split-phase handwritten",
+      "time": 0.05276775360107422,
+      "stdout": "156-q-prod.out",
+      "stderr": "156-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json --split-phase handwritten",
+      "time": 0.04102587699890137,
+      "stdout": "157-2d-conv.out",
+      "stderr": "157-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json --split-phase handwritten",
+      "time": 0.03941965103149414,
+      "stdout": "158-mat-mul.out",
+      "stderr": "158-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-6000.json",
+      "time": 53.16218876838684,
+      "stdout": "159-q-prod.out",
+      "stderr": "159-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-6000.json",
+      "time": 71.58978128433228,
+      "stdout": "160-2d-conv.out",
+      "stderr": "160-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-6000.json",
+      "time": 3387.1589860916138,
+      "stdout": "161-mat-mul.out",
+      "stderr": "161-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 2.9863343238830566,
+      "stdout": "162-q-prod.out",
+      "stderr": "162-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 2.437795400619507,
+      "stdout": "163-2d-conv.out",
+      "stderr": "163-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 2.3167738914489746,
+      "stdout": "164-mat-mul.out",
+      "stderr": "164-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 2.2776973247528076,
+      "stdout": "165-q-prod.out",
+      "stderr": "165-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 2.4198386669158936,
+      "stdout": "166-2d-conv.out",
+      "stderr": "166-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 2.2373342514038086,
+      "stdout": "167-mat-mul.out",
+      "stderr": "167-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog",
+      "time": 3.246236801147461,
+      "stdout": "168-q-prod.out",
+      "stderr": "168-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog",
+      "time": 2.46195650100708,
+      "stdout": "169-2d-conv.out",
+      "stderr": "169-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --sub-prog",
+      "time": 2.2623770236968994,
+      "stdout": "170-mat-mul.out",
+      "stderr": "170-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --split-phase auto",
+      "time": 2.8724489212036133,
+      "stdout": "171-q-prod.out",
+      "stderr": "171-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --split-phase auto",
+      "time": 2.4765615463256836,
+      "stdout": "172-2d-conv.out",
+      "stderr": "172-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --split-phase auto",
+      "time": 2.272388219833374,
+      "stdout": "173-mat-mul.out",
+      "stderr": "173-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --split-phase handwritten",
+      "time": 2.239596128463745,
+      "stdout": "174-q-prod.out",
+      "stderr": "174-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --split-phase handwritten",
+      "time": 2.700005292892456,
+      "stdout": "175-2d-conv.out",
+      "stderr": "175-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0 --split-phase handwritten",
+      "time": 2.3725268840789795,
+      "stdout": "176-mat-mul.out",
+      "stderr": "176-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0",
+      "time": 3.3122096061706543,
+      "stdout": "177-q-prod.out",
+      "stderr": "177-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0",
+      "time": 2.4871132373809814,
+      "stdout": "178-2d-conv.out",
+      "stderr": "178-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 0",
+      "time": 2.3244998455047607,
+      "stdout": "179-mat-mul.out",
+      "stderr": "179-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 2.9003005027770996,
+      "stdout": "180-q-prod.out",
+      "stderr": "180-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 2.4356496334075928,
+      "stdout": "181-2d-conv.out",
+      "stderr": "181-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 2.2851338386535645,
+      "stdout": "182-mat-mul.out",
+      "stderr": "182-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 2.2680609226226807,
+      "stdout": "183-q-prod.out",
+      "stderr": "183-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 2.2428414821624756,
+      "stdout": "184-2d-conv.out",
+      "stderr": "184-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 2.2432382106781006,
+      "stdout": "185-mat-mul.out",
+      "stderr": "185-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog",
+      "time": 2.8868520259857178,
+      "stdout": "186-q-prod.out",
+      "stderr": "186-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog",
+      "time": 2.423177480697632,
+      "stdout": "187-2d-conv.out",
+      "stderr": "187-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --sub-prog",
+      "time": 2.3134849071502686,
+      "stdout": "188-mat-mul.out",
+      "stderr": "188-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --split-phase auto",
+      "time": 2.8928754329681396,
+      "stdout": "189-q-prod.out",
+      "stderr": "189-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --split-phase auto",
+      "time": 2.4207029342651367,
+      "stdout": "190-2d-conv.out",
+      "stderr": "190-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --split-phase auto",
+      "time": 2.285409688949585,
+      "stdout": "191-mat-mul.out",
+      "stderr": "191-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --split-phase handwritten",
+      "time": 2.2422196865081787,
+      "stdout": "192-q-prod.out",
+      "stderr": "192-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --split-phase handwritten",
+      "time": 2.244295120239258,
+      "stdout": "193-2d-conv.out",
+      "stderr": "193-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5 --split-phase handwritten",
+      "time": 2.2470295429229736,
+      "stdout": "194-mat-mul.out",
+      "stderr": "194-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5",
+      "time": 2.95558500289917,
+      "stdout": "195-q-prod.out",
+      "stderr": "195-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5",
+      "time": 2.4082589149475098,
+      "stdout": "196-2d-conv.out",
+      "stderr": "196-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --cost-filter 5",
+      "time": 2.294491767883301,
+      "stdout": "197-mat-mul.out",
+      "stderr": "197-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog --split-phase auto",
+      "time": 717.2206974029541,
+      "stdout": "198-q-prod.out",
+      "stderr": "198-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog --split-phase auto",
+      "time": 554.6363933086395,
+      "stdout": "199-2d-conv.out",
+      "stderr": "199-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog --split-phase auto",
+      "time": 155.8090958595276,
+      "stdout": "200-mat-mul.out",
+      "stderr": "200-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog --split-phase handwritten",
+      "time": 1.714789628982544,
+      "stdout": "201-q-prod.out",
+      "stderr": "201-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog --split-phase handwritten",
+      "time": 1.7220420837402344,
+      "stdout": "202-2d-conv.out",
+      "stderr": "202-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog --split-phase handwritten",
+      "time": 1.7113914489746094,
+      "stdout": "203-mat-mul.out",
+      "stderr": "203-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog",
+      "time": 1749.8424212932587,
+      "stdout": "204-q-prod.out",
+      "stderr": "204-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog",
+      "time": 2911.1787781715393,
+      "stdout": "205-2d-conv.out",
+      "stderr": "205-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --sub-prog",
+      "time": 724.5536184310913,
+      "stdout": "206-mat-mul.out",
+      "stderr": "206-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --split-phase auto",
+      "time": 716.1831796169281,
+      "stdout": "207-q-prod.out",
+      "stderr": "207-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --split-phase auto",
+      "time": 554.3495264053345,
+      "stdout": "208-2d-conv.out",
+      "stderr": "208-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --split-phase auto",
+      "time": 155.58937978744507,
+      "stdout": "209-mat-mul.out",
+      "stderr": "209-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json --split-phase handwritten",
+      "time": 1.7038145065307617,
+      "stdout": "210-q-prod.out",
+      "stderr": "210-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json --split-phase handwritten",
+      "time": 1.6942658424377441,
+      "stdout": "211-2d-conv.out",
+      "stderr": "211-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json --split-phase handwritten",
+      "time": 1.7005856037139893,
+      "stdout": "212-mat-mul.out",
+      "stderr": "212-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-60000.json",
+      "time": 1761.8655557632446,
+      "stdout": "213-q-prod.out",
+      "stderr": "213-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-60000.json",
+      "time": 2912.8490748405457,
+      "stdout": "214-2d-conv.out",
+      "stderr": "214-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-60000.json",
+      "time": 728.7364821434021,
+      "stdout": "215-mat-mul.out",
+      "stderr": "215-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.07901716232299805,
+      "stdout": "216-q-prod.out",
+      "stderr": "216-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.05830097198486328,
+      "stdout": "217-2d-conv.out",
+      "stderr": "217-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.057109832763671875,
+      "stdout": "218-mat-mul.out",
+      "stderr": "218-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.05768632888793945,
+      "stdout": "219-q-prod.out",
+      "stderr": "219-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.05627870559692383,
+      "stdout": "220-2d-conv.out",
+      "stderr": "220-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.056066036224365234,
+      "stdout": "221-mat-mul.out",
+      "stderr": "221-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog",
+      "time": 0.05872368812561035,
+      "stdout": "222-q-prod.out",
+      "stderr": "222-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog",
+      "time": 0.05756878852844238,
+      "stdout": "223-2d-conv.out",
+      "stderr": "223-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --sub-prog",
+      "time": 0.056348323822021484,
+      "stdout": "224-mat-mul.out",
+      "stderr": "224-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --split-phase auto",
+      "time": 0.058077096939086914,
+      "stdout": "225-q-prod.out",
+      "stderr": "225-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --split-phase auto",
+      "time": 0.05768084526062012,
+      "stdout": "226-2d-conv.out",
+      "stderr": "226-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --split-phase auto",
+      "time": 0.05681729316711426,
+      "stdout": "227-mat-mul.out",
+      "stderr": "227-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.056435346603393555,
+      "stdout": "228-q-prod.out",
+      "stderr": "228-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.05622553825378418,
+      "stdout": "229-2d-conv.out",
+      "stderr": "229-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.056342363357543945,
+      "stdout": "230-mat-mul.out",
+      "stderr": "230-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0",
+      "time": 0.058454275131225586,
+      "stdout": "231-q-prod.out",
+      "stderr": "231-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0",
+      "time": 0.0572054386138916,
+      "stdout": "232-2d-conv.out",
+      "stderr": "232-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 0",
+      "time": 0.05606365203857422,
+      "stdout": "233-mat-mul.out",
+      "stderr": "233-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.05803179740905762,
+      "stdout": "234-q-prod.out",
+      "stderr": "234-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.05704092979431152,
+      "stdout": "235-2d-conv.out",
+      "stderr": "235-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.056523799896240234,
+      "stdout": "236-mat-mul.out",
+      "stderr": "236-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.05726933479309082,
+      "stdout": "237-q-prod.out",
+      "stderr": "237-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.05629110336303711,
+      "stdout": "238-2d-conv.out",
+      "stderr": "238-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.055718183517456055,
+      "stdout": "239-mat-mul.out",
+      "stderr": "239-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog",
+      "time": 0.057946205139160156,
+      "stdout": "240-q-prod.out",
+      "stderr": "240-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog",
+      "time": 0.05707526206970215,
+      "stdout": "241-2d-conv.out",
+      "stderr": "241-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --sub-prog",
+      "time": 0.05656599998474121,
+      "stdout": "242-mat-mul.out",
+      "stderr": "242-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --split-phase auto",
+      "time": 0.05995750427246094,
+      "stdout": "243-q-prod.out",
+      "stderr": "243-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --split-phase auto",
+      "time": 0.057088375091552734,
+      "stdout": "244-2d-conv.out",
+      "stderr": "244-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --split-phase auto",
+      "time": 0.05702328681945801,
+      "stdout": "245-mat-mul.out",
+      "stderr": "245-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.0564579963684082,
+      "stdout": "246-q-prod.out",
+      "stderr": "246-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.0560452938079834,
+      "stdout": "247-2d-conv.out",
+      "stderr": "247-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.05659151077270508,
+      "stdout": "248-mat-mul.out",
+      "stderr": "248-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5",
+      "time": 0.058233022689819336,
+      "stdout": "249-q-prod.out",
+      "stderr": "249-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5",
+      "time": 0.057546138763427734,
+      "stdout": "250-2d-conv.out",
+      "stderr": "250-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --cost-filter 5",
+      "time": 0.056136369705200195,
+      "stdout": "251-mat-mul.out",
+      "stderr": "251-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog --split-phase auto",
+      "time": 169.98040127754211,
+      "stdout": "252-q-prod.out",
+      "stderr": "252-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog --split-phase auto",
+      "time": 204.38817262649536,
+      "stdout": "253-2d-conv.out",
+      "stderr": "253-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog --split-phase auto",
+      "time": 353.55637311935425,
+      "stdout": "254-mat-mul.out",
+      "stderr": "254-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog --split-phase handwritten",
+      "time": 0.06488656997680664,
+      "stdout": "255-q-prod.out",
+      "stderr": "255-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog --split-phase handwritten",
+      "time": 0.04253554344177246,
+      "stdout": "256-2d-conv.out",
+      "stderr": "256-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog --split-phase handwritten",
+      "time": 0.04228019714355469,
+      "stdout": "257-mat-mul.out",
+      "stderr": "257-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog",
+      "time": 97.49347066879272,
+      "stdout": "258-q-prod.out",
+      "stderr": "258-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog",
+      "time": 112.0190658569336,
+      "stdout": "259-2d-conv.out",
+      "stderr": "259-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --sub-prog",
+      "time": 3909.286215543747,
+      "stdout": "260-mat-mul.out",
+      "stderr": "260-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --split-phase auto",
+      "time": 167.45113110542297,
+      "stdout": "261-q-prod.out",
+      "stderr": "261-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --split-phase auto",
+      "time": 206.55624985694885,
+      "stdout": "262-2d-conv.out",
+      "stderr": "262-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --split-phase auto",
+      "time": 286.4250547885895,
+      "stdout": "263-mat-mul.out",
+      "stderr": "263-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json --split-phase handwritten",
+      "time": 0.05318164825439453,
+      "stdout": "264-q-prod.out",
+      "stderr": "264-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json --split-phase handwritten",
+      "time": 0.04247593879699707,
+      "stdout": "265-2d-conv.out",
+      "stderr": "265-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json --split-phase handwritten",
+      "time": 0.04155397415161133,
+      "stdout": "266-mat-mul.out",
+      "stderr": "266-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-100000.json",
+      "time": 71.59629964828491,
+      "stdout": "267-q-prod.out",
+      "stderr": "267-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-100000.json",
+      "time": 77.21099090576172,
+      "stdout": "268-2d-conv.out",
+      "stderr": "268-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-100000.json",
+      "time": 3908.3281457424164,
+      "stdout": "269-mat-mul.out",
+      "stderr": "269-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.06904363632202148,
+      "stdout": "270-q-prod.out",
+      "stderr": "270-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.05691266059875488,
+      "stdout": "271-2d-conv.out",
+      "stderr": "271-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.05608177185058594,
+      "stdout": "272-mat-mul.out",
+      "stderr": "272-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.05591893196105957,
+      "stdout": "273-q-prod.out",
+      "stderr": "273-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.055872440338134766,
+      "stdout": "274-2d-conv.out",
+      "stderr": "274-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.05565023422241211,
+      "stdout": "275-mat-mul.out",
+      "stderr": "275-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog",
+      "time": 0.05629158020019531,
+      "stdout": "276-q-prod.out",
+      "stderr": "276-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog",
+      "time": 0.056511878967285156,
+      "stdout": "277-2d-conv.out",
+      "stderr": "277-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --sub-prog",
+      "time": 0.05583000183105469,
+      "stdout": "278-mat-mul.out",
+      "stderr": "278-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --split-phase auto",
+      "time": 0.05651378631591797,
+      "stdout": "279-q-prod.out",
+      "stderr": "279-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --split-phase auto",
+      "time": 0.056142330169677734,
+      "stdout": "280-2d-conv.out",
+      "stderr": "280-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --split-phase auto",
+      "time": 0.055405378341674805,
+      "stdout": "281-mat-mul.out",
+      "stderr": "281-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.05649685859680176,
+      "stdout": "282-q-prod.out",
+      "stderr": "282-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.05604124069213867,
+      "stdout": "283-2d-conv.out",
+      "stderr": "283-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0 --split-phase handwritten",
+      "time": 0.05541658401489258,
+      "stdout": "284-mat-mul.out",
+      "stderr": "284-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0",
+      "time": 0.05646204948425293,
+      "stdout": "285-q-prod.out",
+      "stderr": "285-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0",
+      "time": 0.05593609809875488,
+      "stdout": "286-2d-conv.out",
+      "stderr": "286-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 0",
+      "time": 0.055344343185424805,
+      "stdout": "287-mat-mul.out",
+      "stderr": "287-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.05617928504943848,
+      "stdout": "288-q-prod.out",
+      "stderr": "288-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.05579495429992676,
+      "stdout": "289-2d-conv.out",
+      "stderr": "289-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.055628061294555664,
+      "stdout": "290-mat-mul.out",
+      "stderr": "290-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.056609153747558594,
+      "stdout": "291-q-prod.out",
+      "stderr": "291-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.055924177169799805,
+      "stdout": "292-2d-conv.out",
+      "stderr": "292-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.05554366111755371,
+      "stdout": "293-mat-mul.out",
+      "stderr": "293-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog",
+      "time": 0.056336164474487305,
+      "stdout": "294-q-prod.out",
+      "stderr": "294-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog",
+      "time": 0.05617237091064453,
+      "stdout": "295-2d-conv.out",
+      "stderr": "295-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --sub-prog",
+      "time": 0.05527353286743164,
+      "stdout": "296-mat-mul.out",
+      "stderr": "296-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --split-phase auto",
+      "time": 0.05658841133117676,
+      "stdout": "297-q-prod.out",
+      "stderr": "297-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --split-phase auto",
+      "time": 0.05608701705932617,
+      "stdout": "298-2d-conv.out",
+      "stderr": "298-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --split-phase auto",
+      "time": 0.05574226379394531,
+      "stdout": "299-mat-mul.out",
+      "stderr": "299-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.05651521682739258,
+      "stdout": "300-q-prod.out",
+      "stderr": "300-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.05622673034667969,
+      "stdout": "301-2d-conv.out",
+      "stderr": "301-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5 --split-phase handwritten",
+      "time": 0.05591082572937012,
+      "stdout": "302-mat-mul.out",
+      "stderr": "302-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5",
+      "time": 0.05635666847229004,
+      "stdout": "303-q-prod.out",
+      "stderr": "303-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5",
+      "time": 0.05624723434448242,
+      "stdout": "304-2d-conv.out",
+      "stderr": "304-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --cost-filter 5",
+      "time": 0.05562186241149902,
+      "stdout": "305-mat-mul.out",
+      "stderr": "305-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog --split-phase auto",
+      "time": 128.54743933677673,
+      "stdout": "306-q-prod.out",
+      "stderr": "306-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog --split-phase auto",
+      "time": 176.98284006118774,
+      "stdout": "307-2d-conv.out",
+      "stderr": "307-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog --split-phase auto",
+      "time": 248.44383716583252,
+      "stdout": "308-mat-mul.out",
+      "stderr": "308-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog --split-phase handwritten",
+      "time": 0.053331613540649414,
+      "stdout": "309-q-prod.out",
+      "stderr": "309-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog --split-phase handwritten",
+      "time": 0.042928218841552734,
+      "stdout": "310-2d-conv.out",
+      "stderr": "310-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog --split-phase handwritten",
+      "time": 0.041785478591918945,
+      "stdout": "311-mat-mul.out",
+      "stderr": "311-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog",
+      "time": 69.83930516242981,
+      "stdout": "312-q-prod.out",
+      "stderr": "312-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog",
+      "time": 67.69751143455505,
+      "stdout": "313-2d-conv.out",
+      "stderr": "313-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --sub-prog",
+      "time": 3906.1039564609528,
+      "stdout": "314-mat-mul.out",
+      "stderr": "314-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --split-phase auto",
+      "time": 155.51627039909363,
+      "stdout": "315-q-prod.out",
+      "stderr": "315-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --split-phase auto",
+      "time": 140.15047883987427,
+      "stdout": "316-2d-conv.out",
+      "stderr": "316-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --split-phase auto",
+      "time": 126.98092031478882,
+      "stdout": "317-mat-mul.out",
+      "stderr": "317-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json --split-phase handwritten",
+      "time": 0.04295659065246582,
+      "stdout": "318-q-prod.out",
+      "stderr": "318-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json --split-phase handwritten",
+      "time": 0.04215645790100098,
+      "stdout": "319-2d-conv.out",
+      "stderr": "319-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json --split-phase handwritten",
+      "time": 0.04112505912780762,
+      "stdout": "320-mat-mul.out",
+      "stderr": "320-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--rules time-ablation/rules-t-200000.json",
+      "time": 54.852235555648804,
+      "stdout": "321-q-prod.out",
+      "stderr": "321-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--rules time-ablation/rules-t-200000.json",
+      "time": 82.84499764442444,
+      "stdout": "322-2d-conv.out",
+      "stderr": "322-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--rules time-ablation/rules-t-200000.json",
+      "time": 3906.7066383361816,
+      "stdout": "323-mat-mul.out",
+      "stderr": "323-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.012117385864257812,
+      "stdout": "324-q-prod.out",
+      "stderr": "324-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.003149271011352539,
+      "stdout": "325-2d-conv.out",
+      "stderr": "325-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase auto",
+      "time": 0.0022029876708984375,
+      "stdout": "326-mat-mul.out",
+      "stderr": "326-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.0029370784759521484,
+      "stdout": "327-q-prod.out",
+      "stderr": "327-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.002460002899169922,
+      "stdout": "328-2d-conv.out",
+      "stderr": "328-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --sub-prog --split-phase handwritten",
+      "time": 0.0019178390502929688,
+      "stdout": "329-mat-mul.out",
+      "stderr": "329-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --sub-prog",
+      "time": 0.0029921531677246094,
+      "stdout": "330-q-prod.out",
+      "stderr": "330-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --sub-prog",
+      "time": 0.0026564598083496094,
+      "stdout": "331-2d-conv.out",
+      "stderr": "331-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --sub-prog",
+      "time": 0.0019173622131347656,
+      "stdout": "332-mat-mul.out",
+      "stderr": "332-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --split-phase auto",
+      "time": 0.0030596256256103516,
+      "stdout": "333-q-prod.out",
+      "stderr": "333-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --split-phase auto",
+      "time": 0.002664804458618164,
+      "stdout": "334-2d-conv.out",
+      "stderr": "334-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --split-phase auto",
+      "time": 0.0019066333770751953,
+      "stdout": "335-mat-mul.out",
+      "stderr": "335-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0 --split-phase handwritten",
+      "time": 0.003025054931640625,
+      "stdout": "336-q-prod.out",
+      "stderr": "336-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0 --split-phase handwritten",
+      "time": 0.0026950836181640625,
+      "stdout": "337-2d-conv.out",
+      "stderr": "337-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0 --split-phase handwritten",
+      "time": 0.001894235610961914,
+      "stdout": "338-mat-mul.out",
+      "stderr": "338-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0",
+      "time": 0.002996206283569336,
+      "stdout": "339-q-prod.out",
+      "stderr": "339-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 0",
+      "time": 0.0025815963745117188,
+      "stdout": "340-2d-conv.out",
+      "stderr": "340-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 0",
+      "time": 0.0018787384033203125,
+      "stdout": "341-mat-mul.out",
+      "stderr": "341-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.0029859542846679688,
+      "stdout": "342-q-prod.out",
+      "stderr": "342-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.0026154518127441406,
+      "stdout": "343-2d-conv.out",
+      "stderr": "343-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 5 --sub-prog --split-phase auto",
+      "time": 0.0018496513366699219,
+      "stdout": "344-mat-mul.out",
+      "stderr": "344-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.0029768943786621094,
+      "stdout": "345-q-prod.out",
+      "stderr": "345-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.002573251724243164,
+      "stdout": "346-2d-conv.out",
+      "stderr": "346-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 5 --sub-prog --split-phase handwritten",
+      "time": 0.0018589496612548828,
+      "stdout": "347-mat-mul.out",
+      "stderr": "347-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5 --sub-prog",
+      "time": 0.0029489994049072266,
+      "stdout": "348-q-prod.out",
+      "stderr": "348-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 5 --sub-prog",
+      "time": 0.0025877952575683594,
+      "stdout": "349-2d-conv.out",
+      "stderr": "349-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 5 --sub-prog",
+      "time": 0.0018396377563476562,
+      "stdout": "350-mat-mul.out",
+      "stderr": "350-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5 --split-phase auto",
+      "time": 0.002959012985229492,
+      "stdout": "351-q-prod.out",
+      "stderr": "351-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 5 --split-phase auto",
+      "time": 0.002593517303466797,
+      "stdout": "352-2d-conv.out",
+      "stderr": "352-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 5 --split-phase auto",
+      "time": 0.001837015151977539,
+      "stdout": "353-mat-mul.out",
+      "stderr": "353-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5 --split-phase handwritten",
+      "time": 0.00295257568359375,
+      "stdout": "354-q-prod.out",
+      "stderr": "354-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 5 --split-phase handwritten",
+      "time": 0.002565622329711914,
+      "stdout": "355-2d-conv.out",
+      "stderr": "355-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 5 --split-phase handwritten",
+      "time": 0.0018374919891357422,
+      "stdout": "356-mat-mul.out",
+      "stderr": "356-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5",
+      "time": 0.002942800521850586,
+      "stdout": "357-q-prod.out",
+      "stderr": "357-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--cost-filter 5",
+      "time": 0.002583742141723633,
+      "stdout": "358-2d-conv.out",
+      "stderr": "358-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--cost-filter 5",
+      "time": 0.0018172264099121094,
+      "stdout": "359-mat-mul.out",
+      "stderr": "359-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--sub-prog --split-phase auto",
+      "time": 0.00296783447265625,
+      "stdout": "360-q-prod.out",
+      "stderr": "360-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--sub-prog --split-phase auto",
+      "time": 0.002574443817138672,
+      "stdout": "361-2d-conv.out",
+      "stderr": "361-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--sub-prog --split-phase auto",
+      "time": 0.0018625259399414062,
+      "stdout": "362-mat-mul.out",
+      "stderr": "362-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--sub-prog --split-phase handwritten",
+      "time": 0.002927064895629883,
+      "stdout": "363-q-prod.out",
+      "stderr": "363-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--sub-prog --split-phase handwritten",
+      "time": 0.002586841583251953,
+      "stdout": "364-2d-conv.out",
+      "stderr": "364-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--sub-prog --split-phase handwritten",
+      "time": 0.0019381046295166016,
+      "stdout": "365-mat-mul.out",
+      "stderr": "365-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--sub-prog",
+      "time": 0.003025054931640625,
+      "stdout": "366-q-prod.out",
+      "stderr": "366-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--sub-prog",
+      "time": 0.0026450157165527344,
+      "stdout": "367-2d-conv.out",
+      "stderr": "367-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--sub-prog",
+      "time": 0.0018601417541503906,
+      "stdout": "368-mat-mul.out",
+      "stderr": "368-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--split-phase auto",
+      "time": 0.002958059310913086,
+      "stdout": "369-q-prod.out",
+      "stderr": "369-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--split-phase auto",
+      "time": 0.0025675296783447266,
+      "stdout": "370-2d-conv.out",
+      "stderr": "370-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--split-phase auto",
+      "time": 0.001861572265625,
+      "stdout": "371-mat-mul.out",
+      "stderr": "371-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--split-phase handwritten",
+      "time": 0.0029723644256591797,
+      "stdout": "372-q-prod.out",
+      "stderr": "372-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "--split-phase handwritten",
+      "time": 0.0026187896728515625,
+      "stdout": "373-2d-conv.out",
+      "stderr": "373-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "--split-phase handwritten",
+      "time": 0.0018317699432373047,
+      "stdout": "374-mat-mul.out",
+      "stderr": "374-mat-mul.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "",
+      "time": 0.0030982494354248047,
+      "stdout": "375-q-prod.out",
+      "stderr": "375-q-prod.err"
+    },
+    {
+      "bench": "2d-conv",
+      "cmd": "",
+      "time": 0.002568960189819336,
+      "stdout": "376-2d-conv.out",
+      "stderr": "376-2d-conv.err"
+    },
+    {
+      "bench": "mat-mul",
+      "cmd": "",
+      "time": 0.0018589496612548828,
+      "stdout": "377-mat-mul.out",
+      "stderr": "377-mat-mul.err"
+    }
+  ]
+}

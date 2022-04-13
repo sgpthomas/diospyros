@@ -1,0 +1,27 @@
+Running egg with timeout 360s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+ (* (Get A 0) (Get B 0)) (* (Get A 1) (Get B 2)))
+    (+ (* (Get A 0) (Get B 1)) (* (Get A 1) (Get B 3))))
+  (Vec
+    (+ (* (Get A 2) (Get B 0)) (* (Get A 3) (Get B 2)))
+    (+ (* (Get A 2) (Get B 1)) (* (Get A 3) (Get B 3)))))
+Starting run with 262165 rules
+Egraph size: 7819
+Runner report
+=============
+  Stop reason: TimeLimit(360.001214121)
+  Iterations: 3
+  Egraph size: 7571 nodes, 616 classes, 7819 memo
+  Rebuilds: 17, 5.67 per iter
+  Total time: 360.64309877100004
+    Search:  (1.00) 359.861066991
+    Apply:   (0.00) 0.778391445
+    Rebuild: (0.00) 0.003638417
+Stopped after 3 iterations, reason: Some(TimeLimit(360.001214121))
+==== Starting Second Phase Optimization ====
+Using 0 rules
+Improved cost by 0 (6.948 - 6.948)
+
+Cost: 6.948

@@ -1,0 +1,67 @@
+{
+  "experiments": [
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0.0 --phase-split auto",
+      "time": 0.0019397735595703125,
+      "stdout": "0-q-prod.out",
+      "stderr": "0-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0.0 --phase-split syntax",
+      "time": 0.0019457340240478516,
+      "stdout": "1-q-prod.out",
+      "stderr": "1-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 0.0",
+      "time": 190.93195176124573,
+      "stdout": "2-q-prod.out",
+      "stderr": "2-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5.0 --phase-split auto",
+      "time": 0.0019004344940185547,
+      "stdout": "3-q-prod.out",
+      "stderr": "3-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5.0 --phase-split syntax",
+      "time": 0.0019190311431884766,
+      "stdout": "4-q-prod.out",
+      "stderr": "4-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--cost-filter 5.0",
+      "time": 4.111341238021851,
+      "stdout": "5-q-prod.out",
+      "stderr": "5-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--phase-split auto",
+      "time": 0.001936197280883789,
+      "stdout": "6-q-prod.out",
+      "stderr": "6-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "--phase-split syntax",
+      "time": 0.0016677379608154297,
+      "stdout": "7-q-prod.out",
+      "stderr": "7-q-prod.err"
+    },
+    {
+      "bench": "q-prod",
+      "cmd": "",
+      "time": 3908.149163007736,
+      "stdout": "8-q-prod.out",
+      "stderr": "8-q-prod.err"
+    }
+  ]
+}

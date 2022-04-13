@@ -1,0 +1,131 @@
+Running egg with timeout 3900s, width: 4
+Input prog:
+(Concat
+  (Vec
+    (+
+      (+
+        (* (Get aq 3) (Get bq 0))
+        (+ (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 2))))
+      (neg (* (Get aq 2) (Get bq 1))))
+    (+
+      (+
+        (* (Get aq 3) (Get bq 1))
+        (+ (* (Get aq 1) (Get bq 3)) (* (Get aq 2) (Get bq 0))))
+      (neg (* (Get aq 0) (Get bq 2))))
+    (+
+      (+
+        (* (Get aq 3) (Get bq 2))
+        (+ (* (Get aq 2) (Get bq 3)) (* (Get aq 0) (Get bq 1))))
+      (neg (* (Get aq 1) (Get bq 0))))
+    (+
+      (* (Get aq 3) (Get bq 3))
+      (+
+        (neg (* (Get aq 0) (Get bq 0)))
+        (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
+  (Vec
+    (+
+      (Get at 0)
+      (+
+        (Get bt 0)
+        (+
+          (+
+            (*
+              (Get aq 1)
+              (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))
+            (neg
+              (*
+                (Get aq 2)
+                (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))
+          (*
+            (Get aq 3)
+            (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1)))))))))
+    (+
+      (Get at 1)
+      (+
+        (Get bt 1)
+        (+
+          (+
+            (*
+              (Get aq 2)
+              (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))
+            (neg
+              (*
+                (Get aq 0)
+                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))))
+          (*
+            (Get aq 3)
+            (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2)))))))))
+    (+
+      (Get at 2)
+      (+
+        (Get bt 2)
+        (+
+          (+
+            (*
+              (Get aq 0)
+              (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+            (neg
+              (*
+                (Get aq 1)
+                (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+          (*
+            (Get aq 3)
+            (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))))
+    0))
+Retained 6 rules
+=================================
+Starting Phase 1: Pre-compilation
+=================================
+Using 0 rules
+Starting run with 0 rules
+Egraph size: 98
+  Runner report
+  =============
+    Stop reason: Saturated
+    Iterations: 1
+    Egraph size: 98 nodes, 98 classes, 98 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 0.000004411
+      Search:  (0.03) 0.000000125
+      Apply:   (0.03) 0.000000122
+      Rebuild: (0.84) 0.000003708
+Stopped after 1 iterations, reason: Some(Saturated)
+Cost: 406.35900000000004
+=================================
+Starting Phase 2: Compilation
+=================================
+Using 6 rules
+Starting run with 6 rules
+Egraph size: 98
+  Runner report
+  =============
+    Stop reason: Saturated
+    Iterations: 1
+    Egraph size: 98 nodes, 98 classes, 98 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 0.000006977
+      Search:  (0.31) 0.000002155
+      Apply:   (0.14) 0.000000959
+      Rebuild: (0.53) 0.000003695
+Stopped after 1 iterations, reason: Some(Saturated)
+Cost: 406.35900000000004 (improved 0)
+=================================
+Starting Phase 3: Optimization
+=================================
+Using 0 rules
+Starting run with 0 rules
+Egraph size: 98
+  Runner report
+  =============
+    Stop reason: Saturated
+    Iterations: 1
+    Egraph size: 98 nodes, 98 classes, 98 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 0.000003798
+      Search:  (0.01) 0.000000052
+      Apply:   (0.02) 0.000000082
+      Rebuild: (0.92) 0.00000349
+Stopped after 1 iterations, reason: Some(Saturated)
+Cost: 406.35900000000004 (improved 0)
+
+Cost: 406.35900000000004

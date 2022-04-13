@@ -1,0 +1,98 @@
+Running egg with timeout 3900s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (* (Get I 0) (Get F 0))
+    (+ (* (Get I 0) (Get F 1)) (* (Get I 1) (Get F 0))))
+  (Concat
+    (Vec
+      (+ (* (Get I 1) (Get F 1)) (* (Get I 2) (Get F 0)))
+      (* (Get I 2) (Get F 1)))
+    (Concat
+      (Vec
+        (+ (* (Get I 0) (Get F 2)) (* (Get I 3) (Get F 0)))
+        (+
+          (* (Get I 0) (Get F 3))
+          (+ (* (Get I 1) (Get F 2)) (+ (* (Get I 3) (Get F 1)) (* (Get I 4) (Get F 0))))))
+      (Concat
+        (Vec
+          (+
+            (* (Get I 1) (Get F 3))
+            (+ (* (Get I 2) (Get F 2)) (+ (* (Get I 4) (Get F 1)) (* (Get I 5) (Get F 0)))))
+          (+ (* (Get I 2) (Get F 3)) (* (Get I 5) (Get F 1))))
+        (Concat
+          (Vec
+            (+ (* (Get I 3) (Get F 2)) (* (Get I 6) (Get F 0)))
+            (+
+              (* (Get I 3) (Get F 3))
+              (+ (* (Get I 4) (Get F 2)) (+ (* (Get I 6) (Get F 1)) (* (Get I 7) (Get F 0))))))
+          (Concat
+            (Vec
+              (+
+                (* (Get I 4) (Get F 3))
+                (+ (* (Get I 5) (Get F 2)) (+ (* (Get I 7) (Get F 1)) (* (Get I 8) (Get F 0)))))
+              (+ (* (Get I 5) (Get F 3)) (* (Get I 8) (Get F 1))))
+            (Concat
+              (Vec
+                (* (Get I 6) (Get F 2))
+                (+ (* (Get I 6) (Get F 3)) (* (Get I 7) (Get F 2))))
+              (Vec
+                (+ (* (Get I 7) (Get F 3)) (* (Get I 8) (Get F 2)))
+                (* (Get I 8) (Get F 3))))))))))
+Retained 255 rules
+Retained 1 rules
+Retained 254 rules
+Retained 0 rules
+=================================
+Starting Phase 1: Pre-compilation
+=================================
+Starting run with 1 rules
+Egraph size: 95
+  Runner report
+  =============
+    Stop reason: Saturated
+    Iterations: 1
+    Egraph size: 95 nodes, 95 classes, 95 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 0.000008561
+      Search:  (0.43) 0.000003675
+      Apply:   (0.09) 0.0000008
+      Rebuild: (0.44) 0.000003725
+Stopped after 1 iterations, reason: Some(Saturated)
+Cost: 912.9159999999999
+=================================
+Starting Phase 2: Compilation
+=================================
+Starting run with 254 rules
+Egraph size: 10626
+  Runner report
+  =============
+    Stop reason: Saturated
+    Iterations: 7
+    Egraph size: 10626 nodes, 766 classes, 10626 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 0.141454305
+      Search:  (0.66) 0.093493048
+      Apply:   (0.30) 0.041785666
+      Rebuild: (0.04) 0.006172966
+Stopped after 7 iterations, reason: Some(Saturated)
+Cost: 57.852000000000004 (improved 855.064)
+=================================
+Starting Phase 3: Optimization
+=================================
+Starting run with 0 rules
+Egraph size: 10626
+  Runner report
+  =============
+    Stop reason: Saturated
+    Iterations: 1
+    Egraph size: 10626 nodes, 766 classes, 10626 memo
+    Rebuilds: 0, 0.00 per iter
+    Total time: 0.000282195
+      Search:  (0.00) 0.000000085
+      Apply:   (0.00) 0.00000032
+      Rebuild: (1.00) 0.000281496
+Stopped after 1 iterations, reason: Some(Saturated)
+Cost: 57.852000000000004 (improved 0)
+
+Cost: 57.852000000000004

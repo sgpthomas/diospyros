@@ -1,0 +1,69 @@
+(Concat
+  (VecAdd
+    (VecAdd
+      (VecMul (LitVec (Get aq 3) (Get aq 3)) (LitVec (Get bq 0) (Get bq 1)))
+      (VecAdd
+        (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bq 3) (Get bq 3)))
+        (VecMul (LitVec (Get aq 1) (Get aq 2)) (LitVec (Get bq 2) (Get bq 0)))))
+    (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bq 1) (Get bq 2)))))
+  (Concat
+    (Vec
+      (+
+        (+
+          (* (Get aq 3) (Get bq 2))
+          (+ (* (Get aq 2) (Get bq 3)) (* (Get aq 0) (Get bq 1))))
+        (neg (* (Get aq 1) (Get bq 0))))
+      (+
+        (* (Get aq 3) (Get bq 3))
+        (+
+          (neg (* (Get aq 0) (Get bq 0)))
+          (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
+    (Concat
+      (VecAdd
+        (LitVec (Get at 0) (Get at 1))
+        (VecAdd
+          (LitVec (Get bt 0) (Get bt 1))
+          (VecAdd
+            (VecAdd
+              (VecMul
+                (LitVec (Get aq 1) (Get aq 2))
+                (VecMul
+                  (Vec 2 2)
+                  (VecAdd
+                    (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bt 1) (Get bt 2)))
+                    (VecNeg (VecMul (LitVec (Get aq 1) (Get aq 2)) (LitVec (Get bt 0) (Get bt 1)))))))
+              (VecNeg
+                (VecMul
+                  (LitVec (Get aq 2) (Get aq 0))
+                  (VecMul
+                    (Vec 2 2)
+                    (VecAdd
+                      (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bt 0) (Get bt 1)))
+                      (VecNeg (VecMul (LitVec (Get aq 0) (Get aq 1)) (LitVec (Get bt 2) (Get bt 0)))))))))
+            (VecMul
+              (LitVec (Get aq 3) (Get aq 3))
+              (VecMul
+                (Vec 2 2)
+                (VecAdd
+                  (VecMul (LitVec (Get aq 1) (Get aq 2)) (LitVec (Get bt 2) (Get bt 0)))
+                  (VecNeg (VecMul (LitVec (Get aq 2) (Get aq 0)) (LitVec (Get bt 1) (Get bt 2))))))))))
+      (VecMAC
+        (Vec (Get at 2) 0)
+        (Vec 1 0)
+        (VecMAC
+          (Vec (Get bt 2) 0)
+          (Vec 1 0)
+          (Vec
+            (+
+              (+
+                (*
+                  (Get aq 0)
+                  (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+                (neg
+                  (*
+                    (Get aq 1)
+                    (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))
+            0))))))

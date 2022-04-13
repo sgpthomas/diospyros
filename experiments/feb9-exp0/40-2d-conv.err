@@ -1,0 +1,249 @@
+Running egg with timeout 360s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (* (Get I 0) (Get F 0))
+    (+ (* (Get I 0) (Get F 1)) (* (Get I 1) (Get F 0))))
+  (Concat
+    (Vec
+      (+ (* (Get I 1) (Get F 1)) (* (Get I 2) (Get F 0)))
+      (* (Get I 2) (Get F 1)))
+    (Concat
+      (Vec
+        (+ (* (Get I 0) (Get F 2)) (* (Get I 3) (Get F 0)))
+        (+
+          (* (Get I 0) (Get F 3))
+          (+ (* (Get I 1) (Get F 2)) (+ (* (Get I 3) (Get F 1)) (* (Get I 4) (Get F 0))))))
+      (Concat
+        (Vec
+          (+
+            (* (Get I 1) (Get F 3))
+            (+ (* (Get I 2) (Get F 2)) (+ (* (Get I 4) (Get F 1)) (* (Get I 5) (Get F 0)))))
+          (+ (* (Get I 2) (Get F 3)) (* (Get I 5) (Get F 1))))
+        (Concat
+          (Vec
+            (+ (* (Get I 3) (Get F 2)) (* (Get I 6) (Get F 0)))
+            (+
+              (* (Get I 3) (Get F 3))
+              (+ (* (Get I 4) (Get F 2)) (+ (* (Get I 6) (Get F 1)) (* (Get I 7) (Get F 0))))))
+          (Concat
+            (Vec
+              (+
+                (* (Get I 4) (Get F 3))
+                (+ (* (Get I 5) (Get F 2)) (+ (* (Get I 7) (Get F 1)) (* (Get I 8) (Get F 0)))))
+              (+ (* (Get I 5) (Get F 3)) (* (Get I 8) (Get F 1))))
+            (Concat
+              (Vec
+                (* (Get I 6) (Get F 2))
+                (+ (* (Get I 6) (Get F 3)) (* (Get I 7) (Get F 2))))
+              (Vec
+                (+ (* (Get I 7) (Get F 3)) (* (Get I 8) (Get F 2)))
+                (* (Get I 8) (Get F 3))))))))))
+Dropping inapplicable rules: neg-neg neg-neg-rev neg-sgn neg-sgn-rev neg-zero-inv neg-zero-inv-rev neg-minus neg-minus-rev neg-minus-zero neg-minus-zero-rev sqrt-1-inv sqrt-1-inv-rev neg_unop sqrt_unop /_binop_vec
+Retained 4623 rules
+Vec([271, 278])
+Vec([271, 278])
+Vec([240, 255])
+Vec([240, 255])
+Vec([217, 232])
+Vec([217, 232])
+Vec([154, 185])
+Vec([154, 185])
+Vec([123, 138])
+Vec([123, 138])
+Vec([60, 91])
+Vec([60, 91])
+Vec([37, 44])
+Vec([37, 44])
+Vec([6, 21])
+Vec([6, 21])
+p: (Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+p: (Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+p: (Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+p: (Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+p: (Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+p: (Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+p: (Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+p: (Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+p: (Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+p: (Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+start:
+(Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?x ?y) (Vec ?w ?x)) (Vec ?y ?y) (Vec ?z 0))
+start:
+(Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?x ?y) (Vec ?w ?x)) (Vec ?y ?y) (Vec ?z 0))
+start:
+(Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?x ?w) (Vec ?w ?z)) (Vec ?x ?x) (Vec 0 ?y))
+start:
+(Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?x ?w) (Vec ?w ?z)) (Vec ?x ?x) (Vec 0 ?y))
+start:
+(Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?x ?x) (Vec ?v1 ?y)) (Vec ?y ?y) (Vec ?v0 0))
+    (Vec ?w 0)
+    (Vec ?v2 0))
+  (Vec ?v3 ?w)
+  (Vec ?z ?z))
+start:
+(Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?x ?x) (Vec ?v1 ?y)) (Vec ?y ?y) (Vec ?v0 0))
+    (Vec ?w 0)
+    (Vec ?v2 0))
+  (Vec ?v3 ?w)
+  (Vec ?z ?z))
+start:
+(Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec 1 ?w) (Vec 0 ?z)) (Vec 0 ?y) (Vec 0 ?x))
+    (Vec ?w ?v1)
+    (Vec ?x ?v0))
+  (Vec ?v3 ?v3)
+  (Vec ?v0 ?v2))
+start:
+(Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec 1 ?w) (Vec 0 ?z)) (Vec 0 ?y) (Vec 0 ?x))
+    (Vec ?w ?v1)
+    (Vec ?x ?v0))
+  (Vec ?v3 ?v3)
+  (Vec ?v0 ?v2))
+start:
+(Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?x ?x) (Vec ?v1 ?y)) (Vec ?y ?y) (Vec ?v0 0))
+    (Vec ?w 0)
+    (Vec ?v2 0))
+  (Vec ?v3 ?w)
+  (Vec ?z ?z))
+start:
+(Vec
+  (+ (* ?v3 ?z) (+ (* ?w ?v2) (+ (* ?v1 ?x) (* ?y ?v0))))
+  (+ (* ?w ?z) (* ?y ?x)))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec ?x ?x) (Vec ?v1 ?y)) (Vec ?y ?y) (Vec ?v0 0))
+    (Vec ?w 0)
+    (Vec ?v2 0))
+  (Vec ?v3 ?w)
+  (Vec ?z ?z))
+start:
+(Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec 1 ?w) (Vec 0 ?z)) (Vec 0 ?y) (Vec 0 ?x))
+    (Vec ?w ?v1)
+    (Vec ?x ?v0))
+  (Vec ?v3 ?v3)
+  (Vec ?v0 ?v2))
+start:
+(Vec
+  (+ (* ?v3 ?v0) (* ?w ?x))
+  (+ (* ?v3 ?v2) (+ (* ?v1 ?v0) (+ (* ?w ?z) (* ?y ?x)))))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [4.816000000000001]
+(VecMAC
+  (VecMAC
+    (VecMAC (VecMul (Vec 1 ?w) (Vec 0 ?z)) (Vec 0 ?y) (Vec 0 ?x))
+    (Vec ?w ?v1)
+    (Vec ?x ?v0))
+  (Vec ?v3 ?v3)
+  (Vec ?v0 ?v2))
+start:
+(Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?x ?y) (Vec ?w ?x)) (Vec ?y ?y) (Vec ?z 0))
+start:
+(Vec (+ (* ?w ?x) (* ?y ?z)) (* ?y ?x))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?x ?y) (Vec ?w ?x)) (Vec ?y ?y) (Vec ?z 0))
+start:
+(Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
+searching from the root: [2.408]
+(VecMAC (VecMul (Vec ?x ?w) (Vec ?w ?z)) (Vec ?x ?x) (Vec 0 ?y))
+start:
+(Vec (* ?w ?x) (+ (* ?w ?z) (* ?y ?x)))
+WARNING: Duplicated rule names may affect rule reporting and scheduling.
+Rule 'litvec' appears 2 times
