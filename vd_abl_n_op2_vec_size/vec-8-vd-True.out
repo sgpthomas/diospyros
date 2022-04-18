@@ -1,0 +1,6 @@
+Learned 4 rules in 6064.498825336
+(VecMul ?b ?a) <=> (VecMul ?a ?b)
+(VecAdd ?b ?a) <=> (VecAdd ?a ?b)
+(+ ?b ?a) <=> (+ ?a ?b)
+(* ?b ?a) <=> (* ?a ?b)
+Learned 4 rules in 6064.498825336

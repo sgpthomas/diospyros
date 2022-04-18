@@ -1,0 +1,2105 @@
+    Finished release [optimized] target(s) in 0.05s
+     Running `ruler/target/release/dios synth --dios-config vd_abl_n_op2_vec_size/vd-False.json --variables 16 --iters 2 --vector-size 8 --eqsat-iter-limit 3 --eqsat-time-limit 120 --num-fuzz 10 --abs-timeout 6000 --outfile vd_abl_n_op2_vec_size/rules-vec-8-False.json`
+[INFO  dios] config: vd_abl_n_op2_vec_size/vd-False.json
+[INFO  ruler] [[[ Iteration 1 ]]]
+[INFO  ruler] Made layer! Using chunk size: 100000
+[INFO  ruler] egraph n=16, e=16
+[INFO  ruler] running eqsat with 0 rules
+[INFO  egg::egraph] REBUILT! in 0.048s
+      Old: hc size 100016, eclasses: 100016
+      New: hc size 100016, eclasses: 100016
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000068
+[INFO  egg::run] Apply time: 0.000000328
+[INFO  egg::egraph] REBUILT! in 0.022s
+      Old: hc size 100016, eclasses: 100016
+      New: hc size 100016, eclasses: 100016
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.022740349
+[INFO  egg::run] Size: n=100016, e=100016
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Saturated collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.020s
+      Old: hc size 100016, eclasses: 100016
+      New: hc size 100016, eclasses: 100016
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 0 rules in 1.941988179s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 99258
+[INFO  ruler] 4 candidate eqs
+[INFO  ruler] egraph n=100016, e=100016
+[INFO  ruler] choose_eqs: 4
+[INFO  ruler] Shrinking with 1 keepers
+[INFO  ruler] # rewrites: 1
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 22, eclasses: 22
+      New: hc size 22, eclasses: 22
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000696
+[INFO  egg::run] Apply time: 0.000000769
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 22, eclasses: 22
+      New: hc size 22, eclasses: 22
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000004089
+[INFO  egg::run] Size: n=22, e=22
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 1
+[INFO  ruler] Minimizing... threw away 0 rules, 3 / 4 remain
+[INFO  ruler] Shrinking with 2 keepers
+[INFO  ruler] # rewrites: 2
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 20, eclasses: 20
+      New: hc size 20, eclasses: 20
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000328
+[INFO  egg::run] Apply time: 0.000000311
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 20, eclasses: 20
+      New: hc size 20, eclasses: 20
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000003804
+[INFO  egg::run] Size: n=20, e=20
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 1
+[INFO  ruler] Minimizing... threw away 0 rules, 2 / 4 remain
+[INFO  ruler] Shrinking with 3 keepers
+[INFO  ruler] # rewrites: 3
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 18, eclasses: 18
+      New: hc size 18, eclasses: 18
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000327
+[INFO  egg::run] Apply time: 0.000000277
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 18, eclasses: 18
+      New: hc size 18, eclasses: 18
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.000003564
+[INFO  egg::run] Size: n=18, e=18
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Stopping Saturated, 1
+[INFO  ruler] Minimizing... threw away 0 rules, 1 / 4 remain
+[INFO  ruler] Chose 4 good rules
+[INFO  ruler] Time taken in... run_rewrites: 2.368517195, rule discovery: 0.227914367, rule minimization: 0.006338542
+[INFO  ruler] Stopping early, took all eqs
+[INFO  ruler] egraph n=100016, e=100016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.100s
+      Old: hc size 200016, eclasses: 200016
+      New: hc size 200016, eclasses: 200015
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000515231
+[INFO  egg::run] Apply time: 0.00081784
+[INFO  egg::egraph] REBUILT! in 0.047s
+      Old: hc size 200016, eclasses: 200015
+      New: hc size 200016, eclasses: 199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.047078818
+[INFO  egg::run] Size: n=200016, e=199536
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000252378
+[INFO  egg::run] Apply time: 0.000249237
+[INFO  egg::egraph] REBUILT! in 0.055s
+      Old: hc size 200016, eclasses: 199536
+      New: hc size 200016, eclasses: 199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.055659154
+[INFO  egg::run] Size: n=200016, e=199536
+[INFO  egg::run] Stopping: Saturated
+[INFO  ruler] Saturated collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.046s
+      Old: hc size 200016, eclasses: 199536
+      New: hc size 200016, eclasses: 199536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 3.983384012s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 199258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=200016, e=200016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=200016, e=200016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.184s
+      Old: hc size 300016, eclasses: 300016
+      New: hc size 300016, eclasses: 299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.00000005
+[INFO  egg::run] Apply time: 0.000000329
+[INFO  egg::egraph] REBUILT! in 0.074s
+      Old: hc size 300016, eclasses: 299536
+      New: hc size 300016, eclasses: 299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.074448241
+[INFO  egg::run] Size: n=300016, e=299536
+[INFO  egg::run] Stopping: Other("Node limit: 300016")
+[INFO  ruler] Other("Node limit: 300016") collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.075s
+      Old: hc size 300016, eclasses: 299536
+      New: hc size 300016, eclasses: 299536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 5.024600352s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 299258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=300016, e=300016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=300016, e=300016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.220s
+      Old: hc size 400016, eclasses: 400016
+      New: hc size 400016, eclasses: 399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000051
+[INFO  egg::run] Apply time: 0.000000229
+[INFO  egg::egraph] REBUILT! in 0.092s
+      Old: hc size 400016, eclasses: 399536
+      New: hc size 400016, eclasses: 399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.092761787
+[INFO  egg::run] Size: n=400016, e=399536
+[INFO  egg::run] Stopping: Other("Node limit: 400016")
+[INFO  ruler] Other("Node limit: 400016") collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.094s
+      Old: hc size 400016, eclasses: 399536
+      New: hc size 400016, eclasses: 399536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 5.896845822s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 399258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=400016, e=400016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=400016, e=400016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.286s
+      Old: hc size 500016, eclasses: 500016
+      New: hc size 500016, eclasses: 499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000065
+[INFO  egg::run] Apply time: 0.000000285
+[INFO  egg::egraph] REBUILT! in 0.127s
+      Old: hc size 500016, eclasses: 499536
+      New: hc size 500016, eclasses: 499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.127494777
+[INFO  egg::run] Size: n=500016, e=499536
+[INFO  egg::run] Stopping: Other("Node limit: 500016")
+[INFO  ruler] Other("Node limit: 500016") collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.129s
+      Old: hc size 500016, eclasses: 499536
+      New: hc size 500016, eclasses: 499536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 7.002959487s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 499258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=500016, e=500016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=500016, e=500016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.389s
+      Old: hc size 600016, eclasses: 600016
+      New: hc size 600016, eclasses: 599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.00000029
+[INFO  egg::egraph] REBUILT! in 0.150s
+      Old: hc size 600016, eclasses: 599536
+      New: hc size 600016, eclasses: 599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.150190129
+[INFO  egg::run] Size: n=600016, e=599536
+[INFO  egg::run] Stopping: NodeLimit(600016)
+[INFO  ruler] NodeLimit(600016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.149s
+      Old: hc size 600016, eclasses: 599536
+      New: hc size 600016, eclasses: 599536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 8.036673831s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 599258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=600016, e=600016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=600016, e=600016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.438s
+      Old: hc size 700016, eclasses: 700016
+      New: hc size 700016, eclasses: 699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000294
+[INFO  egg::egraph] REBUILT! in 0.174s
+      Old: hc size 700016, eclasses: 699536
+      New: hc size 700016, eclasses: 699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.174723947
+[INFO  egg::run] Size: n=700016, e=699536
+[INFO  egg::run] Stopping: NodeLimit(700016)
+[INFO  ruler] NodeLimit(700016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.171s
+      Old: hc size 700016, eclasses: 699536
+      New: hc size 700016, eclasses: 699536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 10.182944557s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 699258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=700016, e=700016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=700016, e=700016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.463s
+      Old: hc size 800016, eclasses: 800016
+      New: hc size 800016, eclasses: 799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000347
+[INFO  egg::egraph] REBUILT! in 0.193s
+      Old: hc size 800016, eclasses: 799536
+      New: hc size 800016, eclasses: 799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.193995469
+[INFO  egg::run] Size: n=800016, e=799536
+[INFO  egg::run] Stopping: NodeLimit(800016)
+[INFO  ruler] NodeLimit(800016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.190s
+      Old: hc size 800016, eclasses: 799536
+      New: hc size 800016, eclasses: 799536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 9.909605522s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 799258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=800016, e=800016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=800016, e=800016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.506s
+      Old: hc size 900016, eclasses: 900016
+      New: hc size 900016, eclasses: 899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000291
+[INFO  egg::egraph] REBUILT! in 0.208s
+      Old: hc size 900016, eclasses: 899536
+      New: hc size 900016, eclasses: 899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.20815088
+[INFO  egg::run] Size: n=900016, e=899536
+[INFO  egg::run] Stopping: NodeLimit(900016)
+[INFO  ruler] NodeLimit(900016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.209s
+      Old: hc size 900016, eclasses: 899536
+      New: hc size 900016, eclasses: 899536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 12.365177623s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 899258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=900016, e=900016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=900016, e=900016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.602s
+      Old: hc size 1000016, eclasses: 1000016
+      New: hc size 1000016, eclasses: 999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000397
+[INFO  egg::egraph] REBUILT! in 0.264s
+      Old: hc size 1000016, eclasses: 999536
+      New: hc size 1000016, eclasses: 999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.26408127
+[INFO  egg::run] Size: n=1000016, e=999536
+[INFO  egg::run] Stopping: NodeLimit(1000016)
+[INFO  ruler] NodeLimit(1000016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.265s
+      Old: hc size 1000016, eclasses: 999536
+      New: hc size 1000016, eclasses: 999536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 12.204639461s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 999258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1000016, e=1000016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1000016, e=1000016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.788s
+      Old: hc size 1100016, eclasses: 1100016
+      New: hc size 1100016, eclasses: 1099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000288
+[INFO  egg::egraph] REBUILT! in 0.291s
+      Old: hc size 1100016, eclasses: 1099536
+      New: hc size 1100016, eclasses: 1099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.291163683
+[INFO  egg::run] Size: n=1100016, e=1099536
+[INFO  egg::run] Stopping: NodeLimit(1100016)
+[INFO  ruler] NodeLimit(1100016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.293s
+      Old: hc size 1100016, eclasses: 1099536
+      New: hc size 1100016, eclasses: 1099536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 13.397780956s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1099258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1100016, e=1100016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1100016, e=1100016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.907s
+      Old: hc size 1200016, eclasses: 1200016
+      New: hc size 1200016, eclasses: 1199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000291
+[INFO  egg::egraph] REBUILT! in 0.317s
+      Old: hc size 1200016, eclasses: 1199536
+      New: hc size 1200016, eclasses: 1199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.317739793
+[INFO  egg::run] Size: n=1200016, e=1199536
+[INFO  egg::run] Stopping: NodeLimit(1200016)
+[INFO  ruler] NodeLimit(1200016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.315s
+      Old: hc size 1200016, eclasses: 1199536
+      New: hc size 1200016, eclasses: 1199536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 14.51555437s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1199258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1200016, e=1200016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1200016, e=1200016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.953s
+      Old: hc size 1300016, eclasses: 1300016
+      New: hc size 1300016, eclasses: 1299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000046
+[INFO  egg::run] Apply time: 0.000000275
+[INFO  egg::egraph] REBUILT! in 0.325s
+      Old: hc size 1300016, eclasses: 1299536
+      New: hc size 1300016, eclasses: 1299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.325456709
+[INFO  egg::run] Size: n=1300016, e=1299536
+[INFO  egg::run] Stopping: NodeLimit(1300016)
+[INFO  ruler] NodeLimit(1300016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.322s
+      Old: hc size 1300016, eclasses: 1299536
+      New: hc size 1300016, eclasses: 1299536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 15.415404797s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1299258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1300016, e=1300016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1300016, e=1300016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 0.995s
+      Old: hc size 1400016, eclasses: 1400016
+      New: hc size 1400016, eclasses: 1399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000363
+[INFO  egg::egraph] REBUILT! in 0.344s
+      Old: hc size 1400016, eclasses: 1399536
+      New: hc size 1400016, eclasses: 1399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.344190536
+[INFO  egg::run] Size: n=1400016, e=1399536
+[INFO  egg::run] Stopping: NodeLimit(1400016)
+[INFO  ruler] NodeLimit(1400016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.352s
+      Old: hc size 1400016, eclasses: 1399536
+      New: hc size 1400016, eclasses: 1399536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 16.372662245s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1399258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1400016, e=1400016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1400016, e=1400016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.007s
+      Old: hc size 1500016, eclasses: 1500016
+      New: hc size 1500016, eclasses: 1499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000291
+[INFO  egg::egraph] REBUILT! in 0.360s
+      Old: hc size 1500016, eclasses: 1499536
+      New: hc size 1500016, eclasses: 1499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.360125559
+[INFO  egg::run] Size: n=1500016, e=1499536
+[INFO  egg::run] Stopping: NodeLimit(1500016)
+[INFO  ruler] NodeLimit(1500016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.360s
+      Old: hc size 1500016, eclasses: 1499536
+      New: hc size 1500016, eclasses: 1499536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 17.175998482s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1499258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1500016, e=1500016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1500016, e=1500016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.021s
+      Old: hc size 1600016, eclasses: 1600016
+      New: hc size 1600016, eclasses: 1599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000277
+[INFO  egg::egraph] REBUILT! in 0.378s
+      Old: hc size 1600016, eclasses: 1599536
+      New: hc size 1600016, eclasses: 1599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.378428871
+[INFO  egg::run] Size: n=1600016, e=1599536
+[INFO  egg::run] Stopping: NodeLimit(1600016)
+[INFO  ruler] NodeLimit(1600016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.379s
+      Old: hc size 1600016, eclasses: 1599536
+      New: hc size 1600016, eclasses: 1599536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 18.079130635s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1599258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1600016, e=1600016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1600016, e=1600016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.036s
+      Old: hc size 1700016, eclasses: 1700016
+      New: hc size 1700016, eclasses: 1699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000348
+[INFO  egg::egraph] REBUILT! in 0.404s
+      Old: hc size 1700016, eclasses: 1699536
+      New: hc size 1700016, eclasses: 1699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.404297339
+[INFO  egg::run] Size: n=1700016, e=1699536
+[INFO  egg::run] Stopping: NodeLimit(1700016)
+[INFO  ruler] NodeLimit(1700016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.399s
+      Old: hc size 1700016, eclasses: 1699536
+      New: hc size 1700016, eclasses: 1699536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 18.938995209s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1699258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1700016, e=1700016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1700016, e=1700016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.044s
+      Old: hc size 1800016, eclasses: 1800016
+      New: hc size 1800016, eclasses: 1799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000035
+[INFO  egg::run] Apply time: 0.000000294
+[INFO  egg::egraph] REBUILT! in 0.425s
+      Old: hc size 1800016, eclasses: 1799536
+      New: hc size 1800016, eclasses: 1799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.425047678
+[INFO  egg::run] Size: n=1800016, e=1799536
+[INFO  egg::run] Stopping: NodeLimit(1800016)
+[INFO  ruler] NodeLimit(1800016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.420s
+      Old: hc size 1800016, eclasses: 1799536
+      New: hc size 1800016, eclasses: 1799536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 19.816703037s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1799258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1800016, e=1800016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1800016, e=1800016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.242s
+      Old: hc size 1900016, eclasses: 1900016
+      New: hc size 1900016, eclasses: 1899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000345
+[INFO  egg::egraph] REBUILT! in 0.506s
+      Old: hc size 1900016, eclasses: 1899536
+      New: hc size 1900016, eclasses: 1899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.506929561
+[INFO  egg::run] Size: n=1900016, e=1899536
+[INFO  egg::run] Stopping: NodeLimit(1900016)
+[INFO  ruler] NodeLimit(1900016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.507s
+      Old: hc size 1900016, eclasses: 1899536
+      New: hc size 1900016, eclasses: 1899536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 21.607208839s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1899258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=1900016, e=1900016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=1900016, e=1900016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.265s
+      Old: hc size 2000016, eclasses: 2000016
+      New: hc size 2000016, eclasses: 1999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000447
+[INFO  egg::egraph] REBUILT! in 0.525s
+      Old: hc size 2000016, eclasses: 1999536
+      New: hc size 2000016, eclasses: 1999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.525605893
+[INFO  egg::run] Size: n=2000016, e=1999536
+[INFO  egg::run] Stopping: NodeLimit(2000016)
+[INFO  ruler] NodeLimit(2000016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.524s
+      Old: hc size 2000016, eclasses: 1999536
+      New: hc size 2000016, eclasses: 1999536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 22.224586517s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 1999258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2000016, e=2000016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2000016, e=2000016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.371s
+      Old: hc size 2100016, eclasses: 2100016
+      New: hc size 2100016, eclasses: 2099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.00000029
+[INFO  egg::egraph] REBUILT! in 0.550s
+      Old: hc size 2100016, eclasses: 2099536
+      New: hc size 2100016, eclasses: 2099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.550173096
+[INFO  egg::run] Size: n=2100016, e=2099536
+[INFO  egg::run] Stopping: NodeLimit(2100016)
+[INFO  ruler] NodeLimit(2100016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.547s
+      Old: hc size 2100016, eclasses: 2099536
+      New: hc size 2100016, eclasses: 2099536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 23.456524196s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2099258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2100016, e=2100016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2100016, e=2100016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.717s
+      Old: hc size 2200016, eclasses: 2200016
+      New: hc size 2200016, eclasses: 2199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000357
+[INFO  egg::egraph] REBUILT! in 0.568s
+      Old: hc size 2200016, eclasses: 2199536
+      New: hc size 2200016, eclasses: 2199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.56857656
+[INFO  egg::run] Size: n=2200016, e=2199536
+[INFO  egg::run] Stopping: NodeLimit(2200016)
+[INFO  ruler] NodeLimit(2200016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.560s
+      Old: hc size 2200016, eclasses: 2199536
+      New: hc size 2200016, eclasses: 2199536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 25.00141565s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2199258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2200016, e=2200016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2200016, e=2200016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 1.917s
+      Old: hc size 2300016, eclasses: 2300016
+      New: hc size 2300016, eclasses: 2299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000489
+[INFO  egg::egraph] REBUILT! in 0.586s
+      Old: hc size 2300016, eclasses: 2299536
+      New: hc size 2300016, eclasses: 2299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.58680103
+[INFO  egg::run] Size: n=2300016, e=2299536
+[INFO  egg::run] Stopping: NodeLimit(2300016)
+[INFO  ruler] NodeLimit(2300016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.578s
+      Old: hc size 2300016, eclasses: 2299536
+      New: hc size 2300016, eclasses: 2299536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 28.231415966s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2299258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2300016, e=2300016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2300016, e=2300016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.014s
+      Old: hc size 2400016, eclasses: 2400016
+      New: hc size 2400016, eclasses: 2399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000046
+[INFO  egg::run] Apply time: 0.000000353
+[INFO  egg::egraph] REBUILT! in 0.607s
+      Old: hc size 2400016, eclasses: 2399536
+      New: hc size 2400016, eclasses: 2399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.607396632
+[INFO  egg::run] Size: n=2400016, e=2399536
+[INFO  egg::run] Stopping: NodeLimit(2400016)
+[INFO  ruler] NodeLimit(2400016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.598s
+      Old: hc size 2400016, eclasses: 2399536
+      New: hc size 2400016, eclasses: 2399536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 27.386002268s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2399258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2400016, e=2400016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2400016, e=2400016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.111s
+      Old: hc size 2500016, eclasses: 2500016
+      New: hc size 2500016, eclasses: 2499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000479
+[INFO  egg::egraph] REBUILT! in 0.622s
+      Old: hc size 2500016, eclasses: 2499536
+      New: hc size 2500016, eclasses: 2499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.622521767
+[INFO  egg::run] Size: n=2500016, e=2499536
+[INFO  egg::run] Stopping: NodeLimit(2500016)
+[INFO  ruler] NodeLimit(2500016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.618s
+      Old: hc size 2500016, eclasses: 2499536
+      New: hc size 2500016, eclasses: 2499536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 28.662388248s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2499258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2500016, e=2500016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2500016, e=2500016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.150s
+      Old: hc size 2600016, eclasses: 2600016
+      New: hc size 2600016, eclasses: 2599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000403
+[INFO  egg::egraph] REBUILT! in 0.645s
+      Old: hc size 2600016, eclasses: 2599536
+      New: hc size 2600016, eclasses: 2599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.645399433
+[INFO  egg::run] Size: n=2600016, e=2599536
+[INFO  egg::run] Stopping: NodeLimit(2600016)
+[INFO  ruler] NodeLimit(2600016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.644s
+      Old: hc size 2600016, eclasses: 2599536
+      New: hc size 2600016, eclasses: 2599536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 29.373390946s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2599258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2600016, e=2600016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2600016, e=2600016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.185s
+      Old: hc size 2700016, eclasses: 2700016
+      New: hc size 2700016, eclasses: 2699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000355
+[INFO  egg::egraph] REBUILT! in 0.667s
+      Old: hc size 2700016, eclasses: 2699536
+      New: hc size 2700016, eclasses: 2699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.667257167
+[INFO  egg::run] Size: n=2700016, e=2699536
+[INFO  egg::run] Stopping: NodeLimit(2700016)
+[INFO  ruler] NodeLimit(2700016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.657s
+      Old: hc size 2700016, eclasses: 2699536
+      New: hc size 2700016, eclasses: 2699536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 30.271284459s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2699258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2700016, e=2700016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2700016, e=2700016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.205s
+      Old: hc size 2800016, eclasses: 2800016
+      New: hc size 2800016, eclasses: 2799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000046
+[INFO  egg::run] Apply time: 0.000000406
+[INFO  egg::egraph] REBUILT! in 0.682s
+      Old: hc size 2800016, eclasses: 2799536
+      New: hc size 2800016, eclasses: 2799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.682065438
+[INFO  egg::run] Size: n=2800016, e=2799536
+[INFO  egg::run] Stopping: NodeLimit(2800016)
+[INFO  ruler] NodeLimit(2800016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.683s
+      Old: hc size 2800016, eclasses: 2799536
+      New: hc size 2800016, eclasses: 2799536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 31.163502171s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2799258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2800016, e=2800016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2800016, e=2800016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.251s
+      Old: hc size 2900016, eclasses: 2900016
+      New: hc size 2900016, eclasses: 2899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000065
+[INFO  egg::run] Apply time: 0.000000316
+[INFO  egg::egraph] REBUILT! in 0.706s
+      Old: hc size 2900016, eclasses: 2899536
+      New: hc size 2900016, eclasses: 2899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.706656507
+[INFO  egg::run] Size: n=2900016, e=2899536
+[INFO  egg::run] Stopping: NodeLimit(2900016)
+[INFO  ruler] NodeLimit(2900016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.704s
+      Old: hc size 2900016, eclasses: 2899536
+      New: hc size 2900016, eclasses: 2899536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 32.102456211s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2899258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=2900016, e=2900016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=2900016, e=2900016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.221s
+      Old: hc size 3000016, eclasses: 3000016
+      New: hc size 3000016, eclasses: 2999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.00000027
+[INFO  egg::egraph] REBUILT! in 0.720s
+      Old: hc size 3000016, eclasses: 2999536
+      New: hc size 3000016, eclasses: 2999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.720697972
+[INFO  egg::run] Size: n=3000016, e=2999536
+[INFO  egg::run] Stopping: NodeLimit(3000016)
+[INFO  ruler] NodeLimit(3000016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.718s
+      Old: hc size 3000016, eclasses: 2999536
+      New: hc size 3000016, eclasses: 2999536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 32.933366437s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 2999258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3000016, e=3000016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3000016, e=3000016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.230s
+      Old: hc size 3100016, eclasses: 3100016
+      New: hc size 3100016, eclasses: 3099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000407
+[INFO  egg::egraph] REBUILT! in 0.746s
+      Old: hc size 3100016, eclasses: 3099536
+      New: hc size 3100016, eclasses: 3099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.746751051
+[INFO  egg::run] Size: n=3100016, e=3099536
+[INFO  egg::run] Stopping: NodeLimit(3100016)
+[INFO  ruler] NodeLimit(3100016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.737s
+      Old: hc size 3100016, eclasses: 3099536
+      New: hc size 3100016, eclasses: 3099536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 33.795987162s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3099258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3100016, e=3100016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3100016, e=3100016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.234s
+      Old: hc size 3200016, eclasses: 3200016
+      New: hc size 3200016, eclasses: 3199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000487
+[INFO  egg::egraph] REBUILT! in 0.759s
+      Old: hc size 3200016, eclasses: 3199536
+      New: hc size 3200016, eclasses: 3199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.759632896
+[INFO  egg::run] Size: n=3200016, e=3199536
+[INFO  egg::run] Stopping: NodeLimit(3200016)
+[INFO  ruler] NodeLimit(3200016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.763s
+      Old: hc size 3200016, eclasses: 3199536
+      New: hc size 3200016, eclasses: 3199536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 34.643561396s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3199258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3200016, e=3200016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3200016, e=3200016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.210s
+      Old: hc size 3300016, eclasses: 3300016
+      New: hc size 3300016, eclasses: 3299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000411
+[INFO  egg::egraph] REBUILT! in 0.780s
+      Old: hc size 3300016, eclasses: 3299536
+      New: hc size 3300016, eclasses: 3299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.780454729
+[INFO  egg::run] Size: n=3300016, e=3299536
+[INFO  egg::run] Stopping: NodeLimit(3300016)
+[INFO  ruler] NodeLimit(3300016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.782s
+      Old: hc size 3300016, eclasses: 3299536
+      New: hc size 3300016, eclasses: 3299536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 35.453498944s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3299258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3300016, e=3300016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3300016, e=3300016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.195s
+      Old: hc size 3400016, eclasses: 3400016
+      New: hc size 3400016, eclasses: 3399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000287
+[INFO  egg::egraph] REBUILT! in 0.807s
+      Old: hc size 3400016, eclasses: 3399536
+      New: hc size 3400016, eclasses: 3399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.807604056
+[INFO  egg::run] Size: n=3400016, e=3399536
+[INFO  egg::run] Stopping: NodeLimit(3400016)
+[INFO  ruler] NodeLimit(3400016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.805s
+      Old: hc size 3400016, eclasses: 3399536
+      New: hc size 3400016, eclasses: 3399536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 36.306738565s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3399258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3400016, e=3400016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3400016, e=3400016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.187s
+      Old: hc size 3500016, eclasses: 3500016
+      New: hc size 3500016, eclasses: 3499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000393
+[INFO  egg::egraph] REBUILT! in 0.825s
+      Old: hc size 3500016, eclasses: 3499536
+      New: hc size 3500016, eclasses: 3499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.825320538
+[INFO  egg::run] Size: n=3500016, e=3499536
+[INFO  egg::run] Stopping: NodeLimit(3500016)
+[INFO  ruler] NodeLimit(3500016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.816s
+      Old: hc size 3500016, eclasses: 3499536
+      New: hc size 3500016, eclasses: 3499536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 37.064302258s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3499258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3500016, e=3500016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3500016, e=3500016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.210s
+      Old: hc size 3600016, eclasses: 3600016
+      New: hc size 3600016, eclasses: 3599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000288
+[INFO  egg::egraph] REBUILT! in 0.844s
+      Old: hc size 3600016, eclasses: 3599536
+      New: hc size 3600016, eclasses: 3599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.844249734
+[INFO  egg::run] Size: n=3600016, e=3599536
+[INFO  egg::run] Stopping: NodeLimit(3600016)
+[INFO  ruler] NodeLimit(3600016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.842s
+      Old: hc size 3600016, eclasses: 3599536
+      New: hc size 3600016, eclasses: 3599536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 37.974964238s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3599258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3600016, e=3600016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3600016, e=3600016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.625s
+      Old: hc size 3700016, eclasses: 3700016
+      New: hc size 3700016, eclasses: 3699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000349
+[INFO  egg::egraph] REBUILT! in 0.991s
+      Old: hc size 3700016, eclasses: 3699536
+      New: hc size 3700016, eclasses: 3699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.991656665
+[INFO  egg::run] Size: n=3700016, e=3699536
+[INFO  egg::run] Stopping: NodeLimit(3700016)
+[INFO  ruler] NodeLimit(3700016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.989s
+      Old: hc size 3700016, eclasses: 3699536
+      New: hc size 3700016, eclasses: 3699536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 40.478223825s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3699258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3700016, e=3700016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3700016, e=3700016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.508s
+      Old: hc size 3800016, eclasses: 3800016
+      New: hc size 3800016, eclasses: 3799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000042
+[INFO  egg::run] Apply time: 0.000000401
+[INFO  egg::egraph] REBUILT! in 1.008s
+      Old: hc size 3800016, eclasses: 3799536
+      New: hc size 3800016, eclasses: 3799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.008580905
+[INFO  egg::run] Size: n=3800016, e=3799536
+[INFO  egg::run] Stopping: NodeLimit(3800016)
+[INFO  ruler] NodeLimit(3800016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.008s
+      Old: hc size 3800016, eclasses: 3799536
+      New: hc size 3800016, eclasses: 3799536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 40.693371998s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3799258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3800016, e=3800016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3800016, e=3800016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.612s
+      Old: hc size 3900016, eclasses: 3900016
+      New: hc size 3900016, eclasses: 3899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000046
+[INFO  egg::run] Apply time: 0.000000415
+[INFO  egg::egraph] REBUILT! in 1.028s
+      Old: hc size 3900016, eclasses: 3899536
+      New: hc size 3900016, eclasses: 3899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.029002154
+[INFO  egg::run] Size: n=3900016, e=3899536
+[INFO  egg::run] Stopping: NodeLimit(3900016)
+[INFO  ruler] NodeLimit(3900016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.033s
+      Old: hc size 3900016, eclasses: 3899536
+      New: hc size 3900016, eclasses: 3899536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 41.700700274s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3899258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=3900016, e=3900016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=3900016, e=3900016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.645s
+      Old: hc size 4000016, eclasses: 4000016
+      New: hc size 4000016, eclasses: 3999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000042
+[INFO  egg::run] Apply time: 0.000000401
+[INFO  egg::egraph] REBUILT! in 1.058s
+      Old: hc size 4000016, eclasses: 3999536
+      New: hc size 4000016, eclasses: 3999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.059018988
+[INFO  egg::run] Size: n=4000016, e=3999536
+[INFO  egg::run] Stopping: NodeLimit(4000016)
+[INFO  ruler] NodeLimit(4000016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.063s
+      Old: hc size 4000016, eclasses: 3999536
+      New: hc size 4000016, eclasses: 3999536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 42.670791733s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 3999258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4000016, e=4000016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4000016, e=4000016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.677s
+      Old: hc size 4100016, eclasses: 4100016
+      New: hc size 4100016, eclasses: 4099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000408
+[INFO  egg::egraph] REBUILT! in 1.078s
+      Old: hc size 4100016, eclasses: 4099536
+      New: hc size 4100016, eclasses: 4099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.078725383
+[INFO  egg::run] Size: n=4100016, e=4099536
+[INFO  egg::run] Stopping: NodeLimit(4100016)
+[INFO  ruler] NodeLimit(4100016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.075s
+      Old: hc size 4100016, eclasses: 4099536
+      New: hc size 4100016, eclasses: 4099536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 43.684446344s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4099258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4100016, e=4100016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4100016, e=4100016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 2.920s
+      Old: hc size 4200016, eclasses: 4200016
+      New: hc size 4200016, eclasses: 4199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000292
+[INFO  egg::egraph] REBUILT! in 1.088s
+      Old: hc size 4200016, eclasses: 4199536
+      New: hc size 4200016, eclasses: 4199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.088927146
+[INFO  egg::run] Size: n=4200016, e=4199536
+[INFO  egg::run] Stopping: NodeLimit(4200016)
+[INFO  ruler] NodeLimit(4200016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.087s
+      Old: hc size 4200016, eclasses: 4199536
+      New: hc size 4200016, eclasses: 4199536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 45.177779269s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4199258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4200016, e=4200016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4200016, e=4200016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 3.518s
+      Old: hc size 4300016, eclasses: 4300016
+      New: hc size 4300016, eclasses: 4299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000552
+[INFO  egg::egraph] REBUILT! in 1.111s
+      Old: hc size 4300016, eclasses: 4299536
+      New: hc size 4300016, eclasses: 4299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.111296168
+[INFO  egg::run] Size: n=4300016, e=4299536
+[INFO  egg::run] Stopping: NodeLimit(4300016)
+[INFO  ruler] NodeLimit(4300016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.112s
+      Old: hc size 4300016, eclasses: 4299536
+      New: hc size 4300016, eclasses: 4299536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 47.28896581s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4299258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4300016, e=4300016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4300016, e=4300016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 3.891s
+      Old: hc size 4400016, eclasses: 4400016
+      New: hc size 4400016, eclasses: 4399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000414
+[INFO  egg::egraph] REBUILT! in 1.136s
+      Old: hc size 4400016, eclasses: 4399536
+      New: hc size 4400016, eclasses: 4399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.136488867
+[INFO  egg::run] Size: n=4400016, e=4399536
+[INFO  egg::run] Stopping: NodeLimit(4400016)
+[INFO  ruler] NodeLimit(4400016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.132s
+      Old: hc size 4400016, eclasses: 4399536
+      New: hc size 4400016, eclasses: 4399536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 48.968061538s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4399258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4400016, e=4400016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4400016, e=4400016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.133s
+      Old: hc size 4500016, eclasses: 4500016
+      New: hc size 4500016, eclasses: 4499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000413
+[INFO  egg::egraph] REBUILT! in 1.146s
+      Old: hc size 4500016, eclasses: 4499536
+      New: hc size 4500016, eclasses: 4499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.146898857
+[INFO  egg::run] Size: n=4500016, e=4499536
+[INFO  egg::run] Stopping: NodeLimit(4500016)
+[INFO  ruler] NodeLimit(4500016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.142s
+      Old: hc size 4500016, eclasses: 4499536
+      New: hc size 4500016, eclasses: 4499536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 50.360061726s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4499258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4500016, e=4500016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4500016, e=4500016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.321s
+      Old: hc size 4600016, eclasses: 4600016
+      New: hc size 4600016, eclasses: 4599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000415
+[INFO  egg::egraph] REBUILT! in 1.173s
+      Old: hc size 4600016, eclasses: 4599536
+      New: hc size 4600016, eclasses: 4599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.173678025
+[INFO  egg::run] Size: n=4600016, e=4599536
+[INFO  egg::run] Stopping: NodeLimit(4600016)
+[INFO  ruler] NodeLimit(4600016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.171s
+      Old: hc size 4600016, eclasses: 4599536
+      New: hc size 4600016, eclasses: 4599536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 51.667827982s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4599258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4600016, e=4600016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4600016, e=4600016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.483s
+      Old: hc size 4700016, eclasses: 4700016
+      New: hc size 4700016, eclasses: 4699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000403
+[INFO  egg::egraph] REBUILT! in 1.208s
+      Old: hc size 4700016, eclasses: 4699536
+      New: hc size 4700016, eclasses: 4699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.208173156
+[INFO  egg::run] Size: n=4700016, e=4699536
+[INFO  egg::run] Stopping: NodeLimit(4700016)
+[INFO  ruler] NodeLimit(4700016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.205s
+      Old: hc size 4700016, eclasses: 4699536
+      New: hc size 4700016, eclasses: 4699536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 52.903135601s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4699258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4700016, e=4700016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4700016, e=4700016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.698s
+      Old: hc size 4800016, eclasses: 4800016
+      New: hc size 4800016, eclasses: 4799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.00000041
+[INFO  egg::egraph] REBUILT! in 1.230s
+      Old: hc size 4800016, eclasses: 4799536
+      New: hc size 4800016, eclasses: 4799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.230480548
+[INFO  egg::run] Size: n=4800016, e=4799536
+[INFO  egg::run] Stopping: NodeLimit(4800016)
+[INFO  ruler] NodeLimit(4800016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.229s
+      Old: hc size 4800016, eclasses: 4799536
+      New: hc size 4800016, eclasses: 4799536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 55.073009211s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4799258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4800016, e=4800016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4800016, e=4800016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.860s
+      Old: hc size 4900016, eclasses: 4900016
+      New: hc size 4900016, eclasses: 4899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000417
+[INFO  egg::egraph] REBUILT! in 1.255s
+      Old: hc size 4900016, eclasses: 4899536
+      New: hc size 4900016, eclasses: 4899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.255942152
+[INFO  egg::run] Size: n=4900016, e=4899536
+[INFO  egg::run] Stopping: NodeLimit(4900016)
+[INFO  ruler] NodeLimit(4900016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.253s
+      Old: hc size 4900016, eclasses: 4899536
+      New: hc size 4900016, eclasses: 4899536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 56.207582626s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4899258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=4900016, e=4900016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=4900016, e=4900016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.897s
+      Old: hc size 5000016, eclasses: 5000016
+      New: hc size 5000016, eclasses: 4999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000416
+[INFO  egg::egraph] REBUILT! in 1.280s
+      Old: hc size 5000016, eclasses: 4999536
+      New: hc size 5000016, eclasses: 4999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.28021269
+[INFO  egg::run] Size: n=5000016, e=4999536
+[INFO  egg::run] Stopping: NodeLimit(5000016)
+[INFO  ruler] NodeLimit(5000016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.278s
+      Old: hc size 5000016, eclasses: 4999536
+      New: hc size 5000016, eclasses: 4999536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 57.64227063s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 4999258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5000016, e=5000016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5000016, e=5000016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.940s
+      Old: hc size 5100016, eclasses: 5100016
+      New: hc size 5100016, eclasses: 5099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000413
+[INFO  egg::egraph] REBUILT! in 1.294s
+      Old: hc size 5100016, eclasses: 5099536
+      New: hc size 5100016, eclasses: 5099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.2940449969999999
+[INFO  egg::run] Size: n=5100016, e=5099536
+[INFO  egg::run] Stopping: NodeLimit(5100016)
+[INFO  ruler] NodeLimit(5100016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.298s
+      Old: hc size 5100016, eclasses: 5099536
+      New: hc size 5100016, eclasses: 5099536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 58.216414782s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5099258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5100016, e=5100016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5100016, e=5100016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.036s
+      Old: hc size 5200016, eclasses: 5200016
+      New: hc size 5200016, eclasses: 5199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000406
+[INFO  egg::egraph] REBUILT! in 1.318s
+      Old: hc size 5200016, eclasses: 5199536
+      New: hc size 5200016, eclasses: 5199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.318785158
+[INFO  egg::run] Size: n=5200016, e=5199536
+[INFO  egg::run] Stopping: NodeLimit(5200016)
+[INFO  ruler] NodeLimit(5200016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.312s
+      Old: hc size 5200016, eclasses: 5199536
+      New: hc size 5200016, eclasses: 5199536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 59.239532082s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5199258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5200016, e=5200016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5200016, e=5200016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.048s
+      Old: hc size 5300016, eclasses: 5300016
+      New: hc size 5300016, eclasses: 5299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000042
+[INFO  egg::run] Apply time: 0.000000413
+[INFO  egg::egraph] REBUILT! in 1.326s
+      Old: hc size 5300016, eclasses: 5299536
+      New: hc size 5300016, eclasses: 5299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.3264296899999999
+[INFO  egg::run] Size: n=5300016, e=5299536
+[INFO  egg::run] Stopping: NodeLimit(5300016)
+[INFO  ruler] NodeLimit(5300016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.331s
+      Old: hc size 5300016, eclasses: 5299536
+      New: hc size 5300016, eclasses: 5299536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 60.227719641s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5299258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5300016, e=5300016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5300016, e=5300016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.061s
+      Old: hc size 5400016, eclasses: 5400016
+      New: hc size 5400016, eclasses: 5399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000046
+[INFO  egg::run] Apply time: 0.00000045
+[INFO  egg::egraph] REBUILT! in 1.351s
+      Old: hc size 5400016, eclasses: 5399536
+      New: hc size 5400016, eclasses: 5399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.351653764
+[INFO  egg::run] Size: n=5400016, e=5399536
+[INFO  egg::run] Stopping: NodeLimit(5400016)
+[INFO  ruler] NodeLimit(5400016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.343s
+      Old: hc size 5400016, eclasses: 5399536
+      New: hc size 5400016, eclasses: 5399536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 61.081782612s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5399258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5400016, e=5400016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5400016, e=5400016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.077s
+      Old: hc size 5500016, eclasses: 5500016
+      New: hc size 5500016, eclasses: 5499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000769
+[INFO  egg::egraph] REBUILT! in 1.374s
+      Old: hc size 5500016, eclasses: 5499536
+      New: hc size 5500016, eclasses: 5499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.374878482
+[INFO  egg::run] Size: n=5500016, e=5499536
+[INFO  egg::run] Stopping: NodeLimit(5500016)
+[INFO  ruler] NodeLimit(5500016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.376s
+      Old: hc size 5500016, eclasses: 5499536
+      New: hc size 5500016, eclasses: 5499536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 62.066550204s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5499258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5500016, e=5500016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5500016, e=5500016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.115s
+      Old: hc size 5600016, eclasses: 5600016
+      New: hc size 5600016, eclasses: 5599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000409
+[INFO  egg::egraph] REBUILT! in 1.400s
+      Old: hc size 5600016, eclasses: 5599536
+      New: hc size 5600016, eclasses: 5599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.400484519
+[INFO  egg::run] Size: n=5600016, e=5599536
+[INFO  egg::run] Stopping: NodeLimit(5600016)
+[INFO  ruler] NodeLimit(5600016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.395s
+      Old: hc size 5600016, eclasses: 5599536
+      New: hc size 5600016, eclasses: 5599536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 63.495405851s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5599258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5600016, e=5600016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5600016, e=5600016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 15.444s
+      Old: hc size 5700016, eclasses: 5700016
+      New: hc size 5700016, eclasses: 5699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000387
+[INFO  egg::egraph] REBUILT! in 1.475s
+      Old: hc size 5700016, eclasses: 5699536
+      New: hc size 5700016, eclasses: 5699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.475712369
+[INFO  egg::run] Size: n=5700016, e=5699536
+[INFO  egg::run] Stopping: NodeLimit(5700016)
+[INFO  ruler] NodeLimit(5700016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.492s
+      Old: hc size 5700016, eclasses: 5699536
+      New: hc size 5700016, eclasses: 5699536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 269.353189585s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5699258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5700016, e=5700016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5700016, e=5700016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.173s
+      Old: hc size 5800016, eclasses: 5800016
+      New: hc size 5800016, eclasses: 5799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000645
+[INFO  egg::egraph] REBUILT! in 1.527s
+      Old: hc size 5800016, eclasses: 5799536
+      New: hc size 5800016, eclasses: 5799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.527301675
+[INFO  egg::run] Size: n=5800016, e=5799536
+[INFO  egg::run] Stopping: NodeLimit(5800016)
+[INFO  ruler] NodeLimit(5800016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.535s
+      Old: hc size 5800016, eclasses: 5799536
+      New: hc size 5800016, eclasses: 5799536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 93.404197442s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5799258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5800016, e=5800016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5800016, e=5800016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.363s
+      Old: hc size 5900016, eclasses: 5900016
+      New: hc size 5900016, eclasses: 5899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.0000001
+[INFO  egg::run] Apply time: 0.000000673
+[INFO  egg::egraph] REBUILT! in 1.569s
+      Old: hc size 5900016, eclasses: 5899536
+      New: hc size 5900016, eclasses: 5899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.5699356679999998
+[INFO  egg::run] Size: n=5900016, e=5899536
+[INFO  egg::run] Stopping: NodeLimit(5900016)
+[INFO  ruler] NodeLimit(5900016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.564s
+      Old: hc size 5900016, eclasses: 5899536
+      New: hc size 5900016, eclasses: 5899536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 72.291179122s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5899258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=5900016, e=5900016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=5900016, e=5900016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 8.496s
+      Old: hc size 6000016, eclasses: 6000016
+      New: hc size 6000016, eclasses: 5999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.00000005
+[INFO  egg::run] Apply time: 0.00000048
+[INFO  egg::egraph] REBUILT! in 2.145s
+      Old: hc size 6000016, eclasses: 5999536
+      New: hc size 6000016, eclasses: 5999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 2.145232097
+[INFO  egg::run] Size: n=6000016, e=5999536
+[INFO  egg::run] Stopping: NodeLimit(6000016)
+[INFO  ruler] NodeLimit(6000016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 2.455s
+      Old: hc size 6000016, eclasses: 5999536
+      New: hc size 6000016, eclasses: 5999536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 111.827859818s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 5999258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6000016, e=6000016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6000016, e=6000016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.516s
+      Old: hc size 6100016, eclasses: 6100016
+      New: hc size 6100016, eclasses: 6099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.000000444
+[INFO  egg::egraph] REBUILT! in 1.650s
+      Old: hc size 6100016, eclasses: 6099536
+      New: hc size 6100016, eclasses: 6099536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.650938622
+[INFO  egg::run] Size: n=6100016, e=6099536
+[INFO  egg::run] Stopping: NodeLimit(6100016)
+[INFO  ruler] NodeLimit(6100016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.661s
+      Old: hc size 6100016, eclasses: 6099536
+      New: hc size 6100016, eclasses: 6099536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 124.668134013s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6099258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6100016, e=6100016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6100016, e=6100016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 5.800s
+      Old: hc size 6200016, eclasses: 6200016
+      New: hc size 6200016, eclasses: 6199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000037
+[INFO  egg::run] Apply time: 0.000000627
+[INFO  egg::egraph] REBUILT! in 1.689s
+      Old: hc size 6200016, eclasses: 6199536
+      New: hc size 6200016, eclasses: 6199536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.689385182
+[INFO  egg::run] Size: n=6200016, e=6199536
+[INFO  egg::run] Stopping: NodeLimit(6200016)
+[INFO  ruler] NodeLimit(6200016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.690s
+      Old: hc size 6200016, eclasses: 6199536
+      New: hc size 6200016, eclasses: 6199536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 79.77600687s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6199258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6200016, e=6200016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6200016, e=6200016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 24.236s
+      Old: hc size 6300016, eclasses: 6300016
+      New: hc size 6300016, eclasses: 6299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000042
+[INFO  egg::run] Apply time: 0.000000331
+[INFO  egg::egraph] REBUILT! in 2.045s
+      Old: hc size 6300016, eclasses: 6299536
+      New: hc size 6300016, eclasses: 6299536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 2.045655717
+[INFO  egg::run] Size: n=6300016, e=6299536
+[INFO  egg::run] Stopping: NodeLimit(6300016)
+[INFO  ruler] NodeLimit(6300016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.809s
+      Old: hc size 6300016, eclasses: 6299536
+      New: hc size 6300016, eclasses: 6299536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 189.505736702s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6299258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6300016, e=6300016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6300016, e=6300016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.969s
+      Old: hc size 6400016, eclasses: 6400016
+      New: hc size 6400016, eclasses: 6399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000045
+[INFO  egg::run] Apply time: 0.000000599
+[INFO  egg::egraph] REBUILT! in 1.546s
+      Old: hc size 6400016, eclasses: 6399536
+      New: hc size 6400016, eclasses: 6399536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.546482885
+[INFO  egg::run] Size: n=6400016, e=6399536
+[INFO  egg::run] Stopping: NodeLimit(6400016)
+[INFO  ruler] NodeLimit(6400016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.543s
+      Old: hc size 6400016, eclasses: 6399536
+      New: hc size 6400016, eclasses: 6399536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 153.596255309s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6399258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6400016, e=6400016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6400016, e=6400016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 6.712s
+      Old: hc size 6500016, eclasses: 6500016
+      New: hc size 6500016, eclasses: 6499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000036
+[INFO  egg::run] Apply time: 0.000000449
+[INFO  egg::egraph] REBUILT! in 2.372s
+      Old: hc size 6500016, eclasses: 6499536
+      New: hc size 6500016, eclasses: 6499536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 2.372419265
+[INFO  egg::run] Size: n=6500016, e=6499536
+[INFO  egg::run] Stopping: NodeLimit(6500016)
+[INFO  ruler] NodeLimit(6500016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 2.394s
+      Old: hc size 6500016, eclasses: 6499536
+      New: hc size 6500016, eclasses: 6499536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 114.808867943s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6499258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6500016, e=6500016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6500016, e=6500016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 6.505s
+      Old: hc size 6600016, eclasses: 6600016
+      New: hc size 6600016, eclasses: 6599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.0000003
+[INFO  egg::egraph] REBUILT! in 1.636s
+      Old: hc size 6600016, eclasses: 6599536
+      New: hc size 6600016, eclasses: 6599536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.636405015
+[INFO  egg::run] Size: n=6600016, e=6599536
+[INFO  egg::run] Stopping: NodeLimit(6600016)
+[INFO  ruler] NodeLimit(6600016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.648s
+      Old: hc size 6600016, eclasses: 6599536
+      New: hc size 6600016, eclasses: 6599536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 149.682260197s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6599258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6600016, e=6600016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6600016, e=6600016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 4.958s
+      Old: hc size 6700016, eclasses: 6700016
+      New: hc size 6700016, eclasses: 6699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000041
+[INFO  egg::run] Apply time: 0.00000029
+[INFO  egg::egraph] REBUILT! in 1.688s
+      Old: hc size 6700016, eclasses: 6699536
+      New: hc size 6700016, eclasses: 6699536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.6881337589999998
+[INFO  egg::run] Size: n=6700016, e=6699536
+[INFO  egg::run] Stopping: NodeLimit(6700016)
+[INFO  ruler] NodeLimit(6700016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.689s
+      Old: hc size 6700016, eclasses: 6699536
+      New: hc size 6700016, eclasses: 6699536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 94.568025766s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6699258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6700016, e=6700016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6700016, e=6700016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 21.564s
+      Old: hc size 6800016, eclasses: 6800016
+      New: hc size 6800016, eclasses: 6799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000615
+[INFO  egg::egraph] REBUILT! in 1.900s
+      Old: hc size 6800016, eclasses: 6799536
+      New: hc size 6800016, eclasses: 6799536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.900317606
+[INFO  egg::run] Size: n=6800016, e=6799536
+[INFO  egg::run] Stopping: NodeLimit(6800016)
+[INFO  ruler] NodeLimit(6800016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 3.053s
+      Old: hc size 6800016, eclasses: 6799536
+      New: hc size 6800016, eclasses: 6799536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 247.22392367s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6799258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6800016, e=6800016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6800016, e=6800016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 6.790s
+      Old: hc size 6900016, eclasses: 6900016
+      New: hc size 6900016, eclasses: 6899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000044
+[INFO  egg::run] Apply time: 0.00000045
+[INFO  egg::egraph] REBUILT! in 1.803s
+      Old: hc size 6900016, eclasses: 6899536
+      New: hc size 6900016, eclasses: 6899536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 1.803895544
+[INFO  egg::run] Size: n=6900016, e=6899536
+[INFO  egg::run] Stopping: NodeLimit(6900016)
+[INFO  ruler] NodeLimit(6900016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 1.815s
+      Old: hc size 6900016, eclasses: 6899536
+      New: hc size 6900016, eclasses: 6899536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 99.164296825s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6899258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=6900016, e=6900016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=6900016, e=6900016
+[INFO  ruler] running eqsat with 4 rules
+[INFO  egg::egraph] REBUILT! in 8.940s
+      Old: hc size 7000016, eclasses: 7000016
+      New: hc size 7000016, eclasses: 6999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000043
+[INFO  egg::run] Apply time: 0.000000427
+[INFO  egg::egraph] REBUILT! in 2.830s
+      Old: hc size 7000016, eclasses: 6999536
+      New: hc size 7000016, eclasses: 6999536
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 2.830787817
+[INFO  egg::run] Size: n=7000016, e=6999536
+[INFO  egg::run] Stopping: NodeLimit(7000016)
+[INFO  ruler] NodeLimit(7000016) collecting unions...
+[INFO  egg::egraph] REBUILT! in 2.777s
+      Old: hc size 7000016, eclasses: 6999536
+      New: hc size 7000016, eclasses: 6999536
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 4 rules in 144.205103449s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 6999258
+[INFO  ruler] 0 candidate eqs
+[INFO  ruler] egraph n=7000016, e=7000016
+[INFO  ruler] choose_eqs: 0
+[INFO  ruler] Stopping early, no eqs
+[INFO  ruler] egraph n=7000016, e=7000016

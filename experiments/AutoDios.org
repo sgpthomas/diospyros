@@ -2806,7 +2806,7 @@ rsync -rvp ubuntu@3.12.85.30:~/diospyros/experiments/vd_abl_n_op2_vec_size_short
 #+end_src
 
 #+RESULTS:
-: #<window 831 on *Async Shell Command*>
+: #<window 935 on *Async Shell Command*>
 
 *** Make a pretty plot
 
@@ -2830,10 +2830,12 @@ return table
 
 #+name: n_vec_var_dup_short
 #+RESULTS:
-| vec-size | var-dup |          time |
-|----------+---------+---------------|
-|        2 | False   |   2.672174319 |
-|        3 | False   | 591.774395683 |
+| vec-size | var-dup |            time |
+|----------+---------+-----------------|
+|        2 | True    |     4.577382064 |
+|        2 | False   |     2.672174319 |
+|        3 | False   |   591.774395683 |
+|        4 | False   | 70211.169333964 |
 
 #+header: :var data=n_vec_var_dup_short
 #+header: :file experiments/vd_abl_n_op2_vec_size_short/n_vec.png
@@ -2946,7 +2948,7 @@ rsync -rvp ubuntu@3.21.40.48:~/diospyros/vd_abl_n_op2_vec_size .
 #+end_src
 
 #+RESULTS:
-: #<window 642 on *Async Shell Command*>
+: #<window 937 on *Async Shell Command*>
 
 *** Make a pretty plot
 
@@ -2972,14 +2974,7 @@ return table
 #+RESULTS:
 | vec-size | var-dup |            time |
 |----------+---------+-----------------|
-|        2 | True    |      4.60434182 |
-|        2 | False   |     2.565394821 |
-|        3 | True    | 11528.533479939 |
-|        3 | False   |   375.842439456 |
-|        4 | True    |  6047.932144041 |
-|        4 | False   |  6001.104431702 |
-|        8 | True    |  6064.498825336 |
-|        8 | False   |  6030.023217395 |
+|        3 | True    | 65179.918529969 |
 
 #+header: :var data=n_vec_var_dup
 #+header: :file vd_abl_n_op2_vec_size/n_vec.png
