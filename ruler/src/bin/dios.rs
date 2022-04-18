@@ -236,7 +236,7 @@ define_language! {
         "VecMinus" = VecMinus([Id; 2]),
         "VecMul" = VecMul([Id; 2]),
         "VecDiv" = VecDiv([Id; 2]),
-        // "VecMulSgn" = VecMulSgn([Id; 2]),
+        "VecMulSgn" = VecMulSgn([Id; 2]),
 
         // Vector operations that take 1 vector of inputs
         "VecNeg" = VecNeg([Id; 1]),
@@ -246,12 +246,137 @@ define_language! {
         // MAC takes 3 lists: acc, v1, v2
         "VecMAC" = VecMAC([Id; 3]),
 
+    // New experimental operators
+    "Vec*" = VecLane([Id; 1]),
+    "VecMon" = VecMon([Id; 1]),
+
+    // Comment
         Const(Value),
 
         // language items are parsed in order, and we want symbol to
         // be a fallback, so we put it last.
         // `Symbol` is an egg-provided interned string type
         Symbol(egg::Symbol),
+    }
+}
+
+trait Desugar {
+    fn desugar(self, n_lanes: usize) -> Self;
+}
+
+impl Desugar for egg::RecExpr<VecLang> {
+    /// Desugar vector instructions that are agnostic to vector lanes.
+    /// * `(Vec* ?a)` desugars to `(Vec ?a0 ?a1 .. ?an)`
+    /// * `(VecMon (+ ?a ?b))` desugars to `(Vec (+ ?a0 ?b0) (+ ?a1 ?b0) .. (+ ?an ?bn))`
+    fn desugar(mut self, n_lanes: usize) -> Self {
+        let root_id: Id = (self.as_ref().len() - 1).into();
+
+        let mut get_node = |id: Id| match &self[id] {
+            VecLang::VecLane([var]) => {
+                let repeat: Vec<Id> = match &self[*var] {
+                    VecLang::Symbol(sym) => {
+                        let mut inner = vec![];
+                        let name = sym.as_str();
+                        for n in 0..n_lanes {
+                            inner.push(self.add(VecLang::Symbol(
+                                format!("{name}{n}").into(),
+                            )));
+                        }
+                        inner
+                    }
+                    VecLang::Const(x) => todo!(),
+                    _ => {
+                        panic!("Only symbol and const supported here for now.")
+                    }
+                };
+                VecLang::Vec(repeat.into_boxed_slice())
+            }
+
+            VecLang::VecMon([child]) => {
+                // get the operator of the child
+                match &self[*child] {
+                    VecLang::Add([x, y]) => match (&self[*x], &self[*y]) {
+                        (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+                            let x_name = x.as_str();
+                            let y_name = y.as_str();
+                            let mut inner: Vec<Id> = vec![];
+                            for n in 0..n_lanes {
+                                let x_n = self.add(VecLang::Symbol(
+                                    format!("{x_name}{n}").into(),
+                                ));
+                                let y_n = self.add(VecLang::Symbol(
+                                    format!("{y_name}{n}").into(),
+                                ));
+                                inner.push(self.add(VecLang::Add([x_n, y_n])));
+                            }
+                            VecLang::Vec(inner.into_boxed_slice())
+                        }
+                        _ => todo!(),
+                    },
+                    VecLang::Mul([x, y]) => match (&self[*x], &self[*y]) {
+                        (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+                            let x_name = x.as_str();
+                            let y_name = y.as_str();
+                            let mut inner: Vec<Id> = vec![];
+                            for n in 0..n_lanes {
+                                let x_n = self.add(VecLang::Symbol(
+                                    format!("{x_name}{n}").into(),
+                                ));
+                                let y_n = self.add(VecLang::Symbol(
+                                    format!("{y_name}{n}").into(),
+                                ));
+                                inner.push(self.add(VecLang::Mul([x_n, y_n])));
+                            }
+                            VecLang::Vec(inner.into_boxed_slice())
+                        }
+                        _ => todo!(),
+                    },
+                    VecLang::Minus([x, y]) => match (&self[*x], &self[*y]) {
+                        (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+                            let x_name = x.as_str();
+                            let y_name = y.as_str();
+                            let mut inner: Vec<Id> = vec![];
+                            for n in 0..n_lanes {
+                                let x_n = self.add(VecLang::Symbol(
+                                    format!("{x_name}{n}").into(),
+                                ));
+                                let y_n = self.add(VecLang::Symbol(
+                                    format!("{y_name}{n}").into(),
+                                ));
+                                inner
+                                    .push(self.add(VecLang::Minus([x_n, y_n])));
+                            }
+                            VecLang::Vec(inner.into_boxed_slice())
+                        }
+                        _ => todo!(),
+                    },
+                    VecLang::Div([x, y]) => match (&self[*x], &self[*y]) {
+                        (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+                            let x_name = x.as_str();
+                            let y_name = y.as_str();
+                            let mut inner: Vec<Id> = vec![];
+                            for n in 0..n_lanes {
+                                let x_n = self.add(VecLang::Symbol(
+                                    format!("{x_name}{n}").into(),
+                                ));
+                                let y_n = self.add(VecLang::Symbol(
+                                    format!("{y_name}{n}").into(),
+                                ));
+                                inner.push(self.add(VecLang::Div([x_n, y_n])));
+                            }
+                            VecLang::Vec(inner.into_boxed_slice())
+                        }
+                        _ => todo!(),
+                    },
+                    // TODO: add the rest of the variants / figure out a way to factor this out (maybe with macros?).
+                    _ => todo!(),
+                }
+            }
+
+            x => x.clone(),
+        };
+        // eprintln!("{self}, {root_id}, {}", &self[root_id]);
+        get_node(root_id).build_recexpr(get_node)
     }
 }
 
@@ -425,6 +550,7 @@ impl SynthLanguage for VecLang {
                 }
                 }))
             }
+            VecLang::VecMulSgn(_) => todo!(),
             VecLang::VecNeg([l]) => {
                 map!(get, l => Value::vec1(l, |l| {
                         if l.iter().all(|x| matches!(x, Value::Int(_))) {
@@ -470,11 +596,22 @@ impl SynthLanguage for VecLang {
                 .map(|x| Value::Vec(x))
                         }))
             }
+            VecLang::VecLane(_) => {
+                panic!("VecStar: Should be de-sugared by now.")
+            }
+            VecLang::VecMon(_) => {
+                panic!("VecMon: Should be de-sugared by now.")
+            }
             VecLang::Symbol(_) => vec![],
         }
     }
 
     fn init_synth(synth: &mut Synthesizer<Self>) {
+        let t: egg::RecExpr<VecLang> = "(VecMon (+ ?a ?b))".parse().unwrap();
+        eprintln!("{}", t);
+        eprintln!("{}", t.desugar(synth.params.vector_size));
+        panic!("testing");
+
         // read config
         let config_path = synth
             .params
