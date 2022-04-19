@@ -2655,13 +2655,13 @@ run "4-vd-True" || true
 #+RESULTS:
 
 #+begin_src async-shell :dir (magit-toplevel)
-rm experiments/vd_dup_abl_n_ops_short_eqsat/rules-*.json
+# rm experiments/vd_dup_abl_n_ops_short_eqsat/rules-*.json
 rsync -rvp ubuntu@3.12.85.30:~/diospyros/experiments/vd_dup_abl_n_ops_short_eqsat \
       ./experiments
 #+end_src
 
 #+RESULTS:
-: #<window 758 on *Async Shell Command*>
+: #<window 17 on *Async Shell Command*>
 
 *** Make a pretty plot
 
@@ -2688,12 +2688,12 @@ return table
 #+RESULTS:
 | n-ops | var-dup |         time |
 |-------+---------+--------------|
-|     3 | True    | 49.021542695 |
-|     2 | True    | 11.463658914 |
-|     1 | False   |  0.723772171 |
-|     2 | False   |  3.315880664 |
 |     3 | False   |  5.306232725 |
 |     1 | True    |  2.067974486 |
+|     2 | True    | 11.463658914 |
+|     3 | True    | 49.021542695 |
+|     1 | False   |  0.723772171 |
+|     2 | False   |  3.315880664 |
 
 #+header: :var data=n_ops_var_dup_short
 #+header: :file experiments/vd_dup_abl_n_ops_short_eqsat/n_ops.png
@@ -2800,7 +2800,7 @@ run True 8 || true
 #+RESULTS:
 
 #+begin_src async-shell :dir (magit-toplevel)
-rm -f experiments/vd_abl_n_op2_vec_size_short/rules-*.json
+# rm -f experiments/vd_abl_n_op2_vec_size_short/rules-*.json
 rsync -rvp ubuntu@3.12.85.30:~/diospyros/experiments/vd_abl_n_op2_vec_size_short \
       experiments/
 #+end_src
@@ -2947,9 +2947,6 @@ rm -f vd_abl_n_op2_vec_size/rules-*.json
 rsync -rvp ubuntu@3.21.40.48:~/diospyros/vd_abl_n_op2_vec_size .
 #+end_src
 
-#+RESULTS:
-: #<window 937 on *Async Shell Command*>
-
 *** Make a pretty plot
 
 First we gotta make a table of the data. Let's do that in python.
@@ -2974,21 +2971,8 @@ return table
 #+RESULTS:
 | vec-size | var-dup |            time |
 |----------+---------+-----------------|
-|        3 | True    | 65179.918529969 |
-
-#+header: :var data=n_vec_var_dup
-#+header: :file vd_abl_n_op2_vec_size/n_vec.png
-#+begin_src R :session *n_vec* :colnames yes :results graphics file 
-library(tidyverse)
-
-data %>%
-  ggplot(aes(x = vec.size, y = time, group = var.dup, color = var.dup)) +
-  geom_line() +
-  geom_point()
-#+end_src
-
-#+RESULTS:
-[[file:../vd_abl_n_op2_vec_size/n_vec.png]]
+|        4 | True    | 60461.980421054 |
+|        4 | False   | 65077.826254017 |
 
 ** Ablate by vector size (n_ops=4)
 

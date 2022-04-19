@@ -2891,3 +2891,161 @@
 [INFO  ruler] Ran 31 rules in 9.458696975s
 [INFO  ruler] cvec matching... (no_conditionals: false)
 [INFO  ruler] # unique cvecs: 60167
+<<<<<<< HEAD
+=======
+[INFO  ruler] 534 candidate eqs
+[INFO  ruler] egraph n=1801538, e=1801538
+[INFO  ruler] choose_eqs: 492
+[INFO  ruler] Shrinking with 100 keepers
+[INFO  ruler] # rewrites: 145
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 549, eclasses: 549
+      New: hc size 549, eclasses: 549
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.003299261
+[INFO  egg::run] Apply time: 0.000647366
+[INFO  egg::egraph] REBUILT! in 0.001s
+      Old: hc size 1048, eclasses: 1048
+      New: hc size 1049, eclasses: 252
+      unions: 282, trimmed nodes: 550
+[INFO  egg::run] Rebuild time: 0.001040556
+[INFO  egg::run] Size: n=1049, e=252
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.001504722
+[INFO  egg::run] Apply time: 0.001303621
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 1811, eclasses: 1014
+      New: hc size 1826, eclasses: 294
+      unions: 17, trimmed nodes: 369
+[INFO  egg::run] Rebuild time: 0.000713582
+[INFO  egg::run] Size: n=1826, e=294
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.002340596
+[INFO  egg::run] Apply time: 0.005180249
+[INFO  egg::egraph] REBUILT! in 0.002s
+      Old: hc size 4345, eclasses: 2813
+      New: hc size 4353, eclasses: 352
+      unions: 142, trimmed nodes: 1844
+[INFO  egg::run] Rebuild time: 0.002443833
+[INFO  egg::run] Size: n=4353, e=352
+[INFO  egg::run] Stopping: IterationLimit(3)
+[INFO  ruler] Stopping IterationLimit(3), 3
+[INFO  ruler] Minimizing... threw away 392 rules, 0 / 492 remain
+[INFO  ruler] Shrinking with 10 keepers
+[INFO  ruler] # rewrites: 55
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 154, eclasses: 154
+      New: hc size 154, eclasses: 154
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000266529
+[INFO  egg::run] Apply time: 0.000055933
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 173, eclasses: 173
+      New: hc size 173, eclasses: 60
+      unions: 83, trimmed nodes: 90
+[INFO  egg::run] Rebuild time: 0.000234075
+[INFO  egg::run] Size: n=173, e=60
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000087757
+[INFO  egg::run] Apply time: 0.000070646
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 211, eclasses: 98
+      New: hc size 211, eclasses: 68
+      unions: 0, trimmed nodes: 6
+[INFO  egg::run] Rebuild time: 0.000063786
+[INFO  egg::run] Size: n=211, e=68
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000101412
+[INFO  egg::run] Apply time: 0.000092284
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 277, eclasses: 134
+      New: hc size 277, eclasses: 86
+      unions: 0, trimmed nodes: 4
+[INFO  egg::run] Rebuild time: 0.000047488
+[INFO  egg::run] Size: n=277, e=86
+[INFO  egg::run] Stopping: IterationLimit(3)
+[INFO  ruler] Stopping IterationLimit(3), 3
+[INFO  ruler] Minimizing... threw away 90 rules, 0 / 100 remain
+[INFO  ruler] Shrinking with 1 keepers
+[INFO  ruler] # rewrites: 46
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 44, eclasses: 44
+      New: hc size 44, eclasses: 44
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000041985
+[INFO  egg::run] Apply time: 0.000032693
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 57, eclasses: 57
+      New: hc size 57, eclasses: 37
+      unions: 6, trimmed nodes: 9
+[INFO  egg::run] Rebuild time: 0.000078786
+[INFO  egg::run] Size: n=57, e=37
+[INFO  egg::run] 
+    Iteration 1
+[INFO  egg::run] Search time: 0.000030725
+[INFO  egg::run] Apply time: 0.00005025
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 85, eclasses: 65
+      New: hc size 85, eclasses: 43
+      unions: 0, trimmed nodes: 4
+[INFO  egg::run] Rebuild time: 0.000047055
+[INFO  egg::run] Size: n=85, e=43
+[INFO  egg::run] 
+    Iteration 2
+[INFO  egg::run] Search time: 0.000045529
+[INFO  egg::run] Apply time: 0.000070687
+[INFO  egg::egraph] REBUILT! in 0.000s
+      Old: hc size 134, eclasses: 92
+      New: hc size 134, eclasses: 56
+      unions: 0, trimmed nodes: 3
+[INFO  egg::run] Rebuild time: 0.000037558
+[INFO  egg::run] Size: n=134, e=56
+[INFO  egg::run] Stopping: IterationLimit(3)
+[INFO  ruler] Stopping IterationLimit(3), 3
+[INFO  ruler] Minimizing... threw away 9 rules, 0 / 10 remain
+[INFO  ruler] Chose 1 good rules
+[INFO  ruler] Time taken in... run_rewrites: 10.479827677, rule discovery: 13196.992833285, rule minimization: 0.308555626
+[INFO  ruler] Stopping early, took all eqs
+[INFO  ruler] egraph n=1801538, e=1801538
+[INFO  ruler] running eqsat with 32 rules
+[INFO  egg::egraph] REBUILT! in 4.790s
+      Old: hc size 1901528, eclasses: 1901528
+      New: hc size 1901528, eclasses: 912663
+      unions: 83071, trimmed nodes: 986406
+[INFO  egg::run] 
+    Iteration 0
+[INFO  egg::run] Search time: 0.000000051
+[INFO  egg::run] Apply time: 0.000000273
+[INFO  egg::egraph] REBUILT! in 0.240s
+      Old: hc size 1901528, eclasses: 912663
+      New: hc size 1901528, eclasses: 912663
+      unions: 0, trimmed nodes: 0
+[INFO  egg::run] Rebuild time: 0.24051601
+[INFO  egg::run] Size: n=1901528, e=912663
+[INFO  egg::run] Stopping: NodeLimit(1901528)
+[INFO  ruler] NodeLimit(1901528) collecting unions...
+[INFO  egg::egraph] REBUILT! in 0.268s
+      Old: hc size 1901528, eclasses: 912663
+      New: hc size 1901528, eclasses: 912663
+      unions: 0, trimmed nodes: 0
+[INFO  ruler] Ran 32 rules in 9.452877871s
+[INFO  ruler] cvec matching... (no_conditionals: false)
+[INFO  ruler] # unique cvecs: 64837
+[INFO  ruler] 533 candidate eqs
+[INFO  ruler] egraph n=1901528, e=1901528
+[INFO  ruler] choose_eqs: 491
+[INFO  ruler] Chose 491 good rules
+[INFO  ruler] Time taken in... run_rewrites: 10.611310515, rule discovery: 17025.103776402, rule minimization: 0.000003464
+[INFO  ruler] Stopping early, took all eqs
+[INFO  ruler] egraph n=1901528, e=1901528
+>>>>>>> 14e34d9 (expecting this to break everything)
