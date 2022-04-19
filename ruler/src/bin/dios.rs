@@ -246,10 +246,6 @@ define_language! {
         // MAC takes 3 lists: acc, v1, v2
         "VecMAC" = VecMAC([Id; 3]),
 
-    // New experimental operators
-    "Vec*" = VecLane([Id; 1]),
-    "VecMon" = VecMon([Id; 1]),
-
     // Comment
         Const(Value),
 
@@ -260,125 +256,136 @@ define_language! {
     }
 }
 
-trait Desugar {
-    fn desugar(self, n_lanes: usize) -> Self;
-}
+// fn transform(orig: egg::RecExpr<ENodeOrVar<VecLang>>) -> egg::RecExpr<VecLang> {
+//     orig.as_ref()
+//         .into_iter()
+//         .map(|x| match x {
+//             ENodeOrVar::ENode(l) => l.clone(),
+//             ENodeOrVar::Var(v) => VecLang::Symbol(v.to_string().into()),
+//         })
+//         .collect_vec()
+//         .into()
+// }
 
-impl Desugar for egg::RecExpr<VecLang> {
-    /// Desugar vector instructions that are agnostic to vector lanes.
-    /// * `(Vec* ?a)` desugars to `(Vec ?a0 ?a1 .. ?an)`
-    /// * `(VecMon (+ ?a ?b))` desugars to `(Vec (+ ?a0 ?b0) (+ ?a1 ?b0) .. (+ ?an ?bn))`
-    fn desugar(mut self, n_lanes: usize) -> Self {
-        let root_id: Id = (self.as_ref().len() - 1).into();
+// trait Desugar {
+//     fn desugar(self, n_lanes: usize) -> Self;
+// }
 
-        let mut get_node = |id: Id| match &self[id] {
-            VecLang::VecLane([var]) => {
-                let repeat: Vec<Id> = match &self[*var] {
-                    VecLang::Symbol(sym) => {
-                        let mut inner = vec![];
-                        let name = sym.as_str();
-                        for n in 0..n_lanes {
-                            inner.push(self.add(VecLang::Symbol(
-                                format!("{name}{n}").into(),
-                            )));
-                        }
-                        inner
-                    }
-                    VecLang::Const(x) => todo!(),
-                    _ => {
-                        panic!("Only symbol and const supported here for now.")
-                    }
-                };
-                VecLang::Vec(repeat.into_boxed_slice())
-            }
+// impl Desugar for egg::RecExpr<VecLang> {
+//     /// Desugar vector instructions that are agnostic to vector lanes.
+//     /// * `(Vec* ?a)` desugars to `(Vec ?a0 ?a1 .. ?an)`
+//     /// * `(VecMon (+ ?a ?b))` desugars to `(Vec (+ ?a0 ?b0) (+ ?a1 ?b0) .. (+ ?an ?bn))`
+//     fn desugar(mut self, n_lanes: usize) -> Self {
+//         let root_id: Id = (self.as_ref().len() - 1).into();
 
-            VecLang::VecMon([child]) => {
-                // get the operator of the child
-                match &self[*child] {
-                    VecLang::Add([x, y]) => match (&self[*x], &self[*y]) {
-                        (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-                            let x_name = x.as_str();
-                            let y_name = y.as_str();
-                            let mut inner: Vec<Id> = vec![];
-                            for n in 0..n_lanes {
-                                let x_n = self.add(VecLang::Symbol(
-                                    format!("{x_name}{n}").into(),
-                                ));
-                                let y_n = self.add(VecLang::Symbol(
-                                    format!("{y_name}{n}").into(),
-                                ));
-                                inner.push(self.add(VecLang::Add([x_n, y_n])));
-                            }
-                            VecLang::Vec(inner.into_boxed_slice())
-                        }
-                        _ => todo!(),
-                    },
-                    VecLang::Mul([x, y]) => match (&self[*x], &self[*y]) {
-                        (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-                            let x_name = x.as_str();
-                            let y_name = y.as_str();
-                            let mut inner: Vec<Id> = vec![];
-                            for n in 0..n_lanes {
-                                let x_n = self.add(VecLang::Symbol(
-                                    format!("{x_name}{n}").into(),
-                                ));
-                                let y_n = self.add(VecLang::Symbol(
-                                    format!("{y_name}{n}").into(),
-                                ));
-                                inner.push(self.add(VecLang::Mul([x_n, y_n])));
-                            }
-                            VecLang::Vec(inner.into_boxed_slice())
-                        }
-                        _ => todo!(),
-                    },
-                    VecLang::Minus([x, y]) => match (&self[*x], &self[*y]) {
-                        (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-                            let x_name = x.as_str();
-                            let y_name = y.as_str();
-                            let mut inner: Vec<Id> = vec![];
-                            for n in 0..n_lanes {
-                                let x_n = self.add(VecLang::Symbol(
-                                    format!("{x_name}{n}").into(),
-                                ));
-                                let y_n = self.add(VecLang::Symbol(
-                                    format!("{y_name}{n}").into(),
-                                ));
-                                inner
-                                    .push(self.add(VecLang::Minus([x_n, y_n])));
-                            }
-                            VecLang::Vec(inner.into_boxed_slice())
-                        }
-                        _ => todo!(),
-                    },
-                    VecLang::Div([x, y]) => match (&self[*x], &self[*y]) {
-                        (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-                            let x_name = x.as_str();
-                            let y_name = y.as_str();
-                            let mut inner: Vec<Id> = vec![];
-                            for n in 0..n_lanes {
-                                let x_n = self.add(VecLang::Symbol(
-                                    format!("{x_name}{n}").into(),
-                                ));
-                                let y_n = self.add(VecLang::Symbol(
-                                    format!("{y_name}{n}").into(),
-                                ));
-                                inner.push(self.add(VecLang::Div([x_n, y_n])));
-                            }
-                            VecLang::Vec(inner.into_boxed_slice())
-                        }
-                        _ => todo!(),
-                    },
-                    // TODO: add the rest of the variants / figure out a way to factor this out (maybe with macros?).
-                    _ => todo!(),
-                }
-            }
+//         let mut get_node = |id: Id| match &self[id] {
+//             VecLang::VecLane([var]) => {
+//                 let repeat: Vec<Id> = match &self[*var] {
+//                     VecLang::Symbol(sym) => {
+//                         let mut inner = vec![];
+//                         let name = sym.as_str();
+//                         for n in 0..n_lanes {
+//                             inner.push(self.add(VecLang::Symbol(
+//                                 format!("{name}{n}").into(),
+//                             )));
+//                         }
+//                         inner
+//                     }
+//                     VecLang::Const(x) => todo!(),
+//                     _ => {
+//                         panic!("Only symbol and const supported here for now.")
+//                     }
+//                 };
+//                 VecLang::Vec(repeat.into_boxed_slice())
+//             }
 
-            x => x.clone(),
-        };
-        // eprintln!("{self}, {root_id}, {}", &self[root_id]);
-        get_node(root_id).build_recexpr(get_node)
-    }
-}
+//             VecLang::VecMon([child]) => {
+//                 // get the operator of the child
+//                 match &self[*child] {
+//                     VecLang::Add([x, y]) => match (&self[*x], &self[*y]) {
+//                         (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+//                             let x_name = x.as_str();
+//                             let y_name = y.as_str();
+//                             let mut inner: Vec<Id> = vec![];
+//                             for n in 0..n_lanes {
+//                                 let x_n = self.add(VecLang::Symbol(
+//                                     format!("{x_name}{n}").into(),
+//                                 ));
+//                                 let y_n = self.add(VecLang::Symbol(
+//                                     format!("{y_name}{n}").into(),
+//                                 ));
+//                                 inner.push(self.add(VecLang::Add([x_n, y_n])));
+//                             }
+//                             VecLang::Vec(inner.into_boxed_slice())
+//                         }
+//                         _ => todo!(),
+//                     },
+//                     VecLang::Mul([x, y]) => match (&self[*x], &self[*y]) {
+//                         (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+//                             let x_name = x.as_str();
+//                             let y_name = y.as_str();
+//                             let mut inner: Vec<Id> = vec![];
+//                             for n in 0..n_lanes {
+//                                 let x_n = self.add(VecLang::Symbol(
+//                                     format!("{x_name}{n}").into(),
+//                                 ));
+//                                 let y_n = self.add(VecLang::Symbol(
+//                                     format!("{y_name}{n}").into(),
+//                                 ));
+//                                 inner.push(self.add(VecLang::Mul([x_n, y_n])));
+//                             }
+//                             VecLang::Vec(inner.into_boxed_slice())
+//                         }
+//                         _ => todo!(),
+//                     },
+//                     VecLang::Minus([x, y]) => match (&self[*x], &self[*y]) {
+//                         (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+//                             let x_name = x.as_str();
+//                             let y_name = y.as_str();
+//                             let mut inner: Vec<Id> = vec![];
+//                             for n in 0..n_lanes {
+//                                 let x_n = self.add(VecLang::Symbol(
+//                                     format!("{x_name}{n}").into(),
+//                                 ));
+//                                 let y_n = self.add(VecLang::Symbol(
+//                                     format!("{y_name}{n}").into(),
+//                                 ));
+//                                 inner
+//                                     .push(self.add(VecLang::Minus([x_n, y_n])));
+//                             }
+//                             VecLang::Vec(inner.into_boxed_slice())
+//                         }
+//                         _ => todo!(),
+//                     },
+//                     VecLang::Div([x, y]) => match (&self[*x], &self[*y]) {
+//                         (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+//                             let x_name = x.as_str();
+//                             let y_name = y.as_str();
+//                             let mut inner: Vec<Id> = vec![];
+//                             for n in 0..n_lanes {
+//                                 let x_n = self.add(VecLang::Symbol(
+//                                     format!("{x_name}{n}").into(),
+//                                 ));
+//                                 let y_n = self.add(VecLang::Symbol(
+//                                     format!("{y_name}{n}").into(),
+//                                 ));
+//                                 inner.push(self.add(VecLang::Div([x_n, y_n])));
+//                             }
+//                             VecLang::Vec(inner.into_boxed_slice())
+//                         }
+//                         _ => todo!(),
+//                     },
+//                     // TODO: add the rest of the variants / figure out a way to factor this out (maybe with macros?).
+//                     _ => todo!(),
+//                 }
+//             }
+
+//             x => x.clone(),
+//         };
+//         // eprintln!("{self}, {root_id}, {}", &self[root_id]);
+//         get_node(root_id).build_recexpr(get_node)
+//     }
+// }
 
 impl SynthLanguage for VecLang {
     type Constant = Value;
@@ -596,22 +603,11 @@ impl SynthLanguage for VecLang {
                 .map(|x| Value::Vec(x))
                         }))
             }
-            VecLang::VecLane(_) => {
-                panic!("VecStar: Should be de-sugared by now.")
-            }
-            VecLang::VecMon(_) => {
-                panic!("VecMon: Should be de-sugared by now.")
-            }
             VecLang::Symbol(_) => vec![],
         }
     }
 
     fn init_synth(synth: &mut Synthesizer<Self>) {
-        let t: egg::RecExpr<VecLang> = "(VecMon (+ ?a ?b))".parse().unwrap();
-        eprintln!("{}", t);
-        eprintln!("{}", t.desugar(synth.params.vector_size));
-        panic!("testing");
-
         // read config
         let config_path = synth
             .params
@@ -690,6 +686,38 @@ impl SynthLanguage for VecLang {
             );
 
             egraph[id].data.cvec = cvec;
+
+            // for variable `?a` generate a variable `?an` for
+            // n = 0..|vector|
+            // for n in 0..synth.params.vector_size {
+            //     let vec_var_n = egg::Symbol::from(format!("{}{n}", letter(i)));
+            //     let vec_var_id = egraph.add(VecLang::Symbol(vec_var_n));
+
+            //     // make the cvec use real data
+            //     let mut cvec = vec![];
+
+            //     let (n_ints, n_vecs) = split_into_halves(cvec_size);
+
+            //     cvec.extend(
+            //         Value::sample_int(&mut synth.rng, -100, 100, n_ints)
+            //             .into_iter()
+            //             .map(Some),
+            //     );
+
+            //     cvec.extend(
+            //         Value::sample_vec(
+            //             &mut synth.rng,
+            //             -100,
+            //             100,
+            //             synth.params.vector_size,
+            //             n_vecs,
+            //         )
+            //         .into_iter()
+            //         .map(Some),
+            //     );
+
+            //     egraph[vec_var_id].data.cvec = cvec;
+            // }
         }
 
         // set egraph to the one we just constructed
@@ -713,7 +741,9 @@ impl SynthLanguage for VecLang {
         iter = iter - 1; // make iter start at 0
 
         // only do binops for iters < 2
-        let binops = if iter < 2 {
+        let binops = if true
+        /* iter < 2 */
+        {
             Some(
                 (0..2)
                     .map(|_| ids.clone())
@@ -754,6 +784,9 @@ impl SynthLanguage for VecLang {
                 .map(|x| {
                     vec![
                         VecLang::VecNeg([x]),
+                        // learn the only single vector rules to start.
+                        // we'll expand them to the vector size later
+                        VecLang::Vec(vec![x].into_boxed_slice()),
                         // VecLang::VecSgn([x]),
                         // VecLang::VecSqrt([x]),
                     ]
@@ -763,13 +796,6 @@ impl SynthLanguage for VecLang {
             let vec_binops = (0..2)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
-                // .filter(move |ids| {
-                //     vd || ids
-                //         .iter()
-                //         .map(|x| &synth.egraph[*x].data.vars)
-                //         .flatten()
-                //         .all_unique()
-                // })
                 .filter(move |ids| {
                     !ids.iter().all(|x| synth.egraph[*x].data.exact)
                 })
@@ -791,22 +817,15 @@ impl SynthLanguage for VecLang {
                 .flatten()
                 .filter(move |node| vd || unique_vars(node, &synth.egraph));
 
-            let vec = (0..synth.params.vector_size)
-                .map(|_| ids.clone())
-                .multi_cartesian_product()
-                // .filter(move |ids| {
-                //     vd || ids
-                //         .iter()
-                //         .map(|x| &synth.egraph[*x].data.vars)
-                //         .flatten()
-                //         .all_unique()
-                // })
-                .filter(move |ids| {
-                    !ids.iter().all(|x| synth.egraph[*x].data.exact)
-                })
-                .map(|x| vec![VecLang::Vec(x.into_boxed_slice())])
-                .flatten()
-                .filter(move |node| vd || unique_vars(node, &synth.egraph));
+            // let vec = (0..synth.params.vector_size)
+            //     .map(|_| ids.clone())
+            //     .multi_cartesian_product()
+            //     .filter(move |ids| {
+            //         !ids.iter().all(|x| synth.egraph[*x].data.exact)
+            //     })
+            //     .map(|x: Vec<Id>| vec![VecLang::Vec(x.into_boxed_slice())])
+            //     .flatten()
+            //     .filter(move |node| vd || unique_vars(node, &synth.egraph));
 
             // let vec_mac = (0..3)
             //     .map(|_| ids.clone())
@@ -817,7 +836,7 @@ impl SynthLanguage for VecLang {
 
             // TODO: read conf "vector_mac"
             Some(
-                vec_unops.chain(vec_binops).chain(vec), // .chain(vec_mac)
+                vec_unops.chain(vec_binops), // .chain(vec), // .chain(vec_mac)
             )
         } else {
             None
