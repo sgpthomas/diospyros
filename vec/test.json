@@ -4,7 +4,7 @@
     "n_samples": 0,
     "variables": 4,
     "vector_size": 3,
-    "abs_timeout": 600,
+    "abs_timeout": 60,
     "dios_config": "../configs/test.json",
     "iters": 2,
     "rules_to_take": 18446744073709551615,
@@ -27,7 +27,7 @@
     "use_smt": false,
     "do_final_run": false
   },
-  "time": 0.660655653,
+  "time": 2.010535041,
   "num_rules": 18,
   "smt_unknown": 0,
   "eqs": []

@@ -904,12 +904,14 @@ impl Desugar for egg::RecExpr<VecLang> {
     /// Desugar vector instructions that are agnostic to vector lanes.
     /// * `(Vec* ?a)` desugars to `(Vec ?a0 ?a1 .. ?an)`
     /// * `(VecMon (+ ?a ?b))` desugars to `(Vec (+ ?a0 ?b0) (+ ?a1 ?b0) .. (+ ?an ?bn))`
-    fn desugar(mut self, n_lanes: usize) -> Self {
+    fn desugar(self, n_lanes: usize) -> Self {
         let root_id: Id = (self.as_ref().len() - 1).into();
+
+        let mut copy = self.clone();
 
         eprintln!("{self:?}");
         let mut get_node = |id: Id| {
-            eprintln!("{id}, {self:?}");
+            eprintln!("{id}, {} {self:?}", &self[id]);
             match &self[id] {
                 VecLang::Vec(items) if items.len() == 1 => {
                     let item = items[0];
@@ -918,7 +920,7 @@ impl Desugar for egg::RecExpr<VecLang> {
                             let mut inner = vec![];
                             let name = sym.as_str();
                             for n in 0..n_lanes {
-                                inner.push(self.add(VecLang::Symbol(
+                                inner.push(copy.add(VecLang::Symbol(
                                     format!("{name}{n}").into(),
                                 )));
                             }
@@ -939,8 +941,71 @@ impl Desugar for egg::RecExpr<VecLang> {
             }
         };
         // eprintln!("{self}, {root_id}, {}", &self[root_id]);
-        get_node(root_id).build_recexpr(get_node)
+        // let r = get_node(root_id).build_recexpr(get_node);
+        // eprintln!("{copy}");
+        // r
+        map_recexpr(self)
     }
+}
+
+fn prepend_recexpr(expr: &mut egg::RecExpr<VecLang>, node: VecLang) -> Id {
+    eprintln!("start: {expr:?}");
+    let mut raw_nodes: Vec<VecLang> = expr.as_ref().to_vec();
+
+    for v in &mut raw_nodes {
+        v.update_children(|id| (usize::from(id) + 1).into())
+    }
+    raw_nodes.insert(0, node);
+    *expr = egg::RecExpr::from(raw_nodes);
+    eprintln!("end: {expr:?}");
+
+    Id::from(0)
+}
+
+fn map_recexpr(mut expr: egg::RecExpr<VecLang>) -> egg::RecExpr<VecLang> {
+    let root_id: Id = (expr.as_ref().len() - 1).into();
+
+    let mut todo: std::collections::VecDeque<Id> = [root_id].into();
+    while let Some(id) = todo.pop_front() {
+        eprintln!("{}", expr[id]);
+        // add children to processing queue
+        todo.extend(expr[id].children().iter());
+
+        let new: VecLang = match &expr[id] {
+            VecLang::Vec(items) if items.len() == 1 => {
+                let item = items[0];
+                let repeat: Vec<Id> = match &expr[item] {
+                    VecLang::Symbol(sym) => {
+                        let mut inner = vec![];
+                        let name = sym.as_str();
+                        for n in 0..2 {
+                            inner.push(prepend_recexpr(
+                                &mut expr,
+                                VecLang::Symbol(format!("{name}{n}").into()),
+                            ));
+                        }
+                        // inner
+                        vec![Id::from(0), Id::from(1)]
+                    }
+                    VecLang::Const(_x) => todo!(),
+                    x => {
+                        panic!(
+                            "Only symbol and const supported here for now. {:?}",
+                            x
+                        )
+                    }
+                };
+                VecLang::Vec(repeat.into_boxed_slice())
+            }
+
+            x => x.clone(),
+        };
+
+        expr[id] = new;
+    }
+
+    eprintln!("here: {expr:?}");
+    expr
 }
 
 // VecLang::VecMon([child]) => {
