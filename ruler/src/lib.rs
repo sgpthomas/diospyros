@@ -89,6 +89,10 @@ pub trait SynthLanguage:
         self.to_constant().is_some()
     }
 
+    fn post_process(report: Report<Self>) -> Report<Self> {
+        report
+    }
+
     /// Generalize a pattern
     fn generalize(
         expr: &RecExpr<Self>,
@@ -254,7 +258,7 @@ pub trait SynthLanguage:
             Command::Synth(params) => {
                 let outfile = params.outfile.clone();
                 let syn = Synthesizer::<Self>::new(params);
-                let report = syn.run();
+                let report: Report<Self> = Self::post_process(syn.run());
                 let file = std::fs::File::create(&outfile)
                     .unwrap_or_else(|_| panic!("Failed to open '{}'", outfile));
                 serde_json::to_writer_pretty(file, &report)
