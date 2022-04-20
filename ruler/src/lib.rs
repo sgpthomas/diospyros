@@ -89,7 +89,10 @@ pub trait SynthLanguage:
         self.to_constant().is_some()
     }
 
-    fn post_process(report: Report<Self>) -> Report<Self> {
+    fn post_process(
+        _synth: &SynthParams,
+        report: Report<Self>,
+    ) -> Report<Self> {
         report
     }
 
@@ -257,8 +260,9 @@ pub trait SynthLanguage:
         match Command::parse() {
             Command::Synth(params) => {
                 let outfile = params.outfile.clone();
-                let syn = Synthesizer::<Self>::new(params);
-                let report: Report<Self> = Self::post_process(syn.run());
+                let syn = Synthesizer::<Self>::new(params.clone());
+                let report: Report<Self> =
+                    Self::post_process(&params, syn.run());
                 let file = std::fs::File::create(&outfile)
                     .unwrap_or_else(|_| panic!("Failed to open '{}'", outfile));
                 serde_json::to_writer_pretty(file, &report)

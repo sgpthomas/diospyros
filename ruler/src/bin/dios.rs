@@ -5,7 +5,7 @@ use rand::Rng;
 use rand_pcg::Pcg64;
 use ruler::{
     letter, map, self_product, CVec, Equality, SynthAnalysis, SynthLanguage,
-    Synthesizer,
+    SynthParams, Synthesizer,
 };
 use rustc_hash::FxHasher;
 use std::collections::HashMap;
@@ -253,6 +253,203 @@ define_language! {
         // be a fallback, so we put it last.
         // `Symbol` is an egg-provided interned string type
         Symbol(egg::Symbol),
+    }
+}
+
+#[derive(Debug, Clone)]
+enum Lang {
+    Add(Box<Lang>, Box<Lang>),
+    Mul(Box<Lang>, Box<Lang>),
+    Minus(Box<Lang>, Box<Lang>),
+    Div(Box<Lang>, Box<Lang>),
+
+    Or(Box<Lang>, Box<Lang>),
+    And(Box<Lang>, Box<Lang>),
+    #[allow(unused)]
+    Ite(Box<Lang>, Box<Lang>, Box<Lang>),
+    Lt(Box<Lang>, Box<Lang>),
+
+    Neg(Box<Lang>),
+
+    Vec(Vec<Lang>),
+
+    VecAdd(Box<Lang>, Box<Lang>),
+    VecMul(Box<Lang>, Box<Lang>),
+    VecMinus(Box<Lang>, Box<Lang>),
+    VecDiv(Box<Lang>, Box<Lang>),
+
+    VecNeg(Box<Lang>),
+
+    Const(Value),
+    Symbol(String),
+}
+
+impl Lang {
+    fn to_recexpr(&self, expr: &mut egg::RecExpr<VecLang>) -> Id {
+        match &self {
+            Lang::Add(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::Add([left_id, right_id]))
+            }
+            Lang::Mul(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::Mul([left_id, right_id]))
+            }
+            Lang::Minus(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::Minus([left_id, right_id]))
+            }
+            Lang::Div(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::Div([left_id, right_id]))
+            }
+            Lang::Or(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::Or([left_id, right_id]))
+            }
+            Lang::And(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::And([left_id, right_id]))
+            }
+            Lang::Lt(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::Lt([left_id, right_id]))
+            }
+            Lang::VecAdd(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::VecAdd([left_id, right_id]))
+            }
+            Lang::VecMul(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::VecMul([left_id, right_id]))
+            }
+            Lang::VecMinus(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::VecMinus([left_id, right_id]))
+            }
+            Lang::VecDiv(left, right) => {
+                let left_id = left.to_recexpr(expr);
+                let right_id = right.to_recexpr(expr);
+                expr.add(VecLang::VecDiv([left_id, right_id]))
+            }
+            Lang::Ite(_, _, _) => todo!(),
+            Lang::Neg(inner) => {
+                let id = inner.to_recexpr(expr);
+                expr.add(VecLang::Neg([id]))
+            }
+            Lang::VecNeg(inner) => {
+                let id = inner.to_recexpr(expr);
+                expr.add(VecLang::VecNeg([id]))
+            }
+            Lang::Vec(items) => {
+                let ids =
+                    items.iter().map(|it| it.to_recexpr(expr)).collect_vec();
+                expr.add(VecLang::Vec(ids.into_boxed_slice()))
+            }
+            Lang::Const(v) => expr.add(VecLang::Const(v.clone())),
+            Lang::Symbol(s) => expr.add(VecLang::Symbol(s.into())),
+        }
+    }
+}
+
+fn subtree(
+    expr: &egg::RecExpr<VecLang>,
+    new_root: Id,
+) -> egg::RecExpr<VecLang> {
+    expr[new_root].build_recexpr(|id| expr[id].clone())
+}
+
+impl From<egg::RecExpr<VecLang>> for Lang {
+    fn from(expr: egg::RecExpr<VecLang>) -> Self {
+        let root: Id = Id::from(expr.as_ref().len() - 1);
+        match &expr[root] {
+            VecLang::Add([left, right]) => Lang::Add(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::Mul([left, right]) => Lang::Mul(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::Minus([left, right]) => Lang::Minus(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::Div([left, right]) => Lang::Div(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::Or([left, right]) => Lang::Or(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::And([left, right]) => Lang::And(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::Ite(_) => todo!(),
+            VecLang::Lt([left, right]) => Lang::Lt(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::Sgn(_) => todo!(),
+            VecLang::Sqrt(_) => todo!(),
+            VecLang::Neg([inner]) => {
+                Lang::Neg(Box::new(subtree(&expr, *inner).into()))
+            }
+            VecLang::List(_) => todo!(),
+            VecLang::Vec(items) => Lang::Vec(
+                items
+                    .iter()
+                    .map(|id| subtree(&expr, *id).into())
+                    .collect_vec(),
+            ),
+            VecLang::Get(_) => todo!(),
+            VecLang::Concat(_) => todo!(),
+            VecLang::VecAdd([left, right]) => Lang::VecAdd(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::VecMinus([left, right]) => Lang::VecMinus(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::VecMul([left, right]) => Lang::VecMul(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::VecDiv([left, right]) => Lang::VecDiv(
+                Box::new(subtree(&expr, *left).into()),
+                Box::new(subtree(&expr, *right).into()),
+            ),
+            VecLang::VecMulSgn(_) => todo!(),
+            VecLang::VecNeg([inner]) => {
+                Lang::VecNeg(Box::new(subtree(&expr, *inner).into()))
+            }
+            VecLang::VecSqrt(_) => todo!(),
+            VecLang::VecSgn(_) => todo!(),
+            VecLang::VecMAC(_) => todo!(),
+            VecLang::Const(v) => Lang::Const(v.clone()),
+            VecLang::Symbol(sym) => Lang::Symbol(sym.to_string()),
+        }
+    }
+}
+
+impl Into<egg::RecExpr<VecLang>> for Lang {
+    fn into(self) -> egg::RecExpr<VecLang> {
+        let mut expr = egg::RecExpr::default();
+        self.to_recexpr(&mut expr);
+        expr
     }
 }
 
@@ -601,13 +798,13 @@ impl SynthLanguage for VecLang {
     fn make_layer<'a>(
         ids: Vec<Id>,
         synth: &'a Synthesizer<Self>,
-        mut iter: usize,
+        /*mut*/ _iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         // vd for variable duplication
         let vd = read_conf(synth)["variable_duplication"].as_bool().unwrap();
 
         // if iter % 2 == 0 {
-        iter = iter - 1; // make iter start at 0
+        // iter = iter - 1; // make iter start at 0
 
         // only do binops for iters < 2
         let binops = if true
@@ -865,13 +1062,26 @@ impl SynthLanguage for VecLang {
         ret
     }
 
-    fn post_process(mut report: ruler::Report<Self>) -> ruler::Report<Self> {
-        let new_eqs: Vec<Equality<_>> = vec![];
+    fn post_process(
+        params: &SynthParams,
+        mut report: ruler::Report<Self>,
+    ) -> ruler::Report<Self> {
+        let mut new_eqs: Vec<Equality<_>> = vec![];
         for eq in &report.eqs {
-            eprint!("{} => ", eq.lhs.unpattern(),);
-            eprintln!("{}", eq.lhs.unpattern().desugar(2))
+            let lhs_pre: Lang = eq.lhs.unpattern().into();
+            let lhs: egg::RecExpr<VecLang> =
+                lhs_pre.desugar(params.vector_size).into();
+            let rhs_pre: Lang = eq.rhs.unpattern().into();
+            let rhs: egg::RecExpr<VecLang> =
+                rhs_pre.desugar(params.vector_size).into();
+            if let Some(new_eq) = Equality::new(&lhs, &rhs) {
+                new_eqs.push(new_eq);
+            } else {
+                panic!("Could not make equation for {} <=> {}", lhs, rhs);
+            }
         }
         report.eqs = new_eqs;
+        eprintln!("{report:#?}");
         report
     }
 }
@@ -900,112 +1110,134 @@ trait Desugar {
     fn desugar(self, n_lanes: usize) -> Self;
 }
 
-impl Desugar for egg::RecExpr<VecLang> {
-    /// Desugar vector instructions that are agnostic to vector lanes.
+impl Desugar for Lang {
+    /// Expand single-lane vector instructions to some number of lanes.
     /// * `(Vec* ?a)` desugars to `(Vec ?a0 ?a1 .. ?an)`
     /// * `(VecMon (+ ?a ?b))` desugars to `(Vec (+ ?a0 ?b0) (+ ?a1 ?b0) .. (+ ?an ?bn))`
     fn desugar(self, n_lanes: usize) -> Self {
-        let root_id: Id = (self.as_ref().len() - 1).into();
-
-        let mut copy = self.clone();
-
-        eprintln!("{self:?}");
-        let mut get_node = |id: Id| {
-            eprintln!("{id}, {} {self:?}", &self[id]);
-            match &self[id] {
-                VecLang::Vec(items) if items.len() == 1 => {
-                    let item = items[0];
-                    let repeat: Vec<Id> = match &self[item] {
-                        VecLang::Symbol(sym) => {
-                            let mut inner = vec![];
-                            let name = sym.as_str();
+        match self {
+            Lang::Vec(items) if items.len() == 1 => {
+                let inner = match &items[0] {
+                    Lang::Const(_) => todo!(),
+                    Lang::Symbol(ref v) => (0..n_lanes)
+                        .into_iter()
+                        .map(|n| Lang::Symbol(format!("{v}{n}")))
+                        .collect_vec(),
+                    Lang::Add(l, r) => match ((**l).clone(), (**r).clone()) {
+                        (Lang::Symbol(l), Lang::Symbol(r)) => {
+                            let mut inner: Vec<Lang> = vec![];
                             for n in 0..n_lanes {
-                                inner.push(copy.add(VecLang::Symbol(
-                                    format!("{name}{n}").into(),
-                                )));
+                                let l_n =
+                                    Lang::Symbol(format!("{l}{n}").into());
+                                let r_n =
+                                    Lang::Symbol(format!("{r}{n}").into());
+                                inner.push(Lang::Add(
+                                    Box::new(l_n),
+                                    Box::new(r_n),
+                                ));
                             }
                             inner
                         }
-                        VecLang::Const(x) => todo!(),
-                        x => {
-                            panic!(
-                            "Only symbol and const supported here for now. {:?}",
-                            x
-                        )
+                        _ => todo!(),
+                    },
+                    Lang::Mul(l, r) => match ((**l).clone(), (**r).clone()) {
+                        (Lang::Symbol(l), Lang::Symbol(r)) => {
+                            let mut inner: Vec<Lang> = vec![];
+                            for n in 0..n_lanes {
+                                let l_n =
+                                    Lang::Symbol(format!("{l}{n}").into());
+                                let r_n =
+                                    Lang::Symbol(format!("{r}{n}").into());
+                                inner.push(Lang::Mul(
+                                    Box::new(l_n),
+                                    Box::new(r_n),
+                                ));
+                            }
+                            inner
                         }
-                    };
-                    VecLang::Vec(repeat.into_boxed_slice())
-                }
-
-                x => x.clone(),
-            }
-        };
-        // eprintln!("{self}, {root_id}, {}", &self[root_id]);
-        // let r = get_node(root_id).build_recexpr(get_node);
-        // eprintln!("{copy}");
-        // r
-        map_recexpr(self)
-    }
-}
-
-fn prepend_recexpr(expr: &mut egg::RecExpr<VecLang>, node: VecLang) -> Id {
-    eprintln!("start: {expr:?}");
-    let mut raw_nodes: Vec<VecLang> = expr.as_ref().to_vec();
-
-    for v in &mut raw_nodes {
-        v.update_children(|id| (usize::from(id) + 1).into())
-    }
-    raw_nodes.insert(0, node);
-    *expr = egg::RecExpr::from(raw_nodes);
-    eprintln!("end: {expr:?}");
-
-    Id::from(0)
-}
-
-fn map_recexpr(mut expr: egg::RecExpr<VecLang>) -> egg::RecExpr<VecLang> {
-    let root_id: Id = (expr.as_ref().len() - 1).into();
-
-    let mut todo: std::collections::VecDeque<Id> = [root_id].into();
-    while let Some(id) = todo.pop_front() {
-        eprintln!("{}", expr[id]);
-        // add children to processing queue
-        todo.extend(expr[id].children().iter());
-
-        let new: VecLang = match &expr[id] {
-            VecLang::Vec(items) if items.len() == 1 => {
-                let item = items[0];
-                let repeat: Vec<Id> = match &expr[item] {
-                    VecLang::Symbol(sym) => {
-                        let mut inner = vec![];
-                        let name = sym.as_str();
-                        for n in 0..2 {
-                            inner.push(prepend_recexpr(
-                                &mut expr,
-                                VecLang::Symbol(format!("{name}{n}").into()),
-                            ));
-                        }
-                        // inner
-                        vec![Id::from(0), Id::from(1)]
-                    }
-                    VecLang::Const(_x) => todo!(),
-                    x => {
-                        panic!(
-                            "Only symbol and const supported here for now. {:?}",
-                            x
-                        )
-                    }
+                        _ => todo!(),
+                    },
+                    x => vec![x.clone()],
+                    //         VecLang::Add([x, y]) => match (&self[*x], &self[*y]) {
+                    //             (VecLang::Symbol(x), VecLang::Symbol(y)) => {
+                    //                 let x_name = x.as_str();
+                    //                 let y_name = y.as_str();
+                    //                 let mut inner: Vec<Id> = vec![];
+                    //                 for n in 0..n_lanes {
+                    //                     let x_n = self.add(VecLang::Symbol(
+                    //                         format!("{x_name}{n}").into(),
+                    //                     ));
+                    //                     let y_n = self.add(VecLang::Symbol(
+                    //                         format!("{y_name}{n}").into(),
+                    //                     ));
+                    //                     inner.push(self.add(VecLang::Add([x_n, y_n])));
+                    //                 }
+                    //                 VecLang::Vec(inner.into_boxed_slice())
+                    //             }
+                    //             _ => todo!(),
+                    //         },
                 };
-                VecLang::Vec(repeat.into_boxed_slice())
+                Lang::Vec(inner)
             }
-
-            x => x.clone(),
-        };
-
-        expr[id] = new;
+            Lang::Vec(items) => Lang::Vec(
+                items
+                    .into_iter()
+                    .map(|item| item.desugar(n_lanes))
+                    .collect_vec(),
+            ),
+            Lang::Add(left, right) => Lang::Add(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::Mul(left, right) => Lang::Mul(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::Minus(left, right) => Lang::Minus(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::Div(left, right) => Lang::Div(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::Or(left, right) => Lang::Or(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::And(left, right) => Lang::And(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::Ite(_, _, _) => todo!(),
+            Lang::Lt(left, right) => Lang::Lt(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::Neg(inner) => Lang::Neg(Box::new(inner.desugar(n_lanes))),
+            Lang::VecAdd(left, right) => Lang::VecAdd(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::VecMul(left, right) => Lang::VecMul(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::VecMinus(left, right) => Lang::VecMinus(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::VecDiv(left, right) => Lang::VecDiv(
+                Box::new(left.desugar(n_lanes)),
+                Box::new(right.desugar(n_lanes)),
+            ),
+            Lang::VecNeg(inner) => {
+                Lang::VecNeg(Box::new(inner.desugar(n_lanes)))
+            }
+            x @ Lang::Const(_) => x,
+            x @ Lang::Symbol(_) => x,
+        }
     }
-
-    eprintln!("here: {expr:?}");
-    expr
 }
 
 // VecLang::VecMon([child]) => {
