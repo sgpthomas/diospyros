@@ -49,7 +49,7 @@ pub fn letter(i: usize) -> &'static str {
 }
 
 /// Properties of cvecs in `Ruler`; currently onyl their length.
-/// cvecs are stored as [eclass analysis data](https://docs.rs/egg/0.6.0/egg/trait.Analysis.html).
+/// cvecs are stored as [eclass analysis data](https://docs.rs/egg/0.7.1/egg/trait.Analysis.html).
 #[derive(Debug, Clone)]
 pub struct SynthAnalysis {
     /// Length of cvec or characteristic vector.
