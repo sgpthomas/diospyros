@@ -1081,7 +1081,6 @@ impl SynthLanguage for VecLang {
             }
         }
         report.eqs = new_eqs;
-        eprintln!("{report:#?}");
         report
     }
 }
@@ -1157,25 +1156,24 @@ impl Desugar for Lang {
                         }
                         _ => todo!(),
                     },
+                    Lang::Minus(l, r) => match ((**l).clone(), (**r).clone()) {
+                        (Lang::Symbol(l), Lang::Symbol(r)) => {
+                            let mut inner: Vec<Lang> = vec![];
+                            for n in 0..n_lanes {
+                                let l_n =
+                                    Lang::Symbol(format!("{l}{n}").into());
+                                let r_n =
+                                    Lang::Symbol(format!("{r}{n}").into());
+                                inner.push(Lang::Minus(
+                                    Box::new(l_n),
+                                    Box::new(r_n),
+                                ));
+                            }
+                            inner
+                        }
+                        _ => todo!(),
+                    },
                     x => vec![x.clone()],
-                    //         VecLang::Add([x, y]) => match (&self[*x], &self[*y]) {
-                    //             (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-                    //                 let x_name = x.as_str();
-                    //                 let y_name = y.as_str();
-                    //                 let mut inner: Vec<Id> = vec![];
-                    //                 for n in 0..n_lanes {
-                    //                     let x_n = self.add(VecLang::Symbol(
-                    //                         format!("{x_name}{n}").into(),
-                    //                     ));
-                    //                     let y_n = self.add(VecLang::Symbol(
-                    //                         format!("{y_name}{n}").into(),
-                    //                     ));
-                    //                     inner.push(self.add(VecLang::Add([x_n, y_n])));
-                    //                 }
-                    //                 VecLang::Vec(inner.into_boxed_slice())
-                    //             }
-                    //             _ => todo!(),
-                    //         },
                 };
                 Lang::Vec(inner)
             }

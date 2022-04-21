@@ -1,15 +1,26 @@
 {
-  "constants": [],
-  "seed_rules": [],
-  "binops": [
-    "+",
-    "*"
-  ],
-  "use_vector": true,
-  "vector_binops": [
-    "+",
-    "*"
-  ],
-  "vector_mac": true,
-  "variable_duplication": false
+    "constants": [
+	{
+	"type": "int",
+	"value": 0
+    },
+	{
+	"type": "int",
+	"value": 1
+    }
+    ],
+    "seed_rules": [],
+    "binops": [
+	"+",
+	"*",
+	"-"
+    ],
+    "use_vector": true,
+    "vector_binops": [
+	"+",
+	"*",
+	"-"
+    ],
+    "vector_mac": true,
+    "variable_duplication": true 
 }
