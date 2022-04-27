@@ -279,6 +279,12 @@ enum Lang {
     VecDiv(Box<Lang>, Box<Lang>),
 
     VecNeg(Box<Lang>),
+    #[allow(unused)]
+    VecSqrt(Box<Lang>),
+    #[allow(unused)]
+    VecSgn(Box<Lang>),
+
+    VecMAC(Box<Lang>, Box<Lang>, Box<Lang>),
 
     Const(Value),
     Symbol(String),
@@ -438,7 +444,11 @@ impl From<egg::RecExpr<VecLang>> for Lang {
             }
             VecLang::VecSqrt(_) => todo!(),
             VecLang::VecSgn(_) => todo!(),
-            VecLang::VecMAC(_) => todo!(),
+            VecLang::VecMAC([a, b, c]) => Lang::VecMAC(
+                Box::new(subtree(&expr, *a).into()),
+                Box::new(subtree(&expr, *b).into()),
+                Box::new(subtree(&expr, *c).into()),
+            ),
             VecLang::Const(v) => Lang::Const(v.clone()),
             VecLang::Symbol(sym) => Lang::Symbol(sym.to_string()),
         }

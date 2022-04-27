@@ -16,5 +16,5 @@
     ],
     "use_vector": true,
     "vector_mac": true,
-    "variable_duplication": true
+    "variable_duplication": false
 }
