@@ -6,17 +6,15 @@
 	}
     ],
     "seed_rules": [],
+    "unops": [
+	"neg"
+    ],
     "binops": [
 	"+",
 	"*",
 	"-"
     ],
     "use_vector": true,
-    "vector_binops": [
-	"+",
-	"*",
-	"-"
-    ],
     "vector_mac": true,
     "variable_duplication": true
 }

@@ -813,15 +813,20 @@ impl SynthLanguage for VecLang {
                 .clone()
                 .into_iter()
                 .filter(move |x| !synth.egraph[*x].data.exact)
-                .map(|x| {
-                    vec![
-                        VecLang::VecNeg([x]),
-                        // learn the only single vector rules to start.
-                        // we'll expand them to the vector size later
-                        VecLang::Vec(vec![x].into_boxed_slice()),
-                        // VecLang::VecSgn([x]),
-                        // VecLang::VecSqrt([x]),
-                    ]
+                .map(move |x| {
+                    let mut v = read_conf(synth)["unops"]
+                        .as_array()
+                        .expect("unops")
+                        .iter()
+                        .map(|op| match op.as_str().unwrap() {
+                            "neg" => VecLang::VecNeg([x]),
+                            "sgn" => VecLang::VecSgn([x]),
+                            "sqrt" => VecLang::VecSqrt([x]),
+                            _ => panic!("Unknown vec unop"),
+                        })
+                        .collect_vec();
+                    v.extend(vec![VecLang::Vec(vec![x].into_boxed_slice())]);
+                    v
                 })
                 .flatten();
 
@@ -833,9 +838,9 @@ impl SynthLanguage for VecLang {
                 })
                 .map(|ids| [ids[0], ids[1]])
                 .map(move |x| {
-                    read_conf(synth)["vector_binops"]
+                    read_conf(synth)["binops"]
                         .as_array()
-                        .expect("vector binops")
+                        .expect("binops")
                         .iter()
                         .map(|op| match op.as_str().unwrap() {
                             "+" => VecLang::VecAdd(x),
@@ -849,36 +854,38 @@ impl SynthLanguage for VecLang {
                 .flatten()
                 .filter(move |node| vd || unique_vars(node, &synth.egraph));
 
-            // let vec = (0..synth.params.vector_size)
-            //     .map(|_| ids.clone())
-            //     .multi_cartesian_product()
-            //     .filter(move |ids| {
-            //         !ids.iter().all(|x| synth.egraph[*x].data.exact)
-            //     })
-            //     .map(|x: Vec<Id>| vec![VecLang::Vec(x.into_boxed_slice())])
-            //     .flatten()
-            //     .filter(move |node| vd || unique_vars(node, &synth.egraph));
-
-            // let vec_mac = (0..3)
-            //     .map(|_| ids.clone())
-            //     .multi_cartesian_product()
-            //     .filter(move |ids| !ids.iter().all(|x| synth.egraph[*x].data.exact))
-            //     .map(|ids| [ids[0], ids[1], ids[2]])
-            //     .map(move |x| VecLang::VecMAC(x));
-
-            // TODO: read conf "vector_mac"
-            Some(
-                vec_unops.chain(vec_binops), // .chain(vec), // .chain(vec_mac)
-            )
+            Some(vec_unops.chain(vec_binops))
         } else {
             None
         };
 
-        match (binops, vec_stuff) {
-            (Some(b), Some(v)) => Box::new(b.chain(v)),
-            (Some(i), _) => Box::new(i),
-            (_, Some(i)) => Box::new(i),
-            (_, _) => panic!(),
+        let vec_mac = if read_conf(synth)["vector_mac"].as_bool().unwrap() {
+            let vec_mac = (0..3)
+                .map(|_| ids.clone())
+                .multi_cartesian_product()
+                .filter(move |ids| {
+                    !ids.iter().all(|x| synth.egraph[*x].data.exact)
+                })
+                .map(|ids| [ids[0], ids[1], ids[2]])
+                .map(move |x| VecLang::VecMAC(x));
+            Some(vec_mac)
+        } else {
+            None
+        };
+
+        match (binops, vec_stuff, vec_mac) {
+            // all are defined
+            (Some(b), Some(v), Some(m)) => Box::new(b.chain(v).chain(m)),
+            // two are defined
+            (Some(i), Some(j), _) => Box::new(i.chain(j)),
+            (Some(i), _, Some(j)) => Box::new(i.chain(j)),
+            (_, Some(i), Some(j)) => Box::new(i.chain(j)),
+            // one is defined
+            (Some(i), _, _) => Box::new(i),
+            (_, Some(i), _) => Box::new(i),
+            (_, _, Some(i)) => Box::new(i),
+            // none are defined
+            (_, _, _) => panic!(),
         }
     }
 
