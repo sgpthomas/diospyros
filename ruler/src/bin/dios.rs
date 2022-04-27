@@ -752,38 +752,6 @@ impl SynthLanguage for VecLang {
             );
 
             egraph[id].data.cvec = cvec;
-
-            // for variable `?a` generate a variable `?an` for
-            // n = 0..|vector|
-            // for n in 0..synth.params.vector_size {
-            //     let vec_var_n = egg::Symbol::from(format!("{}{n}", letter(i)));
-            //     let vec_var_id = egraph.add(VecLang::Symbol(vec_var_n));
-
-            //     // make the cvec use real data
-            //     let mut cvec = vec![];
-
-            //     let (n_ints, n_vecs) = split_into_halves(cvec_size);
-
-            //     cvec.extend(
-            //         Value::sample_int(&mut synth.rng, -100, 100, n_ints)
-            //             .into_iter()
-            //             .map(Some),
-            //     );
-
-            //     cvec.extend(
-            //         Value::sample_vec(
-            //             &mut synth.rng,
-            //             -100,
-            //             100,
-            //             synth.params.vector_size,
-            //             n_vecs,
-            //         )
-            //         .into_iter()
-            //         .map(Some),
-            //     );
-
-            //     egraph[vec_var_id].data.cvec = cvec;
-            // }
         }
 
         // set egraph to the one we just constructed
@@ -798,18 +766,16 @@ impl SynthLanguage for VecLang {
     fn make_layer<'a>(
         ids: Vec<Id>,
         synth: &'a Synthesizer<Self>,
-        /*mut*/ _iter: usize,
+        mut iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         // vd for variable duplication
         let vd = read_conf(synth)["variable_duplication"].as_bool().unwrap();
 
         // if iter % 2 == 0 {
-        // iter = iter - 1; // make iter start at 0
+        iter = iter - 1; // make iter start at 0
 
         // only do binops for iters < 2
-        let binops = if true
-        /* iter < 2 */
-        {
+        let binops = if iter < 2 {
             Some(
                 (0..2)
                     .map(|_| ids.clone())
@@ -1238,87 +1204,6 @@ impl Desugar for Lang {
     }
 }
 
-// VecLang::VecMon([child]) => {
-//     // get the operator of the child
-//     match &self[*child] {
-//         VecLang::Add([x, y]) => match (&self[*x], &self[*y]) {
-//             (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-//                 let x_name = x.as_str();
-//                 let y_name = y.as_str();
-//                 let mut inner: Vec<Id> = vec![];
-//                 for n in 0..n_lanes {
-//                     let x_n = self.add(VecLang::Symbol(
-//                         format!("{x_name}{n}").into(),
-//                     ));
-//                     let y_n = self.add(VecLang::Symbol(
-//                         format!("{y_name}{n}").into(),
-//                     ));
-//                     inner.push(self.add(VecLang::Add([x_n, y_n])));
-//                 }
-//                 VecLang::Vec(inner.into_boxed_slice())
-//             }
-//             _ => todo!(),
-//         },
-//         VecLang::Mul([x, y]) => match (&self[*x], &self[*y]) {
-//             (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-//                 let x_name = x.as_str();
-//                 let y_name = y.as_str();
-//                 let mut inner: Vec<Id> = vec![];
-//                 for n in 0..n_lanes {
-//                     let x_n = self.add(VecLang::Symbol(
-//                         format!("{x_name}{n}").into(),
-//                     ));
-//                     let y_n = self.add(VecLang::Symbol(
-//                         format!("{y_name}{n}").into(),
-//                     ));
-//                     inner.push(self.add(VecLang::Mul([x_n, y_n])));
-//                 }
-//                 VecLang::Vec(inner.into_boxed_slice())
-//             }
-//             _ => todo!(),
-//         },
-//         VecLang::Minus([x, y]) => match (&self[*x], &self[*y]) {
-//             (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-//                 let x_name = x.as_str();
-//                 let y_name = y.as_str();
-//                 let mut inner: Vec<Id> = vec![];
-//                 for n in 0..n_lanes {
-//                     let x_n = self.add(VecLang::Symbol(
-//                         format!("{x_name}{n}").into(),
-//                     ));
-//                     let y_n = self.add(VecLang::Symbol(
-//                         format!("{y_name}{n}").into(),
-//                     ));
-//                     inner
-//                         .push(self.add(VecLang::Minus([x_n, y_n])));
-//                 }
-//                 VecLang::Vec(inner.into_boxed_slice())
-//             }
-//             _ => todo!(),
-//         },
-//         VecLang::Div([x, y]) => match (&self[*x], &self[*y]) {
-//             (VecLang::Symbol(x), VecLang::Symbol(y)) => {
-//                 let x_name = x.as_str();
-//                 let y_name = y.as_str();
-//                 let mut inner: Vec<Id> = vec![];
-//                 for n in 0..n_lanes {
-//                     let x_n = self.add(VecLang::Symbol(
-//                         format!("{x_name}{n}").into(),
-//                     ));
-//                     let y_n = self.add(VecLang::Symbol(
-//                         format!("{y_name}{n}").into(),
-//                     ));
-//                     inner.push(self.add(VecLang::Div([x_n, y_n])));
-//                 }
-//                 VecLang::Vec(inner.into_boxed_slice())
-//             }
-//             _ => todo!(),
-//         },
-//         // TODO: add the rest of the variants / figure out a way to factor this out (maybe with macros?).
-//         _ => todo!(),
-//     }
-// }
-
 fn get_vars(
     node: &VecLang,
     egraph: &EGraph<VecLang, SynthAnalysis>,
@@ -1339,11 +1224,6 @@ fn unique_vars(
     egraph: &EGraph<VecLang, SynthAnalysis>,
 ) -> bool {
     let vars: Vec<egg::Symbol> = get_vars(node, egraph);
-    // eprintln!(
-    //     "node: {}, vars: {:?}",
-    //     node.build_recexpr(|id| egraph[id].nodes[0].clone()),
-    //     vars
-    // );
     vars.iter().all_unique()
 }
 

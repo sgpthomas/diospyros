@@ -420,7 +420,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
             by_cvec.entry(cvec).or_default().push(class.id);
         }
 
-        log::info!("# unique cvecs: {}", by_cvec.len());
+        log::info!("(cvec_match_pair_wise) # unique cvecs: {}", by_cvec.len());
 
         let mut new_eqs = EqualityMap::default();
         let extract = Extractor::new(&self.egraph, AstSize);
@@ -437,7 +437,9 @@ impl<L: SynthLanguage> Synthesizer<L> {
             true
         };
 
+        eprint!("CVec Loop");
         for ids in by_cvec.values() {
+            eprint!(".");
             let mut ids = ids.iter().copied();
             while let Some(id1) = ids.next() {
                 for id2 in ids.clone() {
@@ -456,6 +458,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
                 }
             }
         }
+        eprintln!("done");
 
         new_eqs.retain(|k, _v| !self.equalities.contains_key(k));
         new_eqs
@@ -477,7 +480,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
             }
         }
 
-        log::info!("# unique cvecs: {}", by_cvec.len());
+        log::info!("(cvec_match) # unique cvecs: {}", by_cvec.len());
 
         let mut new_eqs = EqualityMap::default();
         let extract = Extractor::new(&self.egraph, AstSize);

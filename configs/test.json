@@ -1,13 +1,9 @@
 {
     "constants": [
 	{
-	"type": "int",
-	"value": 0
-    },
-	{
-	"type": "int",
-	"value": 1
-    }
+	    "type": "int",
+	    "value": 0
+	}
     ],
     "seed_rules": [],
     "binops": [
@@ -22,5 +18,5 @@
 	"-"
     ],
     "vector_mac": true,
-    "variable_duplication": true 
+    "variable_duplication": true
 }
