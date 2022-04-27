@@ -4,15 +4,6 @@ use std::fs;
 fn main() {
     let cli_opts: Opts = argh::from_env();
 
-    // use std::{env, fs};
-
-    // Get a path string to parse a program.
-    // let path = matches.value_of("INPUT").unwrap();
-    // let timeout = env::var("TIMEOUT")
-    //     .ok()
-    //     .and_then(|t| t.parse::<u64>().ok())
-    //     .unwrap_or(180);
-    // let prog_str = fs::read_to_string(path).expect("Failed to read the input file.");
     let prog_str = fs::read_to_string(&cli_opts.input).expect("Failed to read input.");
 
     // AST conversion: boxed Rosette terms to Egg syntax
@@ -22,14 +13,6 @@ fn main() {
     // Rewrite a list of expressions to a concatenation of vectors
     let concats = rewriteconcats::list_to_concats(cli_opts.vector_width, &converted);
     let prog: egg::RecExpr<veclang::VecLang> = concats.unwrap().parse().unwrap();
-
-    // Rules to disable flags
-    // let no_ac = matches.is_present("no-ac");
-    // let no_vec = matches.is_present("no-vec");
-    // let ruleset = matches.value_of("rules");
-    // let iter_limit = matches
-    //     .value_of("iter-limit")
-    //     .map_or(20, |x| x.parse::<usize>().unwrap());
 
     // Run rewriter
     eprintln!(

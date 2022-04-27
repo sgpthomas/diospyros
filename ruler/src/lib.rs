@@ -439,9 +439,10 @@ impl<L: SynthLanguage> Synthesizer<L> {
 
         eprint!("CVec Loop");
         for ids in by_cvec.values() {
-            eprint!(".");
+            eprint!("=");
             let mut ids = ids.iter().copied();
             while let Some(id1) = ids.next() {
+                eprint!(".");
                 for id2 in ids.clone() {
                     if compare(
                         &self.egraph[id1].data.cvec,

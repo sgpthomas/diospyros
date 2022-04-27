@@ -357,6 +357,20 @@ impl Lang {
                 let id = inner.to_recexpr(expr);
                 expr.add(VecLang::VecNeg([id]))
             }
+            Lang::VecSqrt(inner) => {
+                let id = inner.to_recexpr(expr);
+                expr.add(VecLang::VecSqrt([id]))
+            }
+            Lang::VecSgn(inner) => {
+                let id = inner.to_recexpr(expr);
+                expr.add(VecLang::VecSgn([id]))
+            }
+            Lang::VecMAC(a, b, c) => {
+                let a_id = a.to_recexpr(expr);
+                let b_id = b.to_recexpr(expr);
+                let c_id = c.to_recexpr(expr);
+                expr.add(VecLang::VecMAC([a_id, b_id, c_id]))
+            }
             Lang::Vec(items) => {
                 let ids =
                     items.iter().map(|it| it.to_recexpr(expr)).collect_vec();
@@ -786,34 +800,51 @@ impl SynthLanguage for VecLang {
 
         // only do binops for iters < 2
         let binops = if iter < 2 {
-            Some(
-                (0..2)
-                    .map(|_| ids.clone())
-                    .multi_cartesian_product()
-                    .filter(move |ids| {
-                        !ids.iter().all(|x| synth.egraph[*x].data.exact)
-                    })
-                    .map(|ids| [ids[0], ids[1]])
-                    .map(move |x| {
-                        read_conf(synth)["binops"]
-                            .as_array()
-                            .expect("binops in config")
-                            .iter()
-                            .map(|op| match op.as_str().unwrap() {
-                                "+" => VecLang::Add(x),
-                                "*" => VecLang::Mul(x),
-                                "-" => VecLang::Minus(x),
-                                "/" => VecLang::Div(x),
-                                "or" => VecLang::Or(x),
-                                "&&" => VecLang::And(x),
-                                "<" => VecLang::Lt(x),
-                                _ => panic!("Unknown binop"),
-                            })
-                            .collect::<Vec<_>>()
-                    })
-                    .flatten()
-                    .filter(move |node| vd || unique_vars(node, &synth.egraph)),
-            )
+            let us = ids
+                .clone()
+                .into_iter()
+                .filter(move |x| !synth.egraph[*x].data.exact)
+                .map(move |x| {
+                    read_conf(synth)["unops"]
+                        .as_array()
+                        .expect("unops")
+                        .iter()
+                        .map(|op| match op.as_str().unwrap() {
+                            "neg" => VecLang::Neg([x]),
+                            "sgn" => VecLang::Sgn([x]),
+                            "sqrt" => VecLang::Sqrt([x]),
+                            _ => panic!("Unknown vec unop"),
+                        })
+                        .collect_vec()
+                })
+                .flatten();
+            let bs = (0..2)
+                .map(|_| ids.clone())
+                .multi_cartesian_product()
+                .filter(move |ids| {
+                    !ids.iter().all(|x| synth.egraph[*x].data.exact)
+                })
+                .map(|ids| [ids[0], ids[1]])
+                .map(move |x| {
+                    read_conf(synth)["binops"]
+                        .as_array()
+                        .expect("binops in config")
+                        .iter()
+                        .map(|op| match op.as_str().unwrap() {
+                            "+" => VecLang::Add(x),
+                            "*" => VecLang::Mul(x),
+                            "-" => VecLang::Minus(x),
+                            "/" => VecLang::Div(x),
+                            "or" => VecLang::Or(x),
+                            "&&" => VecLang::And(x),
+                            "<" => VecLang::Lt(x),
+                            _ => panic!("Unknown binop"),
+                        })
+                        .collect::<Vec<_>>()
+                })
+                .flatten()
+                .filter(move |node| vd || unique_vars(node, &synth.egraph));
+            Some(us.chain(bs))
         } else {
             None
         };
@@ -877,7 +908,8 @@ impl SynthLanguage for VecLang {
                     !ids.iter().all(|x| synth.egraph[*x].data.exact)
                 })
                 .map(|ids| [ids[0], ids[1], ids[2]])
-                .map(move |x| VecLang::VecMAC(x));
+                .map(move |x| VecLang::VecMAC(x))
+                .filter(move |node| vd || unique_vars(node, &synth.egraph));
             Some(vec_mac)
         } else {
             None
@@ -1060,7 +1092,7 @@ impl SynthLanguage for VecLang {
             if let Some(new_eq) = Equality::new(&lhs, &rhs) {
                 new_eqs.push(new_eq);
             } else {
-                panic!("Could not make equation for {} <=> {}", lhs, rhs);
+                eprintln!("Could not make equation for {} <=> {}", lhs, rhs);
             }
         }
         report.eqs = new_eqs;
@@ -1094,8 +1126,6 @@ trait Desugar {
 
 impl Desugar for Lang {
     /// Expand single-lane vector instructions to some number of lanes.
-    /// * `(Vec* ?a)` desugars to `(Vec ?a0 ?a1 .. ?an)`
-    /// * `(VecMon (+ ?a ?b))` desugars to `(Vec (+ ?a0 ?b0) (+ ?a1 ?b0) .. (+ ?an ?bn))`
     fn desugar(self, n_lanes: usize) -> Self {
         match self {
             Lang::Vec(items) if items.len() == 1 => {
@@ -1215,6 +1245,18 @@ impl Desugar for Lang {
             Lang::VecNeg(inner) => {
                 Lang::VecNeg(Box::new(inner.desugar(n_lanes)))
             }
+            Lang::VecSqrt(inner) => {
+                Lang::VecSqrt(Box::new(inner.desugar(n_lanes)))
+            }
+            Lang::VecSgn(inner) => {
+                Lang::VecSgn(Box::new(inner.desugar(n_lanes)))
+            }
+            Lang::VecMAC(a, b, c) => Lang::VecMAC(
+                Box::new(a.desugar(n_lanes)),
+                Box::new(b.desugar(n_lanes)),
+                Box::new(c.desugar(n_lanes)),
+            ),
+
             x @ Lang::Const(_) => x,
             x @ Lang::Symbol(_) => x,
         }

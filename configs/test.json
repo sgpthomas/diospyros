@@ -1,11 +1,31 @@
 {
-    "constants": [
+    "constants": [],
+    "seed_rules": [
 	{
-	    "type": "int",
-	    "value": 0
+	    "lhs": "(+ ?a ?b)",
+	    "rhs": "(+ ?b ?a)"
+	},
+	{
+	    "lhs": "(* ?a ?b)",
+	    "rhs": "(* ?b ?a)"
+	},
+	{
+	    "lhs": "(+ ?a i0)",
+	    "rhs": "?a"
+	},
+	{
+	    "lhs": "(* ?a i1)",
+	    "rhs": "?a"
+	},
+	{
+	    "lhs": "(Vec (+ ?a ?b))",
+	    "rhs": "(VecAdd (Vec ?a) (Vec ?b))"
+	},
+	{
+	    "lhs": "(Vec (* ?a ?b))",
+	    "rhs": "(VecMul (Vec ?a) (Vec ?b))"
 	}
     ],
-    "seed_rules": [],
     "unops": [
 	"neg"
     ],
