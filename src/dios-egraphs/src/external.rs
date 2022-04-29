@@ -9,7 +9,7 @@ use crate::{
     recexpr_helpers::fold_recexpr,
     rules::LoggingRunner,
     tracking::TrackRewrites,
-    veclang::{DiosRwrite, EGraph, VecLang},
+    veclang::{Desugar, DiosRwrite, EGraph, VecLang},
 };
 
 /// Return rules read in from a json file.
@@ -19,8 +19,11 @@ pub fn external_rules(vec_width: usize, filename: &PathBuf) -> Vec<DiosRwrite> {
 
     let mut rules = vec![];
     for (idx, eq) in data["eqs"].members().enumerate() {
-        let lpat: Pattern<VecLang> = eq["lhs"].as_str().unwrap().parse().unwrap();
-        let rpat: Pattern<VecLang> = eq["rhs"].as_str().unwrap().parse().unwrap();
+        let lpat_single: Pattern<VecLang> = eq["lhs"].as_str().unwrap().parse().unwrap();
+        let rpat_single: Pattern<VecLang> = eq["rhs"].as_str().unwrap().parse().unwrap();
+
+        let lpat = lpat_single.desugar(vec_width);
+        let rpat = rpat_single.desugar(vec_width);
 
         if eq["bidirectional"].as_bool().unwrap() {
             // we have to clone bc it is a bidirectional rule

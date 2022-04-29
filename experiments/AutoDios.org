@@ -2975,4 +2975,17 @@ return table
 |        4 | False   | 65077.826254017 |
 
 ** Ablate by vector size (n_ops=4)
+* Testing dios
+
+#+begin_src async-shell :dir (magit-toplevel)
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      -- q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/test2.json \
+      --split-phase auto
+#+end_src
+
+#+RESULTS:
+: #<window 229 on *Async Shell Command*>
+
 

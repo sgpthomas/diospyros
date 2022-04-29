@@ -742,9 +742,6 @@ pub struct SynthParams {
     /// Number of variables to add to the initial egraph
     #[clap(long, default_value = "3")]
     pub variables: usize,
-    /// Vector size
-    #[clap(long)]
-    pub vector_size: usize,
     /// Absolute timeout
     #[clap(long, default_value = "120")]
     pub abs_timeout: usize,

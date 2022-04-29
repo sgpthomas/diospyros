@@ -1,4 +1,6 @@
-use egg::{define_language, ENodeOrVar, Id, Language, Pattern, PatternAst, RecExpr};
+use std::str::FromStr;
+
+use egg::{define_language, ENodeOrVar, Id, Language, Pattern, PatternAst, RecExpr, Var};
 use itertools::Itertools;
 
 use crate::tracking::TrackRewrites;
@@ -112,6 +114,17 @@ enum Lang {
 }
 
 impl Lang {
+    pub fn from_pattern(pat: &PatternAst<Self>) -> RecExpr<Self> {
+        pat.as_ref()
+            .iter()
+            .map(|node| match node {
+                ENodeOrVar::Var(v) => Lang::Symbol(v.to_string().into()),
+                ENodeOrVar::ENode(node) => node.clone(),
+            })
+            .collect_vec()
+            .into()
+    }
+
     fn to_recexpr(&self, expr: &mut egg::RecExpr<VecLang>) -> Id {
         match &self {
             Lang::Add(left, right) => {
@@ -295,13 +308,91 @@ impl Into<egg::RecExpr<VecLang>> for Lang {
     }
 }
 
-trait Desugar {
+pub trait Desugar {
     fn desugar(self, n_lanes: usize) -> Self;
 }
 
-impl Desugar for Pattern<Lang> {
+pub trait AlphaRenamable {
+    fn rename(self, suffix: &str) -> Self;
+}
+
+impl Desugar for Pattern<VecLang> {
     fn desugar(self, n_lanes: usize) -> Self {
-        VecLang::from_pattern(&self.ast).desugar()
+        let l: Lang = VecLang::from_pattern(&self.ast).into();
+        let desugared: Lang = l.desugar(n_lanes);
+        let vl: RecExpr<VecLang> = desugared.into();
+
+        // map symbols to vars, everything else to enodes
+        let p: RecExpr<ENodeOrVar<VecLang>> = vl
+            .as_ref()
+            .into_iter()
+            .map(|l: &VecLang| match l {
+                VecLang::Symbol(s) => ENodeOrVar::Var(Var::from_str(s.as_str()).unwrap()),
+                x => ENodeOrVar::ENode(x.clone()),
+            })
+            .collect_vec()
+            .into();
+
+        p.into()
+    }
+}
+
+impl AlphaRenamable for Lang {
+    fn rename(self, suffix: &str) -> Self {
+        match self {
+            Lang::Add(x, y) => {
+                Lang::Add(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::Mul(x, y) => {
+                Lang::Mul(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::Minus(x, y) => {
+                Lang::Minus(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::Div(x, y) => {
+                Lang::Div(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::Or(x, y) => {
+                Lang::Or(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::And(x, y) => {
+                Lang::And(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::Ite(b, t, f) => Lang::Ite(
+                Box::new(b.rename(suffix)),
+                Box::new(t.rename(suffix)),
+                Box::new(f.rename(suffix)),
+            ),
+            Lang::Lt(x, y) => {
+                Lang::Lt(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::Neg(x) => Lang::Neg(Box::new(x.rename(suffix))),
+            Lang::Vec(items) => {
+                Lang::Vec(items.into_iter().map(|x| x.rename(suffix)).collect_vec())
+            }
+            Lang::VecAdd(x, y) => {
+                Lang::VecAdd(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::VecMul(x, y) => {
+                Lang::VecMul(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::VecMinus(x, y) => {
+                Lang::VecMinus(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::VecDiv(x, y) => {
+                Lang::VecDiv(Box::new(x.rename(suffix)), Box::new(y.rename(suffix)))
+            }
+            Lang::VecNeg(x) => Lang::VecNeg(Box::new(x.rename(suffix))),
+            Lang::VecSqrt(x) => Lang::VecSqrt(Box::new(x.rename(suffix))),
+            Lang::VecSgn(x) => Lang::VecSgn(Box::new(x.rename(suffix))),
+            Lang::VecMAC(a, b, c) => Lang::VecMAC(
+                Box::new(a.rename(suffix)),
+                Box::new(b.rename(suffix)),
+                Box::new(c.rename(suffix)),
+            ),
+            x @ Lang::Num(_) => x,
+            Lang::Symbol(n) => Lang::Symbol(format!("{n}{suffix}")),
+        }
     }
 }
 
@@ -309,59 +400,13 @@ impl Desugar for Lang {
     /// Expand single-lane vector instructions to some number of lanes.
     fn desugar(self, n_lanes: usize) -> Self {
         match self {
-            Lang::Vec(items) if items.len() == 1 => {
-                let inner = match &items[0] {
-                    Lang::Num(_) => todo!(),
-                    Lang::Symbol(ref v) => (0..n_lanes)
-                        .into_iter()
-                        .map(|n| Lang::Symbol(format!("{v}{n}")))
-                        .collect_vec(),
-                    Lang::Add(l, r) => match ((**l).clone(), (**r).clone()) {
-                        (Lang::Symbol(l), Lang::Symbol(r)) => {
-                            let mut inner: Vec<Lang> = vec![];
-                            for n in 0..n_lanes {
-                                let l_n = Lang::Symbol(format!("{l}{n}").into());
-                                let r_n = Lang::Symbol(format!("{r}{n}").into());
-                                inner.push(Lang::Add(Box::new(l_n), Box::new(r_n)));
-                            }
-                            inner
-                        }
-                        _ => todo!(),
-                    },
-                    Lang::Mul(l, r) => match ((**l).clone(), (**r).clone()) {
-                        (Lang::Symbol(l), Lang::Symbol(r)) => {
-                            let mut inner: Vec<Lang> = vec![];
-                            for n in 0..n_lanes {
-                                let l_n = Lang::Symbol(format!("{l}{n}").into());
-                                let r_n = Lang::Symbol(format!("{r}{n}").into());
-                                inner.push(Lang::Mul(Box::new(l_n), Box::new(r_n)));
-                            }
-                            inner
-                        }
-                        _ => todo!(),
-                    },
-                    Lang::Minus(l, r) => match ((**l).clone(), (**r).clone()) {
-                        (Lang::Symbol(l), Lang::Symbol(r)) => {
-                            let mut inner: Vec<Lang> = vec![];
-                            for n in 0..n_lanes {
-                                let l_n = Lang::Symbol(format!("{l}{n}").into());
-                                let r_n = Lang::Symbol(format!("{r}{n}").into());
-                                inner.push(Lang::Minus(Box::new(l_n), Box::new(r_n)));
-                            }
-                            inner
-                        }
-                        _ => todo!(),
-                    },
-                    x => vec![x.clone()],
-                };
-                Lang::Vec(inner)
-            }
-            Lang::Vec(_items) => todo!(), // Lang::Vec(
-            //     items
-            //         .into_iter()
-            //         .map(|item| item.desugar(n_lanes))
-            //         .collect_vec(),
-            // )
+            Lang::Vec(items) if items.len() == 1 => Lang::Vec(
+                (0..n_lanes)
+                    .into_iter()
+                    .map(|n| items[0].clone().rename(&format!("{n}")))
+                    .collect_vec(),
+            ),
+            Lang::Vec(_) => panic!("Can't desugar Vecs with more than one lane."),
             Lang::Add(left, right) => Lang::Add(
                 Box::new(left.desugar(n_lanes)),
                 Box::new(right.desugar(n_lanes)),
