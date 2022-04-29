@@ -10,7 +10,6 @@ use ruler::{
 use rustc_hash::FxHasher;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
-use std::fs::File;
 use std::hash::BuildHasherDefault;
 use std::str::FromStr;
 use z3::ast::{Ast, Bool, Datatype};
@@ -698,27 +697,15 @@ impl SynthLanguage for VecLang {
     }
 
     fn init_synth(synth: &mut Synthesizer<Self>) {
-        // read config
-        let config_path = synth
-            .params
+        let consts = synth
             .dios_config
-            .as_ref()
-            .expect("Expected dios config file.");
-
-        log::info!("config: {}", config_path);
-
-        let config = read_conf(synth);
-        // parse constants
-        let consts: Vec<Value> = config["constants"]
-            .as_array()
-            .unwrap()
+            .constants
             .iter()
-            .map(|v| match v["type"].as_str().unwrap() {
-                "int" => Value::Int(v["value"].as_i64().unwrap() as i32),
-                "bool" => Value::Bool(v["value"].as_bool().unwrap()),
-                _ => panic!("unknown type."),
+            .map(|c| match c.kind.as_str() {
+                "int" => Value::Int(c.value),
+                t => todo!("haven't implemented {t} yet."),
             })
-            .collect();
+            .collect_vec();
 
         // when we don't have any constants, just use the number of variables
         // as the cvec size.
@@ -733,18 +720,24 @@ impl SynthLanguage for VecLang {
         };
 
         // read and add seed rules from config
-        for eq in config["seed_rules"].as_array().unwrap() {
-            log::info!("eq: {}", eq);
-            add_eq(synth, eq);
+        for rule in &synth.dios_config.seed_rules {
+            let rule: Equality<VecLang> = Equality::new(
+                &rule.lhs.parse().unwrap(),
+                &rule.rhs.parse().unwrap(),
+            )
+            .unwrap();
+            synth
+                .equalities
+                .insert(format!("{} <=> {}", rule.lhs, rule.rhs).into(), rule);
         }
 
         let mut egraph = egg::EGraph::new(SynthAnalysis {
             cvec_len: cvec_size,
         });
 
-        // add constants
-        for v in consts.iter() {
-            egraph.add(VecLang::Const(v.clone()));
+        // add constants to egraph
+        for v in consts {
+            egraph.add(VecLang::Const(v));
         }
 
         // add variables
@@ -793,7 +786,7 @@ impl SynthLanguage for VecLang {
         mut iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         // vd for variable duplication
-        let vd = read_conf(synth)["variable_duplication"].as_bool().unwrap();
+        let vd = synth.dios_config.variable_duplication;
 
         // if iter % 2 == 0 {
         iter = iter - 1; // make iter start at 0
@@ -805,11 +798,11 @@ impl SynthLanguage for VecLang {
                 .into_iter()
                 .filter(move |x| !synth.egraph[*x].data.exact)
                 .map(move |x| {
-                    read_conf(synth)["unops"]
-                        .as_array()
-                        .expect("unops")
+                    synth
+                        .dios_config
+                        .unops
                         .iter()
-                        .map(|op| match op.as_str().unwrap() {
+                        .map(|op| match op.as_str() {
                             "neg" => VecLang::Neg([x]),
                             "sgn" => VecLang::Sgn([x]),
                             "sqrt" => VecLang::Sqrt([x]),
@@ -826,11 +819,11 @@ impl SynthLanguage for VecLang {
                 })
                 .map(|ids| [ids[0], ids[1]])
                 .map(move |x| {
-                    read_conf(synth)["binops"]
-                        .as_array()
-                        .expect("binops in config")
+                    synth
+                        .dios_config
+                        .binops
                         .iter()
-                        .map(|op| match op.as_str().unwrap() {
+                        .map(|op| match op.as_str() {
                             "+" => VecLang::Add(x),
                             "*" => VecLang::Mul(x),
                             "-" => VecLang::Minus(x),
@@ -849,17 +842,17 @@ impl SynthLanguage for VecLang {
             None
         };
 
-        let vec_stuff = if read_conf(synth)["use_vector"].as_bool().unwrap() {
+        let vec_stuff = if synth.dios_config.use_vector {
             let vec_unops = ids
                 .clone()
                 .into_iter()
                 .filter(move |x| !synth.egraph[*x].data.exact)
                 .map(move |x| {
-                    let mut v = read_conf(synth)["unops"]
-                        .as_array()
-                        .expect("unops")
+                    let mut v = synth
+                        .dios_config
+                        .unops
                         .iter()
-                        .map(|op| match op.as_str().unwrap() {
+                        .map(|op| match op.as_str() {
                             "neg" => VecLang::VecNeg([x]),
                             "sgn" => VecLang::VecSgn([x]),
                             "sqrt" => VecLang::VecSqrt([x]),
@@ -879,11 +872,11 @@ impl SynthLanguage for VecLang {
                 })
                 .map(|ids| [ids[0], ids[1]])
                 .map(move |x| {
-                    read_conf(synth)["binops"]
-                        .as_array()
-                        .expect("binops")
+                    synth
+                        .dios_config
+                        .binops
                         .iter()
-                        .map(|op| match op.as_str().unwrap() {
+                        .map(|op| match op.as_str() {
                             "+" => VecLang::VecAdd(x),
                             "-" => VecLang::VecMinus(x),
                             "*" => VecLang::VecMul(x),
@@ -900,7 +893,7 @@ impl SynthLanguage for VecLang {
             None
         };
 
-        let vec_mac = if read_conf(synth)["vector_mac"].as_bool().unwrap() {
+        let vec_mac = if synth.dios_config.vector_mac {
             let vec_mac = (0..3)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
@@ -1123,11 +1116,6 @@ fn unique_vars(
     vars.iter().all_unique()
 }
 
-fn read_conf(synth: &Synthesizer<VecLang>) -> serde_json::Value {
-    let file = File::open(synth.params.dios_config.as_ref().unwrap()).unwrap();
-    serde_json::from_reader(file).unwrap()
-}
-
 fn vecs_eq(lvec: &CVec<VecLang>, rvec: &CVec<VecLang>) -> bool {
     if lvec.iter().all(|x| x.is_none()) && rvec.iter().all(|x| x.is_none()) {
         false
@@ -1138,17 +1126,6 @@ fn vecs_eq(lvec: &CVec<VecLang>, rvec: &CVec<VecLang>) -> bool {
             _ => false,
         })
     }
-}
-
-fn add_eq(synth: &mut Synthesizer<VecLang>, value: &serde_json::Value) {
-    let left = value["lhs"].as_str().unwrap();
-    let right = value["rhs"].as_str().unwrap();
-
-    let rule: Equality<VecLang> =
-        Equality::new(&left.parse().unwrap(), &right.parse().unwrap()).unwrap();
-    synth
-        .equalities
-        .insert(format!("{} <=> {}", left, right).into(), rule);
 }
 
 #[allow(unused)]

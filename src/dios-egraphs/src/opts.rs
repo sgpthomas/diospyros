@@ -75,6 +75,10 @@ pub struct Opts {
     /// vector width
     #[argh(option, default = "2")]
     pub vector_width: usize,
+
+    /// pre-desugared
+    #[argh(switch)]
+    pub pre_desugared: bool,
 }
 
 fn read_path(path: &str) -> Result<PathBuf, String> {

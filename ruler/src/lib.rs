@@ -10,6 +10,7 @@ use itertools::Itertools;
 use rand::SeedableRng;
 use rand_pcg::Pcg64;
 use serde::{Deserialize, Serialize};
+use std::fs::File;
 use std::hash::Hash;
 use std::{
     borrow::{Borrow, Cow},
@@ -280,6 +281,7 @@ pub trait SynthLanguage:
 #[derive(Clone)]
 pub struct Synthesizer<L: SynthLanguage> {
     pub params: SynthParams,
+    pub dios_config: DiosConfig,
     pub rng: Pcg64,
     pub egraph: EGraph<L, SynthAnalysis>,
     initial_egraph: EGraph<L, SynthAnalysis>,
@@ -291,6 +293,7 @@ pub struct Synthesizer<L: SynthLanguage> {
 impl<L: SynthLanguage> Synthesizer<L> {
     /// Initialize all the arguments of the [Synthesizer].
     pub fn new(params: SynthParams) -> Self {
+        let file = File::open(params.dios_config.as_ref().unwrap()).unwrap();
         let mut synth = Self {
             rng: Pcg64::seed_from_u64(params.seed),
             egraph: Default::default(),
@@ -299,6 +302,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
             smt_unknown: 0,
             params,
             start_time: Instant::now(),
+            dios_config: serde_json::from_reader(file).unwrap(),
         };
         L::init_synth(&mut synth);
         synth.initial_egraph = synth.egraph.clone();
@@ -703,6 +707,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
         println!("Learned {} rules in {:?}", num_rules, time);
         Report {
             params: self.params,
+            dios_config: self.dios_config,
             time,
             num_rules,
             eqs,
@@ -711,11 +716,36 @@ impl<L: SynthLanguage> Synthesizer<L> {
     }
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct DiosConstant {
+    pub kind: String,
+    pub value: i32,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct DiosSeedRules {
+    pub lhs: String,
+    pub rhs: String,
+}
+
+/// Dios configuration struct
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct DiosConfig {
+    pub constants: Vec<DiosConstant>,
+    pub seed_rules: Vec<DiosSeedRules>,
+    pub unops: Vec<String>,
+    pub binops: Vec<String>,
+    pub use_vector: bool,
+    pub vector_mac: bool,
+    pub variable_duplication: bool,
+}
+
 /// Reports for each run of Ruler.
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(bound = "L: SynthLanguage")]
 pub struct Report<L: SynthLanguage> {
     pub params: SynthParams,
+    pub dios_config: DiosConfig,
     pub time: f64,
     pub num_rules: usize,
     pub smt_unknown: usize,

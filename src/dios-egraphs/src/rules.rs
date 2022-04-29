@@ -73,7 +73,11 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
 
     // add external rules
     if let Some(filename) = &opts.rules {
-        initial_rules.extend(external_rules(opts.vector_width, filename));
+        initial_rules.extend(external_rules(
+            opts.vector_width,
+            filename,
+            opts.pre_desugared,
+        ));
     }
 
     if initial_rules.is_empty() {

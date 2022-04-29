@@ -13,7 +13,11 @@ use crate::{
 };
 
 /// Return rules read in from a json file.
-pub fn external_rules(vec_width: usize, filename: &PathBuf) -> Vec<DiosRwrite> {
+pub fn external_rules(
+    vec_width: usize,
+    filename: &PathBuf,
+    pre_desugared: bool,
+) -> Vec<DiosRwrite> {
     let contents = std::fs::read_to_string(filename).unwrap();
     let data = json::parse(&contents).unwrap();
 
@@ -22,8 +26,14 @@ pub fn external_rules(vec_width: usize, filename: &PathBuf) -> Vec<DiosRwrite> {
         let lpat_single: Pattern<VecLang> = eq["lhs"].as_str().unwrap().parse().unwrap();
         let rpat_single: Pattern<VecLang> = eq["rhs"].as_str().unwrap().parse().unwrap();
 
-        let lpat = lpat_single.desugar(vec_width);
-        let rpat = rpat_single.desugar(vec_width);
+        let (lpat, rpat) = if pre_desugared {
+            (lpat_single, rpat_single)
+        } else {
+            (
+                lpat_single.desugar(vec_width),
+                rpat_single.desugar(vec_width),
+            )
+        };
 
         if eq["bidirectional"].as_bool().unwrap() {
             // we have to clone bc it is a bidirectional rule

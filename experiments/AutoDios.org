@@ -2986,6 +2986,6 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 #+end_src
 
 #+RESULTS:
-: #<window 229 on *Async Shell Command*>
+: #<window 46 on *Async Shell Command*>
 
 
