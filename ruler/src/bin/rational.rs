@@ -113,8 +113,8 @@ impl SynthLanguage for Math {
         }
     }
 
-    fn mk_constant(c: Self::Constant) -> Self {
-        Math::Num(c)
+    fn mk_constant(c: Self::Constant) -> Option<Self> {
+        Some(Math::Num(c))
     }
 
     /// Initialize an egraph with some constants and variables.

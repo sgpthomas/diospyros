@@ -1,0 +1,250 @@
+* Dios + Ruler paper
+
+** Rough sketch of the argument
+
+Equality saturation with e-graphs are a promising way to easily build specialized high-performance compilers at the cost of compile time. However, their performance depends entirely on the /quality/ of rewrite rules that are fed to the equality saturation engine. Bad rules can make the performance of the compiler unacceptably bad. Writing good rules is difficult process that requires careful and tedious tuning of the rule set.
+
+/Ruler/ showed that rewrite rules could be /automatically/ generated using equality saturation equipped with an interpreter to give terms meaning. In theory, an automatic rule-set and an equality saturation could automatically produce a high-performance compiler from an interpreter.
+
+However, in practice, /Ruler/ generates far too many rules. In this paper, we present techniques to make it feasible to automatically learn rules suitable for use in an equality saturation based compiler.
+
+The techniques are:
+- The key observation is that equality saturation for compilers has the special property that it takes some =src= subset to a =target= subset (rather than being circular rules). Equality saturation naturally splits into 2 phases, 1) moving from =src -> target= and 2) optimizing =target=. By explicitly separating rules into these two phases, we can support orders of magnitude more rules for our equality saturation engine.
+- *there is a quality of rules*
+- you can get this for free, from the cost function.
+
+equality sat is not enough for just compiling
+
+
+Some RQs:
+
+*** Do /phases/ naturally arise when using equality saturation for compilation?
+
+*** Does enforcing /phases/ improve the performance of the compiler and the quality of the output?
+
+*** Does equality saturation for compilation behave differently from equality saturation for optimization?
+
+I need to expand upon this question. /What does it mean to behave differently/?
+
+*** How does ruler run time affect the quality and performance of Dios?
+
+*** How does this approach compare to other approaches?
+
+Compare compiler performance and compiler output quality:
+- Baseline diospyros
+- Raw ruler + diospyros
+- others?
+- Other ways of handling large ruleset? Look into other approaches for AC matching.
+
+  How does htis compare to handwritten compilers and other synthesis approaches.
+
+*** How does /cost function/ splitting compare to /syntax based/ splitting?
+
+*** Does this approach generalize to other languages? 
+
+*Caddy* would be interesting (also just to play with). I wonder how equivalence is defined.
+Hmm it probably doesn't really have an interpreter in the same sense. Unless there is some "core" language.
+
+Not sure if there is this nice source, target distinction. Maybe it would be interesting to see that this approach doesn't work in that scenario? Not sure about that.
+
+So I think it does have a source (Core Caddy) and target (Caddy). Not sure what equivalence is yet. Ok, equivalence is defined by some semantics that they don't mention in that paper. It's unclear what CVECs would be though hmm. Well I suppose the CVECs would be meshes and equivalence is measured with this Hausdorf equivalence. I'm not sure how hard this would be to extend Ruler to support?
+
+*** How many of rules out of the ruleset are actually used?
+
+*** How does this approach scale with increasing vector size?
+
+*** Is it possible to devise a test to see if some language has phases and thus if Diospyros would apply?
+
+I'm imagining something like generating the graph of cost after every rule application.
+
+*** What properties of the cost function do we need for this approach to work?
+
+Something along the lines that it needs to "smoothly" decrease cost as the program becomes more compiled.
+
+*** Meeting
+
+**** Is this good?
+
+**** How important are the phase things? + cost rules (ablation)
+
+**** Does this generalize?
+
+**** For me: What are the contributions of this paper?
+
+**** For me: What are the key technical sections?
+
+**** For me: Overview example
+
+how would someone use this tool? to illustrate how the pieces fit together
+
+**** Name
+
+** Other notes
+
+What are the contributions to the paper:
+- rule filtering technique based on the idea of applying the cost function to rules
+- can trade compute and time for a better compiler
+- evaluation
+
+* Outline: Push-button Compiler Generation using Equality Saturation
+
+** TODO Abstract
+
+dont focus on eqsat
+compiler persp 
+from engineer persp (they need a fast compiler)
+
+*** context
+
+Equality saturation is a promising technique for rapidly building high performance compilers in niche domains.
+
+Buildling high performance compilers is hard
+
+*** gap
+
+However, the viability of an equality saturation based compiler depends on the /quality/ of rewrite rules. Hand-writing these rules is a tedious process. Small changes can result in bad rules that cause execution times to explode and prevent the compiler from producing good code, or code at all.
+
+handwriting
+
+*** innovation
+
+*second try:*
+There is an existing technique to automatically generate rewrite rules. However, this technique generates far too many rules to be used in the compilation setting. We show that you can use the cost function you already have to automatically find high quality rules.
+
+*first try:*
+We show that you can generate high quality rewrite rules automatically from an interpreter for your language, and a cost function that defines high-quality output programs. 
+
+/I think this makes it sound like the main contribution is the rule generation. maybe this is okay?/
+
+*evaluation:*
+Running rule generation for longer, results in higher-quality rules and thus a better compiler. We show that our tool can generate a compiler competitive with the hand-written rules that Diospyros uses, and discover non-trivial optimizations in a minimal imperative language.
+
+use auto rewrite rules + eqsat for compiler
+
+** Introduction
+
+/echo the abstract in more detail/
+
+two insights:
+use eqsat
+not enough to use ruler, need some filtering/something else
+
+*** Main ideas
+
+- apply cost function to rules to filter/classify them
+- can trade compute and time for a better compiler
+- evaluation
+
+** TODO Overview
+
+/Wonder if I should write this section with an example. Maybe some simple dios program and show what e-graphs, equality saturation, and ruler are/
+
+use example (concrete in/out). walk through building compiler with this tool. from persp of engineer. technical meat is not so relevant
+
+shows how all the pieces fit together
+
+** Approach (main technical contribution)
+
+small background. eqsat, but need rules. ruler gens rules. why doesn't that work. in this domain, use cost function + notion of phases
+
+*** E-graph explosion
+
+E-graphs can explode from certain types of rules (associativity, other cycles)
+
+*** Taming explosion
+
+What can we do to tame explosion.
+
+**** Backoff scheduling
+
+why doesn't this work?
+
+**** disabling rules
+
+You can turn off associativity. how do you decide which rules to disable?
+
+
+*** Cost differential & cost average
+
+Introduce the cost differential and cost average metrics.
+
+*** Language design
+
+figure out where to put this
+
+**** The right kinds of exponential growth, aka Diospyros vector trick
+
+Exponential growth in /depth/ (deeper trees explored) is ok. Exponential growth in /width/ (nodes with lots of children) are unacceptable.
+
+**** src and tar in same language
+
+allowed to be imperfect
+falls out naturally during eqsat
+
+*** Rule Phases
+
+Apply rules in phases to limit explosion. =src -> src=, =src -> tar=, =tar -> tar=.
+separate times for different phases.
+
+*** notes
+
+/I actually think that the most valuable contribution is coming up with an analysis that lets you answer this kind of question. how do you analyze e-graphs./
+
+**** phase splitting
+
+There are cost regimes. Example regimes: =src -> src=, =src -> tar=, =tar -> tar=. You can drastically increase the number of rules that you can apply by explicitly separating these phases. Furthermore, you get similar quality output as if you had applied all the rules upfront. 
+
+Hypothesis: there aren't many "interesting" new programs that come from the path =src -> tar -> src=. That kind of cycle unnecessarily blows up the e-graph.
+
+
+**** Just write things
+
+1. define a language that contains both =source= and =target= (as opposed to having two separate languages)
+2. specify semantics of both languages with an interpreter
+3. specify cost function that assigns programs in =target= a low cost, and =source= programs a high cost
+4. run Ruler to generate large ruleset for this language
+5. classify rules into /phases/ based on the applying the language cost function to the rule.
+6. run equality saturation using rules only from each phase
+
+
+** Evaluation
+
+*** Diospyros example
+**** show phases happen naturally
+*** Imperative language example
+
+Show that we can discover a non-trivial optimization. Maybe common-subexpression elimination? Is this interesting enough?
+
+#+begin_example
+X := (A * B) + 2;
+Y := (A * B) + 4;
+#+end_example
+
+Naive translation:
+#+begin_example
+(smull tmp A B)
+(add X tmp #2)
+(smull tmp1 A B)
+(add Y tmp1 #4)
+#+end_example
+
+The problem with this, is this is really the purview of ruler, not my thing.
+*** Non-compilation example
+
+Does this kind of approach benefit e-graph applications that aren't in the compilation domain.
+
+*** Compare against other rule scheduling techniques
+
+** Related Works
+
+*** Diospyros
+*** Ruler
+
+** Conclusion
+
+
+* Ideas for E-Graph Visualization
+
+only show "interesting" e-classes in the graph. leaves probably should be duplicated
+
+distribution of costs of programs in an e-graph. with the idea of somehow visualizing if there are programs that make meaningful progress by "bridging between two cost areas"

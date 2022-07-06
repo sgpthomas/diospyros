@@ -192,8 +192,8 @@ impl SynthLanguage for Lang {
         }
     }
 
-    fn mk_constant(c: Self::Constant) -> Self {
-        Lang::Lit(c)
+    fn mk_constant(c: Self::Constant) -> Option<Self> {
+        Some(Lang::Lit(c))
     }
 
     fn init_synth(synth: &mut Synthesizer<Self>) {

@@ -4,6 +4,11 @@ version = "0.1.0"
 authors = ["Max Willsey <me@mwillsey.com>", "Chandrakana Nandi <cnandi@cs.washington.edu>"]
 edition = "2018"
 
+[features]
+default = ["cli", "z3"]
+cli = ["dep:clap"]
+z3 = ["dep:z3"]
+
 [dependencies]
 log = "0.4"
 env_logger = { version = "0.7", default-features = false }
@@ -19,10 +24,7 @@ libm = "0.2.1"
 float-cmp = "0.8.0"
 lazy_static = "1.4.0"
 itertools = "0.10"
-# fixed = "1.9.0"
-clap = "3.0.0-beta.2"
-z3 = {version="0.11.2", features = ["static-link-z3"]}
-# z3 = {version="0.10.0"}
+z3 = { version = "0.11.2", features = ["static-link-z3"], optional = true }
 rustc-hash = "1"
 symbolic_expressions = "5"
 rayon = "1"
@@ -37,4 +39,8 @@ smallvec = { version = "1.6", features = ["union", "const_generics"] }
 # rev = "e5ded849f55c735b88cc7fd8b74e111dca6685b5" # Use new rebuilding
 # rev = "18e62918ed3c7b30b55a61108f19d405d6b4c3c7" # Don't use cell
 # path = "../egg"
-version = "0.7.1"
+version = "0.8.1"
+
+[dependencies.clap]
+version = "3.0.0-beta.2"
+optional = true

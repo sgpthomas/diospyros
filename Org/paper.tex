@@ -1,0 +1,137 @@
+% Created 2022-05-19 Thu 16:50
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Samuel Thomas}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Samuel Thomas},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.0.50 (Org mode 9.5.2)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\section{Dios + Ruler paper}
+\label{sec:orgf8ab5b9}
+
+\subsection{Rough sketch of the argument}
+\label{sec:orgbc72fef}
+
+Equality saturation with e-graphs are a promising way to easily build specialized high-performance compilers at the cost of compile time. However, their performance depends entirely on the \emph{quality} of rewrite rules that are fed to the equality saturation engine. Bad rules can make the performance of the compiler unacceptably bad. Writing good rules is difficult process that requires careful and tedious tuning of the rule set.
+
+\emph{Ruler} showed that rewrite rules could be \emph{automatically} generated using equality saturation equipped with an interpreter to give terms meaning. In theory, an automatic rule-set and an equality saturation could automatically produce a high-performance compiler from an interpreter.
+
+However, in practice, \emph{Ruler} generates far too many rules. In this paper, we present techniques to make it feasible to automatically learn rules suitable for use in an equality saturation based compiler.
+
+The techniques are:
+\begin{itemize}
+\item The key observation is that equality saturation for compilers has the special property that it takes some \texttt{src} subset to a \texttt{target} subset (rather than being circular rules). Equality saturation naturally splits into 2 phases, 1) moving from \texttt{src -> target} and 2) optimizing \texttt{target}. By explicitly separating rules into these two phases, we can support orders of magnitude more rules for our equality saturation engine.
+\item \textbf{there is a quality of rules}
+\item you can get this for free, from the cost function.
+\end{itemize}
+
+equality sat is not enough for just compiling
+
+
+Some RQs:
+
+\subsubsection{Do \emph{phases} naturally arise when using equality saturation for compilation?}
+\label{sec:org1ce1c2b}
+
+\subsubsection{Does enforcing \emph{phases} improve the performance of the compiler and the quality of the output?}
+\label{sec:org7cc4de3}
+
+\subsubsection{Does equality saturation for compilation behave differently from equality saturation for optimization?}
+\label{sec:orgc1bb5c8}
+
+I need to expand upon this question. \emph{What does it mean to behave differently}?
+
+\subsubsection{How does ruler run time affect the quality and performance of Dios?}
+\label{sec:org6236146}
+
+\subsubsection{How does this approach compare to other approaches?}
+\label{sec:org1ba2132}
+
+Compare compiler performance and compiler output quality:
+\begin{itemize}
+\item Baseline diospyros
+\item Raw ruler + diospyros
+\item others?
+\item Other ways of handling large ruleset? Look into other approaches for AC matching.
+\end{itemize}
+
+\subsubsection{How does \emph{cost function} splitting compare to \emph{syntax based} splitting?}
+\label{sec:orgbba82be}
+
+\subsubsection{Does this approach generalize to other languages?}
+\label{sec:orgcb8b619}
+
+\textbf{Caddy} would be interesting (also just to play with). I wonder how equivalence is defined.
+Hmm it probably doesn't really have an interpreter in the same sense. Unless there is some "core" language.
+
+Not sure if there is this nice source, target distinction. Maybe it would be interesting to see that this approach doesn't work in that scenario? Not sure about that.
+
+So I think it does have a source (Core Caddy) and target (Caddy). Not sure what equivalence is yet. Ok, equivalence is defined by some semantics that they don't mention in that paper. It's unclear what CVECs would be though hmm. Well I suppose the CVECs would be meshes and equivalence is measured with this Hausdorf equivalence. I'm not sure how hard this would be to extend Ruler to support?
+
+\subsubsection{How many of rules out of the ruleset are actually used?}
+\label{sec:org5e9c3e3}
+
+\subsubsection{How does this approach scale with increasing vector size?}
+\label{sec:orgf9f44ec}
+
+\subsubsection{Is it possible to devise a test to see if some language has phases and thus if Diospyros would apply?}
+\label{sec:orgd33b2e7}
+
+\section{Outline: Push-button Compiler Generation using Equality Saturation}
+\label{sec:org4caa40d}
+
+\subsection{Introduction}
+\label{sec:org96cc4ff}
+
+\subsection{Background}
+\label{sec:orgaeb0aa2}
+
+\subsubsection{E-graphs and equality saturation}
+\label{sec:org01b7167}
+
+\subsubsection{Rewrite rule generation}
+\label{sec:org35070c9}
+
+\subsection{Approach}
+\label{sec:org03ba293}
+
+\subsubsection{phase splitting}
+\label{sec:orgc926359}
+
+\subsection{Implementation Hacks}
+\label{sec:orga50831b}
+
+\subsubsection{The right kinds of exponential growth}
+\label{sec:orgb8ac2cd}
+
+Exponential growth in \emph{depth} (deeper trees explored) is ok. Exponential growth in \emph{width} (nodes with lots of children) are unacceptable.
+
+\subsection{Evaluation}
+\label{sec:org2890bb5}
+
+\subsection{Related Works}
+\label{sec:orgbc382d7}
+
+\subsection{Conclusion}
+\label{sec:orgd22acaa}
+\end{document}

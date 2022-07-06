@@ -4,7 +4,6 @@ It uses equality saturation in two novel ways to scale the rule synthesis:
    and 2. to minimize the candidate rule space by removing redundant rules based on rules
    currently in the ruleset.
 !*/
-use clap::Clap;
 use egg::*;
 use itertools::Itertools;
 use rand::SeedableRng;
@@ -28,6 +27,9 @@ mod convert_sexp;
 mod derive;
 mod equality;
 mod util;
+
+#[cfg(feature = "cli")]
+pub mod cli;
 
 /// Faster hashMap implementation used in rustc
 pub type HashMap<K, V> = rustc_hash::FxHashMap<K, V>;
@@ -85,7 +87,7 @@ pub trait SynthLanguage:
     }
 
     fn to_constant(&self) -> Option<&Self::Constant>;
-    fn mk_constant(c: Self::Constant) -> Self;
+    fn mk_constant(c: Self::Constant) -> Option<Self>;
     fn is_constant(&self) -> bool {
         self.to_constant().is_some()
     }
@@ -256,10 +258,12 @@ pub trait SynthLanguage:
 
     /// Entry point. Use the `synth` argument from the command line
     /// for rule synthesis.
+    #[cfg(feature = "cli")]
     fn main() {
         let _ = env_logger::builder().try_init();
-        match Command::parse() {
-            Command::Synth(params) => {
+        match cli::Command::cli() {
+            cli::Command::Synth(params) => {
+                let params: SynthParams = params.into();
                 let outfile = params.outfile.clone();
                 let syn = Synthesizer::<Self>::new(params.clone());
                 let report: Report<Self> =
@@ -269,9 +273,11 @@ pub trait SynthLanguage:
                 serde_json::to_writer_pretty(file, &report)
                     .expect("failed to write json");
             }
-            Command::Derive(params) => derive::derive::<Self>(params),
-            Command::ConvertSexp(params) => {
-                convert_sexp::convert::<Self>(params)
+            cli::Command::Derive(params) => {
+                derive::derive::<Self>(params.into())
+            }
+            cli::Command::ConvertSexp(params) => {
+                convert_sexp::convert::<Self>(params.into())
             }
         }
     }
@@ -399,6 +405,13 @@ impl<L: SynthLanguage> Synthesizer<L> {
             }
         }
         runner.egraph.rebuild();
+
+        // for eclass in runner.egraph.classes() {
+        //     if eclass.data.cvec.iter().any(|x| x.is_some()) {
+        //         eprintln!("eclass: {} {:?}", eclass.id, eclass.data.cvec);
+        //     }
+        // }
+
         log::info!(
             "Ran {} rules in {:?}",
             self.equalities.len(),
@@ -430,15 +443,18 @@ impl<L: SynthLanguage> Synthesizer<L> {
         let extract = Extractor::new(&self.egraph, AstSize);
 
         let compare = |cvec1: &CVec<L>, cvec2: &CVec<L>| -> bool {
-            let mut _count = 0;
+            // keep track of number of pairs that match
+            // we need at least 1 pair to say that the cvecs
+            // are equal
+            let mut count = 0;
             for tup in cvec1.iter().zip(cvec2) {
-                _count += match tup {
+                count += match tup {
                     (Some(a), Some(b)) if a != b => return false,
-                    (None, Some(_)) | (Some(_), None) => 1,
+                    (Some(a), Some(b)) if a == b => 1,
                     _ => 0,
                 };
             }
-            true
+            count > 0
         };
 
         eprint!("CVec Loop");
@@ -759,129 +775,65 @@ struct SlimReport<L: SynthLanguage> {
     eqs: Vec<Equality<L>>,
 }
 
-/// All parameters for rule synthesis.
-#[derive(Debug, Clap, Deserialize, Serialize, Clone)]
-#[clap(rename_all = "kebab-case")]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SynthParams {
-    /// Seed for random number generator, used for random cvec value generation
-    #[clap(long, default_value = "0")]
     pub seed: u64,
-    /// How many random values to add to the cvecs
-    #[clap(long, default_value = "0")]
     pub n_samples: usize,
-    /// Number of variables to add to the initial egraph
-    #[clap(long, default_value = "3")]
     pub variables: usize,
-    /// Absolute timeout
-    #[clap(long, default_value = "120")]
     pub abs_timeout: usize,
-    /// Dios config
-    #[clap(long)]
     pub dios_config: Option<String>,
-
-    ///////////////////
-    // search params //
-    ///////////////////
-    /// Number of iterations
-    #[clap(long, default_value = "1")]
     pub iters: usize,
-    /// 0 is unlimited
-    #[clap(long, default_value = "0")]
     pub rules_to_take: usize,
-    /// 0 is unlimited
-    #[clap(long, default_value = "100000")]
     pub chunk_size: usize,
-    #[clap(long, conflicts_with = "rules-to-take")]
     pub minimize: bool,
-    /// disallows enumerating terms with constants past this iteration
-    #[clap(long, default_value = "999999")]
     pub no_constants_above_iter: usize,
-    /// For enabling / disabling conditional rule inference
-    #[clap(long)]
     pub no_conditionals: bool,
-    #[clap(long)]
-    /// For turning off `run_rewrites`
     pub no_run_rewrites: bool,
-    #[clap(long)]
     pub linear_cvec_matching: bool,
-    /// Output file name
-    #[clap(long, default_value = "out.json")]
     pub outfile: String,
-
-    ////////////////
-    // eqsat args //
-    ////////////////
-    /// node limit for all the eqsats
-    #[clap(long, default_value = "300000")]
     pub eqsat_node_limit: usize,
-    /// iter limit for all the eqsats
-    #[clap(long, default_value = "2")]
     pub eqsat_iter_limit: usize,
-    /// time limit (seconds) for all the eqsats
-    #[clap(long, default_value = "60")]
     pub eqsat_time_limit: u64,
-    /// Controls the size of cvecs
-    #[clap(long, default_value = "5")]
     pub important_cvec_offsets: u32,
-
-    //////////////////////////
-    // domain specific args //
-    //////////////////////////
-    /// (str only), the number of additional int variables
-    #[clap(long, default_value = "1")]
     pub str_int_variables: usize,
-    /// Only for bv, makes it do a complete cvec
-    #[clap(long, conflicts_with = "important-cvec-offsets")]
     pub complete_cvec: bool,
-    /// Only for bool/bv
-    #[clap(long)]
     pub no_xor: bool,
-    /// Only for bv
-    #[clap(long)]
     pub no_shift: bool,
-
-    ///////////////////
-    // eqsat soundness params //
-    ///////////////////
-    // for validation approach
-    /// random testing based validation
-    #[clap(long, default_value = "0")]
     pub num_fuzz: usize,
-    /// SMT based verification (uses Z3 for the current prototype)
-    #[clap(long, conflicts_with = "num-fuzz")]
     pub use_smt: bool,
-    /// For a final round of run_rewrites to remove redundant rules.
-    #[clap(long)]
     pub do_final_run: bool,
 }
 
-/// Derivability report.
-#[derive(Clap)]
-#[clap(rename_all = "kebab-case")]
-pub struct DeriveParams {
-    in1: String,
-    in2: String,
-    out: String,
-    #[clap(long, default_value = "5")]
-    iter_limit: usize,
-}
-
-/// Report for rules generated by CVC4.
-#[derive(Clap)]
-#[clap(rename_all = "kebab-case")]
-pub struct ConvertParams {
-    cvc_log: String,
-    out: String,
-}
-
-/// Ruler can be run to synthesize rules, compare two rulesets
-/// for derivability, and convert CVC4 rewrites to patterns in Ruler.
-#[derive(Clap)]
-#[clap(rename_all = "kebab-case")]
-pub enum Command {
-    Synth(SynthParams),
-    Derive(DeriveParams),
-    ConvertSexp(ConvertParams),
+impl Default for SynthParams {
+    fn default() -> Self {
+        Self {
+            seed: 0,
+            n_samples: 0,
+            variables: 3,
+            abs_timeout: 120,
+            dios_config: None,
+            iters: 1,
+            rules_to_take: 0,
+            chunk_size: 100000,
+            minimize: false,
+            no_constants_above_iter: 999999,
+            no_conditionals: false,
+            no_run_rewrites: false,
+            linear_cvec_matching: false,
+            outfile: "out.json".to_string(),
+            eqsat_node_limit: 300000,
+            eqsat_iter_limit: 2,
+            eqsat_time_limit: 60,
+            important_cvec_offsets: 5,
+            str_int_variables: 1,
+            complete_cvec: false,
+            no_xor: false,
+            no_shift: false,
+            num_fuzz: 0,
+            use_smt: false,
+            do_final_run: false,
+        }
+    }
 }
 
 /// A mapping from a name to an `Equality`.
@@ -943,6 +895,17 @@ impl<L: SynthLanguage> Signature<L> {
 impl<L: SynthLanguage> egg::Analysis<L> for SynthAnalysis {
     type Data = Signature<L>;
 
+    // fn pre_union(egraph: &EGraph<L, Self>, id1: Id, id2: Id) {
+    //     if egraph[id1].data.cvec != egraph[id2].data.cvec {
+    //         let extractor = egg::Extractor::new(egraph, egg::AstSize);
+    //         let (_, prog1) = extractor.find_best(id1);
+    //         let (_, prog2) = extractor.find_best(id2);
+    //         println!("p1: {}\np2: {}", prog1.pretty(80), prog2.pretty(80));
+    //         println!("cvec1: {:?}", egraph[id1].data.cvec);
+    //         println!("cvec2: {:?}", egraph[id2].data.cvec);
+    //     }
+    // }
+
     fn merge(&mut self, to: &mut Self::Data, from: Self::Data) -> DidMerge {
         let mut changed_a = false;
         let mut changed_b = false;
@@ -1000,19 +963,13 @@ impl<L: SynthLanguage> egg::Analysis<L> for SynthAnalysis {
 
     fn modify(egraph: &mut EGraph<L, Self>, id: Id) {
         let sig = &egraph[id].data;
-        // use std::hash::Hasher;
-        // let mut h = std::collections::hash_map::DefaultHasher::new();
-        // id.hash(&mut h);
-        // if 15053463213406696608 == h.finish() {
-        //     log::info!("test: {}, {}", id, h.finish());
-        //     log::info!("egraph: {:?}", egraph[id].nodes);
-        // }
         if sig.exact {
             let first = sig.cvec.iter().find_map(|x| x.as_ref());
             if let Some(first) = first {
-                let enode = L::mk_constant(first.clone());
-                let added = egraph.add(enode);
-                egraph.union(id, added);
+                if let Some(enode) = L::mk_constant(first.clone()) {
+                    let added = egraph.add(enode);
+                    egraph.union(id, added);
+                }
             }
         }
     }

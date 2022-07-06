@@ -499,8 +499,8 @@ impl SynthLanguage for VecLang {
         }
     }
 
-    fn mk_constant(c: <Self as SynthLanguage>::Constant) -> Self {
-        VecLang::Const(c)
+    fn mk_constant(c: <Self as SynthLanguage>::Constant) -> Option<Self> {
+        Some(VecLang::Const(c))
     }
 
     fn eval<'a, F>(&'a self, cvec_len: usize, mut get: F) -> CVec<Self>

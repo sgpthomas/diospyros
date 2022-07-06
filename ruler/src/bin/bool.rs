@@ -69,8 +69,8 @@ impl SynthLanguage for Math {
         }
     }
 
-    fn mk_constant(c: Self::Constant) -> Self {
-        Math::Lit(c)
+    fn mk_constant(c: Self::Constant) -> Option<Self> {
+        Some(Math::Lit(c))
     }
 
     fn init_synth(synth: &mut Synthesizer<Self>) {

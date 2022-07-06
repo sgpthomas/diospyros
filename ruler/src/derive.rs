@@ -3,8 +3,18 @@ use rayon::prelude::*;
 use std::fs::File;
 use std::sync::Mutex;
 
+#[allow(dead_code)]
 type Pair<L> = (RecExpr<L>, RecExpr<L>);
 
+#[allow(dead_code)]
+pub struct DeriveParams {
+    pub in1: String,
+    pub in2: String,
+    pub out: String,
+    pub iter_limit: usize,
+}
+
+#[allow(dead_code)]
 pub fn parse<L: SynthLanguage>(filename: &String) -> Vec<Pair<L>> {
     let file = File::open(filename)
         .unwrap_or_else(|_| panic!("Failed to open {}", filename));
@@ -24,6 +34,7 @@ pub fn parse<L: SynthLanguage>(filename: &String) -> Vec<Pair<L>> {
 }
 
 /// Perform derivability test between two rulesets.
+#[allow(dead_code)]
 pub fn derive<L: SynthLanguage>(params: DeriveParams) {
     let pairs1 = parse::<L>(&params.in1);
     let pairs2 = parse::<L>(&params.in2);
@@ -52,6 +63,7 @@ pub fn derive<L: SynthLanguage>(params: DeriveParams) {
 }
 
 /// Check the derivability of rules in test using the rules in src
+#[allow(dead_code)]
 fn one_way<L: SynthLanguage>(
     params: &DeriveParams,
     src: &[Pair<L>],

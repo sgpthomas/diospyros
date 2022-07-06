@@ -70,8 +70,8 @@ impl SynthLanguage for Math {
         }
     }
 
-    fn mk_constant(c: Self::Constant) -> Self {
-        Math::Num(c)
+    fn mk_constant(c: Self::Constant) -> Option<Self> {
+        Some(Math::Num(c))
     }
 
     fn init_synth(synth: &mut Synthesizer<Self>) {
@@ -272,8 +272,7 @@ fn egg_to_z3<'a>(
             }
             Math::Neg(a) => {
                 buf.push(z3::ast::Int::unary_minus(&buf[usize::from(*a)]))
-            }
-            // _ => unimplemented!(),
+            } // _ => unimplemented!(),
         }
     }
     (buf.pop().unwrap(), assumes)
