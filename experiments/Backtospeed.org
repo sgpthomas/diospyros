@@ -1,0 +1,67 @@
+* Figuring out where I left off
+
+This works pretty well. Uses pre-desugared rules. If I remember correctly, there was some problem with the desugaring.
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/good.json --pre-desugared \
+      --split-phase auto
+      # --rules vec/test3.json \
+#+end_src
+
+Cost: 57.115
+
+Let's try with vector width 4. I assume that it won't work.
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 4 \
+      --rules vec/good.json --pre-desugared \
+      --split-phase auto
+      # --rules vec/test3.json \
+#+end_src
+
+Cost: 370.35900000000004
+
+Yep, that didn't work.
+
+Let's try some desugaring. Let's just use the default vector width of 2.
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/test4.json \
+      --split-phase auto
+#+end_src
+
+Cost: 556.059
+
+So this doesn't seem to be working...I wonder why.
+
+Let's check to see if the rules are being expanded properly.
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/test4.json \
+      --split-phase auto \
+      --dry-run --dump-rules
+#+end_src
+
+The rules seem to be expanded properly. Let's make sure that the correct rules are indeed being applied? Time to actually read some code.
+
+Nothing obviously wrong. I think this is where I was last time. I have to actually dig through the difference in the rules? The problem is that there are an ungodly number of rules to look through.
+
+Let me dump the rules from a pre-desugared case and see what it looks like.
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/good.json --pre-desugared \
+      --split-phase auto \
+      --dry-run --dump-rules
+#+end_src
+
+I wonder if the numbered variables are breaking things again. That might make a lot of sense.
