@@ -89,8 +89,7 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
         initial_rules = retain_cost_effective_rules(
             &initial_rules,
             opts.no_dup_vars,
-            cost_differential,
-            |x| x > cutoff,
+            &[(cost_differential, |x| x > cutoff)],
         );
     }
 
@@ -110,20 +109,17 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
                 let pre_compile = retain_cost_effective_rules(
                     &initial_rules,
                     false,
-                    cost_average,
-                    |x| x < 10.0,
+                    &[(cost_average, |x| x > 70.0)],
                 );
                 let compile = retain_cost_effective_rules(
                     &initial_rules,
                     false,
-                    cost_average,
-                    |x| 10.0 <= x && x < 70.0,
+                    &[(cost_average, |x| 10.0 <= x && x < 70.0)],
                 );
                 let opt = retain_cost_effective_rules(
                     &initial_rules,
                     false,
-                    cost_average,
-                    |x| 70.0 <= x,
+                    &[(cost_average, |x| 10.0 <= x)],
                 );
                 rules
                     .entry(Phase::PreCompile)

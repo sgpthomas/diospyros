@@ -65,3 +65,135 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 #+end_src
 
 I wonder if the numbered variables are breaking things again. That might make a lot of sense.
+
+Just adding some debugging information to make sure that the variables are being picked up correctly.
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/test4.json \
+      --split-phase auto \
+      --dry-run --dump-rules
+#+end_src
+
+Well they seem to be picked up correctly...
+
+What else could be the problem. Let's see if ones of these rules ever applies? I'll restrict the ruleset to just this rule:
+#+begin_example
+(VecAdd (Vec ?b0 ?b1) (Vec ?a0 ?a1)) <=> (Vec (+ ?a0 ?b0) (+ ?a1 ?b1))
+#+end_example
+
+Actually, first let me look at the example. and see if this rule should be able to apply.
+#+begin_example
+(Concat
+  (Vec
+    (+
+      (+
+        (* (Get aq 3) (Get bq 0))
+        (+ (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 2))))
+      (neg (* (Get aq 2) (Get bq 1))))
+    (+
+      (+
+        (* (Get aq 3) (Get bq 1))
+        (+ (* (Get aq 1) (Get bq 3)) (* (Get aq 2) (Get bq 0))))
+      (neg (* (Get aq 0) (Get bq 2)))))
+  (Concat
+    (Vec
+      (+
+        (+
+          (* (Get aq 3) (Get bq 2))
+          (+ (* (Get aq 2) (Get bq 3)) (* (Get aq 0) (Get bq 1))))
+        (neg (* (Get aq 1) (Get bq 0))))
+      (+
+        (* (Get aq 3) (Get bq 3))
+        (+
+          (neg (* (Get aq 0) (Get bq 0)))
+          (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
+    (Concat
+      (Vec
+        (+
+          (Get at 0)
+          (+
+            (Get bt 0)
+            (+
+              (+
+                (*
+                  (Get aq 1)
+                  (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))
+                (neg
+                  (*
+                    (Get aq 2)
+                    (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1)))))))))
+        (+
+          (Get at 1)
+          (+
+            (Get bt 1)
+            (+
+              (+
+                (*
+                  (Get aq 2)
+                  (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))
+                (neg
+                  (*
+                    (Get aq 0)
+                    (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))))
+      (Vec
+        (+
+          (Get at 2)
+          (+
+            (Get bt 2)
+            (+
+              (+
+                (*
+                  (Get aq 0)
+                  (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+                (neg
+                  (*
+                    (Get aq 1)
+                    (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))))
+        0))))
+#+end_example
+
+I think that it should be. I made a =single.json= file with just this rule. Let's see what happens when i try to run it.
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/single.json --pre-desugared \
+      --split-phase auto
+#+end_src
+
+I mean that seems to work. hmm.. Let's try to just run the compilation rules for =test4.json=.
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/test4.json \
+      --split-phase auto
+#+end_src
+
+So just running the compilation rules has much better performance. It actually seems like it's doing something. This means that somehow the pre-optimization phase is the thing that is destroying the performance. I bet what's happening is that the graph is getting so big that all the other phases are just timing out. Let me look at the log and verify that hypothesis.
+
+And then I will try the same thing but just extracting a single program from the "pre-opt" phase. It might also be that my auto filters for the phases are just not that good.
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/test4.json \
+      --split-phase auto --dump-rules
+#+end_src
+
+Ok. I was just using cost average. And I had my signs backwards. Fixing that drastically improves performance again.
+
+So it's not working with neg at the moment. Let me make sure that i have some neg rules.

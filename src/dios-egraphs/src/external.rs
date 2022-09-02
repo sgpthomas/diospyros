@@ -47,9 +47,9 @@ pub fn external_rules(
 
     // hack to add some important rules
     rules.extend(vec![
-        // rw!("vec-neg"; "(Vec (neg ?a) (neg ?b))" => "(VecNeg (Vec ?a ?b))"),
-        // rw!("vec-neg0-l"; "(Vec 0 (neg ?b))" => "(VecNeg (Vec 0 ?b))"),
-        // rw!("vec-neg0-r"; "(Vec (neg ?a) 0)" => "(VecNeg (Vec ?a 0))"),
+        rw!("vec-neg"; "(Vec (neg ?a) (neg ?b))" => "(VecNeg (Vec ?a ?b))"),
+        rw!("vec-neg0-l"; "(Vec 0 (neg ?b))" => "(VecNeg (Vec 0 ?b))"),
+        rw!("vec-neg0-r"; "(Vec (neg ?a) 0)" => "(VecNeg (Vec ?a 0))"),
         build_litvec_rule(vec_width),
     ]);
 
@@ -68,8 +68,7 @@ fn filter_vars(expr: &RecExpr<VecLang>) -> Vec<Var> {
 pub fn retain_cost_effective_rules<F, G>(
     rules: &[DiosRwrite],
     all_vars: bool,
-    metric: F,
-    cutoff: G,
+    metrics: &[(F, G)],
 ) -> Vec<DiosRwrite>
 where
     F: Fn(&DiosRwrite) -> f64,
@@ -78,19 +77,21 @@ where
     let result = rules
         .iter()
         .filter(|r| {
-            let cost_diff = metric(r);
-            if let Some(lhs) = r.searcher.get_pattern_ast() {
-                if all_vars {
-                    let lexp: RecExpr<VecLang> = VecLang::from_pattern(lhs);
-                    let lhs_vars = r.searcher.vars();
-                    let all_vars_p = filter_vars(&lexp).len() == lhs_vars.len();
-                    cutoff(cost_diff) && all_vars_p
+            metrics.iter().all(|(met, cut)| {
+                let cost_diff = met(r);
+                if let Some(lhs) = r.searcher.get_pattern_ast() {
+                    if all_vars {
+                        let lexp: RecExpr<VecLang> = VecLang::from_pattern(lhs);
+                        let lhs_vars = r.searcher.vars();
+                        let all_vars_p = filter_vars(&lexp).len() == lhs_vars.len();
+                        cut(cost_diff) && all_vars_p
+                    } else {
+                        cut(cost_diff)
+                    }
                 } else {
-                    cutoff(cost_diff)
+                    cut(cost_diff)
                 }
-            } else {
-                cutoff(cost_diff)
-            }
+            })
         })
         .cloned()
         .collect_vec();
