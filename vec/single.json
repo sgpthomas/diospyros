@@ -1,0 +1,40 @@
+{
+  "params": {
+    "seed": 0,
+    "n_samples": 0,
+    "variables": 6,
+    "vector_size": 2,
+    "abs_timeout": 1200,
+    "dios_config": "../configs/test.json",
+    "iters": 2,
+    "rules_to_take": 18446744073709551615,
+    "chunk_size": 100000,
+    "minimize": false,
+    "no_constants_above_iter": 999999,
+    "no_conditionals": false,
+    "no_run_rewrites": false,
+    "linear_cvec_matching": false,
+    "outfile": "../vec/test.json",
+    "eqsat_node_limit": 100000,
+    "eqsat_iter_limit": 2,
+    "eqsat_time_limit": 30,
+    "important_cvec_offsets": 5,
+    "str_int_variables": 1,
+    "complete_cvec": false,
+    "no_xor": false,
+    "no_shift": false,
+    "num_fuzz": 4,
+    "use_smt": false,
+    "do_final_run": false
+  },
+  "time": 1206.968107671,
+  "num_rules": 2093,
+  "smt_unknown": 0,
+  "eqs": [
+    {
+      "lhs": "(Vec (+ ?a0 ?b0) (+ ?a1 ?b1))",
+      "rhs": "(VecAdd (Vec ?b0 ?b1) (Vec ?a0 ?a1))",
+      "bidirectional": false
+    }
+  ]
+}

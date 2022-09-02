@@ -190,10 +190,23 @@ And then I will try the same thing but just extracting a single program from the
 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       q-prod-out/spec.rkt \
       --vector-width 2 \
-      --rules vec/test4.json \
+      --rules vec/test5.json \
       --split-phase auto --dump-rules
 #+end_src
 
 Ok. I was just using cost average. And I had my signs backwards. Fixing that drastically improves performance again.
 
 So it's not working with neg at the moment. Let me make sure that i have some neg rules.
+
+Let's see what happens when i don't have any phase split.
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --rules vec/test5.json
+#+end_src
+
+I run out of memory. I'll have to try this on an AWS machine. I don't feel like setting that up right now. I'll do that later.
+
+But what I will do is try running with handwritten rules and then slowly remove some of the handwritten rules and see what 
