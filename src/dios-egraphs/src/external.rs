@@ -46,12 +46,12 @@ pub fn external_rules(
     }
 
     // hack to add some important rules
-    rules.extend(vec![
-        // rw!("vec-neg"; "(Vec (neg ?a) (neg ?b))" => "(VecNeg (Vec ?a ?b))"),
-        // rw!("vec-neg0-l"; "(Vec 0 (neg ?b))" => "(VecNeg (Vec 0 ?b))"),
-        // rw!("vec-neg0-r"; "(Vec (neg ?a) 0)" => "(VecNeg (Vec ?a 0))"),
-        build_litvec_rule(vec_width),
-    ]);
+    // rules.extend(vec![
+    //     // rw!("vec-neg"; "(Vec (neg ?a) (neg ?b))" => "(VecNeg (Vec ?a ?b))"),
+    //     // rw!("vec-neg0-l"; "(Vec 0 (neg ?b))" => "(VecNeg (Vec 0 ?b))"),
+    //     // rw!("vec-neg0-r"; "(Vec (neg ?a) 0)" => "(VecNeg (Vec ?a 0))"),
+    //     build_litvec_rule(vec_width),
+    // ]);
 
     rules
 }
@@ -65,15 +65,11 @@ fn filter_vars(expr: &RecExpr<VecLang>) -> Vec<Var> {
     })
 }
 
-pub fn retain_cost_effective_rules<F, G>(
+pub fn retain_cost_effective_rules(
     rules: &[DiosRwrite],
     all_vars: bool,
-    metrics: &[(F, G)],
-) -> Vec<DiosRwrite>
-where
-    F: Fn(&DiosRwrite) -> f64,
-    G: Fn(f64) -> bool,
-{
+    metrics: &[(fn(&DiosRwrite) -> f64, fn(f64) -> bool)],
+) -> Vec<DiosRwrite> {
     let result = rules
         .iter()
         .filter(|r| {

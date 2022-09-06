@@ -209,4 +209,46 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 
 I run out of memory. I'll have to try this on an AWS machine. I don't feel like setting that up right now. I'll do that later.
 
-But what I will do is try running with handwritten rules and then slowly remove some of the handwritten rules and see what 
+But what I will do is try running with handwritten rules and then slowly remove some of the handwritten rules and see what goes wrong.
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --split-phase auto \
+      --rules vec/test4.json --handwritten --dump-rules
+#+end_src
+
+Hmm, that gave basically the same results as before. Something is not right. I'll dump the rules again.
+
+Ok, let's try just the handwritten rules. We'll keep the phases just for fun. Nevermind, that didn't work. No phases.
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --handwritten
+#+end_src
+
+Ok that worked. so the problem is in the phase separation? I thought that this worked before.
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --split-phase auto \
+      --handwritten --dump-rules
+#+end_src
+
+Ok that works. I changed the filtering to use cost_differential instead of cost average. What about for the =vec/test4.json= ruleset.
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --split-phase auto \
+      --rules vec/test4.json --dump-rules --dry-run
+#+end_src
+
+Ok, that ran out of memory. It didn't actually use that much. But it shouldn't need a crazy amount. I'll tweak the values again.
+
