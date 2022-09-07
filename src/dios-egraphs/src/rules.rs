@@ -89,7 +89,7 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
         initial_rules = retain_cost_effective_rules(
             &initial_rules,
             opts.no_dup_vars,
-            &[(cost_differential, |x| x > cutoff)],
+            &[(cost_differential, Box::new(move |x| x > cutoff))],
         );
     }
 
@@ -109,23 +109,25 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
                 let pre_compile = retain_cost_effective_rules(
                     &initial_rules,
                     false,
-                    // &[(cost_average, |x| x > 70.0)],
                     &[
-                        (cost_differential, |x| x.abs() < 5.0),
-                        (cost_average, |x| x > 5.0),
+                        // (cost_differential, Box::new(|x: f64| x.abs() < 5.0)),
+                        (cost_average, Box::new(|x: f64| x < 10.0)),
                     ],
                 );
                 let compile = retain_cost_effective_rules(
                     &initial_rules,
                     false,
-                    // &[(cost_average, |x| 10.0 <= x && x < 70.0)],
-                    &[(cost_differential, |x| x.abs() > 5.0)],
+                    &[(cost_average, Box::new(|x| 10.0 <= x && x < 70.0))],
+                    // &[(cost_differential, Box::new(|x| x.abs() > 5.0))],
                 );
                 let opt = retain_cost_effective_rules(
                     &initial_rules,
                     false,
-                    // &[(cost_average, |x| 10.0 <= x)],
-                    &[(cost_differential, |x| x.abs() < 5.0)],
+		    &[(cost_average, Box::new(|x| x <= 70.0))]
+                    // &[
+                    //     (cost_average, Box::new(|x| x < 5.0)),
+                    //     (cost_differential, Box::new(|x| 2.0 < x && x.abs() < 5.0)),
+                    // ],
                 );
                 rules
                     .entry(Phase::PreCompile)

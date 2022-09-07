@@ -2981,8 +2981,7 @@ return table
 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       q-prod-out/spec.rkt \
       --vector-width 2 \
-      --rules vec/good.json --pre-desugared \
+      --rules vec/test3.json \
       --split-phase auto
-      # --rules vec/test3.json \
 #+end_src
 

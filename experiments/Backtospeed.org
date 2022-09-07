@@ -247,8 +247,14 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       q-prod-out/spec.rkt \
       --vector-width 2 \
       --split-phase auto \
-      --rules vec/test4.json --dump-rules --dry-run
+      --rules vec/test4.json \
+      --no-dup-vars --cost-filter 0.0 --timeout 3900 --dump-rules
 #+end_src
 
 Ok, that ran out of memory. It didn't actually use that much. But it shouldn't need a crazy amount. I'll tweak the values again.
 
+Ok. so i've done some things that I haven't reported to you yet. Basically, I couldn't get the performance to be the way that I wanted. And so I went back and looked through my previous results, found some old commits, and was able to find something that worked.
+
+However, it used the incorrect filters that I had previously "fixed". Pre-compilation used =cost_average < 10.0=. compilation used =10 < cost_average < 70=. and optimization used =cost_average < 70=. This is exactly backwards from what it "should" be. We should start off with the high-cost rules, go to the transition rules, and then do the lowest cost rules.
+
+The fact that this works I think is pretty accidental. But I'll have to make sure. My theory is that this is accidentally filtering way more rules that I thought that it was. I'm going to start by comparing what the "correct" filtering phase distinctions are vs the "incorrect" filtering.

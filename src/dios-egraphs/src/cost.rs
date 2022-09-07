@@ -78,11 +78,11 @@ pub fn cost_average(r: &DiosRwrite) -> f64 {
         (costfn.cost_rec(&lexp) + costfn.cost_rec(&rexp)) / 2.
     } else {
         match r.name.as_str() {
-            "litvec" => 0.,
+            "litvec" => 100.,
             "+_binop_or_zero_vec" => 50.,
             "*_binop_or_zero_vec" => 50.,
             "-_binop_or_zero_vec" => 50.,
-            "vec-mac" => 0.,
+            "vec-mac" => 100.,
             _ => panic!("rule: {:?}", r),
         }
     }
