@@ -111,7 +111,7 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
                     false,
                     &[
                         // (cost_differential, Box::new(|x: f64| x.abs() < 5.0)),
-                        (cost_average, Box::new(|x: f64| x < 10.0)),
+                        (cost_average, Box::new(|x| x <= 70.0)),
                     ],
                 );
                 let compile = retain_cost_effective_rules(
@@ -123,7 +123,9 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
                 let opt = retain_cost_effective_rules(
                     &initial_rules,
                     false,
-		    &[(cost_average, Box::new(|x| x <= 70.0))]
+		    &[
+			(cost_average, Box::new(|x: f64| x < 10.0))
+		    ]
                     // &[
                     //     (cost_average, Box::new(|x| x < 5.0)),
                     //     (cost_differential, Box::new(|x| 2.0 < x && x.abs() < 5.0)),
