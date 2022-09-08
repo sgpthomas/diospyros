@@ -260,10 +260,9 @@ However, it used the incorrect filters that I had previously "fixed". Pre-compil
 The fact that this works I think is pretty accidental. But I'll have to make sure. My theory is that this is accidentally filtering way more rules that I thought that it was. I'm going to start by comparing what the "correct" filtering phase distinctions are vs the "incorrect" filtering.
 
 #+begin_src async-shell :dir (magit-toplevel) :results silent
-cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+time cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       q-prod-out/spec.rkt \
       --vector-width 2 \
-      --split-phase auto \
       --rules t2.json --pre-desugared \
-      --no-dup-vars --cost-filter 0.0 --dry-run --dump-rules
+      --no-dup-vars --cost-filter 0.0 --split-phase auto
 #+end_src

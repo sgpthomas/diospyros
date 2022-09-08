@@ -1,0 +1,2556 @@
+warning: associated function is never used: `from_pattern`
+   --> src/veclang.rs:117:12
+    |
+117 |     pub fn from_pattern(pat: &PatternAst<Self>) -> RecExpr<Self> {
+    |            ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `dios-egraphs` (lib) generated 1 warning
+    Finished release [optimized] target(s) in 0.01s
+     Running `src/dios-egraphs/target/release/dios-egraphs q-prod-out/spec.rkt --vector-width 2 --split-phase auto --rules t2.json --pre-desugared --no-dup-vars --cost-filter 0.0 --dump-rules --dry-run`
+Running egg with timeout 180s, width: 2
+Input prog:
+(Concat
+  (Vec
+    (+
+      (+
+        (* (Get aq 3) (Get bq 0))
+        (+ (* (Get aq 0) (Get bq 3)) (* (Get aq 1) (Get bq 2))))
+      (neg (* (Get aq 2) (Get bq 1))))
+    (+
+      (+
+        (* (Get aq 3) (Get bq 1))
+        (+ (* (Get aq 1) (Get bq 3)) (* (Get aq 2) (Get bq 0))))
+      (neg (* (Get aq 0) (Get bq 2)))))
+  (Concat
+    (Vec
+      (+
+        (+
+          (* (Get aq 3) (Get bq 2))
+          (+ (* (Get aq 2) (Get bq 3)) (* (Get aq 0) (Get bq 1))))
+        (neg (* (Get aq 1) (Get bq 0))))
+      (+
+        (* (Get aq 3) (Get bq 3))
+        (+
+          (neg (* (Get aq 0) (Get bq 0)))
+          (+ (neg (* (Get aq 1) (Get bq 1))) (neg (* (Get aq 2) (Get bq 2)))))))
+    (Concat
+      (Vec
+        (+
+          (Get at 0)
+          (+
+            (Get bt 0)
+            (+
+              (+
+                (*
+                  (Get aq 1)
+                  (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))
+                (neg
+                  (*
+                    (Get aq 2)
+                    (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1)))))))))
+        (+
+          (Get at 1)
+          (+
+            (Get bt 1)
+            (+
+              (+
+                (*
+                  (Get aq 2)
+                  (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))
+                (neg
+                  (*
+                    (Get aq 0)
+                    (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))))))
+      (Vec
+        (+
+          (Get at 2)
+          (+
+            (Get bt 2)
+            (+
+              (+
+                (*
+                  (Get aq 0)
+                  (* 2 (+ (* (Get aq 2) (Get bt 0)) (neg (* (Get aq 0) (Get bt 2))))))
+                (neg
+                  (*
+                    (Get aq 1)
+                    (* 2 (+ (* (Get aq 1) (Get bt 2)) (neg (* (Get aq 2) (Get bt 1))))))))
+              (*
+                (Get aq 3)
+                (* 2 (+ (* (Get aq 0) (Get bt 1)) (neg (* (Get aq 1) (Get bt 0)))))))))
+        0))))
+Retained 644 rules
+Retained 191 rules
+Retained 421 rules
+Retained 612 rules
+Doing dry run. Aborting early.
+=================================
+Starting Phase 1: Pre-compilation
+=================================
+Using 191 rules
+[ruler_2_lr-rev cd:1.00 avg:2.50] 
+  (VecAdd (VecAdd ?a ?b) (VecMul ?c ?d)) => (VecMAC (VecAdd ?a ?b) ?c ?d)
+[ruler_3_lr-rev cd:1.00 avg:2.50] 
+  (VecAdd (VecMul ?a ?b) (VecMul ?c ?d)) => (VecMAC (VecMul ?a ?b) ?c ?d)
+[ruler_4_lr-rev cd:1.00 avg:2.50] 
+  (VecAdd (VecAdd ?a ?b) (VecMul ?c ?d)) => (VecAdd ?a (VecMAC ?b ?c ?d))
+[ruler_75161_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 1 ?d)) => (VecAdd (Vec ?a ?b) (Vec ?c ?d))
+[ruler_75166_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 0)) => (VecMul (Vec ?b ?a) (Vec ?d 1))
+[ruler_75167_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 0)) => (VecMul (Vec ?d ?a) (Vec ?b 1))
+[ruler_75168_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 0)) => (VecMul (Vec ?b 1) (Vec ?d ?a))
+[ruler_75169_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 0)) => (VecMul (Vec ?d 1) (Vec ?b ?a))
+[ruler_75170_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?d)) => (VecMul (Vec ?c ?a) (Vec ?b 1))
+[ruler_75171_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?d)) => (VecMul (Vec ?c 1) (Vec ?b ?a))
+[ruler_75172_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?d)) => (VecMul (Vec ?b ?a) (Vec ?c 1))
+[ruler_75173_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?d)) => (VecMul (Vec ?b 1) (Vec ?c ?a))
+[ruler_75174_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?d)) => (VecMul (Vec 1 ?c) (Vec ?a ?d))
+[ruler_75175_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?d)) => (VecMul (Vec ?a ?c) (Vec 1 ?d))
+[ruler_75176_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?d)) => (VecMul (Vec ?a ?d) (Vec 1 ?c))
+[ruler_75177_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?d)) => (VecMul (Vec 1 ?d) (Vec ?a ?c))
+[ruler_75178_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?d)) => (VecMul (Vec 1 ?b) (Vec ?a ?d))
+[ruler_75179_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?d)) => (VecMul (Vec ?a ?b) (Vec 1 ?d))
+[ruler_75180_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?d)) => (VecMul (Vec ?a ?d) (Vec 1 ?b))
+[ruler_75181_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?d)) => (VecMul (Vec 1 ?d) (Vec ?a ?b))
+[ruler_75182_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 0 ?d)) => (VecAdd (Vec ?a 0) (Vec 0 ?b))
+[ruler_75183_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 0)) => (VecAdd (Vec ?a 0) (Vec 0 ?b))
+[ruler_75718_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?d)) => (VecAdd (Vec ?c ?b) (Vec ?a 0))
+[ruler_75719_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?d)) => (VecAdd (Vec ?a ?b) (Vec ?c 0))
+[ruler_75720_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?d)) => (VecAdd (Vec ?a 0) (Vec ?c ?b))
+[ruler_75721_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 0)) => (VecAdd (Vec ?d ?b) (Vec ?a 0))
+[ruler_75722_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 0)) => (VecAdd (Vec ?a ?b) (Vec ?d 0))
+[ruler_75723_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 0)) => (VecAdd (Vec ?a 0) (Vec ?d ?b))
+[ruler_75724_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?d)) => (VecAdd (Vec ?c 0) (Vec ?a ?b))
+[ruler_75725_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 0)) => (VecAdd (Vec ?d 0) (Vec ?a ?b))
+[ruler_75726_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 1)) => (VecAdd (Vec 0 ?c) (Vec ?a ?b))
+[ruler_75727_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 1)) => (VecAdd (Vec 0 ?b) (Vec ?a ?c))
+[ruler_75728_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?d)) => (VecAdd (Vec 0 ?d) (Vec ?a ?b))
+[ruler_75729_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?d)) => (VecAdd (Vec 0 ?b) (Vec ?a ?d))
+[ruler_75730_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 1)) => (VecAdd (Vec ?a ?b) (Vec 0 ?c))
+[ruler_75731_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?d)) => (VecAdd (Vec ?a ?b) (Vec 0 ?d))
+[ruler_75732_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 1)) => (VecAdd (Vec ?a ?c) (Vec 0 ?b))
+[ruler_75733_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?d)) => (VecAdd (Vec ?a ?d) (Vec 0 ?b))
+[ruler_76358_lr-rev cd:1.00 avg:1.50] 
+  (VecAdd ?a (VecMul ?b ?c)) => (VecMAC ?a ?b ?c)
+[ruler_118952_lr cd:2.00 avg:5.00] 
+  (* (* ?a ?b) (* ?c 0)) => (* ?a (* ?c 0))
+[ruler_118957_lr cd:2.00 avg:5.00] 
+  (* (+ ?a ?b) (* 0 ?c)) => (* (+ ?a ?c) 0)
+[ruler_118958_lr cd:2.00 avg:5.00] 
+  (* (* 0 ?a) (+ ?b ?c)) => (* ?a (* ?b 0))
+[ruler_118959_lr cd:2.00 avg:5.00] 
+  (* (+ ?a ?b) (* 0 ?c)) => (* 0 (* ?b ?a))
+[ruler_118960_lr cd:2.00 avg:5.00] 
+  (* (* ?a ?b) (* ?c 0)) => (* (+ ?a ?b) 0)
+[ruler_119178_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 0)) => (Vec ?c ?a)
+[ruler_119179_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 1 ?c)) => (Vec ?b ?a)
+[ruler_119180_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (Vec ?a 0)
+[ruler_119181_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (Vec ?a 0)
+[ruler_119182_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 0 ?c)) => (Vec ?a ?c)
+[ruler_119183_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 1)) => (Vec ?a ?b)
+[ruler_119184_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (Vec 0 ?a)
+[ruler_119185_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (Vec 0 ?a)
+[ruler_119262_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec 1 ?a) (Vec ?c ?b))
+[ruler_119263_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119266_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec 1 ?b) (Vec ?c ?a))
+[ruler_119267_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec 1 ?c) (Vec ?b ?a))
+[ruler_119270_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?b) (Vec 1 ?a))
+[ruler_119271_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?c) (Vec 1 ?a))
+[ruler_119272_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?a) (Vec 1 ?b))
+[ruler_119273_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?a) (Vec 1 ?c))
+[ruler_119305_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?c 0) (Vec ?a 0)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_119312_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?b 0) (Vec ?a 0)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_119313_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?a 0) (Vec ?c 0)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_119314_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?a 0) (Vec ?b 0)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_119332_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 0 ?c)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119333_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?c) (Vec 0 ?b)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119336_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 0 ?a) (Vec 0 ?c)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119338_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 0 ?c) (Vec 0 ?a)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119387_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a 1) (Vec ?c ?b))
+[ruler_119388_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119389_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c 1) (Vec ?a ?b))
+[ruler_119391_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119392_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?a ?c) (Vec ?b 1))
+[ruler_119393_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b 1) (Vec ?a ?c))
+[ruler_119394_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?b) (Vec ?a 1))
+[ruler_119395_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?c) (Vec ?a 1))
+[ruler_121445_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?c 0)) => (Vec ?a 1)
+[ruler_121446_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 0 ?c)) => (Vec ?a 1)
+[ruler_121447_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 0)) => (Vec 1 ?a)
+[ruler_121448_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 0 ?c)) => (Vec 1 ?a)
+[ruler_121467_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a 0) (Vec ?c ?b))
+[ruler_121468_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?a 0) (Vec ?b ?c))
+[ruler_121469_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?b) (Vec 0 ?a))
+[ruler_121470_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?c) (Vec 0 ?a))
+[ruler_121473_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?a) (Vec ?c ?b))
+[ruler_121474_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec 0 ?a) (Vec ?b ?c))
+[ruler_121487_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec ?c ?a))
+[ruler_121488_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec 0 ?c) (Vec ?b ?a))
+[ruler_121489_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?a) (Vec 0 ?b))
+[ruler_121490_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?a) (Vec 0 ?c))
+[ruler_121491_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?a) (Vec 0 ?c))
+[ruler_121492_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?a) (Vec 0 ?b))
+[ruler_121493_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?c) (Vec 0 ?a))
+[ruler_121494_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec 0 ?a))
+[ruler_121495_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec ?a 0))
+[ruler_121496_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_121497_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 0) (Vec ?a 0))
+[ruler_121498_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?a 0) (Vec ?c 0))
+[ruler_121503_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?c 0) (Vec ?a 1)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_121504_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?a 1) (Vec ?c 0)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_121505_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?b 0) (Vec ?a 1)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_121506_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?a 0) (Vec ?c 1)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_121507_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?a 0) (Vec ?b 1)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_121508_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?a 1) (Vec ?b 0)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_121509_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?c 1) (Vec ?a 0)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_121510_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?b 1) (Vec ?a 0)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_121511_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?c) (Vec 0 ?b)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_121512_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 0 ?c)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_121513_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 1 ?c) (Vec 0 ?a)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_121514_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 1 ?a) (Vec 0 ?c)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_121515_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 0 ?a) (Vec 1 ?c)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_121516_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 1 ?c)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_121517_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?c) (Vec 1 ?b)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_121518_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 0 ?c) (Vec 1 ?a)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_121519_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?c) (Vec ?a 0))
+[ruler_121520_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?b) (Vec ?a 0))
+[ruler_121521_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec ?a ?c))
+[ruler_121522_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c 0) (Vec ?a ?b))
+[ruler_121523_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?a ?c) (Vec ?b 0))
+[ruler_121524_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a ?b) (Vec ?c 0))
+[ruler_121525_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecMul (Vec 1 ?a) (Vec ?c 1))
+[ruler_121526_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 0) (Vec 0 ?a))
+[ruler_121527_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecMul (Vec ?c 1) (Vec 1 ?a))
+[ruler_121528_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecMul (Vec 1 ?a) (Vec ?b 1))
+[ruler_121529_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec 0 ?a))
+[ruler_121530_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecMul (Vec ?b 1) (Vec 1 ?a))
+[ruler_121597_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?a 0) (Vec 1 ?c))
+[ruler_121598_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 1 ?a) (Vec ?a 0))
+[ruler_121599_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?a 0) (Vec 1 ?a))
+[ruler_121600_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?a 0) (Vec 1 ?b))
+[ruler_121601_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?a 0) (Vec 1 ?c))
+[ruler_121602_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 1 ?a) (Vec ?a 0))
+[ruler_121603_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?a 0) (Vec 1 ?a))
+[ruler_121604_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?a 0) (Vec 1 ?b))
+[ruler_121605_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 1 ?c) (Vec ?a 0))
+[ruler_121606_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 1 ?c) (Vec ?a 0))
+[ruler_121607_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 1 ?b) (Vec ?a 0))
+[ruler_121608_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 1 ?b) (Vec ?a 0))
+[ruler_121609_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?c) (Vec ?a 0))
+[ruler_121610_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 0 ?c)) => (VecMul (Vec 1 ?c) (Vec ?a 1))
+[ruler_121611_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 0 ?c)) => (VecMul (Vec ?a 1) (Vec 1 ?c))
+[ruler_121612_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec ?a 0))
+[ruler_121613_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 1)) => (VecMul (Vec 1 ?b) (Vec ?a 1))
+[ruler_121614_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 1)) => (VecMul (Vec ?a 1) (Vec 1 ?b))
+[ruler_121615_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?c 1) (Vec 0 ?a))
+[ruler_121616_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?b 1) (Vec 0 ?a))
+[ruler_121617_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 0 ?a) (Vec ?c 1))
+[ruler_121618_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 0 ?a) (Vec ?b 1))
+[ruler_121619_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 0 ?a) (Vec ?a 1))
+[ruler_121620_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?c 1) (Vec 0 ?a))
+[ruler_121621_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?b 1) (Vec 0 ?a))
+[ruler_121622_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 0 ?a) (Vec ?c 1))
+[ruler_121623_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 0 ?a) (Vec ?b 1))
+[ruler_121624_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 0 ?a) (Vec ?a 1))
+[ruler_122725_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec ?a 1) (Vec 0 ?c))
+[ruler_122726_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a 1) (Vec 0 ?b))
+[ruler_122727_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?c) (Vec ?a 1))
+[ruler_122728_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec ?a 1))
+[ruler_122729_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec 1 ?a) (Vec ?c 0))
+[ruler_122730_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec 1 ?a) (Vec ?b 0))
+[ruler_122731_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 1 ?a) (Vec 0 ?c))
+[ruler_122732_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 1 ?a) (Vec 0 ?b))
+[ruler_122733_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?a) (Vec 1 ?b))
+[ruler_122734_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 1 ?b) (Vec 0 ?a))
+[ruler_122735_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec 1 ?a))
+[ruler_122736_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?a) (Vec 1 ?c))
+[ruler_122737_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 1 ?c) (Vec 0 ?a))
+[ruler_122738_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?c) (Vec 1 ?a))
+[ruler_122739_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?a 0) (Vec ?c 1))
+[ruler_122740_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 0) (Vec ?a 1))
+[ruler_122741_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?a 0) (Vec ?b 1))
+[ruler_122742_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec ?a 1))
+[ruler_122743_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?a 1) (Vec ?c 0))
+[ruler_122744_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?a 1) (Vec ?b 0))
+[ruler_122745_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 1) (Vec ?a 0))
+[ruler_122746_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 1) (Vec ?a 0))
+[ruler_122747_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 0) (Vec 1 ?a))
+[ruler_122748_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec 1 ?a))
+[ruler_129349_lr cd:1.10 avg:0.65] 
+  (VecAdd (Vec ?a 0) (Vec 0 ?b)) => (Vec ?a ?b)
+[ruler_129350_lr cd:1.10 avg:0.65] 
+  (VecAdd (Vec 0 ?a) (Vec ?b 0)) => (Vec ?b ?a)
+[ruler_129351_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec 1 ?a) (Vec ?b 1)) => (Vec ?b ?a)
+[ruler_129352_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec ?a 1) (Vec 1 ?b)) => (Vec ?a ?b)
+[ruler_129516_lr cd:4.00 avg:2.00] 
+  (* ?a (* ?b 0)) => 0
+[ruler_129517_lr cd:2.00 avg:3.00] 
+  (* ?a (* ?b 0)) => (* 0 ?a)
+[ruler_129518_lr cd:2.00 avg:3.00] 
+  (* ?a (* ?b 0)) => (* ?b 0)
+[ruler_131295_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec 1 ?a) (Vec ?b 0)) => (Vec ?b 0)
+[ruler_131296_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec ?a 0) (Vec 1 ?b)) => (Vec ?a 0)
+[ruler_131297_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec ?a 1) (Vec 0 ?b)) => (Vec 0 ?b)
+[ruler_131298_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec 0 ?a) (Vec ?b 1)) => (Vec 0 ?a)
+[ruler_133594_lr-rev cd:2.00 avg:1.00] 
+  (* ?a 1) => ?a
+[ruler_133595_lr-rev cd:2.00 avg:1.00] 
+  (+ ?a 0) => ?a
+=================================
+Starting Phase 2: Compilation
+=================================
+Using 421 rules
+[ruler_13_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?c) (* ?b ?d)) => (VecMul (Vec ?a ?b) (Vec ?c ?d))
+[ruler_14_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?c) (+ ?b ?d)) => (VecAdd (Vec ?a ?b) (Vec ?c ?d))
+[ruler_75157_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?d) (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 1))
+[ruler_75158_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?c) (+ ?b ?d)) => (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 1 ?d))
+[ruler_75159_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?d) (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 1))
+[ruler_75160_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?c) (+ ?d ?b)) => (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 1 ?d))
+[ruler_75162_lr-rev cd:102.70 avg:52.66] 
+  (Vec ?a (+ ?b (* ?c ?d))) => (VecMAC (Vec ?a ?b) (Vec ?b ?c) (Vec 0 ?d))
+[ruler_75163_lr-rev cd:102.70 avg:52.66] 
+  (Vec (+ ?a (* ?c ?d)) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c ?a) (Vec ?d 0))
+[ruler_75184_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?d ?b) (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 1))
+[ruler_75185_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?c) (+ ?a ?d)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c ?d))
+[ruler_75186_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?d) (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 1))
+[ruler_75187_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c ?b) (+ ?a ?d)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c ?d))
+[ruler_75188_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (* ?c ?d)) => (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 1 ?d))
+[ruler_75189_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (* ?b ?d)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c ?d))
+[ruler_75190_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (* ?d ?c)) => (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 1 ?d))
+[ruler_75191_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (* ?d ?b)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c ?d))
+[ruler_75192_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c ?b) (+ ?d ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c ?d))
+[ruler_75193_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?c) (+ ?d ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c ?d))
+[ruler_75194_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?d ?b) (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 1))
+[ruler_75195_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?d) (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 1))
+[ruler_118802_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (* ?c ?a)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_118803_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (* ?c ?b)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_118804_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (* ?b ?c)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_118805_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (* ?a ?c)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_118806_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) ?c) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_118807_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?c ?a) ?b) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_118808_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?c) ?b) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_118809_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) ?c) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_118810_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?c) ?b) => (VecAdd (Vec ?a ?b) (Vec ?c 0))
+[ruler_118811_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?b) ?c) => (VecAdd (Vec ?a 0) (Vec ?b ?c))
+[ruler_118812_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?c ?a) ?b) => (VecAdd (Vec ?a ?b) (Vec ?c 0))
+[ruler_118813_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b ?a) ?c) => (VecAdd (Vec ?a 0) (Vec ?b ?c))
+[ruler_118814_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (+ ?c ?b)) => (VecAdd (Vec ?a ?b) (Vec 0 ?c))
+[ruler_118815_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (+ ?c ?a)) => (VecAdd (Vec 0 ?a) (Vec ?b ?c))
+[ruler_118816_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (+ ?b ?c)) => (VecAdd (Vec ?a ?b) (Vec 0 ?c))
+[ruler_118817_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (+ ?a ?c)) => (VecAdd (Vec 0 ?a) (Vec ?b ?c))
+[ruler_118846_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?c 0))
+[ruler_118847_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c 0))
+[ruler_118848_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?c))
+[ruler_118849_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?b) (Vec ?c 0))
+[ruler_118850_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?a) (Vec ?c 0))
+[ruler_118851_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?a) (Vec ?c 0))
+[ruler_118852_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c 0))
+[ruler_118853_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?c 0))
+[ruler_118854_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?c))
+[ruler_118855_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?a))
+[ruler_118856_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?b) (Vec ?c 0))
+[ruler_118857_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?b))
+[ruler_118858_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?b))
+[ruler_118859_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?a))
+[ruler_118860_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 0 ?c))
+[ruler_118861_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?a ?c))
+[ruler_118862_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?c))
+[ruler_118863_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec ?a ?b) (Vec 0 ?c))
+[ruler_118864_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec ?b ?b) (Vec 0 ?c))
+[ruler_118865_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?b ?c))
+[ruler_118866_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?b))
+[ruler_118867_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 0 ?c))
+[ruler_118868_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec ?b ?b) (Vec 0 ?c))
+[ruler_118869_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?c))
+[ruler_118870_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?b ?c))
+[ruler_118871_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?a ?c))
+[ruler_118872_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?b))
+[ruler_118873_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119056_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?c) (+ 1 ?b)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119057_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b ?a) (+ 1 ?c)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119058_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?c ?a) (+ 1 ?b)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119059_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (+ 1 ?c)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119068_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?b ?c) (Vec 0 ?b))
+[ruler_119069_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?b ?c) (Vec 0 ?b))
+[ruler_119070_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b 0) (* ?a ?c)) => (VecMul (Vec 0 ?a) (Vec ?b ?c))
+[ruler_119072_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* ?a ?c)) => (VecMul (Vec 0 ?a) (Vec ?b ?c))
+[ruler_119074_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?c ?b) (Vec 0 ?c))
+[ruler_119075_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec 0 ?b))
+[ruler_119076_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec 0 ?c))
+[ruler_119077_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec ?c ?b))
+[ruler_119078_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec ?b ?b))
+[ruler_119079_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?c ?b)) => (VecMul (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119080_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?b ?b) (Vec 0 ?c))
+[ruler_119082_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* ?c ?a)) => (VecMul (Vec 0 ?a) (Vec ?b ?c))
+[ruler_119086_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?c ?c) (Vec 0 ?b))
+[ruler_119087_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?c ?b) (Vec 0 ?c))
+[ruler_119088_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec 0 ?b))
+[ruler_119089_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b 0) (* ?c ?a)) => (VecMul (Vec 0 ?a) (Vec ?b ?c))
+[ruler_119090_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec 0 ?c))
+[ruler_119091_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?c ?b)) => (VecMul (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119092_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec ?c ?b))
+[ruler_119093_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec ?b ?c))
+[ruler_119094_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec ?b ?b))
+[ruler_119095_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?b ?b) (Vec 0 ?c))
+[ruler_119096_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec ?c ?c))
+[ruler_119097_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119098_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?c ?c) (Vec 0 ?b))
+[ruler_119099_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119102_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?a) (+ ?c ?b)) => (VecAdd (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119103_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?a) (+ ?b ?c)) => (VecAdd (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119104_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?b) (+ ?a ?c)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119105_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?b) (+ ?c ?a)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119107_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a 1) (+ ?b ?c)) => (VecAdd (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119108_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b 1) (+ ?a ?c)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119109_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b 1) (+ ?c ?a)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119110_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a 1) (+ ?c ?b)) => (VecAdd (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119118_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 0) (Vec ?a ?b))
+[ruler_119119_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b ?b) (Vec ?a 0))
+[ruler_119120_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b ?b))
+[ruler_119121_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b ?a))
+[ruler_119122_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 0) (Vec ?a 0))
+[ruler_119123_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?c) (* ?b 0)) => (VecMul (Vec ?a ?b) (Vec ?c 0))
+[ruler_119124_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 0) (Vec ?a ?a))
+[ruler_119125_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?c ?a) (* ?b 0)) => (VecMul (Vec ?a ?b) (Vec ?c 0))
+[ruler_119126_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a ?b) (Vec ?b 0))
+[ruler_119127_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a ?a) (Vec ?b 0))
+[ruler_119128_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a ?b) (Vec ?b 0))
+[ruler_119129_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b ?c))
+[ruler_119133_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b 0))
+[ruler_119134_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b ?a) (Vec ?a 0))
+[ruler_119135_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b ?a) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b ?c))
+[ruler_119143_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?c) (* 0 ?b)) => (VecMul (Vec ?a ?b) (Vec ?c 0))
+[ruler_119144_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b ?c))
+[ruler_119145_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 0) (Vec ?a 0))
+[ruler_119146_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b ?a))
+[ruler_119147_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 0) (Vec ?a ?a))
+[ruler_119148_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b ?a) (Vec ?a 0))
+[ruler_119149_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b ?b) (Vec ?a 0))
+[ruler_119151_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?c ?a) (* 0 ?b)) => (VecMul (Vec ?a ?b) (Vec ?c 0))
+[ruler_119156_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b ?a) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b ?c))
+[ruler_119158_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b 0))
+[ruler_119159_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 0) (Vec ?a ?b))
+[ruler_119160_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (+ ?c 1)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119161_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?c) (+ ?b 1)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119162_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b ?a) (+ ?c 1)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119163_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?c ?a) (+ ?b 1)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119166_lr cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_119167_lr cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecAdd (Vec ?b 0) (Vec ?a 0))
+[ruler_119168_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecAdd (Vec 0 ?b) (Vec 0 ?c))
+[ruler_119169_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecAdd (Vec 0 ?c) (Vec 0 ?b))
+[ruler_119170_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecAdd (Vec 0 ?b) (Vec 0 ?c))
+[ruler_119171_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecAdd (Vec 0 ?c) (Vec 0 ?b))
+[ruler_119172_lr cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecAdd (Vec ?b 0) (Vec ?a 0))
+[ruler_119173_lr cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_119186_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?b (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119187_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?c (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119194_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?c 1))
+[ruler_119195_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec ?a 1) (Vec 0 ?c))
+[ruler_119196_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?c))
+[ruler_119197_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?c (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119198_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?b (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119199_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec ?b 1) (Vec 0 ?c))
+[ruler_119200_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?b 1))
+[ruler_119201_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?a 1))
+[ruler_119204_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c 1))
+[ruler_119205_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c 0))
+[ruler_119206_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c 1))
+[ruler_119207_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c 0))
+[ruler_119208_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 0 ?c))
+[ruler_119209_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 0 ?c))
+[ruler_119210_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 1 ?c))
+[ruler_119211_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 1 ?c))
+[ruler_119212_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?b) (Vec ?c 0))
+[ruler_119213_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) ?c) => (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119214_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?b))
+[ruler_119215_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119216_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?c 0))
+[ruler_119217_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?a) (Vec ?c 0))
+[ruler_119218_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?a))
+[ruler_119219_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?c))
+[ruler_119224_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?a) (Vec ?c 0))
+[ruler_119225_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?a))
+[ruler_119226_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?b) (Vec ?c 0))
+[ruler_119227_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?c))
+[ruler_119228_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?c 0))
+[ruler_119229_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?b))
+[ruler_119230_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?c))
+[ruler_119231_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec ?a 1) (Vec 0 ?c))
+[ruler_119232_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?c 1))
+[ruler_119233_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?b 1))
+[ruler_119234_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec ?b 1) (Vec 0 ?c))
+[ruler_119235_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?a 1))
+[ruler_119260_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119261_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (+ ?c 1)) => (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119264_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ 1 ?c) (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119265_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ 1 ?b) (+ ?a ?c)) => (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119268_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c 1) (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119269_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b 1) (+ ?a ?c)) => (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119386_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?c) (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119390_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (+ ?c 1)) => (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c))
+[ruler_121429_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec 1 ?c))
+[ruler_121430_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec 1 ?c))
+[ruler_121431_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec 1 ?b))
+[ruler_121432_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 1 ?c) (Vec 0 ?b))
+[ruler_121433_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec 1 ?b))
+[ruler_121434_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 1 ?c) (Vec 0 ?b))
+[ruler_121435_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 1 ?b) (Vec 0 ?c))
+[ruler_121436_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 1 ?b) (Vec 0 ?c))
+[ruler_121437_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b 1))
+[ruler_121438_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 0) (Vec ?a 1))
+[ruler_121439_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 1) (Vec ?a 0))
+[ruler_121440_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 1) (Vec ?b 0))
+[ruler_121441_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 0) (Vec ?a 1))
+[ruler_121442_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b 1))
+[ruler_121443_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 1) (Vec ?a 0))
+[ruler_121444_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 1) (Vec ?b 0))
+[ruler_121629_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?c) (+ 1 ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c 1))
+[ruler_121630_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c ?b) (+ 1 ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c 1))
+[ruler_121631_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a 1) (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 1 ?c))
+[ruler_121632_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a 1) (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 1 ?c))
+[ruler_121635_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec 0 ?c) (Vec ?c 1))
+[ruler_121636_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec ?c 1) (Vec 0 ?c))
+[ruler_121637_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* 0 ?c) (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121640_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* 0 ?b) (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121643_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b 0) (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121644_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec 0 ?c) (Vec ?c 1))
+[ruler_121645_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec ?c 1) (Vec 0 ?c))
+[ruler_121646_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c 0) (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121647_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121648_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121649_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec 0 ?c) (Vec ?b 1))
+[ruler_121650_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec 0 ?c) (Vec ?b 1))
+[ruler_121653_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec ?b 1) (Vec 0 ?b))
+[ruler_121654_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec ?c 1) (Vec 0 ?b))
+[ruler_121655_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c 0) (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121656_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec 0 ?b) (Vec ?b 1))
+[ruler_121657_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121658_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b 0) (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121663_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec ?b 1) (Vec 0 ?b))
+[ruler_121664_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec ?c 1) (Vec 0 ?b))
+[ruler_121665_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec 0 ?b) (Vec ?b 1))
+[ruler_121666_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121667_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* 0 ?b) (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121668_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* 0 ?c) (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121670_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (* 0 ?c)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?c))
+[ruler_121671_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecMAC (Vec ?b 0) (Vec 1 ?a) (Vec ?a 0))
+[ruler_121672_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecMAC (Vec ?b 0) (Vec ?a 0) (Vec 1 ?b))
+[ruler_121673_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecMAC (Vec ?b 0) (Vec ?a 0) (Vec 1 ?a))
+[ruler_121674_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecMAC (Vec ?b 0) (Vec 1 ?b) (Vec ?a 0))
+[ruler_121675_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (* ?c 0)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?c))
+[ruler_121676_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecMAC (Vec ?b 0) (Vec 1 ?a) (Vec ?a 0))
+[ruler_121677_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecMAC (Vec ?b 0) (Vec ?a 0) (Vec 1 ?b))
+[ruler_121678_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecMAC (Vec ?b 0) (Vec ?a 0) (Vec 1 ?a))
+[ruler_121679_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecMAC (Vec ?b 0) (Vec 1 ?b) (Vec ?a 0))
+[ruler_121680_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 0))
+[ruler_121682_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 0))
+[ruler_129519_lr cd:101.90 avg:51.05] 
+  (Vec ?a (* ?b 0)) => (Vec ?a 0)
+[ruler_129520_lr cd:101.90 avg:51.05] 
+  (Vec (* ?a 0) ?b) => (Vec 0 ?b)
+[ruler_129561_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec ?a ?b) (Vec 0 ?a))
+[ruler_129562_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec ?a ?b) (Vec 0 ?a))
+[ruler_129563_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 0 ?a) (Vec 0 ?b))
+[ruler_129564_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 0 ?a) (Vec 0 ?b))
+[ruler_129565_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 0 ?a) (Vec ?a ?b))
+[ruler_129566_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 0 ?a) (Vec ?a ?b))
+[ruler_129567_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 0 ?a) (Vec ?b ?b))
+[ruler_129568_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 0 ?a) (Vec ?b ?b))
+[ruler_129569_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec ?a ?a) (Vec 0 ?b))
+[ruler_129570_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (* ?b ?a)) => (VecMul (Vec 1 ?a) (Vec 1 ?b))
+[ruler_129571_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (* ?a ?b)) => (VecMul (Vec 1 ?a) (Vec 1 ?b))
+[ruler_129573_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 1) => (VecMul (Vec ?a 1) (Vec ?b 1))
+[ruler_129574_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 1) => (VecMul (Vec ?a 1) (Vec ?b 1))
+[ruler_129595_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a ?b) (Vec ?b 0))
+[ruler_129596_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (+ ?a ?b)) => (VecAdd (Vec 0 ?a) (Vec 0 ?b))
+[ruler_129599_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (+ ?b ?a)) => (VecAdd (Vec 0 ?a) (Vec 0 ?b))
+[ruler_129600_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 0) (Vec ?b ?b))
+[ruler_129601_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 0) (Vec ?b 0))
+[ruler_129602_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 0) (Vec ?b ?a))
+[ruler_129603_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 0) (Vec ?b ?b))
+[ruler_129604_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a ?a) (Vec ?b 0))
+[ruler_129605_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a ?b) (Vec ?b 0))
+[ruler_129606_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a ?a) (Vec ?b 0))
+[ruler_129607_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 0) (Vec ?b 0))
+[ruler_129608_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 0) (Vec ?b ?a))
+[ruler_129609_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b ?a) 0) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_129611_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?b) 0) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_129613_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec ?a ?a) (Vec 0 ?b))
+[ruler_129784_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?a) (+ ?b 1)) => (VecAdd (Vec ?a 1) (Vec 1 ?b))
+[ruler_129785_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?b) (+ ?a 1)) => (VecAdd (Vec 1 ?a) (Vec ?b 1))
+[ruler_129799_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b 1) (+ 1 ?a)) => (VecAdd (Vec 1 ?a) (Vec ?b 1))
+[ruler_129800_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a 1) (+ 1 ?b)) => (VecAdd (Vec ?a 1) (Vec 1 ?b))
+[ruler_129896_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec ?b 0) (Vec 0 ?b))
+[ruler_129897_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec 0 ?b) (Vec ?b 0))
+[ruler_129898_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* ?a 0)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129899_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129900_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* ?a 0)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129901_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* 0 ?a)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129902_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_129903_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_129904_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec 0 ?b) (Vec ?b 0))
+[ruler_129907_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129909_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129910_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* 0 ?a)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129911_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec ?b 0) (Vec 0 ?b))
+[ruler_129912_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_129913_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_129914_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129920_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129921_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b 0) (* 0 ?a)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129922_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_129923_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_129924_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec 0 ?b) (Vec ?b 0))
+[ruler_129925_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec ?b 0) (Vec 0 ?b))
+[ruler_129926_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129927_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b 0) (* 0 ?a)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129979_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a 1) (+ ?b 1)) => (VecAdd (Vec ?a 1) (Vec 1 ?b))
+[ruler_129980_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b 1) (+ ?a 1)) => (VecAdd (Vec 1 ?a) (Vec ?b 1))
+[ruler_130089_lr cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?a) (Vec ?a 0))
+[ruler_130090_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130091_lr cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec ?a 0) (Vec 0 ?a))
+[ruler_130092_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?a))
+[ruler_130093_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130094_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec ?a 0) (Vec 0 ?b))
+[ruler_130095_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130096_lr cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 0 ?a) (Vec ?a 0))
+[ruler_130097_lr cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec ?a 0) (Vec 0 ?a))
+[ruler_130098_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 0 ?a) (Vec ?b 0))
+[ruler_130099_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?a))
+[ruler_130100_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec ?a 0) (Vec 0 ?b))
+[ruler_130104_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?a 0))
+[ruler_130105_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130107_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?a 0))
+[ruler_130109_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?a) (Vec ?b 0))
+[ruler_130111_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?a) (Vec ?b 0))
+[ruler_130113_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?a))
+[ruler_130114_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130116_lr cd:100.70 avg:51.65] 
+  (Vec (* 0 ?a) ?b) => (VecMAC (Vec 0 ?b) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130117_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130119_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130120_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?a) (Vec ?b 0))
+[ruler_130121_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec ?a 0) (Vec 0 ?b))
+[ruler_130122_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130123_lr cd:100.70 avg:51.65] 
+  (Vec (* ?a 0) ?b) => (VecMAC (Vec 0 ?b) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130125_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?a))
+[ruler_130126_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?a 0))
+[ruler_130128_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?a 0))
+[ruler_130129_lr cd:100.70 avg:51.65] 
+  (Vec (* 0 ?a) ?b) => (VecMAC (Vec 0 ?b) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130130_lr cd:100.70 avg:51.65] 
+  (Vec (* ?a 0) ?b) => (VecMAC (Vec 0 ?b) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130131_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?a 0) (Vec 0 ?b))
+[ruler_131299_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (+ 1 ?b)) => (VecAdd (Vec ?a 1) (Vec 0 ?b))
+[ruler_131300_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (+ 1 ?a)) => (VecAdd (Vec 0 ?a) (Vec ?b 1))
+[ruler_131303_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ 1 ?b) ?a) => (VecAdd (Vec 1 ?a) (Vec ?b 0))
+[ruler_131304_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ 1 ?a) ?b) => (VecAdd (Vec ?a 0) (Vec 1 ?b))
+[ruler_131305_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (+ ?a 1)) => (VecAdd (Vec 0 ?a) (Vec ?b 1))
+[ruler_131306_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (+ ?b 1)) => (VecAdd (Vec ?a 1) (Vec 0 ?b))
+[ruler_131307_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 0 ?a) (Vec 1 ?b))
+[ruler_131308_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 0 ?a) (Vec 1 ?b))
+[ruler_131309_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 1 ?a) (Vec 0 ?b))
+[ruler_131310_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 1 ?a) (Vec 0 ?b))
+[ruler_131311_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b 1) ?a) => (VecAdd (Vec 1 ?a) (Vec ?b 0))
+[ruler_131312_lr cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) ?b) => (VecMul (Vec ?b 1) (Vec 0 ?b))
+[ruler_131313_lr cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) ?b) => (VecMul (Vec ?b 1) (Vec 0 ?b))
+[ruler_131314_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (+ ?a ?b)) => (VecAdd (Vec 1 ?a) (Vec 0 ?b))
+[ruler_131315_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (+ ?a ?b)) => (VecAdd (Vec 0 ?a) (Vec 1 ?b))
+[ruler_131316_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (+ ?b ?a)) => (VecAdd (Vec 1 ?a) (Vec 0 ?b))
+[ruler_131317_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (+ ?b ?a)) => (VecAdd (Vec 0 ?a) (Vec 1 ?b))
+[ruler_131318_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 0) (Vec ?b 1))
+[ruler_131319_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 0) (Vec ?b 1))
+[ruler_131320_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 1) (Vec ?b 0))
+[ruler_131321_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 1) (Vec ?b 0))
+[ruler_131322_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (* ?b 0)) => (VecMul (Vec ?a 0) (Vec 1 ?b))
+[ruler_131323_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b ?a) 1) => (VecAdd (Vec ?a 0) (Vec ?b 1))
+[ruler_131324_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?b) 1) => (VecAdd (Vec ?a 0) (Vec ?b 1))
+[ruler_131325_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b ?a) 1) => (VecAdd (Vec ?a 1) (Vec ?b 0))
+[ruler_131326_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?b) 1) => (VecAdd (Vec ?a 1) (Vec ?b 0))
+[ruler_131327_lr cd:100.80 avg:51.60] 
+  (Vec ?a (* ?b 0)) => (VecMul (Vec 1 ?a) (Vec ?a 0))
+[ruler_131328_lr cd:100.80 avg:51.60] 
+  (Vec ?a (* ?b 0)) => (VecMul (Vec ?a 0) (Vec 1 ?a))
+[ruler_131329_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (* ?a 0)) => (VecMul (Vec 1 ?a) (Vec ?b 0))
+[ruler_131333_lr cd:100.80 avg:51.60] 
+  (Vec ?a (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 1 ?a))
+[ruler_131334_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (* 0 ?a)) => (VecMul (Vec 1 ?a) (Vec ?b 0))
+[ruler_131335_lr cd:100.80 avg:51.60] 
+  (Vec ?a (* 0 ?b)) => (VecMul (Vec 1 ?a) (Vec ?a 0))
+[ruler_131337_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 1 ?b))
+[ruler_131338_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a 1) ?b) => (VecAdd (Vec ?a 0) (Vec 1 ?b))
+[ruler_131339_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) ?b) => (VecMul (Vec ?a 1) (Vec 0 ?b))
+[ruler_131341_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) ?b) => (VecMul (Vec ?a 1) (Vec 0 ?b))
+[ruler_131342_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b 0) ?a) => (VecMul (Vec 0 ?a) (Vec ?b 1))
+[ruler_131343_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* 0 ?b) ?a) => (VecMul (Vec 0 ?a) (Vec ?b 1))
+[ruler_131345_lr cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) ?b) => (VecMul (Vec 0 ?b) (Vec ?b 1))
+[ruler_131346_lr cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) ?b) => (VecMul (Vec 0 ?b) (Vec ?b 1))
+[ruler_131446_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ 1 ?b) ?a) => (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131447_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ 1 ?b) ?a) => (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131448_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ 1 ?b) ?a) => (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131449_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ 1 ?b) ?a) => (VecMAC (Vec 1 ?a) (Vec 1 ?a) (Vec ?b 0))
+[ruler_131450_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?b) 1) => (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131451_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?b) 1) => (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131452_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?b) 1) => (VecMAC (Vec ?a 1) (Vec 1 ?a) (Vec ?b 0))
+[ruler_131453_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?b) 1) => (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131454_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?b 1))
+[ruler_131455_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?b))
+[ruler_131456_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec ?a 1) (Vec 0 ?b))
+[ruler_131457_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?a 1))
+[ruler_131464_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?b 1))
+[ruler_131465_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?a 1))
+[ruler_131466_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 0 ?b))
+[ruler_131467_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec ?a 1) (Vec 0 ?b))
+[ruler_131472_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?b))
+[ruler_131473_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec ?a 1) (Vec 0 ?b))
+[ruler_131474_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?b 1))
+[ruler_131475_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?a 1))
+[ruler_131476_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 0) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131477_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 0) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131478_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 0) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131479_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 0) => (VecMAC (Vec ?a 0) (Vec 1 ?a) (Vec ?b 0))
+[ruler_131480_lr-rev cd:100.70 avg:51.65] 
+  (Vec 1 (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?a 1))
+[ruler_131481_lr-rev cd:100.70 avg:51.65] 
+  (Vec 1 (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?b 1))
+[ruler_131482_lr-rev cd:100.70 avg:51.65] 
+  (Vec 1 (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?b))
+[ruler_131483_lr-rev cd:100.70 avg:51.65] 
+  (Vec 1 (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec ?a 1) (Vec 0 ?b))
+[ruler_131486_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 1) => (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131487_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 1) => (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131488_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 1) => (VecMAC (Vec ?a 1) (Vec 1 ?a) (Vec ?b 0))
+[ruler_131489_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 1) => (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131490_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b 1) ?a) => (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131491_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b 1) ?a) => (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131492_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b 1) ?a) => (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131493_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b 1) ?a) => (VecMAC (Vec 1 ?a) (Vec 1 ?a) (Vec ?b 0))
+[ruler_133657_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a 0)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_133658_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a 0)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_133659_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) 0) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_133660_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) 0) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_133661_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* 0 ?a)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_133662_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) 0) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_133663_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* 0 ?a)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_133664_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) 0) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[vec-neg cd:102.90 avg:52.55] 
+  (Vec (neg ?a) (neg ?b)) => (VecNeg (Vec ?a ?b))
+[vec-neg0-l cd:100.90 avg:51.55] 
+  (Vec 0 (neg ?b)) => (VecNeg (Vec 0 ?b))
+[vec-neg0-r cd:100.90 avg:51.55] 
+  (Vec (neg ?a) 0) => (VecNeg (Vec ?a 0))
+=================================
+Starting Phase 3: Optimization
+=================================
+Using 612 rules
+[ruler_2_lr-rev cd:1.00 avg:2.50] 
+  (VecAdd (VecAdd ?a ?b) (VecMul ?c ?d)) => (VecMAC (VecAdd ?a ?b) ?c ?d)
+[ruler_3_lr-rev cd:1.00 avg:2.50] 
+  (VecAdd (VecMul ?a ?b) (VecMul ?c ?d)) => (VecMAC (VecMul ?a ?b) ?c ?d)
+[ruler_4_lr-rev cd:1.00 avg:2.50] 
+  (VecAdd (VecAdd ?a ?b) (VecMul ?c ?d)) => (VecAdd ?a (VecMAC ?b ?c ?d))
+[ruler_13_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?c) (* ?b ?d)) => (VecMul (Vec ?a ?b) (Vec ?c ?d))
+[ruler_14_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?c) (+ ?b ?d)) => (VecAdd (Vec ?a ?b) (Vec ?c ?d))
+[ruler_75157_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?d) (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 1))
+[ruler_75158_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?c) (+ ?b ?d)) => (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 1 ?d))
+[ruler_75159_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?d) (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 1))
+[ruler_75160_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?c) (+ ?d ?b)) => (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 1 ?d))
+[ruler_75161_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 1 ?d)) => (VecAdd (Vec ?a ?b) (Vec ?c ?d))
+[ruler_75162_lr-rev cd:102.70 avg:52.66] 
+  (Vec ?a (+ ?b (* ?c ?d))) => (VecMAC (Vec ?a ?b) (Vec ?b ?c) (Vec 0 ?d))
+[ruler_75163_lr-rev cd:102.70 avg:52.66] 
+  (Vec (+ ?a (* ?c ?d)) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c ?a) (Vec ?d 0))
+[ruler_75166_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 0)) => (VecMul (Vec ?b ?a) (Vec ?d 1))
+[ruler_75167_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 0)) => (VecMul (Vec ?d ?a) (Vec ?b 1))
+[ruler_75168_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 0)) => (VecMul (Vec ?b 1) (Vec ?d ?a))
+[ruler_75169_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 0)) => (VecMul (Vec ?d 1) (Vec ?b ?a))
+[ruler_75170_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?d)) => (VecMul (Vec ?c ?a) (Vec ?b 1))
+[ruler_75171_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?d)) => (VecMul (Vec ?c 1) (Vec ?b ?a))
+[ruler_75172_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?d)) => (VecMul (Vec ?b ?a) (Vec ?c 1))
+[ruler_75173_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?d)) => (VecMul (Vec ?b 1) (Vec ?c ?a))
+[ruler_75174_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?d)) => (VecMul (Vec 1 ?c) (Vec ?a ?d))
+[ruler_75175_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?d)) => (VecMul (Vec ?a ?c) (Vec 1 ?d))
+[ruler_75176_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?d)) => (VecMul (Vec ?a ?d) (Vec 1 ?c))
+[ruler_75177_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?d)) => (VecMul (Vec 1 ?d) (Vec ?a ?c))
+[ruler_75178_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?d)) => (VecMul (Vec 1 ?b) (Vec ?a ?d))
+[ruler_75179_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?d)) => (VecMul (Vec ?a ?b) (Vec 1 ?d))
+[ruler_75180_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?d)) => (VecMul (Vec ?a ?d) (Vec 1 ?b))
+[ruler_75181_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?d)) => (VecMul (Vec 1 ?d) (Vec ?a ?b))
+[ruler_75182_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 0 ?d)) => (VecAdd (Vec ?a 0) (Vec 0 ?b))
+[ruler_75183_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 0)) => (VecAdd (Vec ?a 0) (Vec 0 ?b))
+[ruler_75184_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?d ?b) (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 1))
+[ruler_75185_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?c) (+ ?a ?d)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c ?d))
+[ruler_75186_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?d) (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 1))
+[ruler_75187_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c ?b) (+ ?a ?d)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c ?d))
+[ruler_75188_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (* ?c ?d)) => (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 1 ?d))
+[ruler_75189_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (* ?b ?d)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c ?d))
+[ruler_75190_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (* ?d ?c)) => (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 1 ?d))
+[ruler_75191_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (* ?d ?b)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c ?d))
+[ruler_75192_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c ?b) (+ ?d ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c ?d))
+[ruler_75193_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?c) (+ ?d ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c ?d))
+[ruler_75194_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?d ?b) (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 1))
+[ruler_75195_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?d) (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?d 1))
+[ruler_75718_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?d)) => (VecAdd (Vec ?c ?b) (Vec ?a 0))
+[ruler_75719_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?d)) => (VecAdd (Vec ?a ?b) (Vec ?c 0))
+[ruler_75720_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?d)) => (VecAdd (Vec ?a 0) (Vec ?c ?b))
+[ruler_75721_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 0)) => (VecAdd (Vec ?d ?b) (Vec ?a 0))
+[ruler_75722_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 0)) => (VecAdd (Vec ?a ?b) (Vec ?d 0))
+[ruler_75723_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 0)) => (VecAdd (Vec ?a 0) (Vec ?d ?b))
+[ruler_75724_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?d)) => (VecAdd (Vec ?c 0) (Vec ?a ?b))
+[ruler_75725_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?d 0)) => (VecAdd (Vec ?d 0) (Vec ?a ?b))
+[ruler_75726_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 1)) => (VecAdd (Vec 0 ?c) (Vec ?a ?b))
+[ruler_75727_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 1)) => (VecAdd (Vec 0 ?b) (Vec ?a ?c))
+[ruler_75728_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?d)) => (VecAdd (Vec 0 ?d) (Vec ?a ?b))
+[ruler_75729_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?d)) => (VecAdd (Vec 0 ?b) (Vec ?a ?d))
+[ruler_75730_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 1)) => (VecAdd (Vec ?a ?b) (Vec 0 ?c))
+[ruler_75731_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?d)) => (VecAdd (Vec ?a ?b) (Vec 0 ?d))
+[ruler_75732_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?d 1)) => (VecAdd (Vec ?a ?c) (Vec 0 ?b))
+[ruler_75733_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?d)) => (VecAdd (Vec ?a ?d) (Vec 0 ?b))
+[ruler_76358_lr-rev cd:1.00 avg:1.50] 
+  (VecAdd ?a (VecMul ?b ?c)) => (VecMAC ?a ?b ?c)
+[ruler_118802_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (* ?c ?a)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_118803_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (* ?c ?b)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_118804_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (* ?b ?c)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_118805_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (* ?a ?c)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_118806_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) ?c) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_118807_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?c ?a) ?b) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_118808_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?c) ?b) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_118809_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) ?c) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_118810_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?c) ?b) => (VecAdd (Vec ?a ?b) (Vec ?c 0))
+[ruler_118811_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?b) ?c) => (VecAdd (Vec ?a 0) (Vec ?b ?c))
+[ruler_118812_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?c ?a) ?b) => (VecAdd (Vec ?a ?b) (Vec ?c 0))
+[ruler_118813_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b ?a) ?c) => (VecAdd (Vec ?a 0) (Vec ?b ?c))
+[ruler_118814_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (+ ?c ?b)) => (VecAdd (Vec ?a ?b) (Vec 0 ?c))
+[ruler_118815_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (+ ?c ?a)) => (VecAdd (Vec 0 ?a) (Vec ?b ?c))
+[ruler_118816_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (+ ?b ?c)) => (VecAdd (Vec ?a ?b) (Vec 0 ?c))
+[ruler_118817_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (+ ?a ?c)) => (VecAdd (Vec 0 ?a) (Vec ?b ?c))
+[ruler_118846_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?c 0))
+[ruler_118847_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c 0))
+[ruler_118848_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?c))
+[ruler_118849_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?b) (Vec ?c 0))
+[ruler_118850_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?a) (Vec ?c 0))
+[ruler_118851_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?a) (Vec ?c 0))
+[ruler_118852_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c 0))
+[ruler_118853_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?c) (Vec ?c 0))
+[ruler_118854_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?c))
+[ruler_118855_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?a))
+[ruler_118856_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b ?b) (Vec ?c 0))
+[ruler_118857_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?b))
+[ruler_118858_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?b))
+[ruler_118859_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c ?a))
+[ruler_118860_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 0 ?c))
+[ruler_118861_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?a ?c))
+[ruler_118862_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?c))
+[ruler_118863_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec ?a ?b) (Vec 0 ?c))
+[ruler_118864_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec ?b ?b) (Vec 0 ?c))
+[ruler_118865_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?b ?c))
+[ruler_118866_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?b))
+[ruler_118867_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 0 ?c))
+[ruler_118868_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec ?b ?b) (Vec 0 ?c))
+[ruler_118869_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c ?c))
+[ruler_118870_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?b ?c))
+[ruler_118871_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?a ?c))
+[ruler_118872_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec ?b ?c) (Vec 0 ?b))
+[ruler_118873_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec ?a ?b) (Vec 0 ?c))
+[ruler_118952_lr cd:2.00 avg:5.00] 
+  (* (* ?a ?b) (* ?c 0)) => (* ?a (* ?c 0))
+[ruler_118957_lr cd:2.00 avg:5.00] 
+  (* (+ ?a ?b) (* 0 ?c)) => (* (+ ?a ?c) 0)
+[ruler_118958_lr cd:2.00 avg:5.00] 
+  (* (* 0 ?a) (+ ?b ?c)) => (* ?a (* ?b 0))
+[ruler_118959_lr cd:2.00 avg:5.00] 
+  (* (+ ?a ?b) (* 0 ?c)) => (* 0 (* ?b ?a))
+[ruler_118960_lr cd:2.00 avg:5.00] 
+  (* (* ?a ?b) (* ?c 0)) => (* (+ ?a ?b) 0)
+[ruler_119056_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?c) (+ 1 ?b)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119057_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b ?a) (+ 1 ?c)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119058_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?c ?a) (+ 1 ?b)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119059_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (+ 1 ?c)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119068_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?b ?c) (Vec 0 ?b))
+[ruler_119069_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?b ?c) (Vec 0 ?b))
+[ruler_119070_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b 0) (* ?a ?c)) => (VecMul (Vec 0 ?a) (Vec ?b ?c))
+[ruler_119072_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* ?a ?c)) => (VecMul (Vec 0 ?a) (Vec ?b ?c))
+[ruler_119074_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?c ?b) (Vec 0 ?c))
+[ruler_119075_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec 0 ?b))
+[ruler_119076_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec 0 ?c))
+[ruler_119077_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec ?c ?b))
+[ruler_119078_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec ?b ?b))
+[ruler_119079_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?c ?b)) => (VecMul (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119080_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?b ?b) (Vec 0 ?c))
+[ruler_119082_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* ?c ?a)) => (VecMul (Vec 0 ?a) (Vec ?b ?c))
+[ruler_119086_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?c ?c) (Vec 0 ?b))
+[ruler_119087_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?c ?b) (Vec 0 ?c))
+[ruler_119088_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec 0 ?b))
+[ruler_119089_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b 0) (* ?c ?a)) => (VecMul (Vec 0 ?a) (Vec ?b ?c))
+[ruler_119090_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec 0 ?c))
+[ruler_119091_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?c ?b)) => (VecMul (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119092_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec ?c ?b))
+[ruler_119093_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec ?b ?c))
+[ruler_119094_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec ?b ?b))
+[ruler_119095_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?b ?b) (Vec 0 ?c))
+[ruler_119096_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec ?c ?c))
+[ruler_119097_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119098_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec ?c ?c) (Vec 0 ?b))
+[ruler_119099_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec ?a ?b) (Vec 0 ?c))
+[ruler_119102_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?a) (+ ?c ?b)) => (VecAdd (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119103_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?a) (+ ?b ?c)) => (VecAdd (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119104_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?b) (+ ?a ?c)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119105_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?b) (+ ?c ?a)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119107_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a 1) (+ ?b ?c)) => (VecAdd (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119108_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b 1) (+ ?a ?c)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119109_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b 1) (+ ?c ?a)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119110_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a 1) (+ ?c ?b)) => (VecAdd (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119118_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 0) (Vec ?a ?b))
+[ruler_119119_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b ?b) (Vec ?a 0))
+[ruler_119120_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b ?b))
+[ruler_119121_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b ?a))
+[ruler_119122_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 0) (Vec ?a 0))
+[ruler_119123_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?c) (* ?b 0)) => (VecMul (Vec ?a ?b) (Vec ?c 0))
+[ruler_119124_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 0) (Vec ?a ?a))
+[ruler_119125_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?c ?a) (* ?b 0)) => (VecMul (Vec ?a ?b) (Vec ?c 0))
+[ruler_119126_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a ?b) (Vec ?b 0))
+[ruler_119127_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a ?a) (Vec ?b 0))
+[ruler_119128_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a ?b) (Vec ?b 0))
+[ruler_119129_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b ?c))
+[ruler_119133_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b 0))
+[ruler_119134_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b ?a) (Vec ?a 0))
+[ruler_119135_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b ?a) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b ?c))
+[ruler_119143_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?c) (* 0 ?b)) => (VecMul (Vec ?a ?b) (Vec ?c 0))
+[ruler_119144_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b ?c))
+[ruler_119145_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 0) (Vec ?a 0))
+[ruler_119146_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b ?a))
+[ruler_119147_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 0) (Vec ?a ?a))
+[ruler_119148_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b ?a) (Vec ?a 0))
+[ruler_119149_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b ?b) (Vec ?a 0))
+[ruler_119151_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?c ?a) (* 0 ?b)) => (VecMul (Vec ?a ?b) (Vec ?c 0))
+[ruler_119156_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b ?a) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b ?c))
+[ruler_119158_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b 0))
+[ruler_119159_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 0) (Vec ?a ?b))
+[ruler_119160_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (+ ?c 1)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119161_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?c) (+ ?b 1)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119162_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b ?a) (+ ?c 1)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119163_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?c ?a) (+ ?b 1)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119166_lr cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_119167_lr cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecAdd (Vec ?b 0) (Vec ?a 0))
+[ruler_119168_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecAdd (Vec 0 ?b) (Vec 0 ?c))
+[ruler_119169_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecAdd (Vec 0 ?c) (Vec 0 ?b))
+[ruler_119170_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecAdd (Vec 0 ?b) (Vec 0 ?c))
+[ruler_119171_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecAdd (Vec 0 ?c) (Vec 0 ?b))
+[ruler_119172_lr cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecAdd (Vec ?b 0) (Vec ?a 0))
+[ruler_119173_lr cd:102.80 avg:52.60] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_119178_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 0)) => (Vec ?c ?a)
+[ruler_119179_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 1 ?c)) => (Vec ?b ?a)
+[ruler_119180_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (Vec ?a 0)
+[ruler_119181_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (Vec ?a 0)
+[ruler_119182_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 0 ?c)) => (Vec ?a ?c)
+[ruler_119183_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 1)) => (Vec ?a ?b)
+[ruler_119184_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (Vec 0 ?a)
+[ruler_119185_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (Vec 0 ?a)
+[ruler_119186_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?b (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119187_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?c (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119194_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?c 1))
+[ruler_119195_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec ?a 1) (Vec 0 ?c))
+[ruler_119196_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?c))
+[ruler_119197_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?c (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119198_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?b (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119199_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec ?b 1) (Vec 0 ?c))
+[ruler_119200_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?b 1))
+[ruler_119201_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b ?c)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?a 1))
+[ruler_119204_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c 1))
+[ruler_119205_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c 0))
+[ruler_119206_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?c ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec ?c 1))
+[ruler_119207_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b ?c) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c 0))
+[ruler_119208_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 0 ?c))
+[ruler_119209_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 0 ?c))
+[ruler_119210_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 1 ?c))
+[ruler_119211_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 1 ?c))
+[ruler_119212_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?b) (Vec ?c 0))
+[ruler_119213_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) ?c) => (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119214_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?b))
+[ruler_119215_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119216_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?c 0))
+[ruler_119217_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?a) (Vec ?c 0))
+[ruler_119218_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?a))
+[ruler_119219_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?c) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?c))
+[ruler_119224_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?a) (Vec ?c 0))
+[ruler_119225_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?a))
+[ruler_119226_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?b) (Vec ?c 0))
+[ruler_119227_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?c))
+[ruler_119228_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec 1 ?c) (Vec ?c 0))
+[ruler_119229_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?c ?a) ?b) => (VecMAC (Vec ?a ?b) (Vec ?c 0) (Vec 1 ?b))
+[ruler_119230_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec ?c 1) (Vec 0 ?c))
+[ruler_119231_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec ?a 1) (Vec 0 ?c))
+[ruler_119232_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?c 1))
+[ruler_119233_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?b 1))
+[ruler_119234_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec ?b 1) (Vec 0 ?c))
+[ruler_119235_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?c ?b)) => (VecMAC (Vec ?a ?b) (Vec 0 ?c) (Vec ?a 1))
+[ruler_119260_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119261_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (+ ?c 1)) => (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119262_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec 1 ?a) (Vec ?c ?b))
+[ruler_119263_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119264_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ 1 ?c) (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119265_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ 1 ?b) (+ ?a ?c)) => (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119266_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec 1 ?b) (Vec ?c ?a))
+[ruler_119267_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec 1 ?c) (Vec ?b ?a))
+[ruler_119268_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c 1) (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119269_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b 1) (+ ?a ?c)) => (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119270_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?b) (Vec 1 ?a))
+[ruler_119271_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?c) (Vec 1 ?a))
+[ruler_119272_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?a) (Vec 1 ?b))
+[ruler_119273_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?a) (Vec 1 ?c))
+[ruler_119305_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?c 0) (Vec ?a 0)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_119312_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?b 0) (Vec ?a 0)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_119313_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?a 0) (Vec ?c 0)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_119314_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?a 0) (Vec ?b 0)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_119332_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 0 ?c)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119333_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?c) (Vec 0 ?b)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_119336_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 0 ?a) (Vec 0 ?c)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119338_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 0 ?c) (Vec 0 ?a)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_119386_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?c) (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1))
+[ruler_119387_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a 1) (Vec ?c ?b))
+[ruler_119388_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a ?b) (Vec ?c 1))
+[ruler_119389_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c 1) (Vec ?a ?b))
+[ruler_119390_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (+ ?c 1)) => (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c))
+[ruler_119391_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?a 1) (Vec ?b ?c))
+[ruler_119392_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?a ?c) (Vec ?b 1))
+[ruler_119393_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b 1) (Vec ?a ?c))
+[ruler_119394_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?b) (Vec ?a 1))
+[ruler_119395_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?c) (Vec ?a 1))
+[ruler_121429_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec 1 ?c))
+[ruler_121430_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?b) (Vec 1 ?c))
+[ruler_121431_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec 1 ?b))
+[ruler_121432_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 1 ?c) (Vec 0 ?b))
+[ruler_121433_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 0 ?c) (Vec 1 ?b))
+[ruler_121434_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 1 ?c) (Vec 0 ?b))
+[ruler_121435_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b ?c)) => (VecMul (Vec 1 ?b) (Vec 0 ?c))
+[ruler_121436_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* ?b ?c)) => (VecMul (Vec 1 ?b) (Vec 0 ?c))
+[ruler_121437_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 0) (Vec ?b 1))
+[ruler_121438_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 0) (Vec ?a 1))
+[ruler_121439_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?b 1) (Vec ?a 0))
+[ruler_121440_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* ?c 0)) => (VecMul (Vec ?a 1) (Vec ?b 0))
+[ruler_121441_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 0) (Vec ?a 1))
+[ruler_121442_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 0) (Vec ?b 1))
+[ruler_121443_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?b 1) (Vec ?a 0))
+[ruler_121444_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a ?b) (* 0 ?c)) => (VecMul (Vec ?a 1) (Vec ?b 0))
+[ruler_121445_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?c 0)) => (Vec ?a 1)
+[ruler_121446_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 0 ?c)) => (Vec ?a 1)
+[ruler_121447_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 0)) => (Vec 1 ?a)
+[ruler_121448_lr cd:1.20 avg:0.70] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 0 ?c)) => (Vec 1 ?a)
+[ruler_121467_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a 0) (Vec ?c ?b))
+[ruler_121468_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?a 0) (Vec ?b ?c))
+[ruler_121469_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?b) (Vec 0 ?a))
+[ruler_121470_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?c) (Vec 0 ?a))
+[ruler_121473_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?a) (Vec ?c ?b))
+[ruler_121474_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec 0 ?a) (Vec ?b ?c))
+[ruler_121487_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec ?c ?a))
+[ruler_121488_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec 0 ?c) (Vec ?b ?a))
+[ruler_121489_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?a) (Vec 0 ?b))
+[ruler_121490_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?a) (Vec 0 ?c))
+[ruler_121491_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?a) (Vec 0 ?c))
+[ruler_121492_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?a) (Vec 0 ?b))
+[ruler_121493_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?c) (Vec 0 ?a))
+[ruler_121494_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec 0 ?a))
+[ruler_121495_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec ?a 0))
+[ruler_121496_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_121497_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 0) (Vec ?a 0))
+[ruler_121498_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?a 0) (Vec ?c 0))
+[ruler_121503_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?c 0) (Vec ?a 1)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_121504_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?a 1) (Vec ?c 0)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_121505_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?b 0) (Vec ?a 1)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_121506_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?a 0) (Vec ?c 1)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_121507_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?a 0) (Vec ?b 1)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_121508_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?a 1) (Vec ?b 0)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_121509_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?b) (Vec ?c 1) (Vec ?a 0)) => (VecMul (Vec ?a ?b) (Vec ?c 1))
+[ruler_121510_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?c) (Vec ?b 1) (Vec ?a 0)) => (VecMul (Vec ?a 1) (Vec ?b ?c))
+[ruler_121511_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?c) (Vec 0 ?b)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_121512_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 0 ?c)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_121513_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 1 ?c) (Vec 0 ?a)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_121514_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 1 ?a) (Vec 0 ?c)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_121515_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 0 ?a) (Vec 1 ?c)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_121516_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec 1 ?c)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_121517_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?c) (Vec 1 ?b)) => (VecMul (Vec ?a ?b) (Vec 1 ?c))
+[ruler_121518_lr-rev cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?b 0) (Vec 0 ?c) (Vec 1 ?a)) => (VecMul (Vec 1 ?a) (Vec ?b ?c))
+[ruler_121519_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b ?c) (Vec ?a 0))
+[ruler_121520_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c ?b) (Vec ?a 0))
+[ruler_121521_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec ?a ?c))
+[ruler_121522_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?c 0) (Vec ?a ?b))
+[ruler_121523_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 1 ?c)) => (VecAdd (Vec ?a ?c) (Vec ?b 0))
+[ruler_121524_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a ?b) (Vec ?c 0))
+[ruler_121525_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecMul (Vec 1 ?a) (Vec ?c 1))
+[ruler_121526_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 0) (Vec 0 ?a))
+[ruler_121527_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecMul (Vec ?c 1) (Vec 1 ?a))
+[ruler_121528_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecMul (Vec 1 ?a) (Vec ?b 1))
+[ruler_121529_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec 0 ?a))
+[ruler_121530_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecMul (Vec ?b 1) (Vec 1 ?a))
+[ruler_121597_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?a 0) (Vec 1 ?c))
+[ruler_121598_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 1 ?a) (Vec ?a 0))
+[ruler_121599_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?a 0) (Vec 1 ?a))
+[ruler_121600_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?a 0) (Vec 1 ?b))
+[ruler_121601_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?a 0) (Vec 1 ?c))
+[ruler_121602_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 1 ?a) (Vec ?a 0))
+[ruler_121603_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?a 0) (Vec 1 ?a))
+[ruler_121604_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?a 0) (Vec 1 ?b))
+[ruler_121605_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 1 ?c) (Vec ?a 0))
+[ruler_121606_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 1 ?c) (Vec ?a 0))
+[ruler_121607_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 1 ?b) (Vec ?a 0))
+[ruler_121608_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 1 ?b) (Vec ?a 0))
+[ruler_121609_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?c) (Vec ?a 0))
+[ruler_121610_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 0 ?c)) => (VecMul (Vec 1 ?c) (Vec ?a 1))
+[ruler_121611_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec ?b 1) (Vec 0 ?c)) => (VecMul (Vec ?a 1) (Vec 1 ?c))
+[ruler_121612_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec ?a 0))
+[ruler_121613_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 1)) => (VecMul (Vec 1 ?b) (Vec ?a 1))
+[ruler_121614_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?c 1)) => (VecMul (Vec ?a 1) (Vec 1 ?b))
+[ruler_121615_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?c 1) (Vec 0 ?a))
+[ruler_121616_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec ?b 1) (Vec 0 ?a))
+[ruler_121617_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 0 ?a) (Vec ?c 1))
+[ruler_121618_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 0 ?a) (Vec ?b 1))
+[ruler_121619_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 0)) => (VecMul (Vec 0 ?a) (Vec ?a 1))
+[ruler_121620_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?c 1) (Vec 0 ?a))
+[ruler_121621_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec ?b 1) (Vec 0 ?a))
+[ruler_121622_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 0 ?a) (Vec ?c 1))
+[ruler_121623_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 0 ?a) (Vec ?b 1))
+[ruler_121624_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?c)) => (VecMul (Vec 0 ?a) (Vec ?a 1))
+[ruler_121629_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b ?c) (+ 1 ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c 1))
+[ruler_121630_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c ?b) (+ 1 ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec ?c 1))
+[ruler_121631_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a 1) (* ?c ?b)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 1 ?c))
+[ruler_121632_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?a 1) (* ?b ?c)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec 1 ?c))
+[ruler_121635_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec 0 ?c) (Vec ?c 1))
+[ruler_121636_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec ?c 1) (Vec 0 ?c))
+[ruler_121637_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* 0 ?c) (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121640_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* 0 ?b) (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121643_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b 0) (+ ?a ?c)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121644_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec 0 ?c) (Vec ?c 1))
+[ruler_121645_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec ?c 1) (Vec 0 ?c))
+[ruler_121646_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c 0) (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121647_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121648_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121649_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec 0 ?c) (Vec ?b 1))
+[ruler_121650_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?b) (Vec 0 ?c) (Vec ?b 1))
+[ruler_121653_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec ?b 1) (Vec 0 ?b))
+[ruler_121654_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec ?c 1) (Vec 0 ?b))
+[ruler_121655_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?c 0) (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121656_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec 0 ?b) (Vec ?b 1))
+[ruler_121657_lr cd:102.70 avg:52.65] 
+  (Vec (* ?a 0) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121658_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* ?b 0) (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121663_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec ?b 1) (Vec 0 ?b))
+[ruler_121664_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec ?c 1) (Vec 0 ?b))
+[ruler_121665_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec 0 ?b) (Vec ?b 1))
+[ruler_121666_lr cd:102.70 avg:52.65] 
+  (Vec (* 0 ?a) (+ ?b ?c)) => (VecMAC (Vec 0 ?c) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121667_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* 0 ?b) (+ ?c ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?c))
+[ruler_121668_lr-rev cd:102.70 avg:52.65] 
+  (Vec (* 0 ?c) (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?c 1))
+[ruler_121670_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (* 0 ?c)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?c))
+[ruler_121671_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecMAC (Vec ?b 0) (Vec 1 ?a) (Vec ?a 0))
+[ruler_121672_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecMAC (Vec ?b 0) (Vec ?a 0) (Vec 1 ?b))
+[ruler_121673_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecMAC (Vec ?b 0) (Vec ?a 0) (Vec 1 ?a))
+[ruler_121674_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* 0 ?c)) => (VecMAC (Vec ?b 0) (Vec 1 ?b) (Vec ?a 0))
+[ruler_121675_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?b ?a) (* ?c 0)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?c))
+[ruler_121676_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecMAC (Vec ?b 0) (Vec 1 ?a) (Vec ?a 0))
+[ruler_121677_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecMAC (Vec ?b 0) (Vec ?a 0) (Vec 1 ?b))
+[ruler_121678_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecMAC (Vec ?b 0) (Vec ?a 0) (Vec 1 ?a))
+[ruler_121679_lr cd:102.70 avg:52.65] 
+  (Vec (+ ?a ?b) (* ?c 0)) => (VecMAC (Vec ?b 0) (Vec 1 ?b) (Vec ?a 0))
+[ruler_121680_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 0))
+[ruler_121682_lr-rev cd:102.70 avg:52.65] 
+  (Vec (+ ?c ?a) (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?c 0))
+[ruler_122725_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec ?a 1) (Vec 0 ?c))
+[ruler_122726_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec ?a 1) (Vec 0 ?b))
+[ruler_122727_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?c) (Vec ?a 1))
+[ruler_122728_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec ?a 1))
+[ruler_122729_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec 1 ?a) (Vec ?c 0))
+[ruler_122730_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec 1 ?a) (Vec ?b 0))
+[ruler_122731_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 1 ?a) (Vec 0 ?c))
+[ruler_122732_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 1 ?a) (Vec 0 ?b))
+[ruler_122733_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?a) (Vec 1 ?b))
+[ruler_122734_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 1 ?b) (Vec 0 ?a))
+[ruler_122735_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?c 1)) => (VecAdd (Vec 0 ?b) (Vec 1 ?a))
+[ruler_122736_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?a) (Vec 1 ?c))
+[ruler_122737_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 1 ?c) (Vec 0 ?a))
+[ruler_122738_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?c)) => (VecAdd (Vec 0 ?c) (Vec 1 ?a))
+[ruler_122739_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?a 0) (Vec ?c 1))
+[ruler_122740_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 0) (Vec ?a 1))
+[ruler_122741_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?a 0) (Vec ?b 1))
+[ruler_122742_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec ?a 1))
+[ruler_122743_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?a 1) (Vec ?c 0))
+[ruler_122744_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?a 1) (Vec ?b 0))
+[ruler_122745_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 1) (Vec ?a 0))
+[ruler_122746_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 1) (Vec ?a 0))
+[ruler_122747_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?c 0)) => (VecAdd (Vec ?c 0) (Vec 1 ?a))
+[ruler_122748_lr cd:0.10 avg:1.26] 
+  (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?c)) => (VecAdd (Vec ?b 0) (Vec 1 ?a))
+[ruler_129349_lr cd:1.10 avg:0.65] 
+  (VecAdd (Vec ?a 0) (Vec 0 ?b)) => (Vec ?a ?b)
+[ruler_129350_lr cd:1.10 avg:0.65] 
+  (VecAdd (Vec 0 ?a) (Vec ?b 0)) => (Vec ?b ?a)
+[ruler_129351_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec 1 ?a) (Vec ?b 1)) => (Vec ?b ?a)
+[ruler_129352_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec ?a 1) (Vec 1 ?b)) => (Vec ?a ?b)
+[ruler_129516_lr cd:4.00 avg:2.00] 
+  (* ?a (* ?b 0)) => 0
+[ruler_129517_lr cd:2.00 avg:3.00] 
+  (* ?a (* ?b 0)) => (* 0 ?a)
+[ruler_129518_lr cd:2.00 avg:3.00] 
+  (* ?a (* ?b 0)) => (* ?b 0)
+[ruler_129519_lr cd:101.90 avg:51.05] 
+  (Vec ?a (* ?b 0)) => (Vec ?a 0)
+[ruler_129520_lr cd:101.90 avg:51.05] 
+  (Vec (* ?a 0) ?b) => (Vec 0 ?b)
+[ruler_129561_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec ?a ?b) (Vec 0 ?a))
+[ruler_129562_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec ?a ?b) (Vec 0 ?a))
+[ruler_129563_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 0 ?a) (Vec 0 ?b))
+[ruler_129564_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 0 ?a) (Vec 0 ?b))
+[ruler_129565_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 0 ?a) (Vec ?a ?b))
+[ruler_129566_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 0 ?a) (Vec ?a ?b))
+[ruler_129567_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 0 ?a) (Vec ?b ?b))
+[ruler_129568_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 0 ?a) (Vec ?b ?b))
+[ruler_129569_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec ?a ?a) (Vec 0 ?b))
+[ruler_129570_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (* ?b ?a)) => (VecMul (Vec 1 ?a) (Vec 1 ?b))
+[ruler_129571_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (* ?a ?b)) => (VecMul (Vec 1 ?a) (Vec 1 ?b))
+[ruler_129573_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 1) => (VecMul (Vec ?a 1) (Vec ?b 1))
+[ruler_129574_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 1) => (VecMul (Vec ?a 1) (Vec ?b 1))
+[ruler_129595_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a ?b) (Vec ?b 0))
+[ruler_129596_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (+ ?a ?b)) => (VecAdd (Vec 0 ?a) (Vec 0 ?b))
+[ruler_129599_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (+ ?b ?a)) => (VecAdd (Vec 0 ?a) (Vec 0 ?b))
+[ruler_129600_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 0) (Vec ?b ?b))
+[ruler_129601_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 0) (Vec ?b 0))
+[ruler_129602_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 0) (Vec ?b ?a))
+[ruler_129603_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 0) (Vec ?b ?b))
+[ruler_129604_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a ?a) (Vec ?b 0))
+[ruler_129605_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a ?b) (Vec ?b 0))
+[ruler_129606_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a ?a) (Vec ?b 0))
+[ruler_129607_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 0) (Vec ?b 0))
+[ruler_129608_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 0) (Vec ?b ?a))
+[ruler_129609_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b ?a) 0) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_129611_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?b) 0) => (VecAdd (Vec ?a 0) (Vec ?b 0))
+[ruler_129613_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec ?a ?a) (Vec 0 ?b))
+[ruler_129784_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?a) (+ ?b 1)) => (VecAdd (Vec ?a 1) (Vec 1 ?b))
+[ruler_129785_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ 1 ?b) (+ ?a 1)) => (VecAdd (Vec 1 ?a) (Vec ?b 1))
+[ruler_129799_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b 1) (+ 1 ?a)) => (VecAdd (Vec 1 ?a) (Vec ?b 1))
+[ruler_129800_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a 1) (+ 1 ?b)) => (VecAdd (Vec ?a 1) (Vec 1 ?b))
+[ruler_129896_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec ?b 0) (Vec 0 ?b))
+[ruler_129897_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec 0 ?b) (Vec ?b 0))
+[ruler_129898_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* ?a 0)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129899_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129900_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* ?a 0)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129901_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* 0 ?a)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129902_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_129903_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_129904_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec 0 ?b) (Vec ?b 0))
+[ruler_129907_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129909_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129910_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?b) (* 0 ?a)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129911_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec ?b 0) (Vec 0 ?b))
+[ruler_129912_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_129913_lr cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_129914_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* 0 ?a) (* ?b 0)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129920_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129921_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b 0) (* 0 ?a)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129922_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_129923_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_129924_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec 0 ?b) (Vec ?b 0))
+[ruler_129925_lr cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec ?b 0) (Vec 0 ?b))
+[ruler_129926_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a 0) (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 0 ?b))
+[ruler_129927_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b 0) (* 0 ?a)) => (VecMul (Vec 0 ?a) (Vec ?b 0))
+[ruler_129979_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a 1) (+ ?b 1)) => (VecAdd (Vec ?a 1) (Vec 1 ?b))
+[ruler_129980_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b 1) (+ ?a 1)) => (VecAdd (Vec 1 ?a) (Vec ?b 1))
+[ruler_130089_lr cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?a) (Vec ?a 0))
+[ruler_130090_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130091_lr cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec ?a 0) (Vec 0 ?a))
+[ruler_130092_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?a))
+[ruler_130093_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130094_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec ?a 0) (Vec 0 ?b))
+[ruler_130095_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130096_lr cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 0 ?a) (Vec ?a 0))
+[ruler_130097_lr cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec ?a 0) (Vec 0 ?a))
+[ruler_130098_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 0 ?a) (Vec ?b 0))
+[ruler_130099_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 0 ?a))
+[ruler_130100_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec ?a 0) (Vec 0 ?b))
+[ruler_130104_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* ?b 0)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?a 0))
+[ruler_130105_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130107_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?b) (Vec ?a 0))
+[ruler_130109_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (* 0 ?b)) => (VecMAC (Vec ?a 0) (Vec 0 ?a) (Vec ?b 0))
+[ruler_130111_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?a) (Vec ?b 0))
+[ruler_130113_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?a))
+[ruler_130114_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130116_lr cd:100.70 avg:51.65] 
+  (Vec (* 0 ?a) ?b) => (VecMAC (Vec 0 ?b) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130117_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130119_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130120_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?a) (Vec ?b 0))
+[ruler_130121_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec ?a 0) (Vec 0 ?b))
+[ruler_130122_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130123_lr cd:100.70 avg:51.65] 
+  (Vec (* ?a 0) ?b) => (VecMAC (Vec 0 ?b) (Vec ?b 0) (Vec 0 ?b))
+[ruler_130125_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec ?b 0) (Vec 0 ?a))
+[ruler_130126_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?a 0))
+[ruler_130128_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* ?b 0) ?a) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?a 0))
+[ruler_130129_lr cd:100.70 avg:51.65] 
+  (Vec (* 0 ?a) ?b) => (VecMAC (Vec 0 ?b) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130130_lr cd:100.70 avg:51.65] 
+  (Vec (* ?a 0) ?b) => (VecMAC (Vec 0 ?b) (Vec 0 ?b) (Vec ?b 0))
+[ruler_130131_lr-rev cd:100.70 avg:51.65] 
+  (Vec (* 0 ?b) ?a) => (VecMAC (Vec 0 ?a) (Vec ?a 0) (Vec 0 ?b))
+[ruler_131295_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec 1 ?a) (Vec ?b 0)) => (Vec ?b 0)
+[ruler_131296_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec ?a 0) (Vec 1 ?b)) => (Vec ?a 0)
+[ruler_131297_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec ?a 1) (Vec 0 ?b)) => (Vec 0 ?b)
+[ruler_131298_lr cd:1.10 avg:0.65] 
+  (VecMul (Vec 0 ?a) (Vec ?b 1)) => (Vec 0 ?a)
+[ruler_131299_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (+ 1 ?b)) => (VecAdd (Vec ?a 1) (Vec 0 ?b))
+[ruler_131300_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (+ 1 ?a)) => (VecAdd (Vec 0 ?a) (Vec ?b 1))
+[ruler_131303_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ 1 ?b) ?a) => (VecAdd (Vec 1 ?a) (Vec ?b 0))
+[ruler_131304_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ 1 ?a) ?b) => (VecAdd (Vec ?a 0) (Vec 1 ?b))
+[ruler_131305_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (+ ?a 1)) => (VecAdd (Vec 0 ?a) (Vec ?b 1))
+[ruler_131306_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (+ ?b 1)) => (VecAdd (Vec ?a 1) (Vec 0 ?b))
+[ruler_131307_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 0 ?a) (Vec 1 ?b))
+[ruler_131308_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 0 ?a) (Vec 1 ?b))
+[ruler_131309_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?b ?a)) => (VecMul (Vec 1 ?a) (Vec 0 ?b))
+[ruler_131310_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a ?b)) => (VecMul (Vec 1 ?a) (Vec 0 ?b))
+[ruler_131311_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b 1) ?a) => (VecAdd (Vec 1 ?a) (Vec ?b 0))
+[ruler_131312_lr cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) ?b) => (VecMul (Vec ?b 1) (Vec 0 ?b))
+[ruler_131313_lr cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) ?b) => (VecMul (Vec ?b 1) (Vec 0 ?b))
+[ruler_131314_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (+ ?a ?b)) => (VecAdd (Vec 1 ?a) (Vec 0 ?b))
+[ruler_131315_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (+ ?a ?b)) => (VecAdd (Vec 0 ?a) (Vec 1 ?b))
+[ruler_131316_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (+ ?b ?a)) => (VecAdd (Vec 1 ?a) (Vec 0 ?b))
+[ruler_131317_lr-rev cd:100.80 avg:51.60] 
+  (Vec 1 (+ ?b ?a)) => (VecAdd (Vec 0 ?a) (Vec 1 ?b))
+[ruler_131318_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 0) (Vec ?b 1))
+[ruler_131319_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 0) (Vec ?b 1))
+[ruler_131320_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b ?a) 0) => (VecMul (Vec ?a 1) (Vec ?b 0))
+[ruler_131321_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a ?b) 0) => (VecMul (Vec ?a 1) (Vec ?b 0))
+[ruler_131322_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (* ?b 0)) => (VecMul (Vec ?a 0) (Vec 1 ?b))
+[ruler_131323_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b ?a) 1) => (VecAdd (Vec ?a 0) (Vec ?b 1))
+[ruler_131324_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?b) 1) => (VecAdd (Vec ?a 0) (Vec ?b 1))
+[ruler_131325_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?b ?a) 1) => (VecAdd (Vec ?a 1) (Vec ?b 0))
+[ruler_131326_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a ?b) 1) => (VecAdd (Vec ?a 1) (Vec ?b 0))
+[ruler_131327_lr cd:100.80 avg:51.60] 
+  (Vec ?a (* ?b 0)) => (VecMul (Vec 1 ?a) (Vec ?a 0))
+[ruler_131328_lr cd:100.80 avg:51.60] 
+  (Vec ?a (* ?b 0)) => (VecMul (Vec ?a 0) (Vec 1 ?a))
+[ruler_131329_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (* ?a 0)) => (VecMul (Vec 1 ?a) (Vec ?b 0))
+[ruler_131333_lr cd:100.80 avg:51.60] 
+  (Vec ?a (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 1 ?a))
+[ruler_131334_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?b (* 0 ?a)) => (VecMul (Vec 1 ?a) (Vec ?b 0))
+[ruler_131335_lr cd:100.80 avg:51.60] 
+  (Vec ?a (* 0 ?b)) => (VecMul (Vec 1 ?a) (Vec ?a 0))
+[ruler_131337_lr-rev cd:100.80 avg:51.60] 
+  (Vec ?a (* 0 ?b)) => (VecMul (Vec ?a 0) (Vec 1 ?b))
+[ruler_131338_lr-rev cd:100.80 avg:51.60] 
+  (Vec (+ ?a 1) ?b) => (VecAdd (Vec ?a 0) (Vec 1 ?b))
+[ruler_131339_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) ?b) => (VecMul (Vec ?a 1) (Vec 0 ?b))
+[ruler_131341_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) ?b) => (VecMul (Vec ?a 1) (Vec 0 ?b))
+[ruler_131342_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?b 0) ?a) => (VecMul (Vec 0 ?a) (Vec ?b 1))
+[ruler_131343_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* 0 ?b) ?a) => (VecMul (Vec 0 ?a) (Vec ?b 1))
+[ruler_131345_lr cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) ?b) => (VecMul (Vec 0 ?b) (Vec ?b 1))
+[ruler_131346_lr cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) ?b) => (VecMul (Vec 0 ?b) (Vec ?b 1))
+[ruler_131446_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ 1 ?b) ?a) => (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131447_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ 1 ?b) ?a) => (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131448_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ 1 ?b) ?a) => (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131449_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ 1 ?b) ?a) => (VecMAC (Vec 1 ?a) (Vec 1 ?a) (Vec ?b 0))
+[ruler_131450_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?b) 1) => (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131451_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?b) 1) => (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131452_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?b) 1) => (VecMAC (Vec ?a 1) (Vec 1 ?a) (Vec ?b 0))
+[ruler_131453_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?a ?b) 1) => (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131454_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?b 1))
+[ruler_131455_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?b))
+[ruler_131456_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec ?a 1) (Vec 0 ?b))
+[ruler_131457_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?a ?b)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?a 1))
+[ruler_131464_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?b 1))
+[ruler_131465_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec 0 ?b) (Vec ?a 1))
+[ruler_131466_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec ?b 1) (Vec 0 ?b))
+[ruler_131467_lr-rev cd:100.70 avg:51.65] 
+  (Vec ?a (+ ?b 1)) => (VecMAC (Vec ?a 1) (Vec ?a 1) (Vec 0 ?b))
+[ruler_131472_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec ?b 1) (Vec 0 ?b))
+[ruler_131473_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec ?a 1) (Vec 0 ?b))
+[ruler_131474_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?b 1))
+[ruler_131475_lr-rev cd:100.70 avg:51.65] 
+  (Vec 0 (+ ?b ?a)) => (VecMAC (Vec 0 ?a) (Vec 0 ?b) (Vec ?a 1))
+[ruler_131476_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 0) => (VecMAC (Vec ?a 0) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131477_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 0) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131478_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 0) => (VecMAC (Vec ?a 0) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131479_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 0) => (VecMAC (Vec ?a 0) (Vec 1 ?a) (Vec ?b 0))
+[ruler_131480_lr-rev cd:100.70 avg:51.65] 
+  (Vec 1 (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?a 1))
+[ruler_131481_lr-rev cd:100.70 avg:51.65] 
+  (Vec 1 (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec 0 ?b) (Vec ?b 1))
+[ruler_131482_lr-rev cd:100.70 avg:51.65] 
+  (Vec 1 (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec ?b 1) (Vec 0 ?b))
+[ruler_131483_lr-rev cd:100.70 avg:51.65] 
+  (Vec 1 (+ ?a ?b)) => (VecMAC (Vec 1 ?a) (Vec ?a 1) (Vec 0 ?b))
+[ruler_131486_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 1) => (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131487_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 1) => (VecMAC (Vec ?a 1) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131488_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 1) => (VecMAC (Vec ?a 1) (Vec 1 ?a) (Vec ?b 0))
+[ruler_131489_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b ?a) 1) => (VecMAC (Vec ?a 1) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131490_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b 1) ?a) => (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?a))
+[ruler_131491_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b 1) ?a) => (VecMAC (Vec 1 ?a) (Vec ?b 0) (Vec 1 ?b))
+[ruler_131492_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b 1) ?a) => (VecMAC (Vec 1 ?a) (Vec 1 ?b) (Vec ?b 0))
+[ruler_131493_lr-rev cd:100.70 avg:51.65] 
+  (Vec (+ ?b 1) ?a) => (VecMAC (Vec 1 ?a) (Vec 1 ?a) (Vec ?b 0))
+[ruler_133594_lr-rev cd:2.00 avg:1.00] 
+  (* ?a 1) => ?a
+[ruler_133595_lr-rev cd:2.00 avg:1.00] 
+  (+ ?a 0) => ?a
+[ruler_133657_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a 0)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_133658_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* ?a 0)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_133659_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) 0) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_133660_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* ?a 0) 0) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_133661_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* 0 ?a)) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_133662_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) 0) => (VecMul (Vec 0 ?a) (Vec ?a 0))
+[ruler_133663_lr-rev cd:100.80 avg:51.60] 
+  (Vec 0 (* 0 ?a)) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[ruler_133664_lr-rev cd:100.80 avg:51.60] 
+  (Vec (* 0 ?a) 0) => (VecMul (Vec ?a 0) (Vec 0 ?a))
+[vec-neg cd:102.90 avg:52.55] 
+  (Vec (neg ?a) (neg ?b)) => (VecNeg (Vec ?a ?b))
+[vec-neg0-l cd:100.90 avg:51.55] 
+  (Vec 0 (neg ?b)) => (VecNeg (Vec 0 ?b))
+[vec-neg0-r cd:100.90 avg:51.55] 
+  (Vec (neg ?a) 0) => (VecNeg (Vec ?a 0))
+
+Cost: NaN
