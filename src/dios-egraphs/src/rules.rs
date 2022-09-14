@@ -1,9 +1,9 @@
-use std::{collections::HashMap, fmt::Display};
+use std::{collections::HashMap, fmt::Display, fs::OpenOptions, io, io::Write};
 
-use egg::{RecExpr, Runner};
+use egg::{CostFunction, RecExpr, Runner};
 
 use crate::{
-    cost::{cost_average, cost_differential},
+    cost::{cost_average, cost_differential, VecCostFn},
     eqsat::{self, do_eqsat},
     external::{external_rules, retain_cost_effective_rules},
     handwritten::{self, handwritten_rules},
@@ -33,22 +33,24 @@ impl Display for Phase {
     }
 }
 
-fn print_rules(rules: &[DiosRwrite]) {
+fn print_rules(f: &mut dyn Write, rules: &[DiosRwrite]) -> Result<(), io::Error> {
     for r in rules {
-        eprintln!(
+        writeln!(
+            f,
             "[{} cd:{:.2} avg:{:.2}] ",
             r.name,
             cost_differential(r),
             cost_average(r)
-        );
+        )?;
         if let (Some(lhs), Some(rhs)) =
             (r.searcher.get_pattern_ast(), r.applier.get_pattern_ast())
         {
-            eprintln!("  {} => {}", lhs, rhs);
+            writeln!(f, "  {} => {}", lhs, rhs)?;
         } else {
-            eprintln!("  <opaque>");
+            writeln!(f, "  <opaque>")?;
         }
     }
+    Ok(())
 }
 
 pub type LoggingRunner = Runner<VecLang, TrackRewrites, LoggingData>;
@@ -103,24 +105,23 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
         (Phase::Opt, vec![]),
     ]);
 
-    if let Some(split_phase_opt) = &opts.split_phase {
-        match split_phase_opt {
-            SplitPhase::Auto => {
-                let pre_compile = retain_cost_effective_rules(
-                    &initial_rules,
-                    false,
-                    &[
-                        // (cost_differential, Box::new(|x: f64| x.abs() < 5.0)),
-                        (cost_average, Box::new(|x| x <= 10.0)),
-                    ],
-                );
-                let compile = retain_cost_effective_rules(
-                    &initial_rules,
-                    false,
-                    &[(cost_average, Box::new(|x| 10.0 <= x && x < 70.0))],
-                    // &[(cost_differential, Box::new(|x| x.abs() > 5.0))],
-                );
-                let opt = retain_cost_effective_rules(
+    match opts.split_phase {
+        Some(SplitPhase::Auto) => {
+            let pre_compile = retain_cost_effective_rules(
+                &initial_rules,
+                false,
+                &[
+                    // (cost_differential, Box::new(|x: f64| x.abs() < 5.0)),
+                    (cost_average, Box::new(|x| x <= 70.0)),
+                ],
+            );
+            let compile = retain_cost_effective_rules(
+                &initial_rules,
+                false,
+                &[(cost_average, Box::new(|x| 10.0 <= x && x < 70.0))],
+                // &[(cost_differential, Box::new(|x| x.abs() > 5.0))],
+            );
+            let opt = retain_cost_effective_rules(
                     &initial_rules,
                     false,
 		    &[
@@ -131,35 +132,35 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
                     //     (cost_differential, Box::new(|x| 2.0 < x && x.abs() < 5.0)),
                     // ],
                 );
+            rules
+                .entry(Phase::PreCompile)
+                .and_modify(|rules| rules.extend(pre_compile));
+            rules
+                .entry(Phase::Compile)
+                .and_modify(|rules| rules.extend(compile));
+            rules
+                .entry(Phase::Opt)
+                .and_modify(|rules| rules.extend(opt));
+        }
+        Some(SplitPhase::Handwritten) => {
+            for r in initial_rules {
                 rules
-                    .entry(Phase::PreCompile)
-                    .and_modify(|rules| rules.extend(pre_compile));
-                rules
-                    .entry(Phase::Compile)
-                    .and_modify(|rules| rules.extend(compile));
-                rules
-                    .entry(Phase::Opt)
-                    .and_modify(|rules| rules.extend(opt));
-            }
-            SplitPhase::Handwritten => {
-                for r in initial_rules {
-                    rules
-                        .entry(handwritten::phases(&r))
-                        .and_modify(|rules| rules.push(r));
-                }
-            }
-            SplitPhase::Syntax => {
-                for r in initial_rules {
-                    rules
-                        .entry(split_by_syntax::phases(&r))
-                        .and_modify(|rules| rules.push(r));
-                }
+                    .entry(handwritten::phases(&r))
+                    .and_modify(|rules| rules.push(r));
             }
         }
-    } else {
-        rules
-            .entry(Phase::Compile)
-            .and_modify(|rules| rules.extend(initial_rules));
+        Some(SplitPhase::Syntax) => {
+            for r in initial_rules {
+                rules
+                    .entry(split_by_syntax::phases(&r))
+                    .and_modify(|rules| rules.push(r));
+            }
+        }
+        Some(SplitPhase::None) | None => {
+            rules
+                .entry(Phase::Compile)
+                .and_modify(|rules| rules.extend(initial_rules));
+        }
     }
 
     // filter out rules that have a cost differential lower than cutoff
@@ -201,15 +202,25 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
 
     let mut eg = eqsat::init_egraph();
     let mut prog = prog.clone();
-    let mut cost = None;
+    let mut cost = VecCostFn.cost_rec(&prog);
     for (i, phase) in order.iter().enumerate() {
         eprintln!("=================================");
         eprintln!("Starting Phase {}: {}", i + 1, &phase);
         eprintln!("=================================");
 
         eprintln!("Using {} rules", rules[phase].len());
-        if opts.dump_rules {
-            print_rules(&rules[phase]);
+        if let Some(pathbuf) = &opts.dump_rules {
+            let mut f = OpenOptions::new()
+                .create(true)
+                .append(i > 0)
+                .write(true)
+                .open(pathbuf)
+                .expect("Failed to open file.");
+            writeln!(f, "=================================").unwrap();
+            writeln!(f, "Starting Phase {}: {}", i + 1, &phase).unwrap();
+            writeln!(f, "=================================").unwrap();
+
+            print_rules(&mut f, &rules[phase]).expect("Failed to write.");
         }
 
         if opts.dry_run {
@@ -217,11 +228,8 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
         }
 
         let (new_cost, new_prog, new_eg) = do_eqsat(&rules[phase], eg, &prog, opts);
-        if let Some(old_cost) = cost {
-            eprintln!("Cost: {} (improved {})", new_cost, old_cost - new_cost);
-        } else {
-            eprintln!("Cost: {}", new_cost);
-        }
+
+        eprintln!("Cost: {} (improved {})", new_cost, cost - new_cost);
 
         if opts.new_egraph {
             eg = eqsat::init_egraph();
@@ -229,12 +237,12 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
             eg = new_eg;
         }
         prog = new_prog;
-        cost = Some(new_cost);
+        cost = new_cost;
     }
 
     if opts.dry_run {
         (f64::NAN, prog)
     } else {
-        (cost.unwrap(), prog)
+        (cost, prog)
     }
 }

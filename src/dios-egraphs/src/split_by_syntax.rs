@@ -62,7 +62,7 @@ pub fn phases(rule: &DiosRwrite) -> Phase {
         rule.searcher.get_pattern_ast(),
         rule.applier.get_pattern_ast(),
     ) {
-        if !has_vec(lhs) && !has_vec(rhs) {
+        if !has_vec(lhs) && !has_vec(rhs) && !is_vec_op(lhs) && !is_vec_op(rhs) {
             Phase::PreCompile
         } else if (has_vec(lhs) && is_vec_op(rhs)) || (is_vec_op(lhs) && has_vec(rhs)) {
             Phase::Compile

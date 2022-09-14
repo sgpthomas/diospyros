@@ -73,7 +73,7 @@ pub fn do_eqsat(
     let mut runner = LoggingRunner::new(Default::default())
         .with_egraph(egraph)
         .with_expr(&prog)
-        .with_node_limit(10_000_000)
+        .with_node_limit(opts.node_limit)
         .with_time_limit(std::time::Duration::from_secs(opts.timeout as u64));
 
     // select the scheduler

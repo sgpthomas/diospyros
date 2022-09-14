@@ -1,4 +1,7 @@
 * Figuring out where I left off
+:PROPERTIES:
+:header_args: :dir (magit-toplevel) :results silent
+:END:
 
 This works pretty well. Uses pre-desugared rules. If I remember correctly, there was some problem with the desugaring.
 
@@ -265,4 +268,36 @@ time cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       --vector-width 2 \
       --rules t2.json --pre-desugared \
       --no-dup-vars --cost-filter 0.0 --split-phase auto
+#+end_src
+
+Ok, so what's going on, and what do I need to do. The problem is that the rule filtering
+that I thought was working is not working in the way that I expected.
+
+I could work check out =--syntax= is doing on the new rule set. This encodes much closer to what I think should be the correct ruleset, though I should double check that.
+
+There was this experiment that James was thinking about. This 2d dimensional exploration of this filtering. I think I can only do that after I have a more sound filtering technique. (The experiment is running ruler for longer and longer, checking the resulting compiler, and then taking a long run and try filtering out more and more rules)
+
+Let me start with checking the =--syntax= flag.
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --split-phase none \
+      --rules vec/test4.json
+#+end_src
+
+* Long experiments commands
+
+#+begin_src async-shell :dir (magit-toplevel) :results silent
+./sync.sh 3.141.15.102
+#+end_src
+
+#+begin_src async-shell :dir (ec2/tramp "exp1" "diospyros") :results silent
+cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      q-prod-out/spec.rkt \
+      --vector-width 2 \
+      --split-phase syntax --cost-filter -1.0 \
+      --rules vec/test4.json --new-egraph --timeout 120 \
+      --dump-rules out.rules \
+      --node-limit 50000000
 #+end_src

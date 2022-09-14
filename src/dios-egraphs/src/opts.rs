@@ -52,6 +52,10 @@ pub struct Opts {
     #[argh(option, default = "20")]
     pub iter_limit: usize,
 
+    /// node limit per e-graph for equality saturation.
+    #[argh(option, default = "10000000")]
+    pub node_limit: usize,
+
     /// timeout for equality saturation.
     #[argh(option, default = "180")]
     pub timeout: usize,
@@ -65,8 +69,8 @@ pub struct Opts {
     pub dry_run: bool,
 
     /// dump rules.
-    #[argh(switch)]
-    pub dump_rules: bool,
+    #[argh(option, from_str_fn(read_path))]
+    pub dump_rules: Option<PathBuf>,
 
     /// instrument the eq sat process
     #[argh(option, from_str_fn(read_path))]
@@ -127,6 +131,9 @@ pub enum SplitPhase {
 
     /// Split rules by looking at the syntax of the rules.
     Syntax,
+
+    /// Don't run split phase. Same as not passing in this option at all.
+    None,
 }
 
 impl FromStr for SplitPhase {
@@ -137,9 +144,10 @@ impl FromStr for SplitPhase {
             "auto" => Ok(SplitPhase::Auto),
             "hand" | "handwritten" => Ok(SplitPhase::Handwritten),
             "syntax" => Ok(SplitPhase::Syntax),
+            "none" => Ok(SplitPhase::None),
             s => Err(format!(
                 "Unknown split phase method: {}. Valid options are {}",
-                s, "[`auto`, `handwritten`, `syntax`]"
+                s, "[`auto`, `handwritten`, `syntax`, `none`]"
             )),
         }
     }
