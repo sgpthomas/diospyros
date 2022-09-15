@@ -69,7 +69,7 @@ pub fn do_eqsat(
     egraph: EGraph,
     prog: &RecExpr<VecLang>,
     opts: &opts::Opts,
-) -> (f64, RecExpr<VecLang>, EGraph) {
+) -> (f64, EGraph, egg::Id) {
     let mut runner = LoggingRunner::new(Default::default())
         .with_egraph(egraph)
         .with_expr(&prog)
@@ -111,8 +111,62 @@ pub fn do_eqsat(
     );
 
     // Extract the resulting program
-    let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
-    let extractor = Extractor::new(&eg, VecCostFn {});
-    let (cost, prog) = extractor.find_best(root);
-    (cost, prog, runner.egraph)
+    let root = runner.roots[0];
+    let extractor = Extractor::new(&runner.egraph, VecCostFn);
+    let cost = extractor.find_best_cost(root);
+    (cost, runner.egraph, root)
 }
+
+// pub fn do_eqsat(
+//     rules: &[DiosRwrite],
+//     egraph: EGraph,
+//     prog: &RecExpr<VecLang>,
+//     cost_fn: impl egg::CostFunction<VecLang, Cost = f64>,
+//     opts: &opts::Opts,
+// ) -> (f64, RecExpr<VecLang>, EGraph) {
+//     let mut runner = LoggingRunner::new(Default::default())
+//         .with_egraph(egraph)
+//         .with_expr(&prog)
+//         .with_node_limit(opts.node_limit)
+//         .with_time_limit(std::time::Duration::from_secs(opts.timeout as u64));
+
+//     // select the scheduler
+//     runner = match opts.scheduler {
+//         opts::SchedulerOpt::Simple => runner.with_scheduler(SimpleScheduler),
+//         opts::SchedulerOpt::Backoff => runner.with_scheduler(BackoffScheduler::default()),
+//         opts::SchedulerOpt::Logging => {
+//             if let Some(filename) = &opts.instrument {
+//                 let write = Box::new(BufWriter::with_capacity(
+//                     1024,
+//                     File::create(filename).unwrap(),
+//                 ));
+//                 let mut sched =
+//                     LoggingScheduler::new_w_write(runner.roots[0], prog.clone(), write);
+//                 sched.write_headers();
+//                 runner.with_scheduler(sched)
+//             } else {
+//                 let sched = LoggingScheduler::new(runner.roots[0], prog.clone());
+//                 runner.with_scheduler(sched)
+//             }
+//         }
+//     };
+
+//     eprintln!("Starting run with {} rules", rules.len());
+//     runner = runner.run(rules);
+
+//     eprintln!("Egraph size: {}", runner.egraph.total_size());
+//     report(&runner);
+
+//     // print reason to STDERR.
+//     eprintln!(
+//         "Stopped after {} iterations, reason: {:?}",
+//         runner.iterations.len(),
+//         runner.stop_reason
+//     );
+
+//     // Extract the resulting program
+//     let (eg, root) = (runner.egraph.clone(), runner.roots[0].clone());
+//     let extractor = Extractor::new(&eg, cost_fn);
+//     let (cost, prog) = extractor.find_best(root);
+//     (cost, prog, runner.egraph)
+// }

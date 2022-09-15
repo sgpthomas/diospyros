@@ -288,9 +288,11 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 
 * Long experiments commands
 
-#+begin_src emacs-lisp :dir (magit-toplevel) :results silent
-(async-shell-command
- (s-join " " (list "./sync.sh" (ec2/get-ip "exp1"))))
+Set the elisp compile command to be sending the code to an EC2 machine.
+#+begin_src emacs-lisp :results silent
+(set-variable 'sgt/elisp-compile-command
+	      '(async-shell-command
+		(format "cd ~/Research/diospyros && ./sync.sh %s" (ec2/get-ip "exp1"))))
 #+end_src
 
 #+begin_src async-shell :dir (ec2/tramp "exp1" "diospyros") :results silent
@@ -299,8 +301,8 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       --vector-width 2 \
       --split-phase syntax \
       --rules vec/test4.json \
-      --new-egraph --timeout 120 \
-      --dump-rules vec-test4.rules --dry-run \
+      --new-egraph --timeout 60 \
+      --dump-rules vec-test4.rules \
       --node-limit 50000000
 #+end_src
 

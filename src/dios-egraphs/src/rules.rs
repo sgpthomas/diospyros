@@ -6,10 +6,10 @@ use std::{
     io::Write,
 };
 
-use egg::{CostFunction, RecExpr, Runner};
+use egg::{CostFunction, Extractor, RecExpr, Runner};
 
 use crate::{
-    cost::{cost_average, cost_differential, VecCostFn},
+    cost::{cost_average, cost_differential, PhaseCostFn, VecCostFn},
     eqsat::{self, do_eqsat},
     external::{external_rules, retain_cost_effective_rules},
     handwritten::{self, handwritten_rules},
@@ -62,7 +62,7 @@ fn print_rules(f: &mut dyn Write, rules: &[DiosRwrite]) -> Result<(), io::Error>
 pub type LoggingRunner = Runner<VecLang, TrackRewrites, LoggingData>;
 
 /// Run the rewrite rules over the input program and return the best (cost, program)
-pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>) {
+pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>) {
     // ====================================================================
     // Gather initial rules and optionally filter them by cost differential
     // ====================================================================
@@ -72,7 +72,7 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     // add handwritten rules
     if opts.handwritten {
         initial_rules.extend(handwritten_rules(
-            prog,
+            orig_prog,
             opts.vector_width,
             opts.no_ac,
             opts.no_vec,
@@ -90,7 +90,7 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
 
     if initial_rules.is_empty() {
         eprintln!("Stopping early, no rules were added.");
-        return (f64::NAN, prog.clone());
+        return (f64::NAN, orig_prog.clone());
     }
 
     if let Some(cutoff) = opts.cost_filter {
@@ -200,14 +200,17 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     //     rules = fancy_rules;
     // }
 
-    let order = [Phase::PreCompile, Phase::Compile, Phase::Opt];
+    let order = [
+        Phase::PreCompile,
+        Phase::Compile, // , Phase::Opt
+    ];
 
     if opts.dry_run {
         eprintln!("Doing dry run. Aborting early.");
     }
 
     let mut eg = eqsat::init_egraph();
-    let mut prog = prog.clone();
+    let mut prog = orig_prog.clone();
     let mut cost = VecCostFn.cost_rec(&prog);
 
     let mut file: Option<File> = if let Some(pathbuf) = &opts.dump_rules {
@@ -238,16 +241,44 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
             continue;
         }
 
-        let (new_cost, new_prog, new_eg) = do_eqsat(&rules[phase], eg, &prog, opts);
+        // do equality saturation with the rules in this phase
+        let (new_cost, new_eg, root) = do_eqsat(&rules[phase], eg, &prog, opts);
+
+        // let (new_cost, new_prog, new_eg) = if *phase == Phase::Compile {
+        //     do_eqsat(
+        //         &rules[phase],
+        //         eg,
+        //         &prog,
+        //         PhaseCostFn::from_rules(
+        //             rules[&Phase::Compile].clone(),
+        //             orig_prog.clone(),
+        //         ),
+        //         opts,
+        //     )
+        // } else {
+        //     do_eqsat(&rules[phase], eg, &prog, VecCostFn, opts)
+        // };
 
         eprintln!("Cost: {} (improved {})", new_cost, cost - new_cost);
 
         if opts.new_egraph {
+            if *phase == Phase::PreCompile {
+                let extractor = Extractor::new(
+                    &new_eg,
+                    PhaseCostFn::from_rules(
+                        rules[&Phase::Compile].clone(),
+                        orig_prog.clone(),
+                    ),
+                );
+                let (cost, new_prog) = extractor.find_best(root);
+                eprintln!("new:\n{}", new_prog.pretty(100));
+                eprintln!("Extracted prog cost: {cost}");
+                prog = new_prog;
+            }
             eg = eqsat::init_egraph();
         } else {
             eg = new_eg;
         }
-        prog = new_prog;
         cost = new_cost;
     }
 

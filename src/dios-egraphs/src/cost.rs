@@ -1,6 +1,11 @@
+use std::sync::Arc;
+
 use egg::*;
 
-use crate::veclang::{DiosRwrite, VecLang};
+use crate::{
+    tracking::TrackRewrites,
+    veclang::{DiosRwrite, VecLang},
+};
 
 pub struct VecCostFn;
 
@@ -105,5 +110,115 @@ pub fn cost_differential(r: &DiosRwrite) -> f64 {
             "vec-mac" => 106.7,
             _ => panic!("rule: {:?}", r),
         }
+    }
+}
+
+/// Returns the number of times `lhs` matches `expr`.
+fn match_recexpr(
+    lhs: &Arc<dyn egg::Searcher<VecLang, TrackRewrites> + Send + Sync>,
+    expr: &egg::RecExpr<VecLang>,
+) -> usize {
+    let mut egraph: EGraph<VecLang, TrackRewrites> =
+        EGraph::new(TrackRewrites::default());
+    egraph.add_expr(&expr);
+    egraph.rebuild();
+    let matches = lhs.search(&egraph);
+    let x = matches.len();
+    // if x != 0 {
+    //     if let Some(ast) = lhs.get_pattern_ast() {
+    //         eprintln!("matches({}, {}) = {x}", ast.pretty(80), expr.pretty(80));
+    //     } else {
+    //         eprintln!("matches({}) = {x}", expr.pretty(80));
+    //     }
+    //     for m in matches {
+    //         eprintln!(
+    //             "{m:?} {}",
+    //             m.ast
+    //                 .as_ref()
+    //                 .map_or_else(|| "".to_string(), |x| x.pretty(80))
+    //         );
+    //     }
+    // }
+    x
+}
+
+/// Defines a cost function based on the rules in a phase.
+/// Roughly, this looks at the LHS of each rule in a phase,
+/// and gives expressions that match some LHS a low cost.
+pub struct PhaseCostFn {
+    rules: Vec<DiosRwrite>,
+    expr: RecExpr<VecLang>,
+}
+
+impl PhaseCostFn {
+    pub fn from_rules(rules: Vec<DiosRwrite>, expr: RecExpr<VecLang>) -> Self {
+        for r in &rules {
+            if let Some(r) = r.searcher.get_pattern_ast() {
+                eprintln!("lhs: {}", r.pretty(80));
+            }
+        }
+        PhaseCostFn { rules, expr }
+    }
+}
+
+impl CostFunction<VecLang> for PhaseCostFn {
+    type Cost = f64;
+
+    fn cost<C>(&mut self, enode: &VecLang, mut costs: C) -> Self::Cost
+    where
+        C: FnMut(Id) -> Self::Cost,
+    {
+        const BIG: f64 = 100.0;
+
+        let expr: RecExpr<VecLang> = enode.build_recexpr(|id| self.expr[id].clone());
+        let raw_this_cost: f64 = self
+            .rules
+            .iter()
+            .fold(0, |acc, it| acc + match_recexpr(&it.searcher, &expr))
+            as f64;
+
+        let raw_tot_cost = raw_this_cost
+            + match enode {
+                VecLang::Num(_) | VecLang::Symbol(_) => 0.0,
+                // 1 children
+                VecLang::Sgn(ids)
+                | VecLang::Sqrt(ids)
+                | VecLang::Neg(ids)
+                | VecLang::VecNeg(ids)
+                | VecLang::VecSqrt(ids)
+                | VecLang::VecSgn(ids) => {
+                    ids.iter().fold(0.0, |acc, it| acc + costs(*it))
+                }
+
+                // 2 children
+                VecLang::Add(ids)
+                | VecLang::Mul(ids)
+                | VecLang::Minus(ids)
+                | VecLang::Div(ids)
+                | VecLang::Or(ids)
+                | VecLang::And(ids)
+                | VecLang::Lt(ids)
+                | VecLang::Get(ids)
+                | VecLang::Concat(ids)
+                | VecLang::VecAdd(ids)
+                | VecLang::VecMinus(ids)
+                | VecLang::VecMul(ids)
+                | VecLang::VecDiv(ids) => {
+                    ids.iter().fold(0.0, |acc, it| acc + costs(*it))
+                }
+
+                // 3 children
+                VecLang::VecMAC(ids) | VecLang::Ite(ids) => {
+                    ids.iter().fold(0.0, |acc, it| acc + costs(*it))
+                }
+
+                // n children
+                VecLang::List(ids) | VecLang::Vec(ids) | VecLang::LitVec(ids) => {
+                    ids.iter().fold(0.0, |acc, it| acc + costs(*it))
+                }
+            };
+
+        // add small amount to raw_cost in case it's 0
+        1.0 / (raw_tot_cost + 0.01)
     }
 }
