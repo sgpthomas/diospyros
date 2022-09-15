@@ -2,6 +2,8 @@
 
 set -x
 
+SCRIPT=$(readlink -f "$0")
+PROJ_DIR=$(dirname "$SCRIPT")
 ADDR=$1
 
 # some other commands
@@ -19,8 +21,6 @@ rsync -rP --exclude=.git \
       --exclude=time-ablation* \
       --exclude=variable_dup_abl_n_ops \
       --exclude=vd_abl_n_op2_vec_size \
-      --exclude=vec \
-      --exclude=t*.json \
       --exclude=web-demo \
       -e "ssh -i ~/.ssh/thelio.pem" \
-      `pwd`/ "ubuntu@$ADDR:~/$dir/"
+      $PROJ_DIR/ "ubuntu@$ADDR:~/$dir/"

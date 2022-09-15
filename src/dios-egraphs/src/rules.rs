@@ -1,4 +1,10 @@
-use std::{collections::HashMap, fmt::Display, fs::OpenOptions, io, io::Write};
+use std::{
+    collections::HashMap,
+    fmt::Display,
+    fs::{File, OpenOptions},
+    io,
+    io::Write,
+};
 
 use egg::{CostFunction, RecExpr, Runner};
 
@@ -203,24 +209,29 @@ pub fn run(prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<VecLang>
     let mut eg = eqsat::init_egraph();
     let mut prog = prog.clone();
     let mut cost = VecCostFn.cost_rec(&prog);
+
+    let mut file: Option<File> = if let Some(pathbuf) = &opts.dump_rules {
+        OpenOptions::new()
+            .create(true)
+            .write(true)
+            .open(pathbuf)
+            .ok()
+    } else {
+        None
+    };
+
     for (i, phase) in order.iter().enumerate() {
         eprintln!("=================================");
         eprintln!("Starting Phase {}: {}", i + 1, &phase);
         eprintln!("=================================");
 
         eprintln!("Using {} rules", rules[phase].len());
-        if let Some(pathbuf) = &opts.dump_rules {
-            let mut f = OpenOptions::new()
-                .create(true)
-                .append(i > 0)
-                .write(true)
-                .open(pathbuf)
-                .expect("Failed to open file.");
+        if let Some(f) = &mut file {
             writeln!(f, "=================================").unwrap();
             writeln!(f, "Starting Phase {}: {}", i + 1, &phase).unwrap();
             writeln!(f, "=================================").unwrap();
 
-            print_rules(&mut f, &rules[phase]).expect("Failed to write.");
+            print_rules(f, &rules[phase]).expect("Failed to write.");
         }
 
         if opts.dry_run {

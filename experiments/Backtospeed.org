@@ -288,16 +288,23 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 
 * Long experiments commands
 
-#+begin_src async-shell :dir (magit-toplevel) :results silent
-./sync.sh 3.141.15.102
+#+begin_src emacs-lisp :dir (magit-toplevel) :results silent
+(async-shell-command
+ (s-join " " (list "./sync.sh" (ec2/get-ip "exp1"))))
 #+end_src
 
 #+begin_src async-shell :dir (ec2/tramp "exp1" "diospyros") :results silent
 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       q-prod-out/spec.rkt \
       --vector-width 2 \
-      --split-phase syntax --cost-filter -1.0 \
-      --rules vec/test4.json --new-egraph --timeout 120 \
-      --dump-rules out.rules \
+      --split-phase syntax \
+      --rules vec/test4.json \
+      --new-egraph --timeout 120 \
+      --dump-rules vec-test4.rules --dry-run \
       --node-limit 50000000
 #+end_src
+
+* Two directions to make things work
+
+1) Try this second cost function for the phase that does some kind of syntax matching.
+2) Get more than one program out of the e-graph. something like the n highest scoring programs.
