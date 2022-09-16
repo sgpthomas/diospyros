@@ -3,13 +3,13 @@ use std::sync::Arc;
 use egg::*;
 
 use crate::{
+    recexpr_helpers,
     tracking::TrackRewrites,
     veclang::{DiosRwrite, VecLang},
 };
 
 pub struct VecCostFn;
 
-// &'a EGraph
 impl CostFunction<VecLang> for VecCostFn {
     type Cost = f64;
     // you're passed in an enode whose children are costs instead of eclass ids
@@ -113,8 +113,72 @@ pub fn cost_differential(r: &DiosRwrite) -> f64 {
     }
 }
 
-/// Returns the number of times `lhs` matches `expr`.
+/// Checks if the searcher `lhs` matches `expr`.
 fn match_recexpr(
+    pattern: &egg::RecExpr<ENodeOrVar<VecLang>>,
+    pattern_root: &ENodeOrVar<VecLang>,
+    expr: &egg::RecExpr<VecLang>,
+    expr_root: &VecLang,
+) -> bool {
+    match (pattern_root, expr_root) {
+        // no children
+        (ENodeOrVar::ENode(VecLang::Num(n0)), VecLang::Num(n1)) => n0 == n1,
+        (ENodeOrVar::ENode(VecLang::Symbol(s0)), VecLang::Symbol(s1)) => s0 == s1,
+
+        // 1 child
+        (ENodeOrVar::ENode(VecLang::Sgn(lefts)), VecLang::Sgn(rights))
+        | (ENodeOrVar::ENode(VecLang::Sqrt(lefts)), VecLang::Sqrt(rights))
+        | (ENodeOrVar::ENode(VecLang::Neg(lefts)), VecLang::Neg(rights))
+        | (ENodeOrVar::ENode(VecLang::VecNeg(lefts)), VecLang::VecNeg(rights))
+        | (ENodeOrVar::ENode(VecLang::VecSqrt(lefts)), VecLang::VecSqrt(rights))
+        | (ENodeOrVar::ENode(VecLang::VecSgn(lefts)), VecLang::VecSgn(rights)) => lefts
+            .iter()
+            .zip(rights.iter())
+            .all(|(l, r)| match_recexpr(&pattern, &pattern[*l], &expr, &expr[*r])),
+
+        // 2 children
+        (ENodeOrVar::ENode(VecLang::Add(lefts)), VecLang::Add(rights))
+        | (ENodeOrVar::ENode(VecLang::Mul(lefts)), VecLang::Mul(rights))
+        | (ENodeOrVar::ENode(VecLang::Minus(lefts)), VecLang::Minus(rights))
+        | (ENodeOrVar::ENode(VecLang::Div(lefts)), VecLang::Div(rights))
+        | (ENodeOrVar::ENode(VecLang::Or(lefts)), VecLang::Or(rights))
+        | (ENodeOrVar::ENode(VecLang::And(lefts)), VecLang::And(rights))
+        | (ENodeOrVar::ENode(VecLang::Lt(lefts)), VecLang::Lt(rights))
+        | (ENodeOrVar::ENode(VecLang::Get(lefts)), VecLang::Get(rights))
+        | (ENodeOrVar::ENode(VecLang::Concat(lefts)), VecLang::Concat(rights))
+        | (ENodeOrVar::ENode(VecLang::VecAdd(lefts)), VecLang::VecAdd(rights))
+        | (ENodeOrVar::ENode(VecLang::VecMinus(lefts)), VecLang::VecMinus(rights))
+        | (ENodeOrVar::ENode(VecLang::VecMul(lefts)), VecLang::VecMul(rights))
+        | (ENodeOrVar::ENode(VecLang::VecDiv(lefts)), VecLang::VecDiv(rights)) => lefts
+            .iter()
+            .zip(rights.iter())
+            .all(|(l, r)| match_recexpr(&pattern, &pattern[*l], &expr, &expr[*r])),
+
+        // 3 children
+        (ENodeOrVar::ENode(VecLang::Ite(lefts)), VecLang::Ite(rights))
+        | (ENodeOrVar::ENode(VecLang::VecMAC(lefts)), VecLang::VecMAC(rights)) => lefts
+            .iter()
+            .zip(rights.iter())
+            .all(|(l, r)| match_recexpr(&pattern, &pattern[*l], &expr, &expr[*r])),
+
+        // n childen
+        (ENodeOrVar::ENode(VecLang::List(lefts)), VecLang::List(rights))
+        | (ENodeOrVar::ENode(VecLang::Vec(lefts)), VecLang::Vec(rights))
+        | (ENodeOrVar::ENode(VecLang::LitVec(lefts)), VecLang::LitVec(rights)) => lefts
+            .iter()
+            .zip(rights.iter())
+            .all(|(l, r)| match_recexpr(&pattern, &pattern[*l], &expr, &expr[*r])),
+
+        // else, we checked everything, return false
+        (ENodeOrVar::ENode(_), _) => false,
+
+        // if the pattern is a variable, it matches anything
+        (ENodeOrVar::Var(_), _) => true,
+    }
+}
+
+/// Returns the number of times `lhs` matches `expr` using an e-graph.
+fn match_recexpr_egraph(
     lhs: &Arc<dyn egg::Searcher<VecLang, TrackRewrites> + Send + Sync>,
     expr: &egg::RecExpr<VecLang>,
 ) -> usize {
@@ -174,7 +238,7 @@ impl CostFunction<VecLang> for PhaseCostFn {
         let raw_this_cost: f64 = self
             .rules
             .iter()
-            .fold(0, |acc, it| acc + match_recexpr(&it.searcher, &expr))
+            .fold(0, |acc, it| acc + match_recexpr_egraph(&it.searcher, &expr))
             as f64;
 
         let raw_tot_cost = raw_this_cost

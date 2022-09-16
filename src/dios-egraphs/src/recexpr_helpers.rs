@@ -29,3 +29,7 @@ where
     walk_recexpr(expr, |l| acc = action(acc.clone(), l));
     acc
 }
+
+pub fn root<L: Language>(expr: &RecExpr<L>) -> &L {
+    &expr.as_ref()[expr.as_ref().len() - 1]
+}
