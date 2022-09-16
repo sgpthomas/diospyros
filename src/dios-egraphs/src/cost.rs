@@ -238,8 +238,19 @@ impl CostFunction<VecLang> for PhaseCostFn {
         let raw_this_cost: f64 = self
             .rules
             .iter()
-            .fold(0, |acc, it| acc + match_recexpr_egraph(&it.searcher, &expr))
-            as f64;
+            .flat_map(|rw| rw.searcher.get_pattern_ast())
+            .fold(0, |acc, it| {
+                if match_recexpr(
+                    it,
+                    recexpr_helpers::root(it),
+                    &expr,
+                    recexpr_helpers::root(&expr),
+                ) {
+                    acc + 1
+                } else {
+                    acc
+                }
+            }) as f64;
 
         let raw_tot_cost = raw_this_cost
             + match enode {
