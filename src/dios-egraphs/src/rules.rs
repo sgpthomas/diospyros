@@ -242,35 +242,21 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
         }
 
         // do equality saturation with the rules in this phase
-        let (new_cost, new_eg, root) = do_eqsat(&rules[phase], eg, &prog, opts);
-
-        // let (new_cost, new_prog, new_eg) = if *phase == Phase::Compile {
-        //     do_eqsat(
-        //         &rules[phase],
-        //         eg,
-        //         &prog,
-        //         PhaseCostFn::from_rules(
-        //             rules[&Phase::Compile].clone(),
-        //             orig_prog.clone(),
-        //         ),
-        //         opts,
-        //     )
-        // } else {
-        //     do_eqsat(&rules[phase], eg, &prog, VecCostFn, opts)
-        // };
+        let (new_cost, new_eg, root, new_prog) = do_eqsat(&rules[phase], eg, &prog, opts);
 
         eprintln!("Cost: {} (improved {})", new_cost, cost - new_cost);
 
         if opts.new_egraph {
             if *phase == Phase::PreCompile {
-                let extractor = Extractor::new(
-                    &new_eg,
-                    PhaseCostFn::from_rules(
-                        rules[&Phase::Compile].clone(),
-                        orig_prog.clone(),
-                    ),
-                );
-                let (cost, new_prog) = extractor.find_best(root);
+                // let extractor = Extractor::new(
+                //     &new_eg,
+                //     PhaseCostFn::from_rules(
+                //         rules[&Phase::Compile].clone(),
+                //         orig_prog.clone(),
+                //     ),
+                // );
+                // let (cost, new_prog) = extractor.find_best(root);
+                let (cost, new_prog) = Extractor::new(&new_eg, VecCostFn).find_best(root);
                 eprintln!("new:\n{}", new_prog.pretty(100));
                 eprintln!("Extracted prog cost: {cost}");
                 prog = new_prog;
@@ -280,7 +266,15 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
             eg = new_eg;
         }
         cost = new_cost;
+
+        // HACK:
+        if i == order.len() - 1 {
+            prog = new_prog;
+        }
     }
+
+    eg.rebuild();
+    eg.dot().to_pdf("test.pdf").unwrap();
 
     if opts.dry_run {
         (f64::NAN, prog)

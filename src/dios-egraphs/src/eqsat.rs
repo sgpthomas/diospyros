@@ -69,12 +69,13 @@ pub fn do_eqsat(
     egraph: EGraph,
     prog: &RecExpr<VecLang>,
     opts: &opts::Opts,
-) -> (f64, EGraph, egg::Id) {
+) -> (f64, EGraph, egg::Id, RecExpr<VecLang>) {
     let mut runner = LoggingRunner::new(Default::default())
         .with_egraph(egraph)
         .with_expr(&prog)
         .with_node_limit(opts.node_limit)
-        .with_time_limit(std::time::Duration::from_secs(opts.timeout as u64));
+        .with_time_limit(std::time::Duration::from_secs(opts.timeout as u64))
+        .with_iter_limit(opts.iter_limit);
 
     // select the scheduler
     runner = match opts.scheduler {
@@ -113,8 +114,8 @@ pub fn do_eqsat(
     // Extract the resulting program
     let root = runner.roots[0];
     let extractor = Extractor::new(&runner.egraph, VecCostFn);
-    let cost = extractor.find_best_cost(root);
-    (cost, runner.egraph, root)
+    let (cost, prog) = extractor.find_best(root);
+    (cost, runner.egraph, root, prog)
 }
 
 // pub fn do_eqsat(

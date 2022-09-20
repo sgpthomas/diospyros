@@ -177,33 +177,21 @@ fn match_recexpr(
     }
 }
 
-/// Returns the number of times `lhs` matches `expr` using an e-graph.
-fn match_recexpr_egraph(
-    lhs: &Arc<dyn egg::Searcher<VecLang, TrackRewrites> + Send + Sync>,
-    expr: &egg::RecExpr<VecLang>,
+fn match_pattern_against_egraph<A: egg::Analysis<VecLang>>(
+    pattern: &egg::RecExpr<ENodeOrVar<VecLang>>,
+    pattern_id: &ENodeOrVar<VecLang>,
+    egraph: &egg::EGraph<VecLang, A>,
+    expr: &VecLang,
 ) -> usize {
-    let mut egraph: EGraph<VecLang, TrackRewrites> =
-        EGraph::new(TrackRewrites::default());
-    egraph.add_expr(&expr);
-    egraph.rebuild();
-    let matches = lhs.search(&egraph);
-    let x = matches.len();
-    // if x != 0 {
-    //     if let Some(ast) = lhs.get_pattern_ast() {
-    //         eprintln!("matches({}, {}) = {x}", ast.pretty(80), expr.pretty(80));
-    //     } else {
-    //         eprintln!("matches({}) = {x}", expr.pretty(80));
-    //     }
-    //     for m in matches {
-    //         eprintln!(
-    //             "{m:?} {}",
-    //             m.ast
-    //                 .as_ref()
-    //                 .map_or_else(|| "".to_string(), |x| x.pretty(80))
-    //         );
-    //     }
-    // }
-    x
+    // match on expr & pattern, if they have the same top-level, check the number of children
+    // that match this?
+
+    // egraph[id]
+    //     .nodes
+    //     .iter()
+    //     .map(|enode| if matches(pattern, enode) { 1 } else { 0 })
+    //     .sum()
+    todo!()
 }
 
 /// Defines a cost function based on the rules in a phase.

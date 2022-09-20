@@ -302,7 +302,7 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       --split-phase syntax \
       --rules vec/test4.json \
       --new-egraph --timeout 60 \
-      --dump-rules vec-test4.rules \
+      --dump-rules vec-test4.rules --dry-run \
       --node-limit 50000000
 #+end_src
 
@@ -310,3 +310,21 @@ cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
 
 1) Try this second cost function for the phase that does some kind of syntax matching.
 2) Get more than one program out of the e-graph. something like the n highest scoring programs.
+
+* Phase specific cost functions
+
+This seems hard to implement as a cost function. Though, maybe possible with clever use of analyses. But first, I want to explore writing a custom extractor. I'm going to study their implementation and see what changes I would have to make.
+
+Another idea is to first "explode" rules into =depth=1= rules and then match on those segments. I think that this might actually be the better idea. The reason is that we want to make all potential children to be the shape that allows the most rules to apply.
+
+#+begin_src async-shell :dir (ec2/tramp "exp1" "diospyros") :results silent
+RUST_BACKTRACE=1 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
+      test-extr/spec.rkt \
+      --vector-width 2 \
+      --split-phase syntax \
+      --rules vec/test4.json \
+      --timeout 60 \
+      --scheduler backoff \
+      --dump-rules vec-test4.rules \
+      --node-limit 50000000 --iter-limit 10
+#+end_src
