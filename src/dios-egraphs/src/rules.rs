@@ -246,7 +246,7 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
 
         eprintln!("Cost: {} (improved {})", new_cost, cost - new_cost);
 
-        if opts.new_egraph {
+        if opts.new_egraph && i != order.len() - 1 {
             if *phase == Phase::PreCompile {
                 // let extractor = Extractor::new(
                 //     &new_eg,
@@ -275,6 +275,7 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
 
     eg.rebuild();
     eg.dot().to_pdf("test.pdf").unwrap();
+    eprintln!("Wrote test.pdf");
 
     if opts.dry_run {
         (f64::NAN, prog)

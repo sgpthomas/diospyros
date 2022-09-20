@@ -1,1 +1,1 @@
-(list (box (* a$0 b$0)))
+(list (box (+ a$0 b$0)))
