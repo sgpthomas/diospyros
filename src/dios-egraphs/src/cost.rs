@@ -1,10 +1,7 @@
-use std::sync::Arc;
-
 use egg::*;
 
 use crate::{
     recexpr_helpers,
-    tracking::TrackRewrites,
     veclang::{DiosRwrite, VecLang},
 };
 

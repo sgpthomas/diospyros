@@ -13,6 +13,7 @@ pub mod scheduler;
 pub mod searchutils;
 mod split_by_syntax;
 pub mod stringconversion;
+mod top_down_extract;
 pub mod tracking;
 mod tree;
 pub mod veclang;

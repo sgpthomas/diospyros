@@ -333,3 +333,9 @@ rsync ubuntu@"$dir":~/diospyros/test.pdf ~/Downloads
 open ~/Downloads/test.pdf
 #+end_src
 
+** Sketch of the "top-down" cost function algorithm
+
+For each eclass, for each node in that eclass. check if children match the children of rules. score of child is number of rules that match it.
+
+for each eclass, extract the node that has the highest score.
+
