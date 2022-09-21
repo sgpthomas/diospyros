@@ -8,7 +8,7 @@ ADDR=$1
 
 # some other commands
 dir=diospyros
-rsync -rP --exclude=.git \
+rsync -r --exclude=.git \
       --exclude=ruler/target \
       --exclude=src/dios-egraphs/target \
       --exclude=*-results \

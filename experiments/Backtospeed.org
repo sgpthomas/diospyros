@@ -317,9 +317,11 @@ This seems hard to implement as a cost function. Though, maybe possible with cle
 
 Another idea is to first "explode" rules into =depth=1= rules and then match on those segments. I think that this might actually be the better idea. The reason is that we want to make all potential children to be the shape that allows the most rules to apply.
 
-#+begin_src async-shell :dir (ec2/tramp "exp1" "diospyros") :results silent
+#+begin_src async-shell :results silent
 RUST_BACKTRACE=1 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml \
       test-extr/spec.rkt \
+      --phase pre-compile --phase compile \
+      --new-egraph \
       --vector-width 2 \
       --split-phase syntax \
       --rules vec/test4.json \

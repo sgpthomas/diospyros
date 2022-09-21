@@ -4,18 +4,20 @@ use std::{
     fs::{File, OpenOptions},
     io,
     io::Write,
+    str::FromStr,
 };
 
 use egg::{CostFunction, Extractor, RecExpr, Runner};
 
 use crate::{
-    cost::{cost_average, cost_differential, PhaseCostFn, VecCostFn},
+    cost::{cost_average, cost_differential, VecCostFn},
     eqsat::{self, do_eqsat},
     external::{external_rules, retain_cost_effective_rules},
     handwritten::{self, handwritten_rules},
     opts::{self, SplitPhase},
     scheduler::LoggingData,
     split_by_syntax,
+    top_down_extract::TopDownExtractor,
     tracking::TrackRewrites,
     veclang::{DiosRwrite, VecLang},
 };
@@ -26,6 +28,22 @@ pub enum Phase {
     PreCompile,
     Compile,
     Opt,
+}
+
+impl FromStr for Phase {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "pre-compile" => Ok(Phase::PreCompile),
+            "compile" => Ok(Phase::Compile),
+            "opt" => Ok(Phase::Opt),
+            _ => Err(format!(
+                "Unknown phase: {}. Valid options are {}",
+                s, "[`pre-compile`, `compile`, `opt`]"
+            )),
+        }
+    }
 }
 
 impl Display for Phase {
@@ -200,11 +218,6 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
     //     rules = fancy_rules;
     // }
 
-    let order = [
-        Phase::PreCompile,
-        Phase::Compile, // , Phase::Opt
-    ];
-
     if opts.dry_run {
         eprintln!("Doing dry run. Aborting early.");
     }
@@ -223,7 +236,7 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
         None
     };
 
-    for (i, phase) in order.iter().enumerate() {
+    for (i, phase) in opts.phase.iter().enumerate() {
         eprintln!("=================================");
         eprintln!("Starting Phase {}: {}", i + 1, &phase);
         eprintln!("=================================");
@@ -246,7 +259,7 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
 
         eprintln!("Cost: {} (improved {})", new_cost, cost - new_cost);
 
-        if opts.new_egraph && i != order.len() - 1 {
+        if opts.new_egraph && i != opts.phase.len() - 1 {
             if *phase == Phase::PreCompile {
                 // let extractor = Extractor::new(
                 //     &new_eg,
@@ -256,7 +269,17 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
                 //     ),
                 // );
                 // let (cost, new_prog) = extractor.find_best(root);
-                let (cost, new_prog) = Extractor::new(&new_eg, VecCostFn).find_best(root);
+                // let (cost, new_prog) = Extractor::new(&new_eg, VecCostFn).find_best(root);
+
+                let patterns: Vec<RecExpr<egg::ENodeOrVar<_>>> = rules[&Phase::Compile]
+                    .iter()
+                    .flat_map(|x| x.searcher.get_pattern_ast())
+                    .cloned()
+                    .collect();
+
+                let (cost, new_prog) =
+                    TopDownExtractor::new(&new_eg, &patterns).find_best(root);
+
                 eprintln!("new:\n{}", new_prog.pretty(100));
                 eprintln!("Extracted prog cost: {cost}");
                 prog = new_prog;
@@ -268,7 +291,7 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
         cost = new_cost;
 
         // HACK:
-        if i == order.len() - 1 {
+        if i == opts.phase.len() - 1 {
             prog = new_prog;
         }
     }

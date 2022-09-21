@@ -4,6 +4,8 @@ use std::{
 };
 
 use argh::FromArgs;
+
+use crate::rules::Phase;
 /// The Diospyros Equality Saturation Compiler
 #[derive(FromArgs)]
 pub struct Opts {
@@ -83,6 +85,10 @@ pub struct Opts {
     /// pre-desugared
     #[argh(switch)]
     pub pre_desugared: bool,
+
+    /// the order to run phases in
+    #[argh(option)]
+    pub phase: Vec<Phase>,
 }
 
 fn read_path(path: &str) -> Result<PathBuf, String> {
