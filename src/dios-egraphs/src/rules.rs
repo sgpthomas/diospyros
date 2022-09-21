@@ -271,14 +271,16 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
                 // let (cost, new_prog) = extractor.find_best(root);
                 // let (cost, new_prog) = Extractor::new(&new_eg, VecCostFn).find_best(root);
 
-                let patterns: Vec<RecExpr<egg::ENodeOrVar<_>>> = rules[&Phase::Compile]
+                let patterns: Vec<
+                    std::sync::Arc<dyn egg::Searcher<VecLang, _> + Send + Sync>,
+                > = rules[&Phase::Compile]
                     .iter()
-                    .flat_map(|x| x.searcher.get_pattern_ast())
+                    .map(|x| &x.searcher)
                     .cloned()
                     .collect();
 
                 let (cost, new_prog) =
-                    TopDownExtractor::new(&new_eg, &patterns).find_best(root);
+                    TopDownExtractor::new(&new_eg, patterns.as_slice()).find_best(root);
 
                 eprintln!("new:\n{}", new_prog.pretty(100));
                 eprintln!("Extracted prog cost: {cost}");
