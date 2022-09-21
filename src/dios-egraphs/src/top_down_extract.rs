@@ -1,18 +1,19 @@
 use std::{collections::HashMap, fmt::Display};
 
 use egg::{Language, Searcher};
+use itertools::Itertools;
 
-pub struct TopDownExtractor<'a, L: egg::Language, N: egg::Analysis<L>> {
+pub struct TopDownExtractor<'a, L: egg::Language + Display, N: egg::Analysis<L>> {
     score_map: HashMap<L, f64>,
     egraph: &'a egg::EGraph<L, N>,
     patterns: &'a [std::sync::Arc<dyn egg::Searcher<L, N> + Send + Sync>],
 }
 
-struct RootlessPattern<L: egg::Language> {
+struct RootlessPattern<L: egg::Language + Display> {
     legs: Vec<egg::Pattern<L>>,
 }
 
-impl<L: egg::Language> From<&egg::PatternAst<L>> for RootlessPattern<L> {
+impl<L: egg::Language + Display> From<&egg::PatternAst<L>> for RootlessPattern<L> {
     fn from(pattern: &egg::PatternAst<L>) -> Self {
         let root: egg::Id = (pattern.as_ref().len() - 1).into();
         let legs = match &pattern[root] {
@@ -31,50 +32,70 @@ impl<L: egg::Language> From<&egg::PatternAst<L>> for RootlessPattern<L> {
     }
 }
 
-impl<L: egg::Language> RootlessPattern<L> {
+impl<L: egg::Language + Display> RootlessPattern<L> {
     fn search_eclass<N: egg::Analysis<L>>(
         &self,
         egraph: &egg::EGraph<L, N>,
         eclass: egg::Id,
-    ) -> usize {
+    ) -> Vec<L> {
         let class = &egraph[eclass];
-        let mut count = 0;
-        for node in &class.nodes {
-            let children = node.children();
-            if children.len() == self.legs.len() {
-                for (child_id, pattern) in children.iter().zip(self.legs.iter()) {
-                    if let Some(res) = pattern.search_eclass(&egraph, *child_id) {
-                        eprintln!("{:?}", res.reify());
-                        count += 1;
-                    }
-                }
-            }
-        }
-        count
+        class
+            .nodes
+            .iter()
+            // we only want to consider nodes with the same number as legs as self
+            .filter(|node| node.children().len() == self.legs.len())
+            .map(|node| {
+                node.children()
+                    .iter()
+                    .zip(self.legs.iter())
+                    .filter_map(|(child_id, pattern)| {
+                        pattern
+                            .search_eclass(&egraph, *child_id)
+                            .map(|res| res.reify())
+                    })
+                    .flatten()
+                    .collect::<Vec<_>>()
+            })
+            .flatten()
+            .unique()
+            .collect()
     }
 }
 
-trait Reify<L: egg::Language> {
-    fn reify(&self) -> Vec<egg::RecExpr<L>>;
+trait Reify<L: egg::Language + Display> {
+    fn reify(&self) -> Vec<L>;
 }
 
-impl<'a, L: egg::Language> Reify<L> for egg::SearchMatches<'a, L> {
-    fn reify(&self) -> Vec<egg::RecExpr<L>> {
-        if let Some(ast) = &self.ast {
-            let hack: Vec<L> = ast
-                .as_ref()
-                .as_ref()
-                .iter()
-                .flat_map(|n| match n {
-                    egg::ENodeOrVar::ENode(x) => Some(x.clone()),
-                    egg::ENodeOrVar::Var(_) => None,
-                })
-                .collect();
-            let r: egg::RecExpr<L> = hack.into();
-            vec![]
-        } else {
-            panic!()
-        }
+impl<'a, L: egg::Language + Display> Reify<L> for egg::SearchMatches<'a, L> {
+    fn reify(&self) -> Vec<L> {
+        self.substs
+            .iter()
+            .filter_map(|subst| {
+                if let Some(ast) = &self.ast {
+                    Some((subst, ast))
+                } else {
+                    None
+                }
+            })
+            .map(|(subst, ast)| {
+                let mut owned = ast.as_ref().as_ref().to_vec();
+                owned.iter_mut().rev().for_each(|l| {
+                    l.update_children(|id| match &ast[id] {
+                        egg::ENodeOrVar::ENode(_) => id,
+                        egg::ENodeOrVar::Var(var) => *(subst.get(*var).unwrap()),
+                    })
+                });
+                let blah: Vec<L> = owned
+                    .into_iter()
+                    .filter_map(|l| match l {
+                        egg::ENodeOrVar::ENode(inner) => Some(inner),
+                        egg::ENodeOrVar::Var(_) => None,
+                    })
+                    .collect();
+                blah
+            })
+            .flatten()
+            .collect()
     }
 }
 
@@ -104,33 +125,28 @@ impl<'a, L: egg::Language + Display, N: egg::Analysis<L>> TopDownExtractor<'a, L
         todo!()
     }
 
-    /// Use a fixed point algorithm to calculate the score
-    /// for each e-class.
     fn find_scores(&mut self) {
-        let mut did_something = true;
-        while did_something {
-            // if this stays false for the body of the loop, then
-            // we're done.
-            did_something = false;
+        // go through each class, and assign all children nodes a score
+        for (i, class) in self.egraph.classes().enumerate() {
+            eprintln!("id: {i} =====");
+            eprintln!("{class:?}");
+            for pat in self.patterns {
+                eprintln!("pattern: {}", pat.get_pattern_ast().unwrap().pretty(80),);
 
-            for (i, class) in self.egraph.classes().enumerate() {
-                eprintln!("id: {i} =====");
-                eprintln!("{class:?}");
-                if i == 7 {
-                    let x = 4;
-                    eprintln!(
-                        "pattern: {}\n{:?}",
-                        self.patterns[x].get_pattern_ast().unwrap().pretty(80),
-                        self.patterns[x].get_pattern_ast().unwrap()
-                    );
+                let rootless: RootlessPattern<_> = pat.get_pattern_ast().unwrap().into();
+                let n_matches = rootless.search_eclass(&self.egraph, class.id);
 
-                    let rootless: RootlessPattern<_> =
-                        self.patterns[x].get_pattern_ast().unwrap().into();
-                    let n_matches = rootless.search_eclass(&self.egraph, class.id);
+                eprintln!("{:?} -> {n_matches:?}", class.nodes);
 
-                    eprintln!("{:?} -> {n_matches}", class.nodes);
+                for m in n_matches {
+                    self.score_map
+                        .entry(m)
+                        .and_modify(|x| *x += 1.0)
+                        .or_insert(1.0);
                 }
             }
         }
+
+        eprintln!("{:#?}", self.score_map);
     }
 }

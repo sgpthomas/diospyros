@@ -1,0 +1,1165 @@
+=================================
+Starting Phase 1: Pre-compilation
+=================================
+[ruler_1093_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?a ?b) (* ?c ?d))
+[ruler_1094_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?d ?c) (* ?a ?b))
+[ruler_1095_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?c ?b) (* ?d ?a))
+[ruler_1095_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?c ?b) (* ?d ?a)) => (* (* ?d ?c) (* ?b ?a))
+[ruler_1096_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?a ?c) (* ?b ?d))
+[ruler_1097_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?d ?a) (* ?b ?c))
+[ruler_1098_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?b ?a) (* ?c ?d))
+[ruler_1098_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?b ?a) (* ?c ?d)) => (* (* ?d ?c) (* ?b ?a))
+[ruler_1099_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?b ?a) (* ?d ?c))
+[ruler_1100_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?d ?b) (* ?a ?c))
+[ruler_1100_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?d ?b) (* ?a ?c)) => (* (* ?d ?c) (* ?b ?a))
+[ruler_1101_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?b ?c) (* ?d ?a))
+[ruler_1102_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?c ?d) (* ?b ?a))
+[ruler_1103_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?c ?d) (* ?a ?b))
+[ruler_1104_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?c ?a) (* ?b ?d))
+[ruler_1104_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?c ?a) (* ?b ?d)) => (* (* ?d ?c) (* ?b ?a))
+[ruler_1105_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?c ?a) (* ?d ?b))
+[ruler_1105_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?c ?a) (* ?d ?b)) => (* (* ?d ?c) (* ?b ?a))
+[ruler_1106_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?b ?c) (* ?a ?d))
+[ruler_1106_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?b ?c) (* ?a ?d)) => (* (* ?d ?c) (* ?b ?a))
+[ruler_1107_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?c ?b) (* ?a ?d))
+[ruler_1107_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?c ?b) (* ?a ?d)) => (* (* ?d ?c) (* ?b ?a))
+[ruler_1108_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?d ?c) (+ ?a ?b))
+[ruler_1109_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?a ?c) (+ ?b ?d))
+[ruler_1110_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?b ?c) (+ ?d ?a))
+[ruler_1111_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?b ?a) (+ ?d ?c))
+[ruler_1112_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?a ?b) (+ ?c ?d))
+[ruler_1113_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?c ?a) (+ ?b ?d))
+[ruler_1113_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?c ?a) (+ ?b ?d)) => (+ (+ ?d ?c) (+ ?b ?a))
+[ruler_1114_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?d ?b) (+ ?c ?a))
+[ruler_1115_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?b ?c) (+ ?a ?d))
+[ruler_1115_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?b ?c) (+ ?a ?d)) => (+ (+ ?d ?c) (+ ?b ?a))
+[ruler_1116_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?c ?a) (+ ?d ?b))
+[ruler_1116_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?c ?a) (+ ?d ?b)) => (+ (+ ?d ?c) (+ ?b ?a))
+[ruler_1117_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?c ?d) (+ ?b ?a))
+[ruler_1118_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?c ?b) (+ ?a ?d))
+[ruler_1118_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?c ?b) (+ ?a ?d)) => (+ (+ ?d ?c) (+ ?b ?a))
+[ruler_1119_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?d ?b) (+ ?a ?c))
+[ruler_1119_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?d ?b) (+ ?a ?c)) => (+ (+ ?d ?c) (+ ?b ?a))
+[ruler_1120_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?c ?d) (+ ?a ?b))
+[ruler_1121_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?d ?a) (+ ?b ?c))
+[ruler_1122_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?b ?a) (+ ?c ?d))
+[ruler_1122_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?b ?a) (+ ?c ?d)) => (+ (+ ?d ?c) (+ ?b ?a))
+[ruler_1123_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (- (- ?d ?b) (- ?c ?a))
+[ruler_1158_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (- (- ?a ?c) (- ?b ?d))
+[ruler_1159_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (- (- ?a ?b) (- ?c ?d))
+[ruler_1161_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (* ?b ?a)) => (* (* ?d ?b) (* ?c ?a))
+[ruler_1162_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (+ ?b ?a)) => (+ (+ ?c ?b) (+ ?d ?a))
+[ruler_1162_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?c ?b) (+ ?d ?a)) => (+ (+ ?d ?c) (+ ?b ?a))
+[ruler_1163_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (- (+ ?a ?c) (- ?b ?d))
+[ruler_1164_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (- (+ ?c ?d) (- ?b ?a))
+[ruler_1165_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (- (+ ?d ?a) (- ?b ?c))
+[ruler_1166_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (- (+ ?c ?a) (- ?b ?d))
+[ruler_1166_lr-rev cd:0.00 avg:6.00] 
+  (- (+ ?c ?a) (- ?b ?d)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1167_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (- ?b ?a)) => (+ (+ ?b ?c) (- ?d ?a))
+[ruler_1168_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (+ ?c ?a) (- ?d ?b))
+[ruler_1168_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?c ?a) (- ?d ?b)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1169_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (+ ?d ?a) (- ?c ?b))
+[ruler_1169_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?d ?a) (- ?c ?b)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1170_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (+ ?a ?c) (- ?d ?b))
+[ruler_1170_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?a ?c) (- ?d ?b)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1171_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (- ?b ?a)) => (+ (+ ?c ?b) (- ?d ?a))
+[ruler_1171_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?c ?b) (- ?d ?a)) => (+ (+ ?d ?c) (- ?b ?a))
+[ruler_1172_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (- ?b ?a)) => (+ (+ ?d ?b) (- ?c ?a))
+[ruler_1173_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (+ ?c ?d) (- ?a ?b))
+[ruler_1173_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?c ?d) (- ?a ?b)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1174_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (- ?b ?a)) => (+ (+ ?c ?d) (- ?b ?a))
+[ruler_1175_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (+ ?d ?c) (- ?a ?b))
+[ruler_1175_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (- ?a ?b)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1176_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (+ ?a ?b) (- ?d ?c))
+[ruler_1176_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?a ?b) (- ?d ?c)) => (+ (- ?d ?c) (+ ?b ?a))
+[ruler_1177_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (- ?d ?c) (+ ?a ?b))
+[ruler_1178_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (- ?b ?c) (+ ?a ?d))
+[ruler_1178_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?b ?c) (+ ?a ?d)) => (+ (- ?d ?c) (+ ?b ?a))
+[ruler_1179_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (- ?c ?b) (+ ?a ?d))
+[ruler_1179_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?c ?b) (+ ?a ?d)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1180_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (- ?d ?b) (+ ?a ?c))
+[ruler_1180_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?d ?b) (+ ?a ?c)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1181_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (- ?b ?c) (+ ?d ?a))
+[ruler_1182_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (+ ?b ?a) (- ?d ?c))
+[ruler_1182_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?b ?a) (- ?d ?c)) => (+ (- ?d ?c) (+ ?b ?a))
+[ruler_1183_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (- ?a ?b) (+ ?c ?d))
+[ruler_1183_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?a ?b) (+ ?c ?d)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1184_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (+ ?a ?d) (- ?b ?c))
+[ruler_1184_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?a ?d) (- ?b ?c)) => (+ (- ?d ?c) (+ ?b ?a))
+[ruler_1185_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (+ ?d ?a) (- ?b ?c))
+[ruler_1185_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?d ?a) (- ?b ?c)) => (+ (- ?d ?c) (+ ?b ?a))
+[ruler_1186_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (- ?c ?b) (+ ?d ?a))
+[ruler_1186_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?c ?b) (+ ?d ?a)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1187_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (- ?a ?c) (+ ?b ?d))
+[ruler_1188_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (+ ?b ?d) (- ?a ?c))
+[ruler_1188_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?b ?d) (- ?a ?c)) => (+ (- ?d ?c) (+ ?b ?a))
+[ruler_1189_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (- ?d ?b) (+ ?c ?a))
+[ruler_1189_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?d ?b) (+ ?c ?a)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1190_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (- ?a ?b) (+ ?d ?c))
+[ruler_1190_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?a ?b) (+ ?d ?c)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1191_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (+ ?b ?a)) => (+ (+ ?d ?b) (- ?a ?c))
+[ruler_1191_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?d ?b) (- ?a ?c)) => (+ (- ?d ?c) (+ ?b ?a))
+[ruler_1192_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (+ ?b ?a)) => (* (* ?c ?d) (+ ?a ?b))
+[ruler_1193_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (+ ?b ?a)) => (* (* ?c ?d) (+ ?b ?a))
+[ruler_1194_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (+ ?b ?a)) => (* (* ?d ?c) (+ ?a ?b))
+[ruler_1195_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (* ?b ?a)) => (* (* ?a ?b) (+ ?c ?d))
+[ruler_1195_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?a ?b) (+ ?c ?d)) => (* (+ ?d ?c) (* ?b ?a))
+[ruler_1196_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (* ?b ?a)) => (* (* ?a ?b) (+ ?d ?c))
+[ruler_1196_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?a ?b) (+ ?d ?c)) => (* (+ ?d ?c) (* ?b ?a))
+[ruler_1197_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (* ?b ?a)) => (* (* ?b ?a) (+ ?c ?d))
+[ruler_1197_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?b ?a) (+ ?c ?d)) => (* (+ ?d ?c) (* ?b ?a))
+[ruler_1198_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (* ?b ?a)) => (* (+ ?c ?d) (* ?a ?b))
+[ruler_1199_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (* ?b ?a)) => (* (+ ?d ?c) (* ?a ?b))
+[ruler_1200_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (* ?b ?a)) => (* (* ?b ?a) (+ ?d ?c))
+[ruler_1200_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?b ?a) (+ ?d ?c)) => (* (+ ?d ?c) (* ?b ?a))
+[ruler_1201_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (* ?b ?a)) => (* (+ ?c ?d) (* ?b ?a))
+[ruler_1202_lr cd:0.00 avg:6.00] 
+  (* (* ?d ?c) (- ?b ?a)) => (* (* ?c ?d) (- ?b ?a))
+[ruler_1203_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (* ?b ?a)) => (* (* ?a ?b) (- ?d ?c))
+[ruler_1203_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?a ?b) (- ?d ?c)) => (* (- ?d ?c) (* ?b ?a))
+[ruler_1204_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (* ?b ?a)) => (* (- ?d ?c) (* ?a ?b))
+[ruler_1205_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (* ?b ?a)) => (* (* ?b ?a) (- ?d ?c))
+[ruler_1205_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?b ?a) (- ?d ?c)) => (* (- ?d ?c) (* ?b ?a))
+[ruler_1206_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (* ?b ?a)) => (- (* ?c ?d) (* ?b ?a))
+[ruler_1207_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (* ?b ?a)) => (- (* ?d ?c) (* ?a ?b))
+[ruler_1208_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (* ?b ?a)) => (- (* ?c ?d) (* ?a ?b))
+[ruler_1209_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (* ?b ?a)) => (+ (* ?a ?b) (* ?c ?d))
+[ruler_1210_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (* ?b ?a)) => (+ (* ?d ?c) (* ?a ?b))
+[ruler_1211_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (* ?b ?a)) => (+ (* ?c ?d) (* ?b ?a))
+[ruler_1212_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (* ?b ?a)) => (+ (* ?b ?a) (* ?c ?d))
+[ruler_1212_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?b ?a) (* ?c ?d)) => (+ (* ?d ?c) (* ?b ?a))
+[ruler_1213_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (* ?b ?a)) => (+ (* ?b ?a) (* ?d ?c))
+[ruler_1214_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (* ?b ?a)) => (+ (* ?c ?d) (* ?a ?b))
+[ruler_1215_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (- ?b ?a)) => (+ (- ?d ?a) (- ?b ?c))
+[ruler_1216_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (- ?b ?a)) => (+ (- ?b ?c) (- ?d ?a))
+[ruler_1217_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (- ?b ?a)) => (+ (- ?b ?a) (- ?d ?c))
+[ruler_1218_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (+ ?b ?a)) => (+ (- ?d ?a) (- ?c ?b))
+[ruler_1218_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?d ?a) (- ?c ?b)) => (- (+ ?d ?c) (+ ?b ?a))
+[ruler_1219_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (+ ?b ?a)) => (+ (- ?c ?b) (- ?d ?a))
+[ruler_1219_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?c ?b) (- ?d ?a)) => (- (+ ?d ?c) (+ ?b ?a))
+[ruler_1220_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (+ ?b ?a)) => (+ (- ?c ?a) (- ?d ?b))
+[ruler_1220_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?c ?a) (- ?d ?b)) => (- (+ ?d ?c) (+ ?b ?a))
+[ruler_1221_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (+ ?b ?a)) => (- (+ ?c ?d) (+ ?a ?b))
+[ruler_1222_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (+ ?b ?a)) => (- (+ ?c ?d) (+ ?b ?a))
+[ruler_1223_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (+ ?b ?a)) => (- (+ ?d ?c) (+ ?a ?b))
+[ruler_1224_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (+ ?b ?a)) => (+ (- ?d ?b) (- ?c ?a))
+[ruler_1224_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?d ?b) (- ?c ?a)) => (- (+ ?d ?c) (+ ?b ?a))
+[ruler_1225_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (+ (- ?d ?b) (- ?a ?c))
+[ruler_1225_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?d ?b) (- ?a ?c)) => (- (- ?d ?c) (- ?b ?a))
+[ruler_1226_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (+ (- ?a ?b) (- ?d ?c))
+[ruler_1226_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?a ?b) (- ?d ?c)) => (- (- ?d ?c) (- ?b ?a))
+[ruler_1227_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (- (+ ?a ?d) (+ ?c ?b))
+[ruler_1227_lr-rev cd:0.00 avg:6.00] 
+  (- (+ ?a ?d) (+ ?c ?b)) => (- (- ?d ?c) (- ?b ?a))
+[ruler_1228_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (- (+ ?d ?a) (+ ?b ?c))
+[ruler_1228_lr-rev cd:0.00 avg:6.00] 
+  (- (+ ?d ?a) (+ ?b ?c)) => (- (- ?d ?c) (- ?b ?a))
+[ruler_1229_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (+ (- ?d ?c) (- ?a ?b))
+[ruler_1229_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (- ?a ?b)) => (- (- ?d ?c) (- ?b ?a))
+[ruler_1230_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (- (+ ?d ?a) (+ ?c ?b))
+[ruler_1230_lr-rev cd:0.00 avg:6.00] 
+  (- (+ ?d ?a) (+ ?c ?b)) => (- (- ?d ?c) (- ?b ?a))
+[ruler_1231_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (- ?b ?a)) => (- (* ?c ?d) (- ?b ?a))
+[ruler_1232_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (+ ?b ?a)) => (- (- ?d ?c) (+ ?a ?b))
+[ruler_1233_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (+ ?b ?a)) => (- (- ?d ?b) (+ ?a ?c))
+[ruler_1233_lr-rev cd:0.00 avg:6.00] 
+  (- (- ?d ?b) (+ ?a ?c)) => (- (- ?d ?c) (+ ?b ?a))
+[ruler_1234_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (+ ?b ?a)) => (- (- ?d ?b) (+ ?c ?a))
+[ruler_1235_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (* ?b ?a)) => (- (- ?d ?c) (* ?a ?b))
+[ruler_1236_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (- ?b ?a)) => (* (- ?a ?b) (- ?c ?d))
+[ruler_1237_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (- ?b ?a)) => (* (- ?b ?a) (- ?d ?c))
+[ruler_1238_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (+ ?b ?a)) => (+ (* ?c ?d) (+ ?a ?b))
+[ruler_1239_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (+ ?b ?a)) => (+ (* ?d ?c) (+ ?a ?b))
+[ruler_1240_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (+ ?b ?a)) => (+ (* ?c ?d) (+ ?b ?a))
+[ruler_1241_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (* ?b ?a)) => (+ (+ ?c ?d) (* ?b ?a))
+[ruler_1242_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (* ?b ?a)) => (+ (+ ?d ?c) (* ?a ?b))
+[ruler_1243_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (* ?b ?a)) => (+ (* ?b ?a) (+ ?c ?d))
+[ruler_1243_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?b ?a) (+ ?c ?d)) => (+ (+ ?d ?c) (* ?b ?a))
+[ruler_1244_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (* ?b ?a)) => (+ (* ?a ?b) (+ ?c ?d))
+[ruler_1244_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?a ?b) (+ ?c ?d)) => (+ (+ ?d ?c) (* ?b ?a))
+[ruler_1245_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (* ?b ?a)) => (+ (+ ?c ?d) (* ?a ?b))
+[ruler_1246_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (* ?b ?a)) => (+ (* ?b ?a) (+ ?d ?c))
+[ruler_1246_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?b ?a) (+ ?d ?c)) => (+ (+ ?d ?c) (* ?b ?a))
+[ruler_1247_lr cd:0.00 avg:6.00] 
+  (+ (+ ?d ?c) (* ?b ?a)) => (+ (* ?a ?b) (+ ?d ?c))
+[ruler_1247_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?a ?b) (+ ?d ?c)) => (+ (+ ?d ?c) (* ?b ?a))
+[ruler_1248_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (+ ?b ?a)) => (* (+ ?c ?d) (+ ?a ?b))
+[ruler_1249_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (+ ?b ?a)) => (* (+ ?d ?c) (+ ?a ?b))
+[ruler_1250_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (+ ?b ?a)) => (* (+ ?b ?a) (+ ?d ?c))
+[ruler_1251_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (+ ?b ?a)) => (* (+ ?b ?a) (+ ?c ?d))
+[ruler_1251_lr-rev cd:0.00 avg:6.00] 
+  (* (+ ?b ?a) (+ ?c ?d)) => (* (+ ?d ?c) (+ ?b ?a))
+[ruler_1252_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (+ ?b ?a)) => (* (+ ?a ?b) (+ ?c ?d))
+[ruler_1253_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (+ ?b ?a)) => (* (+ ?c ?d) (+ ?b ?a))
+[ruler_1347_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (+ (- ?a ?c) (- ?d ?b))
+[ruler_1347_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?a ?c) (- ?d ?b)) => (- (- ?d ?c) (- ?b ?a))
+[ruler_1348_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (+ ?b ?a)) => (- (- ?d ?a) (+ ?b ?c))
+[ruler_1349_lr cd:0.00 avg:6.00] 
+  (- (- ?d ?c) (- ?b ?a)) => (- (+ ?a ?d) (+ ?b ?c))
+[ruler_1349_lr-rev cd:0.00 avg:6.00] 
+  (- (+ ?a ?d) (+ ?b ?c)) => (- (- ?d ?c) (- ?b ?a))
+[ruler_1350_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (- ?b ?a)) => (+ (+ ?a ?d) (- ?c ?b))
+[ruler_1350_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?a ?d) (- ?c ?b)) => (- (+ ?d ?c) (- ?b ?a))
+[ruler_1354_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (- ?b ?a)) => (* (- ?c ?d) (- ?a ?b))
+[ruler_1355_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (* ?b ?a)) => (- (+ ?c ?d) (* ?a ?b))
+[ruler_1356_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (* ?b ?a)) => (- (+ ?c ?d) (* ?b ?a))
+[ruler_1357_lr cd:0.00 avg:6.00] 
+  (- (+ ?d ?c) (* ?b ?a)) => (- (+ ?d ?c) (* ?a ?b))
+[ruler_1358_lr cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (- ?b ?a)) => (+ (* ?c ?d) (- ?b ?a))
+[ruler_1359_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (- ?b ?a)) => (+ (* ?c ?d) (- ?a ?b))
+[ruler_1359_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?c ?d) (- ?a ?b)) => (- (* ?d ?c) (- ?b ?a))
+[ruler_1360_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (- ?b ?a)) => (+ (* ?d ?c) (- ?a ?b))
+[ruler_1360_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?d ?c) (- ?a ?b)) => (- (* ?d ?c) (- ?b ?a))
+[ruler_1361_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (* ?b ?a)) => (+ (- ?d ?c) (* ?a ?b))
+[ruler_1362_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (* ?b ?a)) => (+ (* ?b ?a) (- ?d ?c))
+[ruler_1362_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?b ?a) (- ?d ?c)) => (+ (- ?d ?c) (* ?b ?a))
+[ruler_1363_lr cd:0.00 avg:6.00] 
+  (+ (- ?d ?c) (* ?b ?a)) => (+ (* ?a ?b) (- ?d ?c))
+[ruler_1363_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?a ?b) (- ?d ?c)) => (+ (- ?d ?c) (* ?b ?a))
+[ruler_1364_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (- ?b ?a)) => (+ (- ?a ?b) (* ?c ?d))
+[ruler_1364_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?a ?b) (* ?c ?d)) => (- (* ?d ?c) (- ?b ?a))
+[ruler_1365_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (+ ?b ?a)) => (* (- ?d ?c) (+ ?a ?b))
+[ruler_1366_lr cd:0.00 avg:6.00] 
+  (* (+ ?d ?c) (- ?b ?a)) => (* (+ ?c ?d) (- ?b ?a))
+[ruler_1367_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (+ ?b ?a)) => (* (+ ?a ?b) (- ?d ?c))
+[ruler_1367_lr-rev cd:0.00 avg:6.00] 
+  (* (+ ?a ?b) (- ?d ?c)) => (* (- ?d ?c) (+ ?b ?a))
+[ruler_1368_lr cd:0.00 avg:6.00] 
+  (* (- ?d ?c) (+ ?b ?a)) => (* (+ ?b ?a) (- ?d ?c))
+[ruler_1368_lr-rev cd:0.00 avg:6.00] 
+  (* (+ ?b ?a) (- ?d ?c)) => (* (- ?d ?c) (+ ?b ?a))
+[ruler_1369_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (+ ?b ?a)) => (- (* ?c ?d) (+ ?a ?b))
+[ruler_1370_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (+ ?b ?a)) => (- (* ?c ?d) (+ ?b ?a))
+[ruler_1371_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (+ ?b ?a)) => (- (* ?d ?c) (+ ?a ?b))
+[ruler_1466_lr cd:0.00 avg:6.00] 
+  (- (* ?d ?c) (- ?b ?a)) => (+ (- ?a ?b) (* ?d ?c))
+[ruler_1466_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?a ?b) (* ?d ?c)) => (- (* ?d ?c) (- ?b ?a))
+[ruler_1600_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* ?c (* ?a ?b))
+[ruler_1601_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* ?b (* ?c ?a))
+[ruler_1602_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* ?b (* ?a ?c))
+[ruler_1602_lr-rev cd:0.00 avg:4.00] 
+  (* ?b (* ?a ?c)) => (* ?c (* ?b ?a))
+[ruler_1603_lr cd:0.00 avg:4.00] 
+  (* (* ?c ?b) ?a) => (* (* ?c ?a) ?b)
+[ruler_1604_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* (* ?c ?a) ?b)
+[ruler_1604_lr-rev cd:0.00 avg:4.00] 
+  (* (* ?c ?a) ?b) => (* ?c (* ?b ?a))
+[ruler_1605_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* (* ?a ?c) ?b)
+[ruler_1605_lr-rev cd:0.00 avg:4.00] 
+  (* (* ?a ?c) ?b) => (* ?c (* ?b ?a))
+[ruler_1606_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* (* ?c ?b) ?a)
+[ruler_1606_lr-rev cd:0.00 avg:4.00] 
+  (* (* ?c ?b) ?a) => (* ?c (* ?b ?a))
+[ruler_1607_lr cd:0.00 avg:4.00] 
+  (* (* ?c ?b) ?a) => (* (* ?b ?c) ?a)
+[ruler_1608_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* (* ?b ?a) ?c)
+[ruler_1608_lr-rev cd:0.00 avg:4.00] 
+  (* (* ?b ?a) ?c) => (* ?c (* ?b ?a))
+[ruler_1609_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* (* ?a ?b) ?c)
+[ruler_1609_lr-rev cd:0.00 avg:4.00] 
+  (* (* ?a ?b) ?c) => (* ?c (* ?b ?a))
+[ruler_1610_lr cd:0.00 avg:4.00] 
+  (* (* ?c ?b) ?a) => (* (* ?b ?a) ?c)
+[ruler_1610_lr-rev cd:0.00 avg:4.00] 
+  (* (* ?b ?a) ?c) => (* (* ?c ?b) ?a)
+[ruler_1611_lr cd:0.00 avg:4.00] 
+  (* (* ?c ?b) ?a) => (* (* ?a ?b) ?c)
+[ruler_1612_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* (* ?b ?c) ?a)
+[ruler_1612_lr-rev cd:0.00 avg:4.00] 
+  (* (* ?b ?c) ?a) => (* ?c (* ?b ?a))
+[ruler_1613_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ ?c (+ ?a ?b))
+[ruler_1614_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ ?b (+ ?c ?a))
+[ruler_1615_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ ?a (+ ?b ?c))
+[ruler_1616_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ (+ ?b ?a) ?c)
+[ruler_1616_lr-rev cd:0.00 avg:4.00] 
+  (+ (+ ?b ?a) ?c) => (+ ?c (+ ?b ?a))
+[ruler_1617_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ (+ ?c ?a) ?b)
+[ruler_1617_lr-rev cd:0.00 avg:4.00] 
+  (+ (+ ?c ?a) ?b) => (+ ?c (+ ?b ?a))
+[ruler_1618_lr cd:0.00 avg:4.00] 
+  (+ (+ ?c ?b) ?a) => (+ (+ ?c ?a) ?b)
+[ruler_1619_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ (+ ?a ?c) ?b)
+[ruler_1619_lr-rev cd:0.00 avg:4.00] 
+  (+ (+ ?a ?c) ?b) => (+ ?c (+ ?b ?a))
+[ruler_1620_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ (+ ?c ?b) ?a)
+[ruler_1620_lr-rev cd:0.00 avg:4.00] 
+  (+ (+ ?c ?b) ?a) => (+ ?c (+ ?b ?a))
+[ruler_1621_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ (+ ?b ?c) ?a)
+[ruler_1621_lr-rev cd:0.00 avg:4.00] 
+  (+ (+ ?b ?c) ?a) => (+ ?c (+ ?b ?a))
+[ruler_1622_lr cd:0.00 avg:4.00] 
+  (+ (+ ?c ?b) ?a) => (+ (+ ?a ?b) ?c)
+[ruler_1623_lr cd:0.00 avg:4.00] 
+  (+ (+ ?c ?b) ?a) => (+ (+ ?b ?c) ?a)
+[ruler_1624_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ (+ ?a ?b) ?c)
+[ruler_1624_lr-rev cd:0.00 avg:4.00] 
+  (+ (+ ?a ?b) ?c) => (+ ?c (+ ?b ?a))
+[ruler_1625_lr cd:0.00 avg:4.00] 
+  (+ (+ ?c ?b) ?a) => (+ (+ ?b ?a) ?c)
+[ruler_1625_lr-rev cd:0.00 avg:4.00] 
+  (+ (+ ?b ?a) ?c) => (+ (+ ?c ?b) ?a)
+[ruler_1656_lr cd:0.00 avg:4.00] 
+  (- (- ?c ?b) ?a) => (- (- ?c ?a) ?b)
+[ruler_1657_lr cd:0.00 avg:4.00] 
+  (- ?c (- ?b ?a)) => (- ?a (- ?b ?c))
+[ruler_1658_lr cd:0.00 avg:4.00] 
+  (* ?c (* ?b ?a)) => (* ?a (* ?b ?c))
+[ruler_1659_lr cd:0.00 avg:4.00] 
+  (+ ?c (+ ?b ?a)) => (+ ?b (+ ?a ?c))
+[ruler_1659_lr-rev cd:0.00 avg:4.00] 
+  (+ ?b (+ ?a ?c)) => (+ ?c (+ ?b ?a))
+[ruler_1660_lr cd:0.00 avg:4.00] 
+  (+ ?c (* ?b ?a)) => (+ ?c (* ?a ?b))
+[ruler_1661_lr cd:0.00 avg:4.00] 
+  (+ ?c (* ?b ?a)) => (+ (* ?b ?a) ?c)
+[ruler_1661_lr-rev cd:0.00 avg:4.00] 
+  (+ (* ?b ?a) ?c) => (+ ?c (* ?b ?a))
+[ruler_1662_lr cd:0.00 avg:4.00] 
+  (+ ?c (* ?b ?a)) => (+ (* ?a ?b) ?c)
+[ruler_1662_lr-rev cd:0.00 avg:4.00] 
+  (+ (* ?a ?b) ?c) => (+ ?c (* ?b ?a))
+[ruler_1663_lr cd:0.00 avg:4.00] 
+  (+ (* ?c ?b) ?a) => (+ (* ?b ?c) ?a)
+[ruler_1664_lr cd:0.00 avg:4.00] 
+  (* ?c (+ ?b ?a)) => (* ?c (+ ?a ?b))
+[ruler_1665_lr cd:0.00 avg:4.00] 
+  (* (+ ?c ?b) ?a) => (* (+ ?b ?c) ?a)
+[ruler_1666_lr cd:0.00 avg:4.00] 
+  (* ?c (+ ?b ?a)) => (* (+ ?b ?a) ?c)
+[ruler_1666_lr-rev cd:0.00 avg:4.00] 
+  (* (+ ?b ?a) ?c) => (* ?c (+ ?b ?a))
+[ruler_1667_lr cd:0.00 avg:4.00] 
+  (* ?c (+ ?b ?a)) => (* (+ ?a ?b) ?c)
+[ruler_1667_lr-rev cd:0.00 avg:4.00] 
+  (* (+ ?a ?b) ?c) => (* ?c (+ ?b ?a))
+[ruler_1668_lr cd:0.00 avg:4.00] 
+  (- ?c (+ ?b ?a)) => (- ?c (+ ?a ?b))
+[ruler_1669_lr cd:0.00 avg:4.00] 
+  (- ?c (+ ?b ?a)) => (- (- ?c ?a) ?b)
+[ruler_1669_lr-rev cd:0.00 avg:4.00] 
+  (- (- ?c ?a) ?b) => (- ?c (+ ?b ?a))
+[ruler_1670_lr cd:0.00 avg:4.00] 
+  (- ?c (* ?b ?a)) => (- ?c (* ?a ?b))
+[ruler_1671_lr cd:0.00 avg:4.00] 
+  (- (* ?c ?b) ?a) => (- (* ?b ?c) ?a)
+[ruler_1672_lr cd:0.00 avg:4.00] 
+  (- ?c (- ?b ?a)) => (- (+ ?a ?c) ?b)
+[ruler_1672_lr-rev cd:0.00 avg:4.00] 
+  (- (+ ?a ?c) ?b) => (- ?c (- ?b ?a))
+[ruler_1673_lr cd:0.00 avg:4.00] 
+  (- (+ ?c ?b) ?a) => (- (+ ?b ?c) ?a)
+[ruler_1674_lr cd:0.00 avg:4.00] 
+  (- ?c (- ?b ?a)) => (+ (- ?a ?b) ?c)
+[ruler_1674_lr-rev cd:0.00 avg:4.00] 
+  (+ (- ?a ?b) ?c) => (- ?c (- ?b ?a))
+[ruler_1675_lr cd:0.00 avg:4.00] 
+  (- (+ ?c ?b) ?a) => (+ (- ?b ?a) ?c)
+[ruler_1675_lr-rev cd:0.00 avg:4.00] 
+  (+ (- ?b ?a) ?c) => (- (+ ?c ?b) ?a)
+[ruler_1676_lr cd:0.00 avg:4.00] 
+  (- ?c (- ?b ?a)) => (+ (- ?c ?b) ?a)
+[ruler_1676_lr-rev cd:0.00 avg:4.00] 
+  (+ (- ?c ?b) ?a) => (- ?c (- ?b ?a))
+[ruler_1677_lr cd:0.00 avg:4.00] 
+  (+ (- ?c ?b) ?a) => (+ (- ?a ?b) ?c)
+[ruler_1678_lr cd:0.00 avg:4.00] 
+  (- (+ ?c ?b) ?a) => (+ (- ?c ?a) ?b)
+[ruler_1678_lr-rev cd:0.00 avg:4.00] 
+  (+ (- ?c ?a) ?b) => (- (+ ?c ?b) ?a)
+[ruler_1679_lr cd:0.00 avg:4.00] 
+  (- (+ ?c ?b) ?a) => (+ ?c (- ?b ?a))
+[ruler_1679_lr-rev cd:0.00 avg:4.00] 
+  (+ ?c (- ?b ?a)) => (- (+ ?c ?b) ?a)
+[ruler_1680_lr cd:0.00 avg:4.00] 
+  (- ?c (- ?b ?a)) => (+ ?a (- ?c ?b))
+[ruler_1680_lr-rev cd:0.00 avg:4.00] 
+  (+ ?a (- ?c ?b)) => (- ?c (- ?b ?a))
+[ruler_1681_lr cd:0.00 avg:4.00] 
+  (+ ?c (- ?b ?a)) => (+ (- ?c ?a) ?b)
+[ruler_1681_lr-rev cd:0.00 avg:4.00] 
+  (+ (- ?c ?a) ?b) => (+ ?c (- ?b ?a))
+[ruler_1682_lr cd:0.00 avg:4.00] 
+  (- (+ ?c ?b) ?a) => (+ ?b (- ?c ?a))
+[ruler_1682_lr-rev cd:0.00 avg:4.00] 
+  (+ ?b (- ?c ?a)) => (- (+ ?c ?b) ?a)
+[ruler_1683_lr cd:0.00 avg:4.00] 
+  (+ ?c (- ?b ?a)) => (+ (- ?b ?a) ?c)
+[ruler_1683_lr-rev cd:0.00 avg:4.00] 
+  (+ (- ?b ?a) ?c) => (+ ?c (- ?b ?a))
+[ruler_1684_lr cd:0.00 avg:4.00] 
+  (* ?c (- ?b ?a)) => (* (- ?b ?a) ?c)
+[ruler_1684_lr-rev cd:0.00 avg:4.00] 
+  (* (- ?b ?a) ?c) => (* ?c (- ?b ?a))
+[ruler_1721_lr cd:0.00 avg:4.00] 
+  (- ?c (+ ?b ?a)) => (- (- ?c ?b) ?a)
+[ruler_1721_lr-rev cd:0.00 avg:4.00] 
+  (- (- ?c ?b) ?a) => (- ?c (+ ?b ?a))
+[ruler_1722_lr cd:0.00 avg:4.00] 
+  (- ?c (- ?b ?a)) => (+ ?c (- ?a ?b))
+[ruler_1722_lr-rev cd:0.00 avg:4.00] 
+  (+ ?c (- ?a ?b)) => (- ?c (- ?b ?a))
+[ruler_1723_lr cd:0.00 avg:4.00] 
+  (+ ?c (- ?b ?a)) => (+ ?b (- ?c ?a))
+[ruler_1724_lr cd:0.00 avg:4.00] 
+  (- ?c (- ?b ?a)) => (- (+ ?c ?a) ?b)
+[ruler_1724_lr-rev cd:0.00 avg:4.00] 
+  (- (+ ?c ?a) ?b) => (- ?c (- ?b ?a))
+[ruler_1735_lr cd:2.00 avg:5.00] 
+  (- (neg ?c) (- ?b ?a)) => (- (- ?a ?c) ?b)
+[ruler_1735_lr-rev cd:-2.00 avg:5.00] 
+  (- (- ?a ?c) ?b) => (- (neg ?c) (- ?b ?a))
+[ruler_1736_lr cd:2.00 avg:5.00] 
+  (- (neg ?c) (- ?b ?a)) => (- (- ?a ?b) ?c)
+[ruler_1736_lr-rev cd:-2.00 avg:5.00] 
+  (- (- ?a ?b) ?c) => (- (neg ?c) (- ?b ?a))
+[ruler_1737_lr cd:-2.00 avg:5.00] 
+  (- ?c (- ?b ?a)) => (- (- ?a ?b) (neg ?c))
+[ruler_1737_lr-rev cd:2.00 avg:5.00] 
+  (- (- ?a ?b) (neg ?c)) => (- ?c (- ?b ?a))
+[ruler_1738_lr cd:-2.00 avg:5.00] 
+  (- ?c (- ?b ?a)) => (- (- ?c ?b) (neg ?a))
+[ruler_1738_lr-rev cd:2.00 avg:5.00] 
+  (- (- ?c ?b) (neg ?a)) => (- ?c (- ?b ?a))
+[ruler_1747_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ ?b (+ ?a ?c))
+[ruler_1747_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?b (+ ?a ?c)) => (- (+ ?c ?b) (neg ?a))
+[ruler_1748_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ ?a (+ ?b ?c))
+[ruler_1748_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?a (+ ?b ?c)) => (- (+ ?c ?b) (neg ?a))
+[ruler_1749_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ ?c (+ ?b ?a))
+[ruler_1749_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?c (+ ?b ?a)) => (- (+ ?c ?b) (neg ?a))
+[ruler_1750_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ ?a (+ ?c ?b))
+[ruler_1750_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?a (+ ?c ?b)) => (- (+ ?c ?b) (neg ?a))
+[ruler_1751_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ ?c (+ ?a ?b))
+[ruler_1751_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?c (+ ?a ?b)) => (- (+ ?c ?b) (neg ?a))
+[ruler_1752_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ ?b (+ ?c ?a))
+[ruler_1752_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?b (+ ?c ?a)) => (- (+ ?c ?b) (neg ?a))
+[ruler_1753_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ (+ ?c ?b) ?a)
+[ruler_1753_lr-rev cd:-2.00 avg:5.00] 
+  (+ (+ ?c ?b) ?a) => (- (+ ?c ?b) (neg ?a))
+[ruler_1754_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ (+ ?b ?a) ?c)
+[ruler_1754_lr-rev cd:-2.00 avg:5.00] 
+  (+ (+ ?b ?a) ?c) => (- (+ ?c ?b) (neg ?a))
+[ruler_1755_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ (+ ?c ?a) ?b)
+[ruler_1755_lr-rev cd:-2.00 avg:5.00] 
+  (+ (+ ?c ?a) ?b) => (- (+ ?c ?b) (neg ?a))
+[ruler_1756_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ (+ ?b ?c) ?a)
+[ruler_1756_lr-rev cd:-2.00 avg:5.00] 
+  (+ (+ ?b ?c) ?a) => (- (+ ?c ?b) (neg ?a))
+[ruler_1757_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ (+ ?a ?b) ?c)
+[ruler_1757_lr-rev cd:-2.00 avg:5.00] 
+  (+ (+ ?a ?b) ?c) => (- (+ ?c ?b) (neg ?a))
+[ruler_1758_lr cd:2.00 avg:5.00] 
+  (- (+ ?c ?b) (neg ?a)) => (+ (+ ?a ?c) ?b)
+[ruler_1758_lr-rev cd:-2.00 avg:5.00] 
+  (+ (+ ?a ?c) ?b) => (- (+ ?c ?b) (neg ?a))
+[ruler_1759_lr cd:-2.00 avg:5.00] 
+  (- (- ?c ?b) ?a) => (+ (- ?c ?b) (neg ?a))
+[ruler_1759_lr-rev cd:2.00 avg:5.00] 
+  (+ (- ?c ?b) (neg ?a)) => (- (- ?c ?b) ?a)
+[ruler_1760_lr cd:-2.00 avg:5.00] 
+  (- (- ?c ?b) ?a) => (+ (- ?c ?a) (neg ?b))
+[ruler_1760_lr-rev cd:2.00 avg:5.00] 
+  (+ (- ?c ?a) (neg ?b)) => (- (- ?c ?b) ?a)
+[ruler_1761_lr cd:-2.00 avg:5.00] 
+  (- (- ?c ?b) ?a) => (+ (neg ?a) (- ?c ?b))
+[ruler_1761_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (- ?c ?b)) => (- (- ?c ?b) ?a)
+[ruler_1762_lr cd:-2.00 avg:5.00] 
+  (- (- ?c ?b) ?a) => (+ (neg ?b) (- ?c ?a))
+[ruler_1762_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?b) (- ?c ?a)) => (- (- ?c ?b) ?a)
+[ruler_1763_lr cd:-2.00 avg:5.00] 
+  (- ?c (+ ?b ?a)) => (+ (neg ?a) (- ?c ?b))
+[ruler_1763_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (- ?c ?b)) => (- ?c (+ ?b ?a))
+[ruler_1764_lr cd:-2.00 avg:5.00] 
+  (- ?c (+ ?b ?a)) => (+ (- ?c ?b) (neg ?a))
+[ruler_1764_lr-rev cd:2.00 avg:5.00] 
+  (+ (- ?c ?b) (neg ?a)) => (- ?c (+ ?b ?a))
+[ruler_1765_lr cd:-2.00 avg:5.00] 
+  (- ?c (+ ?b ?a)) => (+ (- ?c ?a) (neg ?b))
+[ruler_1765_lr-rev cd:2.00 avg:5.00] 
+  (+ (- ?c ?a) (neg ?b)) => (- ?c (+ ?b ?a))
+[ruler_1766_lr cd:-2.00 avg:5.00] 
+  (- ?c (+ ?b ?a)) => (+ (neg ?b) (- ?c ?a))
+[ruler_1766_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?b) (- ?c ?a)) => (- ?c (+ ?b ?a))
+[ruler_1767_lr cd:-2.00 avg:5.00] 
+  (- ?c (+ ?b ?a)) => (- (neg ?b) (- ?a ?c))
+[ruler_1767_lr-rev cd:2.00 avg:5.00] 
+  (- (neg ?b) (- ?a ?c)) => (- ?c (+ ?b ?a))
+[ruler_1768_lr cd:-2.00 avg:5.00] 
+  (- ?c (+ ?b ?a)) => (- (neg ?a) (- ?b ?c))
+[ruler_1768_lr-rev cd:2.00 avg:5.00] 
+  (- (neg ?a) (- ?b ?c)) => (- ?c (+ ?b ?a))
+[ruler_1769_lr cd:-2.00 avg:5.00] 
+  (- ?c (- ?b ?a)) => (+ (neg ?b) (+ ?a ?c))
+[ruler_1769_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?b) (+ ?a ?c)) => (- ?c (- ?b ?a))
+[ruler_1770_lr cd:-2.00 avg:5.00] 
+  (- ?c (- ?b ?a)) => (+ (neg ?b) (+ ?c ?a))
+[ruler_1770_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?b) (+ ?c ?a)) => (- ?c (- ?b ?a))
+[ruler_1771_lr cd:-2.00 avg:5.00] 
+  (- (+ ?c ?b) ?a) => (+ (neg ?a) (+ ?b ?c))
+[ruler_1771_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (+ ?b ?c)) => (- (+ ?c ?b) ?a)
+[ruler_1772_lr cd:2.00 avg:5.00] 
+  (- (- ?c ?b) (neg ?a)) => (- (+ ?a ?c) ?b)
+[ruler_1772_lr-rev cd:-2.00 avg:5.00] 
+  (- (+ ?a ?c) ?b) => (- (- ?c ?b) (neg ?a))
+[ruler_1773_lr cd:-2.00 avg:5.00] 
+  (- (+ ?c ?b) ?a) => (+ (neg ?a) (+ ?c ?b))
+[ruler_1773_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (+ ?c ?b)) => (- (+ ?c ?b) ?a)
+[ruler_1774_lr cd:2.00 avg:5.00] 
+  (- (- ?c ?b) (neg ?a)) => (- (+ ?c ?a) ?b)
+[ruler_1774_lr-rev cd:-2.00 avg:5.00] 
+  (- (+ ?c ?a) ?b) => (- (- ?c ?b) (neg ?a))
+[ruler_1775_lr cd:2.00 avg:5.00] 
+  (+ (neg ?c) (+ ?b ?a)) => (+ (- ?a ?c) ?b)
+[ruler_1775_lr-rev cd:-2.00 avg:5.00] 
+  (+ (- ?a ?c) ?b) => (+ (neg ?c) (+ ?b ?a))
+[ruler_1776_lr cd:2.00 avg:5.00] 
+  (- (- ?c ?b) (neg ?a)) => (+ (- ?a ?b) ?c)
+[ruler_1776_lr-rev cd:-2.00 avg:5.00] 
+  (+ (- ?a ?b) ?c) => (- (- ?c ?b) (neg ?a))
+[ruler_1777_lr cd:2.00 avg:5.00] 
+  (+ (neg ?c) (+ ?b ?a)) => (+ (- ?b ?c) ?a)
+[ruler_1777_lr-rev cd:-2.00 avg:5.00] 
+  (+ (- ?b ?c) ?a) => (+ (neg ?c) (+ ?b ?a))
+[ruler_1778_lr cd:2.00 avg:5.00] 
+  (- (- ?c ?b) (neg ?a)) => (+ (- ?c ?b) ?a)
+[ruler_1778_lr-rev cd:-2.00 avg:5.00] 
+  (+ (- ?c ?b) ?a) => (- (- ?c ?b) (neg ?a))
+[ruler_1779_lr cd:-2.00 avg:5.00] 
+  (- ?c (- ?b ?a)) => (+ (+ ?a ?c) (neg ?b))
+[ruler_1779_lr-rev cd:2.00 avg:5.00] 
+  (+ (+ ?a ?c) (neg ?b)) => (- ?c (- ?b ?a))
+[ruler_1780_lr cd:-2.00 avg:5.00] 
+  (- (+ ?c ?b) ?a) => (+ (+ ?b ?c) (neg ?a))
+[ruler_1780_lr-rev cd:2.00 avg:5.00] 
+  (+ (+ ?b ?c) (neg ?a)) => (- (+ ?c ?b) ?a)
+[ruler_1781_lr cd:-2.00 avg:5.00] 
+  (- ?c (- ?b ?a)) => (+ (+ ?c ?a) (neg ?b))
+[ruler_1781_lr-rev cd:2.00 avg:5.00] 
+  (+ (+ ?c ?a) (neg ?b)) => (- ?c (- ?b ?a))
+[ruler_1782_lr cd:-2.00 avg:5.00] 
+  (+ (- ?c ?b) ?a) => (+ (+ ?a ?c) (neg ?b))
+[ruler_1782_lr-rev cd:2.00 avg:5.00] 
+  (+ (+ ?a ?c) (neg ?b)) => (+ (- ?c ?b) ?a)
+[ruler_1783_lr cd:-2.00 avg:5.00] 
+  (- (+ ?c ?b) ?a) => (+ (+ ?c ?b) (neg ?a))
+[ruler_1783_lr-rev cd:2.00 avg:5.00] 
+  (+ (+ ?c ?b) (neg ?a)) => (- (+ ?c ?b) ?a)
+[ruler_1784_lr cd:-2.00 avg:5.00] 
+  (+ (- ?c ?b) ?a) => (+ (+ ?c ?a) (neg ?b))
+[ruler_1784_lr-rev cd:2.00 avg:5.00] 
+  (+ (+ ?c ?a) (neg ?b)) => (+ (- ?c ?b) ?a)
+[ruler_1785_lr cd:2.00 avg:5.00] 
+  (- (- ?c ?b) (neg ?a)) => (+ ?c (- ?a ?b))
+[ruler_1785_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?c (- ?a ?b)) => (- (- ?c ?b) (neg ?a))
+[ruler_1786_lr cd:-2.00 avg:5.00] 
+  (+ ?c (- ?b ?a)) => (+ (+ ?c ?b) (neg ?a))
+[ruler_1786_lr-rev cd:2.00 avg:5.00] 
+  (+ (+ ?c ?b) (neg ?a)) => (+ ?c (- ?b ?a))
+[ruler_1787_lr cd:-2.00 avg:5.00] 
+  (+ ?c (- ?b ?a)) => (+ (neg ?a) (+ ?b ?c))
+[ruler_1787_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (+ ?b ?c)) => (+ ?c (- ?b ?a))
+[ruler_1788_lr cd:2.00 avg:5.00] 
+  (- (- ?c ?b) (neg ?a)) => (+ ?a (- ?c ?b))
+[ruler_1788_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?a (- ?c ?b)) => (- (- ?c ?b) (neg ?a))
+[ruler_1789_lr cd:-2.00 avg:5.00] 
+  (+ ?c (- ?b ?a)) => (+ (+ ?b ?c) (neg ?a))
+[ruler_1789_lr-rev cd:2.00 avg:5.00] 
+  (+ (+ ?b ?c) (neg ?a)) => (+ ?c (- ?b ?a))
+[ruler_1790_lr cd:-2.00 avg:5.00] 
+  (* (- ?c ?b) ?a) => (* (- ?b ?c) (neg ?a))
+[ruler_1790_lr-rev cd:2.00 avg:5.00] 
+  (* (- ?b ?c) (neg ?a)) => (* (- ?c ?b) ?a)
+[ruler_1791_lr cd:-2.00 avg:5.00] 
+  (* ?c (- ?b ?a)) => (* (neg ?c) (- ?a ?b))
+[ruler_1791_lr-rev cd:2.00 avg:5.00] 
+  (* (neg ?c) (- ?a ?b)) => (* ?c (- ?b ?a))
+[ruler_1792_lr cd:2.00 avg:5.00] 
+  (* (neg ?c) (- ?b ?a)) => (* (- ?a ?b) ?c)
+[ruler_1792_lr-rev cd:-2.00 avg:5.00] 
+  (* (- ?a ?b) ?c) => (* (neg ?c) (- ?b ?a))
+[ruler_1840_lr cd:2.00 avg:5.00] 
+  (- ?c (+ ?b (neg ?a))) => (+ ?a (- ?c ?b))
+[ruler_1840_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?a (- ?c ?b)) => (- ?c (+ ?b (neg ?a)))
+[ruler_1844_lr cd:-2.00 avg:5.00] 
+  (* ?c (- ?b ?a)) => (* (- ?a ?b) (neg ?c))
+[ruler_1844_lr-rev cd:2.00 avg:5.00] 
+  (* (- ?a ?b) (neg ?c)) => (* ?c (- ?b ?a))
+[ruler_1845_lr cd:-2.00 avg:5.00] 
+  (+ ?c (- ?b ?a)) => (+ (neg ?a) (+ ?c ?b))
+[ruler_1845_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (+ ?c ?b)) => (+ ?c (- ?b ?a))
+[ruler_1846_lr cd:2.00 avg:5.00] 
+  (- ?c (- (neg ?b) ?a)) => (+ ?c (+ ?b ?a))
+[ruler_1846_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?c (+ ?b ?a)) => (- ?c (- (neg ?b) ?a))
+[ruler_1847_lr cd:-2.00 avg:5.00] 
+  (- (- ?c ?b) ?a) => (+ ?c (- (neg ?a) ?b))
+[ruler_1847_lr-rev cd:2.00 avg:5.00] 
+  (+ ?c (- (neg ?a) ?b)) => (- (- ?c ?b) ?a)
+[ruler_1848_lr cd:2.00 avg:5.00] 
+  (- (* ?c ?b) (neg ?a)) => (+ ?a (* ?b ?c))
+[ruler_1848_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?a (* ?b ?c)) => (- (* ?c ?b) (neg ?a))
+[ruler_1849_lr cd:2.00 avg:5.00] 
+  (- (* ?c ?b) (neg ?a)) => (+ (* ?b ?c) ?a)
+[ruler_1849_lr-rev cd:-2.00 avg:5.00] 
+  (+ (* ?b ?c) ?a) => (- (* ?c ?b) (neg ?a))
+[ruler_1850_lr cd:2.00 avg:5.00] 
+  (- (* ?c ?b) (neg ?a)) => (+ (* ?c ?b) ?a)
+[ruler_1850_lr-rev cd:-2.00 avg:5.00] 
+  (+ (* ?c ?b) ?a) => (- (* ?c ?b) (neg ?a))
+[ruler_1851_lr cd:-2.00 avg:5.00] 
+  (- (* ?c ?b) ?a) => (+ (* ?c ?b) (neg ?a))
+[ruler_1851_lr-rev cd:2.00 avg:5.00] 
+  (+ (* ?c ?b) (neg ?a)) => (- (* ?c ?b) ?a)
+[ruler_1852_lr cd:-2.00 avg:5.00] 
+  (- (* ?c ?b) ?a) => (+ (neg ?a) (* ?b ?c))
+[ruler_1852_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (* ?b ?c)) => (- (* ?c ?b) ?a)
+[ruler_1853_lr cd:-2.00 avg:5.00] 
+  (- (* ?c ?b) ?a) => (+ (* ?b ?c) (neg ?a))
+[ruler_1853_lr-rev cd:2.00 avg:5.00] 
+  (+ (* ?b ?c) (neg ?a)) => (- (* ?c ?b) ?a)
+[ruler_1872_lr cd:-2.00 avg:5.00] 
+  (- (* ?c ?b) ?a) => (+ (neg ?a) (* ?c ?b))
+[ruler_1872_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (* ?c ?b)) => (- (* ?c ?b) ?a)
+[ruler_1873_lr cd:2.00 avg:5.00] 
+  (- (* ?c ?b) (neg ?a)) => (+ ?a (* ?c ?b))
+[ruler_1873_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?a (* ?c ?b)) => (- (* ?c ?b) (neg ?a))
+[ruler_1874_lr cd:0.00 avg:6.00] 
+  (- (neg ?c) (- ?b ?a)) => (- (neg ?b) (- ?c ?a))
+[ruler_1875_lr cd:0.00 avg:6.00] 
+  (+ (neg ?c) (+ ?b ?a)) => (+ (neg ?c) (+ ?a ?b))
+[ruler_1876_lr cd:0.00 avg:6.00] 
+  (- (- ?c ?b) (neg ?a)) => (- (- ?a ?b) (neg ?c))
+[ruler_1877_lr cd:-0.00 avg:6.00] 
+  (+ (neg ?c) (+ ?b ?a)) => (+ (+ ?a ?b) (neg ?c))
+[ruler_1877_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?a ?b) (neg ?c)) => (+ (neg ?c) (+ ?b ?a))
+[ruler_1878_lr cd:0.00 avg:6.00] 
+  (+ (+ ?c ?b) (neg ?a)) => (+ (+ ?b ?c) (neg ?a))
+[ruler_1879_lr cd:-0.00 avg:6.00] 
+  (+ (neg ?c) (+ ?b ?a)) => (+ (+ ?b ?a) (neg ?c))
+[ruler_1879_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?b ?a) (neg ?c)) => (+ (neg ?c) (+ ?b ?a))
+[ruler_1880_lr cd:0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (neg ?b) (* ?c ?a))
+[ruler_1881_lr cd:0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (neg ?c) (* ?a ?b))
+[ruler_1882_lr cd:0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (neg ?a) (* ?b ?c))
+[ruler_1883_lr cd:0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (neg ?b) (* ?a ?c))
+[ruler_1883_lr-rev cd:0.00 avg:6.00] 
+  (* (neg ?b) (* ?a ?c)) => (* (neg ?c) (* ?b ?a))
+[ruler_1884_lr cd:0.00 avg:6.00] 
+  (* (* ?c ?b) (neg ?a)) => (* (* ?b ?c) (neg ?a))
+[ruler_1885_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (* ?c ?a) (neg ?b))
+[ruler_1885_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?c ?a) (neg ?b)) => (* (neg ?c) (* ?b ?a))
+[ruler_1886_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (* ?a ?b) (neg ?c))
+[ruler_1886_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?a ?b) (neg ?c)) => (* (neg ?c) (* ?b ?a))
+[ruler_1887_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (* ?b ?c) (neg ?a))
+[ruler_1887_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?b ?c) (neg ?a)) => (* (neg ?c) (* ?b ?a))
+[ruler_1888_lr cd:0.00 avg:6.00] 
+  (* (* ?c ?b) (neg ?a)) => (* (* ?c ?a) (neg ?b))
+[ruler_1889_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (* ?c ?b) (neg ?a))
+[ruler_1889_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?c ?b) (neg ?a)) => (* (neg ?c) (* ?b ?a))
+[ruler_1890_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (* ?a ?c) (neg ?b))
+[ruler_1890_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?a ?c) (neg ?b)) => (* (neg ?c) (* ?b ?a))
+[ruler_1891_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (* ?b ?a)) => (* (* ?b ?a) (neg ?c))
+[ruler_1891_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?b ?a) (neg ?c)) => (* (neg ?c) (* ?b ?a))
+[ruler_1892_lr cd:0.00 avg:6.00] 
+  (* (* ?c ?b) (neg ?a)) => (* (* ?a ?b) (neg ?c))
+[ruler_1893_lr cd:0.00 avg:6.00] 
+  (* (* ?c ?b) (neg ?a)) => (* (* ?b ?a) (neg ?c))
+[ruler_1893_lr-rev cd:0.00 avg:6.00] 
+  (* (* ?b ?a) (neg ?c)) => (* (* ?c ?b) (neg ?a))
+[ruler_1919_lr cd:0.00 avg:6.00] 
+  (* ?c (* ?b (neg ?a))) => (* ?b (* (neg ?c) ?a))
+[ruler_1919_lr-rev cd:0.00 avg:6.00] 
+  (* ?b (* (neg ?c) ?a)) => (* ?c (* ?b (neg ?a)))
+[ruler_1920_lr cd:0.00 avg:6.00] 
+  (- (neg ?c) (* ?b ?a)) => (- (neg ?c) (* ?a ?b))
+[ruler_1921_lr cd:0.00 avg:6.00] 
+  (- (neg ?c) (+ ?b ?a)) => (- (neg ?a) (+ ?b ?c))
+[ruler_1922_lr cd:0.00 avg:6.00] 
+  (- (neg ?c) (+ ?b ?a)) => (- (neg ?b) (+ ?a ?c))
+[ruler_1922_lr-rev cd:0.00 avg:6.00] 
+  (- (neg ?b) (+ ?a ?c)) => (- (neg ?c) (+ ?b ?a))
+[ruler_1923_lr cd:0.00 avg:6.00] 
+  (- (neg ?c) (+ ?b ?a)) => (- (neg ?c) (+ ?a ?b))
+[ruler_1924_lr cd:0.00 avg:6.00] 
+  (- (neg ?c) (+ ?b ?a)) => (- (neg ?b) (+ ?c ?a))
+[ruler_1925_lr cd:0.00 avg:6.00] 
+  (- (+ ?c ?b) (neg ?a)) => (- (+ ?b ?a) (neg ?c))
+[ruler_1925_lr-rev cd:0.00 avg:6.00] 
+  (- (+ ?b ?a) (neg ?c)) => (- (+ ?c ?b) (neg ?a))
+[ruler_1926_lr cd:0.00 avg:6.00] 
+  (- (+ ?c ?b) (neg ?a)) => (- (+ ?a ?b) (neg ?c))
+[ruler_1927_lr cd:0.00 avg:6.00] 
+  (- (+ ?c ?b) (neg ?a)) => (- (+ ?c ?a) (neg ?b))
+[ruler_1928_lr cd:0.00 avg:6.00] 
+  (- (+ ?c ?b) (neg ?a)) => (- (+ ?b ?c) (neg ?a))
+[ruler_1929_lr cd:0.00 avg:6.00] 
+  (- (* ?c ?b) (neg ?a)) => (- (* ?b ?c) (neg ?a))
+[ruler_1930_lr cd:0.00 avg:6.00] 
+  (+ (- ?c ?b) (neg ?a)) => (+ (- ?c ?a) (neg ?b))
+[ruler_1931_lr cd:0.00 avg:6.00] 
+  (+ (neg ?c) (- ?b ?a)) => (+ (neg ?a) (- ?b ?c))
+[ruler_1932_lr cd:-0.00 avg:6.00] 
+  (+ (neg ?c) (- ?b ?a)) => (+ (- ?b ?c) (neg ?a))
+[ruler_1932_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?b ?c) (neg ?a)) => (+ (neg ?c) (- ?b ?a))
+[ruler_1933_lr cd:-0.00 avg:6.00] 
+  (+ (neg ?c) (- ?b ?a)) => (+ (- ?b ?a) (neg ?c))
+[ruler_1933_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?b ?a) (neg ?c)) => (+ (neg ?c) (- ?b ?a))
+[ruler_1934_lr cd:0.00 avg:6.00] 
+  (- (neg ?c) (- ?b ?a)) => (+ (neg ?c) (- ?a ?b))
+[ruler_1934_lr-rev cd:0.00 avg:6.00] 
+  (+ (neg ?c) (- ?a ?b)) => (- (neg ?c) (- ?b ?a))
+[ruler_1935_lr cd:-0.00 avg:6.00] 
+  (- (neg ?c) (- ?b ?a)) => (+ (- ?a ?b) (neg ?c))
+[ruler_1935_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?a ?b) (neg ?c)) => (- (neg ?c) (- ?b ?a))
+[ruler_1936_lr cd:-0.00 avg:6.00] 
+  (- (neg ?c) (- ?b ?a)) => (+ (- ?a ?c) (neg ?b))
+[ruler_1936_lr-rev cd:0.00 avg:6.00] 
+  (+ (- ?a ?c) (neg ?b)) => (- (neg ?c) (- ?b ?a))
+[ruler_1937_lr cd:0.00 avg:6.00] 
+  (- (neg ?c) (- ?b ?a)) => (+ (neg ?b) (- ?a ?c))
+[ruler_1937_lr-rev cd:0.00 avg:6.00] 
+  (+ (neg ?b) (- ?a ?c)) => (- (neg ?c) (- ?b ?a))
+[ruler_1938_lr cd:0.00 avg:6.00] 
+  (+ (* ?c ?b) (neg ?a)) => (+ (* ?b ?c) (neg ?a))
+[ruler_1939_lr cd:-0.00 avg:6.00] 
+  (+ (neg ?c) (* ?b ?a)) => (+ (* ?b ?a) (neg ?c))
+[ruler_1939_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?b ?a) (neg ?c)) => (+ (neg ?c) (* ?b ?a))
+[ruler_1940_lr cd:0.00 avg:6.00] 
+  (+ (neg ?c) (* ?b ?a)) => (+ (neg ?c) (* ?a ?b))
+[ruler_1941_lr cd:-0.00 avg:6.00] 
+  (+ (neg ?c) (* ?b ?a)) => (+ (* ?a ?b) (neg ?c))
+[ruler_1941_lr-rev cd:0.00 avg:6.00] 
+  (+ (* ?a ?b) (neg ?c)) => (+ (neg ?c) (* ?b ?a))
+[ruler_1942_lr cd:0.00 avg:6.00] 
+  (- (- ?c ?b) (neg ?a)) => (+ (neg ?b) (+ ?a ?c))
+[ruler_1942_lr-rev cd:-0.00 avg:6.00] 
+  (+ (neg ?b) (+ ?a ?c)) => (- (- ?c ?b) (neg ?a))
+[ruler_1943_lr cd:0.00 avg:6.00] 
+  (- (- ?c ?b) (neg ?a)) => (+ (neg ?b) (+ ?c ?a))
+[ruler_1943_lr-rev cd:-0.00 avg:6.00] 
+  (+ (neg ?b) (+ ?c ?a)) => (- (- ?c ?b) (neg ?a))
+[ruler_1944_lr cd:0.00 avg:6.00] 
+  (- (- ?c ?b) (neg ?a)) => (+ (+ ?a ?c) (neg ?b))
+[ruler_1944_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?a ?c) (neg ?b)) => (- (- ?c ?b) (neg ?a))
+[ruler_1945_lr cd:0.00 avg:6.00] 
+  (- (- ?c ?b) (neg ?a)) => (+ (+ ?c ?a) (neg ?b))
+[ruler_1945_lr-rev cd:0.00 avg:6.00] 
+  (+ (+ ?c ?a) (neg ?b)) => (- (- ?c ?b) (neg ?a))
+[ruler_1946_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (- ?b ?a)) => (* (- ?b ?a) (neg ?c))
+[ruler_1946_lr-rev cd:0.00 avg:6.00] 
+  (* (- ?b ?a) (neg ?c)) => (* (neg ?c) (- ?b ?a))
+[ruler_1978_lr cd:0.00 avg:6.00] 
+  (* (neg ?c) (+ ?b ?a)) => (* (neg ?c) (+ ?a ?b))
+[ruler_1979_lr cd:0.00 avg:6.00] 
+  (* (+ ?c ?b) (neg ?a)) => (* (+ ?b ?c) (neg ?a))
+[ruler_1980_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (+ ?b ?a)) => (* (+ ?a ?b) (neg ?c))
+[ruler_1980_lr-rev cd:0.00 avg:6.00] 
+  (* (+ ?a ?b) (neg ?c)) => (* (neg ?c) (+ ?b ?a))
+[ruler_1981_lr cd:-0.00 avg:6.00] 
+  (* (neg ?c) (+ ?b ?a)) => (* (+ ?b ?a) (neg ?c))
+[ruler_1981_lr-rev cd:0.00 avg:6.00] 
+  (* (+ ?b ?a) (neg ?c)) => (* (neg ?c) (+ ?b ?a))
+[ruler_2000_lr cd:0.00 avg:2.00] 
+  (* ?b ?a) => (* ?a ?b)
+[ruler_2001_lr cd:0.00 avg:2.00] 
+  (+ ?b ?a) => (+ ?a ?b)
+[ruler_2003_lr cd:2.00 avg:3.00] 
+  (neg (- ?b ?a)) => (- ?a ?b)
+[ruler_2003_lr-rev cd:-2.00 avg:3.00] 
+  (- ?a ?b) => (neg (- ?b ?a))
+[ruler_2004_lr cd:2.00 avg:3.00] 
+  (- ?b (neg ?a)) => (+ ?b ?a)
+[ruler_2004_lr-rev cd:-2.00 avg:3.00] 
+  (+ ?b ?a) => (- ?b (neg ?a))
+[ruler_2005_lr cd:-2.00 avg:3.00] 
+  (- ?b ?a) => (+ (neg ?a) ?b)
+[ruler_2005_lr-rev cd:2.00 avg:3.00] 
+  (+ (neg ?a) ?b) => (- ?b ?a)
+[ruler_2010_lr cd:-2.00 avg:3.00] 
+  (- ?b ?a) => (+ ?b (neg ?a))
+[ruler_2010_lr-rev cd:2.00 avg:3.00] 
+  (+ ?b (neg ?a)) => (- ?b ?a)
+[ruler_2011_lr cd:2.00 avg:3.00] 
+  (- ?b (neg ?a)) => (+ ?a ?b)
+[ruler_2011_lr-rev cd:-2.00 avg:3.00] 
+  (+ ?a ?b) => (- ?b (neg ?a))
+[ruler_2014_lr cd:0.00 avg:4.00] 
+  (- ?b (neg ?a)) => (- ?a (neg ?b))
+[ruler_2015_lr cd:0.00 avg:4.00] 
+  (neg (+ ?b ?a)) => (neg (+ ?a ?b))
+[ruler_2016_lr cd:0.00 avg:4.00] 
+  (- (neg ?b) ?a) => (- (neg ?a) ?b)
+[ruler_2017_lr cd:0.00 avg:4.00] 
+  (+ ?b (neg ?a)) => (+ (neg ?a) ?b)
+[ruler_2017_lr-rev cd:0.00 avg:4.00] 
+  (+ (neg ?a) ?b) => (+ ?b (neg ?a))
+[ruler_2018_lr cd:0.00 avg:4.00] 
+  (neg (* ?b ?a)) => (neg (* ?a ?b))
+[ruler_2019_lr cd:0.00 avg:4.00] 
+  (* ?b (neg ?a)) => (* ?a (neg ?b))
+[ruler_2020_lr cd:0.00 avg:4.00] 
+  (neg (* ?b ?a)) => (* ?a (neg ?b))
+[ruler_2020_lr-rev cd:0.00 avg:4.00] 
+  (* ?a (neg ?b)) => (neg (* ?b ?a))
+[ruler_2021_lr cd:0.00 avg:4.00] 
+  (* ?b (neg ?a)) => (* (neg ?a) ?b)
+[ruler_2021_lr-rev cd:0.00 avg:4.00] 
+  (* (neg ?a) ?b) => (* ?b (neg ?a))
+[ruler_2022_lr cd:0.00 avg:4.00] 
+  (neg (* ?b ?a)) => (* (neg ?a) ?b)
+[ruler_2022_lr-rev cd:0.00 avg:4.00] 
+  (* (neg ?a) ?b) => (neg (* ?b ?a))
+[ruler_2023_lr cd:0.00 avg:4.00] 
+  (* (neg ?b) ?a) => (* (neg ?a) ?b)
+[ruler_2024_lr cd:0.00 avg:4.00] 
+  (neg (* ?b ?a)) => (* (neg ?b) ?a)
+[ruler_2024_lr-rev cd:0.00 avg:4.00] 
+  (* (neg ?b) ?a) => (neg (* ?b ?a))
+[ruler_2025_lr cd:0.00 avg:4.00] 
+  (* ?b (neg ?a)) => (* (neg ?b) ?a)
+[ruler_2025_lr-rev cd:0.00 avg:4.00] 
+  (* (neg ?b) ?a) => (* ?b (neg ?a))
+[ruler_2041_lr cd:0.00 avg:4.00] 
+  (neg (* ?b ?a)) => (* ?b (neg ?a))
+[ruler_2041_lr-rev cd:0.00 avg:4.00] 
+  (* ?b (neg ?a)) => (neg (* ?b ?a))
+[ruler_2042_lr cd:0.00 avg:4.00] 
+  (neg (+ ?b ?a)) => (- (neg ?a) ?b)
+[ruler_2042_lr-rev cd:0.00 avg:4.00] 
+  (- (neg ?a) ?b) => (neg (+ ?b ?a))
+[ruler_2043_lr cd:0.00 avg:4.00] 
+  (neg (+ ?b ?a)) => (- (neg ?b) ?a)
+[ruler_2043_lr-rev cd:0.00 avg:4.00] 
+  (- (neg ?b) ?a) => (neg (+ ?b ?a))
+[ruler_2044_lr cd:0.00 avg:4.00] 
+  (neg (- ?b ?a)) => (+ (neg ?b) ?a)
+[ruler_2044_lr-rev cd:0.00 avg:4.00] 
+  (+ (neg ?b) ?a) => (neg (- ?b ?a))
+[ruler_2045_lr cd:0.00 avg:4.00] 
+  (neg (- ?b ?a)) => (+ ?a (neg ?b))
+[ruler_2045_lr-rev cd:0.00 avg:4.00] 
+  (+ ?a (neg ?b)) => (neg (- ?b ?a))
+[ruler_2050_lr cd:-4.00 avg:4.00] 
+  (* ?b ?a) => (* (neg ?a) (neg ?b))
+[ruler_2050_lr-rev cd:4.00 avg:4.00] 
+  (* (neg ?a) (neg ?b)) => (* ?b ?a)
+[ruler_2051_lr cd:-4.00 avg:4.00] 
+  (- ?b ?a) => (- (neg ?a) (neg ?b))
+[ruler_2051_lr-rev cd:4.00 avg:4.00] 
+  (- (neg ?a) (neg ?b)) => (- ?b ?a)
+[ruler_2055_lr cd:-4.00 avg:4.00] 
+  (* ?b ?a) => (* (neg ?b) (neg ?a))
+[ruler_2055_lr-rev cd:4.00 avg:4.00] 
+  (* (neg ?b) (neg ?a)) => (* ?b ?a)
+[ruler_2056_lr cd:-2.00 avg:5.00] 
+  (neg (+ ?b ?a)) => (+ (neg ?b) (neg ?a))
+[ruler_2056_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?b) (neg ?a)) => (neg (+ ?b ?a))
+[ruler_2057_lr cd:-2.00 avg:5.00] 
+  (neg (+ ?b ?a)) => (+ (neg ?a) (neg ?b))
+[ruler_2057_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (neg ?b)) => (neg (+ ?b ?a))
+[ruler_2058_lr cd:-2.00 avg:5.00] 
+  (neg (- ?b ?a)) => (- (neg ?b) (neg ?a))
+[ruler_2058_lr-rev cd:2.00 avg:5.00] 
+  (- (neg ?b) (neg ?a)) => (neg (- ?b ?a))
+[ruler_2065_lr cd:-2.00 avg:5.00] 
+  (- (neg ?b) ?a) => (+ (neg ?b) (neg ?a))
+[ruler_2065_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?b) (neg ?a)) => (- (neg ?b) ?a)
+[ruler_2066_lr cd:-2.00 avg:5.00] 
+  (- (neg ?b) ?a) => (+ (neg ?a) (neg ?b))
+[ruler_2066_lr-rev cd:2.00 avg:5.00] 
+  (+ (neg ?a) (neg ?b)) => (- (neg ?b) ?a)
+[ruler_2067_lr cd:2.00 avg:5.00] 
+  (- (neg ?b) (neg ?a)) => (+ (neg ?b) ?a)
+[ruler_2067_lr-rev cd:-2.00 avg:5.00] 
+  (+ (neg ?b) ?a) => (- (neg ?b) (neg ?a))
+[ruler_2068_lr cd:2.00 avg:5.00] 
+  (- (neg ?b) (neg ?a)) => (+ ?a (neg ?b))
+[ruler_2068_lr-rev cd:-2.00 avg:5.00] 
+  (+ ?a (neg ?b)) => (- (neg ?b) (neg ?a))
+[ruler_2077_lr cd:0.00 avg:6.00] 
+  (* (neg ?b) (neg ?a)) => (* (neg ?a) (neg ?b))
+[ruler_2078_lr cd:0.00 avg:6.00] 
+  (+ (neg ?b) (neg ?a)) => (+ (neg ?a) (neg ?b))
+[expand-0+ cd:-2.00 avg:1.00] 
+  0 => (+ 0 0)
+[expand-0* cd:-2.00 avg:1.00] 
+  0 => (* 0 0)
