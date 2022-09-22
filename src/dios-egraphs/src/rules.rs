@@ -279,11 +279,12 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
                     .cloned()
                     .collect();
 
-                let (cost, new_prog) =
-                    TopDownExtractor::new(&new_eg, patterns.as_slice()).find_best(root);
+                let new_prog =
+                    TopDownExtractor::new(&new_eg, patterns.as_slice(), VecCostFn)
+                        .find_best(root);
 
                 eprintln!("new:\n{}", new_prog.pretty(100));
-                eprintln!("Extracted prog cost: {cost}");
+                // eprintln!("Extracted prog cost: {cost}");
                 prog = new_prog;
             }
             eg = eqsat::init_egraph();

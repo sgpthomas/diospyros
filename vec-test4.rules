@@ -1163,3 +1163,42 @@ Starting Phase 1: Pre-compilation
   0 => (+ 0 0)
 [expand-0* cd:-2.00 avg:1.00] 
   0 => (* 0 0)
+=================================
+Starting Phase 2: Compilation
+=================================
+[ruler_1996_lr cd:0.00 avg:1.31] 
+  (VecMAC (Vec ?c0 ?c1) (Vec ?b0 ?b1) (Vec ?a0 ?a1)) => (VecMAC (Vec ?c0 ?c1) (Vec ?a0 ?a1) (Vec ?b0 ?b1))
+[ruler_2062_lr cd:-102.80 avg:52.60] 
+  (VecMul (Vec ?b0 ?b1) (Vec ?a0 ?a1)) => (Vec (* ?a0 ?b0) (* ?a1 ?b1))
+[ruler_2062_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?a0 ?b0) (* ?a1 ?b1)) => (VecMul (Vec ?b0 ?b1) (Vec ?a0 ?a1))
+[ruler_2063_lr cd:-102.80 avg:52.60] 
+  (VecAdd (Vec ?b0 ?b1) (Vec ?a0 ?a1)) => (Vec (+ ?a0 ?b0) (+ ?a1 ?b1))
+[ruler_2063_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?a0 ?b0) (+ ?a1 ?b1)) => (VecAdd (Vec ?b0 ?b1) (Vec ?a0 ?a1))
+[ruler_2064_lr cd:-102.80 avg:52.60] 
+  (VecMinus (Vec ?b0 ?b1) (Vec ?a0 ?a1)) => (Vec (- ?b0 ?a0) (- ?b1 ?a1))
+[ruler_2064_lr-rev cd:102.80 avg:52.60] 
+  (Vec (- ?b0 ?a0) (- ?b1 ?a1)) => (VecMinus (Vec ?b0 ?b1) (Vec ?a0 ?a1))
+[ruler_2073_lr cd:-102.80 avg:52.60] 
+  (VecMul (Vec ?b0 ?b1) (Vec ?a0 ?a1)) => (Vec (* ?b0 ?a0) (* ?b1 ?a1))
+[ruler_2073_lr-rev cd:102.80 avg:52.60] 
+  (Vec (* ?b0 ?a0) (* ?b1 ?a1)) => (VecMul (Vec ?b0 ?b1) (Vec ?a0 ?a1))
+[ruler_2074_lr cd:-102.80 avg:52.60] 
+  (VecAdd (Vec ?b0 ?b1) (Vec ?a0 ?a1)) => (Vec (+ ?b0 ?a0) (+ ?b1 ?a1))
+[ruler_2074_lr-rev cd:102.80 avg:52.60] 
+  (Vec (+ ?b0 ?a0) (+ ?b1 ?a1)) => (VecAdd (Vec ?b0 ?b1) (Vec ?a0 ?a1))
+[ruler_2075_lr cd:0.00 avg:1.20] 
+  (VecMul (Vec ?b0 ?b1) (Vec ?a0 ?a1)) => (VecMul (Vec ?a0 ?a1) (Vec ?b0 ?b1))
+[ruler_2076_lr cd:0.00 avg:1.20] 
+  (VecAdd (Vec ?b0 ?b1) (Vec ?a0 ?a1)) => (VecAdd (Vec ?a0 ?a1) (Vec ?b0 ?b1))
+[ruler_2081_lr cd:-102.90 avg:52.55] 
+  (VecNeg (Vec ?a0 ?a1)) => (Vec (neg ?a0) (neg ?a1))
+[ruler_2081_lr-rev cd:102.90 avg:52.55] 
+  (Vec (neg ?a0) (neg ?a1)) => (VecNeg (Vec ?a0 ?a1))
+[vec-neg cd:102.90 avg:52.55] 
+  (Vec (neg ?a) (neg ?b)) => (VecNeg (Vec ?a ?b))
+[vec-neg0-l cd:100.90 avg:51.55] 
+  (Vec 0 (neg ?b)) => (VecNeg (Vec 0 ?b))
+[vec-neg0-r cd:100.90 avg:51.55] 
+  (Vec (neg ?a) 0) => (VecNeg (Vec ?a 0))
