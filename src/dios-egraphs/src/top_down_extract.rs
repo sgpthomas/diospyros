@@ -193,15 +193,15 @@ impl<'a, L: egg::Language + Display, N: egg::Analysis<L>, CF: egg::CostFunction<
             }
         }
 
-        // now assign each eclass a score. we need to do this in a separate
-        // pass because the other loop is updating the children of each eclass
-
-        // eprintln!(
-        //     "{{\n{}\n}}",
-        //     self.node_score_map
-        //         .iter()
-        //         .map(|((id, l), v)| format!("  {id},{l:?} -> {v}"))
-        //         .join("\n")
-        // );
+        eprintln!(
+            "{{\n{}\n}}",
+            self.node_score_map
+                .iter()
+                .map(|((id, l), v)| format!(
+                    "  {id}:{:?},{l:?} -> {v}",
+                    &self.egraph[*id].nodes
+                ))
+                .join("\n")
+        );
     }
 }
