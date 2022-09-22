@@ -40,7 +40,7 @@ impl<L: egg::Language + Display> HeadlessPattern<L> {
             .iter()
             // we only want to keep nodes that have at least one child different
             // than itself
-            .filter(|node| node.any(|id| id != eclass))
+            .filter(|node| node.all(|id| id != eclass))
             // we only want to consider nodes with the same number as legs as self
             .filter(|node| node.children().len() == self.legs.len())
             .map(|node| {
@@ -129,12 +129,6 @@ impl<'a, L: egg::Language + Display, N: egg::Analysis<L>, CF: egg::CostFunction<
             patterns,
             extractor,
         };
-
-        // for p in td_extractor.patterns {
-        //     if let Some(a) = p.get_pattern_ast() {
-        //         eprintln!("{}", a.pretty(80));
-        //     }
-        // }
 
         td_extractor.find_scores();
         td_extractor

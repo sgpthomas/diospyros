@@ -255,7 +255,8 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
         }
 
         // do equality saturation with the rules in this phase
-        let (new_cost, new_eg, root, new_prog) = do_eqsat(&rules[phase], eg, &prog, opts);
+        let (new_cost, mut new_eg, root, new_prog) =
+            do_eqsat(&rules[phase], eg, &prog, opts);
 
         eprintln!("Cost: {} (improved {})", new_cost, cost - new_cost);
 
@@ -279,6 +280,10 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
                     .cloned()
                     .collect();
 
+                new_eg.rebuild();
+                new_eg.dot().to_pdf("test0.pdf").unwrap();
+                eprintln!("Wrote test0.pdf");
+
                 let new_prog =
                     TopDownExtractor::new(&new_eg, patterns.as_slice(), VecCostFn)
                         .find_best(root);
@@ -300,8 +305,8 @@ pub fn run(orig_prog: &RecExpr<VecLang>, opts: &opts::Opts) -> (f64, RecExpr<Vec
     }
 
     eg.rebuild();
-    eg.dot().to_pdf("test.pdf").unwrap();
-    eprintln!("Wrote test.pdf");
+    eg.dot().to_pdf("test1.pdf").unwrap();
+    eprintln!("Wrote test1.pdf");
 
     if opts.dry_run {
         (f64::NAN, prog)

@@ -70,13 +70,15 @@ impl<L: egg::Language + Display> LanguageHelpers<L> for L {
 
         // eprintln!("{self:?}");
 
+        // inductive case
         let map: HashMap<_, _> = self
             .children()
             .into_iter()
             .map(|&child_id| {
                 let next_node = get_node(root_id, child_id);
+                // eprintln!("  ({root_id}, {child_id}) -> ");
                 let v = next_node.build_recexpr_w_parent(child_id, get_node);
-                // eprintln!("  ({root_id}, {child_id}) -> {v:?}");
+                // eprintln!("    {}", v.pretty(80));
                 (child_id, v)
             })
             .collect();

@@ -325,14 +325,13 @@ RUST_BACKTRACE=1 cargo run --release --manifest-path src/dios-egraphs/Cargo.toml
       --vector-width 2 \
       --split-phase syntax \
       --rules vec/test4.json \
-      --timeout 60 \
+      --timeout 20 \
       --dump-rules vec-test4.rules \
-      --node-limit 50000000 --iter-limit 1
+      --node-limit 50000000 --iter-limit 2
 #+end_src
 
 #+begin_src shell :var dir=(ec2/get-ip "exp1") :results silent
 rsync ubuntu@"$dir":~/diospyros/test.pdf ~/Downloads
-open ~/Downloads/test.pdf
 #+end_src
 
 ** Sketch of the "top-down" cost function algorithm
