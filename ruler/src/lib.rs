@@ -9,7 +9,6 @@ use itertools::Itertools;
 use rand::SeedableRng;
 use rand_pcg::Pcg64;
 use serde::{Deserialize, Serialize};
-use std::fs::File;
 use std::hash::Hash;
 use std::{
     borrow::{Borrow, Cow},
@@ -17,6 +16,7 @@ use std::{
 };
 use std::{
     fmt::{Debug, Display},
+    marker::PhantomData,
     time::Duration,
     time::Instant,
 };
@@ -75,6 +75,7 @@ pub trait SynthLanguage:
     egg::Language + Send + Sync + Display + FromOp + 'static
 {
     type Constant: Clone + Hash + Eq + Debug + Display;
+    type Config: Clone + Default;
 
     fn eval<'a, F>(&'a self, cvec_len: usize, f: F) -> CVec<Self>
     where
@@ -196,12 +197,12 @@ pub trait SynthLanguage:
     }
 
     /// Initialize an egraph with variables and interesting constants from the domain.
-    fn init_synth(synth: &mut Synthesizer<Self>);
+    fn init_synth(synth: &mut Synthesizer<Self, Uninit>);
 
     /// Layer wise term enumeration in the egraph.
     fn make_layer<'a>(
         ids: Vec<Id>,
-        egraph: &'a Synthesizer<Self>,
+        egraph: &'a Synthesizer<Self, Init>,
         iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a>;
     // fn make_layer(synth: &Synthesizer<Self>, iter: usize) -> Box<dyn Iterator<Item = Self> + '_>;
@@ -232,7 +233,7 @@ pub trait SynthLanguage:
 
     /// Domain specific rule validation.
     fn is_valid(
-        synth: &mut Synthesizer<Self>,
+        synth: &mut Synthesizer<Self, Init>,
         lhs: &Pattern<Self>,
         rhs: &Pattern<Self>,
     ) -> bool;
@@ -265,7 +266,7 @@ pub trait SynthLanguage:
             cli::Command::Synth(params) => {
                 let params: SynthParams = params.into();
                 let outfile = params.outfile.clone();
-                let syn = Synthesizer::<Self>::new(params.clone());
+                let syn = Synthesizer::<Self, _>::new(params.clone()).init();
                 let report: Report<Self> =
                     Self::post_process(&params, syn.run());
                 let file = std::fs::File::create(&outfile)
@@ -283,24 +284,28 @@ pub trait SynthLanguage:
     }
 }
 
+#[derive(Clone)]
+pub struct Uninit;
+#[derive(Clone)]
+pub struct Init;
+
 /// A synthesizer for a given [SynthLanguage].
 #[derive(Clone)]
-pub struct Synthesizer<L: SynthLanguage> {
+pub struct Synthesizer<L: SynthLanguage, State> {
     pub params: SynthParams,
-    pub dios_config: DiosConfig,
+    pub lang_config: L::Config,
     pub rng: Pcg64,
     pub egraph: EGraph<L, SynthAnalysis>,
     initial_egraph: EGraph<L, SynthAnalysis>,
     pub equalities: EqualityMap<L>,
     pub smt_unknown: usize,
     start_time: Instant,
+    phantom_state: PhantomData<State>,
 }
 
-impl<L: SynthLanguage> Synthesizer<L> {
-    /// Initialize all the arguments of the [Synthesizer].
-    pub fn new(params: SynthParams) -> Self {
-        let file = File::open(params.dios_config.as_ref().unwrap()).unwrap();
-        let mut synth = Self {
+impl<L: SynthLanguage> Synthesizer<L, Uninit> {
+    pub fn new_with_data(params: SynthParams, data: L::Config) -> Self {
+        Synthesizer {
             rng: Pcg64::seed_from_u64(params.seed),
             egraph: Default::default(),
             initial_egraph: Default::default(),
@@ -308,13 +313,35 @@ impl<L: SynthLanguage> Synthesizer<L> {
             smt_unknown: 0,
             params,
             start_time: Instant::now(),
-            dios_config: serde_json::from_reader(file).unwrap(),
-        };
-        L::init_synth(&mut synth);
-        synth.initial_egraph = synth.egraph.clone();
-        synth
+            lang_config: data,
+            phantom_state: PhantomData,
+        }
     }
 
+    /// Initialize all the arguments of the [Synthesizer].
+    pub fn new(params: SynthParams) -> Self {
+        Self::new_with_data(params, L::Config::default())
+    }
+
+    pub fn init(mut self) -> Synthesizer<L, Init> {
+        L::init_synth(&mut self);
+        self.initial_egraph = self.egraph.clone();
+        Synthesizer {
+            phantom_state: PhantomData,
+            // copy the rest of the fields
+            params: self.params,
+            lang_config: self.lang_config,
+            rng: self.rng,
+            egraph: self.egraph,
+            initial_egraph: self.initial_egraph,
+            equalities: self.equalities,
+            smt_unknown: self.smt_unknown,
+            start_time: self.start_time,
+        }
+    }
+}
+
+impl<L: SynthLanguage> Synthesizer<L, Init> {
     fn check_time(&self) -> bool {
         let t = self.start_time;
         self.params.abs_timeout > 0
@@ -723,7 +750,7 @@ impl<L: SynthLanguage> Synthesizer<L> {
         println!("Learned {} rules in {:?}", num_rules, time);
         Report {
             params: self.params,
-            dios_config: self.dios_config,
+            // lang_config: self.lang_config,
             time,
             num_rules,
             eqs,
@@ -732,36 +759,12 @@ impl<L: SynthLanguage> Synthesizer<L> {
     }
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct DiosConstant {
-    pub kind: String,
-    pub value: i32,
-}
-
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct DiosSeedRules {
-    pub lhs: String,
-    pub rhs: String,
-}
-
-/// Dios configuration struct
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct DiosConfig {
-    pub constants: Vec<DiosConstant>,
-    pub seed_rules: Vec<DiosSeedRules>,
-    pub unops: Vec<String>,
-    pub binops: Vec<String>,
-    pub use_vector: bool,
-    pub vector_mac: bool,
-    pub variable_duplication: bool,
-}
-
 /// Reports for each run of Ruler.
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(bound = "L: SynthLanguage")]
 pub struct Report<L: SynthLanguage> {
     pub params: SynthParams,
-    pub dios_config: DiosConfig,
+    // pub lang_config: L::Config,
     pub time: f64,
     pub num_rules: usize,
     pub smt_unknown: usize,
@@ -781,7 +784,7 @@ pub struct SynthParams {
     pub n_samples: usize,
     pub variables: usize,
     pub abs_timeout: usize,
-    pub dios_config: Option<String>,
+    // pub dios_config: Option<String>,
     pub iters: usize,
     pub rules_to_take: usize,
     pub chunk_size: usize,
@@ -811,7 +814,7 @@ impl Default for SynthParams {
             n_samples: 0,
             variables: 3,
             abs_timeout: 120,
-            dios_config: None,
+            // dios_config: None,
             iters: 1,
             rules_to_take: 0,
             chunk_size: 100000,
@@ -975,7 +978,7 @@ impl<L: SynthLanguage> egg::Analysis<L> for SynthAnalysis {
     }
 }
 
-impl<L: SynthLanguage> Synthesizer<L> {
+impl<L: SynthLanguage> Synthesizer<L, Init> {
     /// Shrink the candidate space.
     #[inline(never)]
     fn shrink(

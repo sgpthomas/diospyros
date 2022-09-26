@@ -28,6 +28,7 @@ define_language! {
 
 impl SynthLanguage for Math {
     type Constant = Constant;
+    type Config = ();
 
     fn eval<'a, F>(&'a self, cvec_len: usize, mut v: F) -> CVec<Self>
     where
@@ -74,7 +75,7 @@ impl SynthLanguage for Math {
         Some(Math::Num(c))
     }
 
-    fn init_synth(synth: &mut Synthesizer<Self>) {
+    fn init_synth(synth: &mut Synthesizer<Self, Uninit>) {
         // this is for adding to the egraph, not used for cvec.
         // let constants: Vec<Constant> = vec![];
         // let constants: Vec<Constant> = ["0"]
@@ -134,7 +135,7 @@ impl SynthLanguage for Math {
 
     fn make_layer<'a>(
         _ids: Vec<Id>,
-        _synth: &'a Synthesizer<Self>,
+        _synth: &'a Synthesizer<Self, Init>,
         _iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         todo!()
@@ -163,7 +164,7 @@ impl SynthLanguage for Math {
     // }
 
     fn is_valid(
-        synth: &mut Synthesizer<Self>,
+        synth: &mut Synthesizer<Self, Init>,
         lhs: &egg::Pattern<Self>,
         rhs: &egg::Pattern<Self>,
     ) -> bool {

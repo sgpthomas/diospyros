@@ -23,6 +23,7 @@ define_language! {
 
 impl SynthLanguage for Math {
     type Constant = bool;
+    type Config = ();
 
     fn convert_parse(s: &str) -> RecExpr<Self> {
         let s = s
@@ -73,7 +74,7 @@ impl SynthLanguage for Math {
         Some(Math::Lit(c))
     }
 
-    fn init_synth(synth: &mut Synthesizer<Self>) {
+    fn init_synth(synth: &mut Synthesizer<Self, ruler::Uninit>) {
         // let consts: Vec<Option<bool>> = vec![];
         let consts: Vec<Option<bool>> = vec![Some(false), Some(true)];
 
@@ -98,7 +99,7 @@ impl SynthLanguage for Math {
 
     fn make_layer<'a>(
         _ids: Vec<Id>,
-        _synth: &'a Synthesizer<Self>,
+        _synth: &'a Synthesizer<Self, ruler::Init>,
         _iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         todo!()
@@ -135,7 +136,7 @@ impl SynthLanguage for Math {
     // }
 
     fn is_valid(
-        _synth: &mut Synthesizer<Self>,
+        _synth: &mut Synthesizer<Self, ruler::Init>,
         _lhs: &Pattern<Self>,
         _rhs: &Pattern<Self>,
     ) -> bool {

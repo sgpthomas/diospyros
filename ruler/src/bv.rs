@@ -158,6 +158,7 @@ macro_rules! impl_bv {
 
         impl SynthLanguage for Math {
             type Constant = BV;
+	    type Config = ();
 
             /// Converting CVC4's rewrites to Ruler's BV grammar syntax.
             fn convert_parse(s: &str) -> RecExpr<Self> {
@@ -226,7 +227,7 @@ macro_rules! impl_bv {
                 Some(Math::Num(c))
             }
 
-            fn init_synth(synth: &mut Synthesizer<Self>) {
+            fn init_synth(synth: &mut Synthesizer<Self, ruler::Uninit>) {
                 let mut consts: Vec<Option<BV>> = vec![];
                 if synth.params.complete_cvec {
                     consts = (0..1u64 << $n).map(|i| Some((i as u32).into())).collect();
@@ -272,7 +273,7 @@ macro_rules! impl_bv {
 
 	    fn make_layer<'a>(
 		_ids: Vec<Id>,
-		_synth: &'a Synthesizer<Self>,
+		_synth: &'a Synthesizer<Self, ruler::Init>,
 		_iter: usize,
 	    ) -> Box<dyn Iterator<Item = Self> + 'a> {
 		todo!()
@@ -323,7 +324,7 @@ macro_rules! impl_bv {
 
 
             fn is_valid(
-                synth: &mut Synthesizer<Self>,
+                synth: &mut Synthesizer<Self, ruler::Init>,
                 lhs: &Pattern<Self>,
                 rhs: &Pattern<Self>,
             ) -> bool {

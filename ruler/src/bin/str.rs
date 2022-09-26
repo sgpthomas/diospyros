@@ -89,6 +89,7 @@ fn concat(a: &[u8], b: &[u8]) -> SmallStr {
 
 impl SynthLanguage for Lang {
     type Constant = Constant;
+    type Config = ();
 
     fn eval<'a, F>(&'a self, cvec_len: usize, mut v: F) -> CVec<Self>
     where
@@ -196,7 +197,7 @@ impl SynthLanguage for Lang {
         Some(Lang::Lit(c))
     }
 
-    fn init_synth(synth: &mut Synthesizer<Self>) {
+    fn init_synth(synth: &mut Synthesizer<Self, ruler::Uninit>) {
         let mut str_consts: Vec<SmallStr> = vec![SmallStr::new()];
         for _ in 0..3 {
             let mut new = vec![SmallStr::new()];
@@ -265,7 +266,7 @@ impl SynthLanguage for Lang {
 
     fn make_layer<'a>(
         _ids: Vec<Id>,
-        _synth: &'a Synthesizer<Self>,
+        _synth: &'a Synthesizer<Self, ruler::Init>,
         _iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         todo!()
@@ -340,7 +341,7 @@ impl SynthLanguage for Lang {
     // }
 
     fn is_valid(
-        _synth: &mut Synthesizer<Self>,
+        _synth: &mut Synthesizer<Self, ruler::Init>,
         _lhs: &Pattern<Self>,
         _rhs: &Pattern<Self>,
     ) -> bool {

@@ -19,9 +19,9 @@ pub struct SynthParamsCli {
     /// Absolute timeout
     #[clap(long, default_value = "120")]
     pub abs_timeout: usize,
-    /// Dios config
-    #[clap(long)]
-    pub dios_config: Option<String>,
+    // /// Dios config
+    // #[clap(long)]
+    // pub dios_config: Option<String>,
 
     ///////////////////
     // search params //
@@ -141,7 +141,7 @@ impl Into<SynthParams> for SynthParamsCli {
             n_samples: self.n_samples,
             variables: self.variables,
             abs_timeout: self.abs_timeout,
-            dios_config: self.dios_config,
+            // dios_config: self.dios_config,
             iters: self.iters,
             rules_to_take: self.rules_to_take,
             chunk_size: self.chunk_size,

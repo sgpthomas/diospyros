@@ -49,6 +49,7 @@ fn mk_constant(n: &BigInt, d: &BigInt) -> Option<Constant> {
 
 impl SynthLanguage for Math {
     type Constant = Constant;
+    type Config = ();
 
     /// Interpreter for rationals.
     fn eval<'a, F>(&'a self, cvec_len: usize, mut v: F) -> CVec<Self>
@@ -118,7 +119,7 @@ impl SynthLanguage for Math {
     }
 
     /// Initialize an egraph with some constants and variables.
-    fn init_synth(synth: &mut Synthesizer<Self>) {
+    fn init_synth(synth: &mut Synthesizer<Self, ruler::Uninit>) {
         // this is for adding to the egraph, not used for cvec.
         let constants: Vec<Constant> = ["1", "0", "-1"]
             .iter()
@@ -176,7 +177,7 @@ impl SynthLanguage for Math {
 
     fn make_layer<'a>(
         _ids: Vec<Id>,
-        _synth: &'a Synthesizer<Self>,
+        _synth: &'a Synthesizer<Self, ruler::Init>,
         _iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         todo!()
@@ -210,7 +211,7 @@ impl SynthLanguage for Math {
     /// Depending on the value of `use_smt`, it either uses
     /// Z3 to verify the rules or fuzzing to validate them.
     fn is_valid(
-        synth: &mut Synthesizer<Self>,
+        synth: &mut Synthesizer<Self, ruler::Init>,
         lhs: &egg::Pattern<Self>,
         rhs: &egg::Pattern<Self>,
     ) -> bool {

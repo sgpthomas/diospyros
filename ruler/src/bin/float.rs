@@ -61,6 +61,7 @@ pub fn mk_constant(val: f64) -> Option<Constant> {
 
 impl SynthLanguage for Math {
     type Constant = Constant;
+    type Config = ();
 
     fn eval<'a, F>(&'a self, cvec_len: usize, mut v: F) -> CVec<Self>
     where
@@ -117,7 +118,7 @@ impl SynthLanguage for Math {
         Some(Math::Num(c))
     }
 
-    fn init_synth(synth: &mut Synthesizer<Self>) {
+    fn init_synth(synth: &mut Synthesizer<Self, ruler::Uninit>) {
         let params = &synth.params;
 
         // let constants: Vec<Constant> = ["1", "0", "-1"]
@@ -164,14 +165,14 @@ impl SynthLanguage for Math {
 
     fn make_layer<'a>(
         _ids: Vec<Id>,
-        _synth: &'a Synthesizer<Self>,
+        _synth: &'a Synthesizer<Self, ruler::Init>,
         _iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         todo!()
     }
     // fn make_layer(synth: &Synthesizer<Self>, _iter: usize) -> Vec<Self> {
     //     let mut to_add = vec![];
-    //     for i in synth.ids() {
+    //     for i in .ids() {
     //         for j in synth.ids() {
     //             if synth.egraph[i].data.exact && synth.egraph[j].data.exact {
     //                 continue;
@@ -194,7 +195,7 @@ impl SynthLanguage for Math {
     // }
 
     fn is_valid(
-        synth: &mut Synthesizer<Self>,
+        synth: &mut Synthesizer<Self, ruler::Init>,
         lhs: &Pattern<Self>,
         rhs: &Pattern<Self>,
     ) -> bool {

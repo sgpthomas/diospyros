@@ -63,6 +63,7 @@ impl std::fmt::Display for Value {
 
 impl SynthLanguage for Aella {
     type Constant = Value;
+    type Config = ();
 
     fn eval<'a, F>(&'a self, cvec_len: usize, mut get: F) -> ruler::CVec<Self>
     where
@@ -182,7 +183,7 @@ impl SynthLanguage for Aella {
         matches!(self, Aella::Num(..))
     }
 
-    fn init_synth(synth: &mut ruler::Synthesizer<Self>) {
+    fn init_synth(synth: &mut ruler::Synthesizer<Self, ruler::Uninit>) {
         // initial constants that will be in the graph
         let constants = [-1, 0, 1];
 
@@ -234,7 +235,7 @@ impl SynthLanguage for Aella {
 
     fn make_layer<'a>(
         ids: Vec<Id>,
-        synth: &'a ruler::Synthesizer<Self>,
+        synth: &'a ruler::Synthesizer<Self, ruler::Init>,
         _iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         let binops = (0..2)
@@ -265,7 +266,7 @@ impl SynthLanguage for Aella {
     }
 
     fn is_valid(
-        _synth: &mut ruler::Synthesizer<Self>,
+        _synth: &mut ruler::Synthesizer<Self, ruler::Init>,
         _lhs: &egg::Pattern<Self>,
         _rhs: &egg::Pattern<Self>,
     ) -> bool {

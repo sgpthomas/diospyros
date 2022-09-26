@@ -8,6 +8,7 @@ use ruler::{
     Synthesizer,
 };
 use rustc_hash::FxHasher;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::hash::BuildHasherDefault;
@@ -476,8 +477,33 @@ impl Into<egg::RecExpr<VecLang>> for Lang {
     }
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct DiosConstant {
+    pub kind: String,
+    pub value: i32,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct DiosSeedRules {
+    pub lhs: String,
+    pub rhs: String,
+}
+
+/// Dios configuration struct
+#[derive(Clone, Debug, Serialize, Deserialize, Default)]
+pub struct DiosConfig {
+    pub constants: Vec<DiosConstant>,
+    pub seed_rules: Vec<DiosSeedRules>,
+    pub unops: Vec<String>,
+    pub binops: Vec<String>,
+    pub use_vector: bool,
+    pub vector_mac: bool,
+    pub variable_duplication: bool,
+}
+
 impl SynthLanguage for VecLang {
     type Constant = Value;
+    type Config = DiosConfig;
 
     fn to_var(&self) -> Option<egg::Symbol> {
         if let VecLang::Symbol(sym) = self {
@@ -696,9 +722,9 @@ impl SynthLanguage for VecLang {
         }
     }
 
-    fn init_synth(synth: &mut Synthesizer<Self>) {
+    fn init_synth(synth: &mut Synthesizer<Self, ruler::Uninit>) {
         let consts = synth
-            .dios_config
+            .lang_config
             .constants
             .iter()
             .map(|c| match c.kind.as_str() {
@@ -720,7 +746,7 @@ impl SynthLanguage for VecLang {
         };
 
         // read and add seed rules from config
-        for rule in &synth.dios_config.seed_rules {
+        for rule in &synth.lang_config.seed_rules {
             let rule: Equality<VecLang> = Equality::new(
                 &rule.lhs.parse().unwrap(),
                 &rule.rhs.parse().unwrap(),
@@ -782,11 +808,11 @@ impl SynthLanguage for VecLang {
     ///   depth 1 and depth 2 vector operations
     fn make_layer<'a>(
         ids: Vec<Id>,
-        synth: &'a Synthesizer<Self>,
+        synth: &'a Synthesizer<Self, ruler::Init>,
         mut iter: usize,
     ) -> Box<dyn Iterator<Item = Self> + 'a> {
         // vd for variable duplication
-        let vd = synth.dios_config.variable_duplication;
+        let vd = synth.lang_config.variable_duplication;
 
         // if iter % 2 == 0 {
         iter = iter - 1; // make iter start at 0
@@ -799,7 +825,7 @@ impl SynthLanguage for VecLang {
                 .filter(move |x| !synth.egraph[*x].data.exact)
                 .map(move |x| {
                     synth
-                        .dios_config
+                        .lang_config
                         .unops
                         .iter()
                         .map(|op| match op.as_str() {
@@ -820,7 +846,7 @@ impl SynthLanguage for VecLang {
                 .map(|ids| [ids[0], ids[1]])
                 .map(move |x| {
                     synth
-                        .dios_config
+                        .lang_config
                         .binops
                         .iter()
                         .map(|op| match op.as_str() {
@@ -842,14 +868,14 @@ impl SynthLanguage for VecLang {
             None
         };
 
-        let vec_stuff = if synth.dios_config.use_vector {
+        let vec_stuff = if synth.lang_config.use_vector {
             let vec_unops = ids
                 .clone()
                 .into_iter()
                 .filter(move |x| !synth.egraph[*x].data.exact)
                 .map(move |x| {
                     let mut v = synth
-                        .dios_config
+                        .lang_config
                         .unops
                         .iter()
                         .map(|op| match op.as_str() {
@@ -873,7 +899,7 @@ impl SynthLanguage for VecLang {
                 .map(|ids| [ids[0], ids[1]])
                 .map(move |x| {
                     synth
-                        .dios_config
+                        .lang_config
                         .binops
                         .iter()
                         .map(|op| match op.as_str() {
@@ -893,7 +919,7 @@ impl SynthLanguage for VecLang {
             None
         };
 
-        let vec_mac = if synth.dios_config.vector_mac {
+        let vec_mac = if synth.lang_config.vector_mac {
             let vec_mac = (0..3)
                 .map(|_| ids.clone())
                 .multi_cartesian_product()
@@ -925,7 +951,7 @@ impl SynthLanguage for VecLang {
     }
 
     fn is_valid(
-        synth: &mut Synthesizer<Self>,
+        synth: &mut Synthesizer<Self, ruler::Init>,
         lhs: &egg::Pattern<Self>,
         rhs: &egg::Pattern<Self>,
     ) -> bool {
