@@ -75,7 +75,7 @@ pub trait SynthLanguage:
     egg::Language + Send + Sync + Display + FromOp + 'static
 {
     type Constant: Clone + Hash + Eq + Debug + Display;
-    type Config: Clone + Default;
+    type Config: Clone;
 
     fn eval<'a, F>(&'a self, cvec_len: usize, f: F) -> CVec<Self>
     where
@@ -256,7 +256,16 @@ pub trait SynthLanguage:
         let r = Self::convert_parse(&list[2].to_string());
         Equality::new(&l, &r)
     }
+}
 
+pub trait Main {
+    fn main();
+}
+
+impl<T: SynthLanguage> Main for T
+where
+    T::Config: Default,
+{
     /// Entry point. Use the `synth` argument from the command line
     /// for rule synthesis.
     #[cfg(feature = "cli")]
@@ -318,11 +327,6 @@ impl<L: SynthLanguage> Synthesizer<L, Uninit> {
         }
     }
 
-    /// Initialize all the arguments of the [Synthesizer].
-    pub fn new(params: SynthParams) -> Self {
-        Self::new_with_data(params, L::Config::default())
-    }
-
     pub fn init(mut self) -> Synthesizer<L, Init> {
         L::init_synth(&mut self);
         self.initial_egraph = self.egraph.clone();
@@ -338,6 +342,16 @@ impl<L: SynthLanguage> Synthesizer<L, Uninit> {
             smt_unknown: self.smt_unknown,
             start_time: self.start_time,
         }
+    }
+}
+
+impl<L: SynthLanguage> Synthesizer<L, Uninit>
+where
+    L::Config: Default,
+{
+    /// Initialize all the arguments of the [Synthesizer].
+    pub fn new(params: SynthParams) -> Self {
+        Self::new_with_data(params, L::Config::default())
     }
 }
 

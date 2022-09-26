@@ -293,5 +293,5 @@ impl SynthLanguage for Aella {
 }
 
 fn main() {
-    Aella::main()
+    <Aella as ruler::Main>::main()
 }

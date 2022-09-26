@@ -1180,7 +1180,7 @@ fn debug(left: &str, right: &str, n: usize, env_pairs: &[(&str, Value)]) {
 }
 
 fn main() {
-    VecLang::main()
+    <VecLang as ruler::Main>::main()
 }
 
 fn egg_to_z3<'a>(
