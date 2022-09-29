@@ -7,7 +7,7 @@ use std::{
     str::FromStr,
 };
 
-use egg::{CostFunction, Extractor, RecExpr, Runner};
+use egg::{CostFunction, RecExpr, Runner};
 
 use crate::{
     cost::{cost_average, cost_differential, VecCostFn},

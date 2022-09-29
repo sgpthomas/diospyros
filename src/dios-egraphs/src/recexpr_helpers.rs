@@ -38,8 +38,14 @@ where
     acc
 }
 
-pub fn root<L: egg::Language>(expr: &egg::RecExpr<L>) -> &L {
-    &expr.as_ref()[expr.as_ref().len() - 1]
+pub trait RecExprHelpers<L: egg::Language + Display> {
+    fn root(&self) -> &L;
+}
+
+impl<L: egg::Language + Display> RecExprHelpers<L> for egg::RecExpr<L> {
+    fn root(&self) -> &L {
+        &self.as_ref()[self.as_ref().len() - 1]
+    }
 }
 
 pub trait LanguageHelpers<L: egg::Language + Display> {

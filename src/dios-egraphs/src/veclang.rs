@@ -114,6 +114,7 @@ enum Lang {
 }
 
 impl Lang {
+    #[allow(unused)]
     pub fn from_pattern(pat: &PatternAst<Self>) -> RecExpr<Self> {
         pat.as_ref()
             .iter()
