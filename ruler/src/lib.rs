@@ -258,17 +258,18 @@ pub trait SynthLanguage:
     }
 }
 
+#[cfg(feature = "cli")]
 pub trait Main {
     fn main();
 }
 
+#[cfg(feature = "cli")]
 impl<T: SynthLanguage> Main for T
 where
     T::Config: Default,
 {
     /// Entry point. Use the `synth` argument from the command line
     /// for rule synthesis.
-    #[cfg(feature = "cli")]
     fn main() {
         let _ = env_logger::builder().try_init();
         match cli::Command::cli() {
