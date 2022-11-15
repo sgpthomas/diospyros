@@ -136,64 +136,14 @@ data %>%
   ## filter(no.dup.vars == "True") %>%
   filter(sub.prog == "True") %>%
   filter(split.phase == "True") %>%
-  filter(bench == "q-prod") %>%
+  filter(bench == "qr-decomp") %>%
   ## filter(variable == "impr_cost" | variable == "cost" | variable == "time") %>%
   select(id, cost.filter, no.dup.vars, sub.prog, split.phase, variable, value)
 #+end_src
 
 #+RESULTS:
-|  id | cost.filter | no.dup.vars | sub.prog | split.phase | variable  |               value |
-|-----+-------------+-------------+----------+-------------+-----------+---------------------|
-| 240 |         -10 | True        | True     | True        | time      |          Timed out. |
-| 240 |         -10 | True        | True     | True        | cost      |                -1.0 |
-| 240 |         -10 | True        | True     | True        | phase_1_n |                     |
-| 240 |         -10 | True        | True     | True        | phase_2_n |                     |
-| 240 |         -10 | True        | True     | True        | impr_cost |                     |
-| 252 |         -10 | False       | True     | True        | time      |   247.1159701347351 |
-| 252 |         -10 | False       | True     | True        | cost      |             596.965 |
-| 252 |         -10 | False       | True     | True        | phase_1_n |                   6 |
-| 252 |         -10 | False       | True     | True        | phase_2_n |                1242 |
-| 252 |         -10 | False       | True     | True        | impr_cost | 0.19799999999997908 |
-| 264 |           0 | True        | True     | True        | time      |          Timed out. |
-| 264 |           0 | True        | True     | True        | cost      |                -1.0 |
-| 264 |           0 | True        | True     | True        | phase_1_n |                   8 |
-| 264 |           0 | True        | True     | True        | phase_2_n |                2699 |
-| 264 |           0 | True        | True     | True        | impr_cost |                     |
-| 276 |           0 | False       | True     | True        | time      |          Timed out. |
-| 276 |           0 | False       | True     | True        | cost      |                -1.0 |
-| 276 |           0 | False       | True     | True        | phase_1_n |                   8 |
-| 276 |           0 | False       | True     | True        | phase_2_n |              257554 |
-| 276 |           0 | False       | True     | True        | impr_cost |                     |
-| 288 |           1 | True        | True     | True        | time      |   3907.579300403595 |
-| 288 |           1 | True        | True     | True        | cost      |              62.454 |
-| 288 |           1 | True        | True     | True        | phase_1_n |                   8 |
-| 288 |           1 | True        | True     | True        | phase_2_n |                2860 |
-| 288 |           1 | True        | True     | True        | impr_cost |  12.144000000000013 |
-| 300 |           1 | False       | True     | True        | time      |  3978.5280747413635 |
-| 300 |           1 | False       | True     | True        | cost      |  61.846000000000004 |
-| 300 |           1 | False       | True     | True        | phase_1_n |                   8 |
-| 300 |           1 | False       | True     | True        | phase_2_n |              259826 |
-| 300 |           1 | False       | True     | True        | impr_cost |   11.74600000000001 |
-| 312 |          10 | True        | True     | True        | time      |   3912.639219760895 |
-| 312 |          10 | True        | True     | True        | cost      |              62.454 |
-| 312 |          10 | True        | True     | True        | phase_1_n |                   8 |
-| 312 |          10 | True        | True     | True        | phase_2_n |                2922 |
-| 312 |          10 | True        | True     | True        | impr_cost |  12.144000000000013 |
-| 324 |          10 | False       | True     | True        | time      |  3907.8842482566833 |
-| 324 |          10 | False       | True     | True        | cost      |  58.846000000000004 |
-| 324 |          10 | False       | True     | True        | phase_1_n |                   8 |
-| 324 |          10 | False       | True     | True        | phase_2_n |              260987 |
-| 324 |          10 | False       | True     | True        | impr_cost |               15.75 |
-| 336 |             | True        | True     | True        | time      |   244.3377125263214 |
-| 336 |             | True        | True     | True        | cost      |             597.163 |
-| 336 |             | True        | True     | True        | phase_1_n |                   6 |
-| 336 |             | True        | True     | True        | phase_2_n |                   0 |
-| 336 |             | True        | True     | True        | impr_cost |                 0.0 |
-| 348 |             | False       | True     | True        | time      |  244.28918313980103 |
-| 348 |             | False       | True     | True        | cost      |             597.163 |
-| 348 |             | False       | True     | True        | phase_1_n |                   6 |
-| 348 |             | False       | True     | True        | phase_2_n |                   0 |
-| 348 |             | False       | True     | True        | impr_cost |                 0.0 |
+| id | cost.filter | no.dup.vars | sub.prog | split.phase | variable | value |
+|----+-------------+-------------+----------+-------------+----------+-------|
 
 #+begin_src R :reuslts value
 data %>%

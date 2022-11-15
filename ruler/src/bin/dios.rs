@@ -1063,7 +1063,7 @@ impl SynthLanguage for VecLang {
                         &mut synth.rng,
                         -100,
                         100,
-                        4, // synth.params.vector_size
+                        synth.params.vector_size,
                         n_vecs,
                     )
                     .into_iter()

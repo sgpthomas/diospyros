@@ -51,6 +51,10 @@ dios: $(RACKET_SRC)
 dios-example-gen: $(RACKET_SRC)
 	raco exe -o $(MK_DIR)/dios-example-gen $(MK_DIR)/src/example-gen.rkt
 
+dios.tar: dios dios-example-gen
+	raco distribute dios-bins dios dios-example-gen
+	tar cvf dios.tar dios-bins
+
 clean:
 	rm -rf $(MK_DIR)/dios $(MK_DIR)/dios-example-gen $(MK_DIR)/__pycache__ $(MK_DIR)/src/compiled $(MK_DIR)/src/*~ build *-out/
 
