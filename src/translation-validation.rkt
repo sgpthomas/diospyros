@@ -96,19 +96,24 @@
   (for ([a (uninterp-fn-assumptions)])
     (assert a))
 
-  (define model
+  (pretty-print init-env)
+  (pretty-print spec)
+  (pretty-print flatten-prog-outputs)
+
+  (define m
     (verify
         (assert (equal? spec flatten-prog-outputs))))
 
-  (if (not (unsat? model))
-    (pretty-display (format "Translation validation unsuccessful. Spec:\n ~a \nProg:\n ~a"
-                        spec
-                        flatten-prog-outputs))
+  (if (not (unsat? m))
+    (pretty-display (format "Translation validation unsuccessful. Spec:\n~a \nProg:\n~a\n~a"
+                        (pretty-format spec)
+                        (pretty-format flatten-prog-outputs)
+                        m))
     (pretty-display (format "~aTranslation validation successful! ~a elements equal~a\n"
                             "\x1B[32m"    ; Green in terminal
                             (length spec)
                             "\x1B[0m")))  ; Back to black
-  model)
+  m)
 
 ; Verify input-output behavior of programs.
 (define (verify-prog spec

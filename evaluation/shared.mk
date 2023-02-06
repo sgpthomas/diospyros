@@ -1,16 +1,17 @@
 SRC := harness.c
-KERNEL_SRC := kernel.c
+KERNEL_SRC := egg-kernel.c
 
-XCC := xt-xcc
-XCXX := xt-xc++
-XRUN := xt-run
+XCC := ~/Research/xtensa/RI-2021.8-linux/XtensaTools/bin/xt-clang # xt-xcc
+XCXX := ~/Research/xtensa/RI-2021.8-linux/XtensaTools/bin/xt-clang++
+XRUN := ~/Research/xtensa/RI-2021.8-linux/XtensaTools/bin/xt-run
 XCC_FLAGS += -O3 -mlongcalls -mtext-section-literals
 # for verbose: -LNO:SIMD_V
 XCXX_FLAGS += -std=c++11 -O3 -LNO:SIMD -w
-XCXX_FLAGS += -I /usr/local/include/eigen-3
+XCXX_FLAGS += -I /usr/include/eigen3
 XSIM_FLAGS := --summary --mem_model
 
-NATURE_DIR := /data/Xplorer-8.0.11-workspaces/workspace/fusiong3_library
+# NATURE_DIR := /data/Xplorer-8.0.11-workspaces/workspace/fusiong3_library
+NATURE_DIR := ~/Research/xtensa/fusiong3_library
 NATURE_INC := -I $(NATURE_DIR)/include -I $(NATURE_DIR)/include_private -DXCHAL_HAVE_FUSIONG_SP_VFPU=1
 
 PARAMS += -DOUTFILE='"$(OUTFILE)"'
@@ -26,7 +27,7 @@ default: $(OBJECT)
 clean:
 	rm -rf $(OBJECT) $(ALL_OBJS)
 
-$(OBJECT): $(ALL_OBJS) $(KERNEL_SRC) $(SRC)
+$(OBJECT): $(ALL_OBJS) $(SRC) $(KERNEL_SRC)
 	$(XCXX) $(PARAMS) $(XCXX_FLAGS) $(NATURE_INC) $(ALL_OBJS) $(KERNEL_SRC) $(SRC) -o $(OBJECT)
 
 run: $(OBJECT)

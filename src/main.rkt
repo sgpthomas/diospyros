@@ -1,6 +1,8 @@
 #lang rosette
 
 (require "compiler.rkt"
+         "compile-passes.rkt" ; debug
+         "interp.rkt" ; debug
          "ast.rkt"
          "c-ast.rkt"
          "configuration.rkt"
@@ -126,7 +128,6 @@ here-string-delimiter
 
         (pretty-display "Compiling to Tensilica backend" (current-error-port))
         (define (backend p) (tensilica-g3-compile (fn-name) p))
-
 
         (~> i-prog
             backend
