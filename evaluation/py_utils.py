@@ -10,9 +10,9 @@ qprod = "q-prod"
 
 benchmarks = [
     matmul,
-    # conv2d,
-    # qrdecomp,
-    # qprod
+    conv2d,
+    qrdecomp,
+    qprod
 ]
 
 

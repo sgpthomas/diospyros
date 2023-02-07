@@ -31,55 +31,55 @@ float nat_b[SIZE*SIZE] __attribute__((section(".dram0.data")));
 void kernel(float * A, float * Q, float * R);
 
 // Nature functions.
-extern "C" {
-  void matinvqrf(void *pScr,
-                 float32_t* A,float32_t* V,float32_t* D, int M, int N_);
-  size_t matinvqrf_getScratchSize(int M, int N_);
-  void matinvqrrotf(void *pScr,
-                    float32_t* B, const float32_t* V,
-                    int M, int N_, int P);
-  size_t matinvqrrotf_getScratchSize(int M, int N_, int P);
-  void transpmf(const float32_t * x, int M, int N_, float32_t * z);
-}
+/* extern "C" { */
+/*   void matinvqrf(void *pScr, */
+/*                  float32_t* A,float32_t* V,float32_t* D, int M, int N_); */
+/*   size_t matinvqrf_getScratchSize(int M, int N_); */
+/*   void matinvqrrotf(void *pScr, */
+/*                     float32_t* B, const float32_t* V, */
+/*                     int M, int N_, int P); */
+/*   size_t matinvqrrotf_getScratchSize(int M, int N_, int P); */
+/*   void transpmf(const float32_t * x, int M, int N_, float32_t * z); */
+/* } */
 
 /**
  * QR decomposition using Nature kernels.
  */
-int nature_qr(const float *A, float *Q, float *R) {
-  // Check that our scratch array is big enough for both steps.
-  size_t scratchSize = matinvqrf_getScratchSize(SIZE, SIZE);
-  if (sizeof(scratch) < scratchSize) {
-    printf("scratch is too small for matinvqrf!\n");
-    return 1;
-  }
-  scratchSize = matinvqrrotf_getScratchSize(SIZE, SIZE, SIZE);
-  if (sizeof(scratch) < scratchSize) {
-    printf("scratch is too small for matinvqrrotf!\n");
-    return 1;
-  }
+/* int nature_qr(const float *A, float *Q, float *R) { */
+/*   // Check that our scratch array is big enough for both steps. */
+/*   size_t scratchSize = matinvqrf_getScratchSize(SIZE, SIZE); */
+/*   if (sizeof(scratch) < scratchSize) { */
+/*     printf("scratch is too small for matinvqrf!\n"); */
+/*     return 1; */
+/*   } */
+/*   scratchSize = matinvqrrotf_getScratchSize(SIZE, SIZE, SIZE); */
+/*   if (sizeof(scratch) < scratchSize) { */
+/*     printf("scratch is too small for matinvqrrotf!\n"); */
+/*     return 1; */
+/*   } */
 
-  // Copy A into R (because it's overwritten in the first step).
-  for (int i = 0; i < SIZE * SIZE; ++i) {
-    R[i] = A[i];
-  }
+/*   // Copy A into R (because it's overwritten in the first step). */
+/*   for (int i = 0; i < SIZE * SIZE; ++i) { */
+/*     R[i] = A[i]; */
+/*   } */
 
-  // Start with main QR decomposition call.
-  // The `R` used here is an in/out parameter: A in input, R on output.
-  matinvqrf(scratch, R, nat_v, nat_d, SIZE, SIZE);
+/*   // Start with main QR decomposition call. */
+/*   // The `R` used here is an in/out parameter: A in input, R on output. */
+/*   matinvqrf(scratch, R, nat_v, nat_d, SIZE, SIZE); */
 
-  // We need an extra identity matrix for the second step.
-  zero_matrix(nat_b, SIZE, SIZE);
-  for (int i = 0; i < SIZE; ++i) {
-    nat_b[i*SIZE + i] = 1;
-  }
+/*   // We need an extra identity matrix for the second step. */
+/*   zero_matrix(nat_b, SIZE, SIZE); */
+/*   for (int i = 0; i < SIZE; ++i) { */
+/*     nat_b[i*SIZE + i] = 1; */
+/*   } */
 
-  // Apply Householder rotations to obtain Q'.
-  matinvqrrotf(scratch, nat_b, nat_v, SIZE, SIZE, SIZE);
+/*   // Apply Householder rotations to obtain Q'. */
+/*   matinvqrrotf(scratch, nat_b, nat_v, SIZE, SIZE, SIZE); */
 
-  // Transpose that to get Q.
-  transpmf(nat_b, SIZE, SIZE, Q);
-  return 0;
-}
+/*   // Transpose that to get Q. */
+/*   transpmf(nat_b, SIZE, SIZE, Q); */
+/*   return 0; */
+/* } */
 
 float sgn(float v){
   return (v > 0) - (v < 0);
@@ -342,23 +342,23 @@ int main(int argc, char **argv) {
   fprintf(file, "%s,%d,%d\n","Naive hard size",SIZE,time);
 
   // Nature only works if the size is a multiple of 4
-  if (SIZE % 4 == 0) {
-    start_cycle_timing;
-    err = nature_qr(a, q, r);
-    stop_cycle_timing;
-    if (err) {
-      return err;
-    }
-    time = get_time();
-    print_matrix(q, SIZE, SIZE);
-    print_matrix(r, SIZE, SIZE);
-    output_check_abs(q, q_spec, SIZE, SIZE);
-    output_check_abs(r, r_spec, SIZE, SIZE);
-    zero_matrix(q, SIZE, SIZE);
-    zero_matrix(r, SIZE, SIZE);
-    printf("Nature : %d cycles\n", time);
-    fprintf(file, "%s,%d,%d\n","Nature",SIZE,time);
-  }
+  /* if (SIZE % 4 == 0) { */
+  /*   start_cycle_timing; */
+  /*   err = nature_qr(a, q, r); */
+  /*   stop_cycle_timing; */
+  /*   if (err) { */
+  /*     return err; */
+  /*   } */
+  /*   time = get_time(); */
+  /*   print_matrix(q, SIZE, SIZE); */
+  /*   print_matrix(r, SIZE, SIZE); */
+  /*   output_check_abs(q, q_spec, SIZE, SIZE); */
+  /*   output_check_abs(r, r_spec, SIZE, SIZE); */
+  /*   zero_matrix(q, SIZE, SIZE); */
+  /*   zero_matrix(r, SIZE, SIZE); */
+  /*   printf("Nature : %d cycles\n", time); */
+  /*   fprintf(file, "%s,%d,%d\n","Nature",SIZE,time); */
+  /* } */
 
   // Eigen
   // Don't count data transformation toward timing

@@ -19,11 +19,11 @@ float f[F_ROWS * F_COLS] __attribute__((section(".dram0.data")));
 float o[O_ROWS * O_COLS] __attribute__((section(".dram0.data")));
 float o_spec[O_ROWS * O_COLS] __attribute__((section(".dram0.data")));
 
-extern "C" {
-  // Nature kernel
-  void conv2df(const float32_t *x, int M, int N,
-              const float32_t *y, int P, int Q, float32_t * z);
-}
+/* extern "C" { */
+/*   // Nature kernel */
+/*   void conv2df(const float32_t *x, int M, int N, */
+/*               const float32_t *y, int P, int Q, float32_t * z); */
+/* } */
 
 // Diospyros kernel
 void kernel(float * input_I, float * input_F, float * input_O);
@@ -120,15 +120,15 @@ int main(int argc, char **argv) {
   fprintf(file, "%s,%d,%d,%d,%d,%d\n","Naive hard size",I_ROWS,I_COLS,F_ROWS,F_COLS,time);
 
   // Nature
-  start_cycle_timing;
-  conv2df(i, I_ROWS, I_COLS, f, F_ROWS, F_COLS, o);
-  stop_cycle_timing;
-  time = get_time();
-  print_matrix(o, O_ROWS, O_COLS);
-  output_check(o, o_spec, O_ROWS, O_COLS);
-  zero_matrix(o, O_ROWS, O_COLS);
-  printf("Nature : %d cycles\n", time);
-  fprintf(file, "%s,%d,%d,%d,%d,%d\n","Nature",I_ROWS,I_COLS,F_ROWS,F_COLS,time);
+  /* start_cycle_timing; */
+  /* conv2df(i, I_ROWS, I_COLS, f, F_ROWS, F_COLS, o); */
+  /* stop_cycle_timing; */
+  /* time = get_time(); */
+  /* print_matrix(o, O_ROWS, O_COLS); */
+  /* output_check(o, o_spec, O_ROWS, O_COLS); */
+  /* zero_matrix(o, O_ROWS, O_COLS); */
+  /* printf("Nature : %d cycles\n", time); */
+  /* fprintf(file, "%s,%d,%d,%d,%d,%d\n","Nature",I_ROWS,I_COLS,F_ROWS,F_COLS,time); */
 
   // Diospyros
   start_cycle_timing;
