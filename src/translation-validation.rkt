@@ -96,9 +96,9 @@
   (for ([a (uninterp-fn-assumptions)])
     (assert a))
 
-  (pretty-print init-env)
-  (pretty-print spec)
-  (pretty-print flatten-prog-outputs)
+  ;; (pretty-print init-env)
+  ;; (pretty-print spec)
+  ;; (pretty-print flatten-prog-outputs)
 
   (define m
     (verify
