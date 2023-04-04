@@ -12,7 +12,7 @@
   (define map (make-hash))
   (for ([e (prog-insts prelude)])
     (match e
-      [(vec-extern-decl name _ tag) (hash-set! map name tag)]
+      [(vec-extern-decl name size tag) (hash-set! map name `(,tag . ,size))]
       [else void]))
   map)
 
@@ -41,21 +41,89 @@
 
 (define new-name (make-name-gen))
 
-(define (egg-get-list-to-shuffle gets shuf-name out-name)
+
+(define (correct gets shuf-name out-name)
+  ;; (pretty-print "----")
   (define has-zero (ormap (curry equal? 0) gets))
+  (define mems-used
+    (append
+     (if has-zero `(Z) `())
+     (remove-duplicates (map egg-get-name
+                             (filter egg-get? gets)))))
+  ;; (pretty-print mems-used)
+
+  (define (get-idx v)
+    (if (egg-get? v)
+        (+ (* (current-reg-size)
+              (index-of mems-used (egg-get-name v)))
+           (modulo (egg-get-idx v) (current-reg-size))
+           )
+        0))
+  (define idxs (map get-idx gets))
+  ;; (pretty-print (format "~a -> ~a" gets idxs))
+  ;; (pretty-print "----")
+  (values idxs mems-used)
+  )
+
+; Converts a list of array accesses into a vector shuffle instruction
+; in the case of multiple memories, the memories are concatted, and the
+; indices are adjusted so that the refer into the concatted vector.
+; For example, consider:
+;   (Vec (get F 0) (get I 1) (get I 2) (get I 2))
+; Logically, F and I are concatted into '(F0 F1 F2 F3 I0 I1 I2 I3)
+; and so the indices for the shuffle need to be adjusted. in this case,
+; the resulting shuffle looks like:
+;  (vec-shuffle 'res '(0 5 6 6) '(F I))
+; Note:
+;  This is working on the level of input memories. This is before
+;  we have split the memory up into different registers.
+(define (egg-get-list-to-shuffle gets input-tags shuf-name out-name)
+  ;; (correct gets shuf-name out-name)
+  (define has-zero (ormap (curry equal? 0) gets))
+  (define mems-used
+    (append
+     (if has-zero `(Z) `())
+     (remove-duplicates (map egg-get-name
+                             (filter egg-get? gets)))))
+
   (define start (if has-zero (current-reg-size) 0))
   (define (get-idx v)
     (if (egg-get? v)
         (+ start (egg-get-idx v))
         0))
-  (define idxs (map get-idx gets))
+
+  ;; compute memory offsets
+  (define offsets
+    (make-hash
+     (cdr
+      (foldl
+       (lambda (el acc)
+         (let* ([sum (car acc)]
+                [counts (cdr acc)]
+                [size
+                 (if (equal? el 'Z)
+                     (current-reg-size)
+                     (cdr (hash-ref input-tags el)))]
+                [aligned
+                 (if (equal? (modulo size 4) 0)
+                     size
+                     (+ size (- (current-reg-size) (modulo size (current-reg-size)))))])
+           `(,(+ sum aligned) . ,(cons `(,el . ,sum) counts))))
+       '(0 . ())
+       mems-used))))
+  (pretty-print input-tags)
+  (pretty-print offsets)
+
+  (define (get-idx-2 v)
+    (if (egg-get? v)
+        (+ (hash-ref offsets (egg-get-name v)) (egg-get-idx v))
+        0))
+
+  (define idxs (map get-idx-2 gets))
+  (pretty-print (format "~a -> ~a" gets idxs))
 
   ; Use -1 to indicate "don't care"
-  (define mems-used
-    (append
-      (if has-zero `(Z) `())
-      (remove-duplicates (map egg-get-name
-                              (filter egg-get? gets)))))
+  
   (values
     out-name
     (list
@@ -64,11 +132,10 @@
 
 ; Functional expression -> (name, list of DSL instructions)
 (define (egg-to-dios-prog p input-tags)
-
-  (define mapped-consts-or-gets (make-hash))
-  (define has-const-or-get? (curry hash-has-key? mapped-consts-or-gets))
-  (define const-or-get-name (curry hash-ref mapped-consts-or-gets))
-  (define (set-const-or-get v name) (hash-set! mapped-consts-or-gets v name))
+  ;; (define mapped-consts-or-gets (make-hash))
+  ;; (define has-const-or-get? (curry hash-has-key? mapped-consts-or-gets))
+  ;; (define const-or-get-name (curry hash-ref mapped-consts-or-gets))
+  ;; (define (set-const-or-get v name) (hash-set! mapped-consts-or-gets v name))
 
   ; Don't redefine constants or array accesses
   (define seen-const-or-get-names (mutable-set))
@@ -121,10 +188,11 @@
         (define new-vs (map (lambda (x) (if (eq? x `nop) (first vs) x)) vs))
         (define (get-or-zero? v)
           (or (and (egg-get? v)
-                   (equal? (hash-ref input-tags (egg-get-name v)) 'extern-input-array))
+                   (equal? (car (hash-ref input-tags (egg-get-name v))) 'extern-input-array))
               (equal? v 0)))
         (if (andmap get-or-zero? new-vs)
           (egg-get-list-to-shuffle new-vs
+                                   input-tags
                                    (new-name `shufs)
                                    (new-name `shuf-out))
           (begin
@@ -139,7 +207,21 @@
               (vec-lit name names float-type))
             (values name
                     (flatten
-                      (list progs vlit)))))]
+                      (list progs vlit)))))
+        ;; (begin
+        ;;   (define (egg-to-tuple v)
+        ;;     (define-values (n p) (egg-to-dios v))
+        ;;     (list n p))
+        ;;   (define vs-egg (map egg-to-tuple new-vs))
+        ;;   (define names (map first vs-egg))
+        ;;   (define progs (map second vs-egg))
+        ;;   (define name (new-name 'lit))
+        ;;   (define vlit
+        ;;     (vec-lit name names float-type))
+        ;;   (values name
+        ;;           (flatten
+        ;;            (list progs vlit))))
+        ]
       [(egg-list vs)
         (define-values (zero-n zero-p) (egg-to-dios 0))
         (define (egg-to-tuple v)

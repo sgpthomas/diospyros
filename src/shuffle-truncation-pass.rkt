@@ -17,29 +17,56 @@
 ; Fresh name generation for new variables
 (define new-var (make-name-gen))
 
+(define (find-which tbl idx)
+  (cond
+    [(empty? tbl) (raise "Table not big enough for me!@!")]
+    [else
+     (define row (car tbl))
+     (if (< idx (car row))
+         (values idx (cdr row))
+         (find-which (cdr tbl) (- idx (car row))))]))
+
 ; Map an index to either the input it references, or the allocated register
 ; that now holds that index value
 (define (inp-id-for-idx env inps idx)
   (assert (not (empty? inps))
           (format "idx ~a not found in inputs" idx))
   (define inp-id (first inps))
-  (define inp-val (hash-ref env inp-id))
+  ;; (define inp-val (hash-ref env inp-id))
+  ;; (display (format "id: ~a, val: ~a\n" inp-id inp-val))
+  (define test
+   (map (lambda (x)
+          (let* ([tbl (hash-ref env x)]
+                 [size (cond
+                         [(vector? tbl) (vector-length tbl)]
+                         [(hash? tbl) (hash-count tbl)]
+                         [else (current-reg-size)])])
+            (cons size tbl)))
+        inps))
+
+  (define-values (real-idx inp-val) (find-which test idx))
+
   (cond
-    ; The input is a constant
-    [(vector? inp-val)
-     (define const-len (vector-length inp-val))
-     (if (< idx const-len)
-       inp-id
-       (inp-id-for-idx env (rest inps) (- idx const-len)))]
-    ; Input has been mapped across allocated registers
-    [else
-      (cond
-        ; The mapped input symbol
-        [(hash-has-key? inp-val idx) (hash-ref inp-val idx)]
-        ; Otherwise, on to the next input
-        [else
-          (define hash-len (length (hash->list inp-val)))
-          (inp-id-for-idx env (rest inps) (- idx hash-len))])]))
+    [(vector? inp-val) inp-id]
+    [else (hash-ref inp-val real-idx)])
+
+  ;; (cond
+  ;;   ; The input is a constant
+  ;;   [(vector? inp-val)
+  ;;    (define const-len (vector-length inp-val))
+  ;;    (if (< idx const-len)
+  ;;      inp-id
+  ;;      (inp-id-for-idx env (rest inps) (- idx const-len)))]
+  ;;   ; Input has been mapped across allocated registers
+  ;;   [else
+  ;;     (cond
+  ;;       ; The mapped input symbol
+  ;;       [(hash-has-key? inp-val idx) (hash-ref inp-val idx)]
+  ;;       ; Otherwise, on to the next input
+  ;;       [else
+  ;;         (define hash-len (length (hash->list inp-val)))
+  ;;         (inp-id-for-idx env (rest inps) (- idx hash-len))])])
+  )
 
 ; Handle cases where shuffles touch more registers than the limit
 (define (nest-shuffles shufs id idxs inp-ids new-inps)
@@ -80,10 +107,19 @@
   (define shuf-vec (vector-copy shufs))
   (define shuf-decl (vec-const shuf-id shuf-vec int-type))
 
+  ;; (pretty-print
+  ;;  (format "~a -> ~a -> ~a" id idxs inps))
+
+  ;; (pretty-print (vector->list shuf-vec))
+  ;; (when (equal? id 'v_11)
+  ;;   ;; (pretty-print env)
+  ;;   )
+
   ; Get the allocated register each index falls within
   (define inp-ids
     (map (curry inp-id-for-idx env inps) (vector->list shuf-vec)))
   (define new-inps (remove-duplicates inp-ids))
+  ;; (pretty-print inp-ids)
 
   ; Truncate indices based on the register they fall within
   (for ([i (in-range (length inp-ids))])
@@ -116,7 +152,6 @@
       (shuffle-to-write env id shufs (first inps))
       (truncate-irregular-shuffle env id idxs inps)))
 
-
 (define (truncate-shuffle-set env out-vec idxs inp)
   (define shufs (hash-ref env idxs))
   (assert (is-continuous-aligned-vec? (current-reg-size) shufs)
@@ -137,6 +172,8 @@
 (define (truncate-shuffle-inst env inst)
   (match inst
     [(vec-shuffle id idxs inps)
+     ;; (display "\n")
+     ;; (pretty-display inst)
      (truncate-shuffle env id idxs inps)]
     [(vec-shuffle-set! out-vec idxs inp)
      (truncate-shuffle-set env out-vec idxs inp)]
