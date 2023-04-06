@@ -168,10 +168,14 @@
            (match (type-ref inp)
             ["int *" (c-deref (c-cast "xb_vecMx32 *" (c-id inp)))]
             ["float *" (c-deref (c-cast "xb_vecMxf32 *" (c-id inp)))]
-            ["xb_vecMx32" (c-id inp)]
-            ["xb_vecMxf32"
-              (c-call (c-id "PDX_MOV_MX32_FROM_MXF32")
-                      (list (c-id inp)))]
+            ["xb_vecMx32"
+             (c-call (c-id "PDX_MOV_MXF32_FROM_MX32")
+                     (list (c-id inp)))]
+            ["xb_vecMxf32" (c-id inp)]
+            ;; ["xb_vecMx32" (c-id inp)]
+            ;; ["xb_vecMxf32"
+            ;;   (c-call (c-id "PDX_MOV_MX32_FROM_MXF32")
+            ;;           (list (c-id inp)))]
             [_ (error 'tensilica-g3-compile
                       "Missing type for id: ~a"
                       inp)]))
@@ -179,8 +183,8 @@
 
   (define func-name
     (case (length inps)
-      [(1) "PDX_SHFL_MX32"]
-      [(2) "PDX_SEL_MX32"]))
+      [(1) "PDX_SHFL_MXF32"]
+      [(2) "PDX_SEL_MXF32"]))
 
   (define shufl
     (c-deref (c-cast "xb_vecMx32 *" (c-id idxs))))
@@ -195,10 +199,13 @@
   (list
     (c-decl "xb_vecMxf32" #f (c-id id) #f #f)
     (c-assign (c-id id)
-              (c-call (c-id "PDX_MOV_MXF32_FROM_MX32")
-                      (list
-                       (c-call (c-id func-name)
-                               ordered-args))))))
+              (c-call (c-id func-name) ordered-args))
+    ;; (c-assign (c-id id)
+    ;;           (c-call (c-id "PDX_MOV_MXF32_FROM_MX32")
+    ;;                   (list
+    ;;                    (c-call (c-id func-name)
+    ;;                            ordered-args))))
+    ))
 
 (define (to-vecMxf2 type-ref inp)
   (match (type-ref inp)

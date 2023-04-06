@@ -111,8 +111,8 @@
            `(,(+ sum aligned) . ,(cons `(,el . ,sum) counts))))
        '(0 . ())
        mems-used))))
-  (pretty-print input-tags)
-  (pretty-print offsets)
+  ;; (pretty-print input-tags)
+  ;; (pretty-print offsets)
 
   (define (get-idx-2 v)
     (if (egg-get? v)
@@ -120,7 +120,7 @@
         0))
 
   (define idxs (map get-idx-2 gets))
-  (pretty-print (format "~a -> ~a" gets idxs))
+  ;; (pretty-print (format "~a -> ~a" gets idxs))
 
   ; Use -1 to indicate "don't care"
   
