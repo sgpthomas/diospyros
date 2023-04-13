@@ -224,7 +224,7 @@
 ; into:
 ; declare out = acc;
 ; vmac(out, i1, i2)
-(define (gen-vecmac type-set type-ref inst)
+(define (gen-vecmac type-set type-ref inst intrinsic)
   (match-define (vec-app out 'vec-mac (list v-acc i1 i2)) inst)
   ; Declare out register.
   (type-set out "xb_vecMxf32")
@@ -237,7 +237,7 @@
 
   (define mac
     (c-stmt
-      (c-call (c-id "PDX_MULA_MXF32")
+      (c-call (c-id intrinsic)
             (list
               (c-id out)
               (to-vecMxf2 type-ref i1)
@@ -452,7 +452,8 @@
         [(vec-shuffle _ _ _)
          (gen-shuffle type-set type-ref inst)]
 
-        [(vec-app _ 'vec-mac _) (gen-vecmac type-set type-ref inst)]
+        [(vec-app _ 'vec-mac _) (gen-vecmac type-set type-ref inst "PDX_MULA_MXF32")]
+        [(vec-app _ 'vec-muls _) (gen-vecmac type-set type-ref inst "PDX_MULS_MXF32")]
 
         [(vec-app out 'vec-mul inputs)
          (gen-vecMxf2-pure-app "PDX_MUL_MXF32" type-set type-ref out inputs)]

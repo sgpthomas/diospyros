@@ -11,10 +11,11 @@
   (values 'add
           'mul))
 
-(define-values (vec-add vec-mul vec-mac)
+(define-values (vec-add vec-mul vec-mac vec-muls)
   (values 'vec-add
           'vec-mul
-          'vec-mac))
+          'vec-mac
+          'vec-muls))
 
 (struct egg-get (name idx) #:transparent)
 (struct egg-vec-op (op args) #:transparent)
@@ -85,6 +86,8 @@
     [`nop `nop]
     [`(VecMAC ,acc ,v1 ,v2)
       (egg-vec-op `vec-mac (map s-exp-to-ast (list acc v1 v2)))]
+    [`(VecMULS ,acc ,v1 ,v2)
+      (egg-vec-op `vec-muls (map s-exp-to-ast (list acc v1 v2)))]
     [`(VecMul ,v1 ,v2)
       (egg-vec-op `vec-mul (map s-exp-to-ast (list v1 v2)))]
     [`(VecMulSgn ,v1 ,v2)
