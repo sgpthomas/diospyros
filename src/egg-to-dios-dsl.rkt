@@ -258,6 +258,19 @@
                         v1-prog
                         v2-prog
                         mac)))]
+      [(egg-vec-op `vec-muls (list acc v1 v2))
+        (define-values (acc-name acc-prog) (egg-to-dios acc))
+        (define-values (v1-name v1-prog) (egg-to-dios v1))
+        (define-values (v2-name v2-prog) (egg-to-dios v2))
+        (define muls-name (new-name 'muls-out))
+        (define muls
+          (vec-app muls-name 'vec-muls (list acc-name v1-name v2-name)))
+        (values muls-name
+                (flatten
+                  (list acc-prog
+                        v1-prog
+                        v2-prog
+                        muls)))]
       [(egg-vec-op op (list v1 v2))
         (define-values (v1-name v1-prog) (egg-to-dios v1))
         (define-values (v2-name v2-prog) (egg-to-dios v2))

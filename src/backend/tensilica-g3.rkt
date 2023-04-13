@@ -225,7 +225,7 @@
 ; declare out = acc;
 ; vmac(out, i1, i2)
 (define (gen-vecmac type-set type-ref inst intrinsic)
-  (match-define (vec-app out 'vec-mac (list v-acc i1 i2)) inst)
+  (match-define (vec-app out _ (list v-acc i1 i2)) inst)
   ; Declare out register.
   (type-set out "xb_vecMxf32")
   (define out-decl

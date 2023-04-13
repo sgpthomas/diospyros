@@ -114,6 +114,8 @@
       (egg-concat (s-exp-to-ast v1) (s-exp-to-ast v2))]
     [`(+ , vs ...)
       (make-binop `+ vs)]
+    [`(- , vs ...)
+      (make-binop `- vs)]
     [`(* , vs ...)
       (make-binop `* vs)]
     [`(/ , vs ...)
@@ -125,8 +127,6 @@
     [`(< , vs ...)
       (make-binop `< vs)]
     [`(neg , v)
-      (egg-unnop 'neg (s-exp-to-ast v))]
-    [`(- , v)
       (egg-unnop 'neg (s-exp-to-ast v))]
     [`(sgn , v)
       (egg-unnop 'sgn (s-exp-to-ast v))]
