@@ -98,10 +98,14 @@
       (egg-vec-op `vec-minus (map s-exp-to-ast (list v1 v2)))]
     [`(VecDiv ,v1 ,v2)
       (egg-vec-op `vec-div (map s-exp-to-ast (list v1 v2)))]
+    [`(VecSqr ,v1 ,v2)
+      (egg-vec-op `vec-sqr (map s-exp-to-ast (list v1 v2)))]
     [`(VecNeg ,v)
       (egg-vec-op `vec-neg (list (s-exp-to-ast v)))]
     [`(VecSqrt ,v)
       (egg-vec-op `vec-sqrt (list (s-exp-to-ast v)))]
+    [`(VecSqrtSgn ,v)
+      (egg-vec-op `vec-sqrt-sgn (list (s-exp-to-ast v)))]
     [`(VecSgn ,v)
       (egg-vec-op `vec-sgn (list (s-exp-to-ast v)))]
     [(or `(Vec , vs ...) `(LitVec , vs ...))
@@ -126,6 +130,8 @@
       (make-binop `&& vs)]
     [`(< , vs ...)
       (make-binop `< vs)]
+    [`(sqrtsgn , vs ...)
+      (make-binop 'sqrtsgn vs)]
     [`(neg , v)
       (egg-unnop 'neg (s-exp-to-ast v))]
     [`(sgn , v)

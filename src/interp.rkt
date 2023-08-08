@@ -70,10 +70,8 @@
   (for ([inst (prog-insts program)])
     ; Increase the cost based on the current env
     (incr-cost! (cost-fn inst env))
-
     ; Execute the program instruction
     (match inst
-
       [(vec-const id init _)
        ; Check whether the constant is a mapped symbol
        (define val
@@ -83,10 +81,8 @@
                  (hash-ref fn-map v)
                  v)))))
        (env-set! id val)]
-
       [(vec-decl id size)
        (env-set! id (make-v-list-zeros (current-reg-size)))]
-
       [(vec-extern-decl id size _)
        ; The identifier is not already bound, create a symbolic vector of the
        ; correct size and add it to the environment.
@@ -100,61 +96,49 @@
                        ". Expected: " size
                        " Given: " (length (env-ref id))))
            (env-set! id (align (env-ref id)))))]
-
       [(vec-shuffle id idxs inps)
        (let ([inp-vals (map env-ref inps)]
              [idxs-val (env-ref idxs)])
          (env-set! id (vector-shuffle inp-vals idxs-val)))]
-
       [(vec-shuffle-set! out-vec idxs inp)
        (let ([out-vec-val (env-ref out-vec)]
              [inp-val (env-ref inp)]
              [idxs-val (env-ref idxs)])
          (vector-shuffle-set! out-vec-val idxs-val inp-val))]
-
       [(vec-app id f inps)
        (let ([inps-val (map env-ref inps)]
              [fn (hash-ref fn-map f)])
          (env-set! id (apply fn inps-val)))]
-
       [(vec-void-app f inps)
        (let ([inps-val (map env-ref inps)]
              [fn (hash-ref fn-map f)])
          (apply fn inps-val))]
-
       [(vec-load dest-id src-id start end)
        (let ([dest (make-v-list-zeros (current-reg-size))]
              [src (env-ref src-id)])
          (v-list-copy! dest 0 src start end)
          (env-set! dest-id dest))]
-
       [(vec-store dest-id src-id start end)
        (let ([dest (env-ref dest-id)]
              [src (env-ref src-id)])
          (v-list-copy! dest start src 0 (- end start)))]
-
       [(vec-write dst-id src-id)
        (let ([dest (env-ref dst-id)]
              [src (env-ref src-id)])
          (v-list-copy! dest 0 src))]
-
       [(let-bind id expr _)
        (env-set! id (list (box expr)))]
-
       [(array-get id arr-id idx)
        (let* ([arr (env-ref arr-id)]
               [elem (v-list-get arr idx)])
          (env-set! id (list (box elem))))]
-
       [(vec-lit id elems _)
         (env-set! id (map first (map env-ref elems)))]
-
       [(scalar-binop id op l r)
        (let ([l-val (unbox (first (env-ref l)))]
              [r-val (unbox (first (env-ref r)))]
              [fn (hash-ref fn-map op)])
          (env-set! id (list (box (fn l-val r-val)))))]
-
       [(scalar-unnop id op v)
        (let ([val (unbox (first (env-ref v)))]
              [fn (hash-ref fn-map op)])

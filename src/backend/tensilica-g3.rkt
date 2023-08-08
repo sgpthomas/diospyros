@@ -341,8 +341,13 @@
                 c-ty-l
                 c-ty-r))
          (type-set id c-ty-l)
-         (c-decl c-ty-l #f (c-id id) #f
-                 (c-bare (format "~a ~a ~a" lhs op rhs)))]
+         (match op
+           ['sqrtsgn
+            (c-decl c-ty-l #f (c-id id) #f
+                    (c-bare (format "sqrt(~a) * ~a" lhs rhs)))]
+           [else
+            (c-decl c-ty-l #f (c-id id) #f
+                    (c-bare (format "~a ~a ~a" lhs op rhs)))])]
 
         [(scalar-ternop id i t e)
          (define c-ty-i (type-ref i))
@@ -481,6 +486,11 @@
 
         [(vec-app out 'vec-sqrt inputs)
          (gen-vecMxf2-pure-app "PDX_SQRT_MXF32" type-set type-ref out inputs)]
+
+        [(vec-app out 'vec-sqrtsgn inputs)
+         (append
+          (gen-vecMxf2-pure-app "PDX_MUL_MXF32" type-set type-ref out inputs)
+          (gen-vecMxf2-pure-app "PDX_SQRT_MXF32" type-set type-ref out inputs))]
 
         [(vec-app out 'vec-div inputs)
          (gen-vecMxf2-pure-app "PDX_DIV_MXF32" type-set type-ref out inputs)]
