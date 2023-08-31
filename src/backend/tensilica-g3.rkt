@@ -298,13 +298,16 @@
 
   (define decl-consts
     (c-seq
-      (for/list ([inst all-consts])
+     (for/list ([inst all-consts]
+                [i (in-naturals)])
         (match inst
           [(vec-const id init type)
            (define c-ty (c-type type))
+           (define dram-n (floor (/ i 2000)))
            (type-set id (~a c-ty " *"))
+           (pretty-print (format "[~a] dram~a ~a\n" i dram-n id))
            (c-decl c-ty
-                   "__attribute__((section(\".dram0.data\")))"
+                   (format "__attribute__((section(\".dram~a.data\")))" dram-n)
                    (c-id id)
                    (current-reg-size)
                    (c-bare (vector->string const-ref const? init)))]
