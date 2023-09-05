@@ -305,7 +305,6 @@
            (define c-ty (c-type type))
            (define dram-n (floor (/ i 2000)))
            (type-set id (~a c-ty " *"))
-           (pretty-print (format "[~a] dram~a ~a\n" i dram-n id))
            (c-decl c-ty
                    (format "__attribute__((section(\".dram~a.data\")))" dram-n)
                    (c-id id)

@@ -19,10 +19,13 @@ fn main() {
         "Running egg with timeout {:?}s, width: {:?}",
         cli_opts.timeout, cli_opts.vector_width
     );
-    eprintln!("Input prog:\n{}", &prog.pretty(80));
+    // eprintln!("Input prog:\n{}", &prog.pretty(80));
     let (cost, best) = rules::run(&prog, &cli_opts);
 
-    println!("{}", best.pretty(80)); /* Pretty print with width 80 */
+    println!(
+        "{}",
+        best // .pretty(80)
+    ); /* Pretty print with width 80 */
     eprintln!("\nCost: {}", cost);
 }
 
