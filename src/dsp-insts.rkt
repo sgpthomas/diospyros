@@ -79,13 +79,13 @@
              [e2 v2])
     (box (+ (unbox e-acc) (* (unbox e1) (unbox e2))))))
 
-(define (sqrt-sgn v1 v2)
-  (* (sqrt e1) (sgn (- e2))))
+;; (define (sqrt-sgn v1 v2)
+;;   (* (sqrt e1) (sgn (- e2))))
 
-(define (vector-sqrt-sgn v1 v2)
-  (for/list ([e1 v1]
-             [e2 v2])
-    (* (sqrt e1) (sgn (- e2)))))
+;; (define (vector-sqrt-sgn v1 v2)
+;;   (for/list ([e1 v1]
+;;              [e2 v2])
+;;     (* (sqrt e1) (sgn (- e2)))))
 
 ; Define sine and cosine as an interpreted functions
 (define-symbolic cosine (~> real? real?))
