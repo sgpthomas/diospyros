@@ -104,8 +104,8 @@
       (egg-vec-op `vec-neg (list (s-exp-to-ast v)))]
     [`(VecSqrt ,v)
       (egg-vec-op `vec-sqrt (list (s-exp-to-ast v)))]
-    [`(VecSqrtSgn ,v)
-      (egg-vec-op `vec-sqrt-sgn (list (s-exp-to-ast v)))]
+    [`(VecSqrtSgn ,v1 ,v2)
+      (egg-vec-op `vec-sqrt-sgn (map s-exp-to-ast (list v1 v2)))]
     [`(VecSgn ,v)
       (egg-vec-op `vec-sgn (list (s-exp-to-ast v)))]
     [(or `(Vec , vs ...) `(LitVec , vs ...))
