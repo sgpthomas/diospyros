@@ -489,7 +489,7 @@
         [(vec-app out 'vec-sqrt inputs)
          (gen-vecMxf2-pure-app "PDX_SQRT_MXF32" type-set type-ref out inputs)]
 
-        [(vec-app out 'vec-sqrtsgn inputs)
+        [(vec-app out 'vec-sqrt-sgn inputs)
          (append
           (gen-vecMxf2-pure-app "PDX_MUL_MXF32" type-set type-ref out inputs)
           (gen-vecMxf2-pure-app "PDX_SQRT_MXF32" type-set type-ref out inputs))]
