@@ -64,6 +64,8 @@ here-string-delimiter
       [("-w" "--vec-width") width
                             "Vector width (default is 4)"
                             (vec-width (string->number width))]
+      [("--dump-intermediate") "Dump intermediate representation to stdout"
+                               (intermediate #t)]
       [("-n" "--name") n
                        "Name for kernel function"
                        (fn-name n)]
